@@ -1,0 +1,25 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("modules_codegit"
+ (filename . "~/code/.gitmodules")
+ (front-context-string . "[submodule \"proj")
+ (rear-context-string)
+ (position . 1))
+("ignore_codegit"
+ (filename . "~/code/.gitignore")
+ (front-context-string . "# Structure of c")
+ (rear-context-string)
+ (position . 1))
+("zsh-config"
+ (filename . "~/.oh-my-zsh/.zshrc")
+ (front-context-string . "# ;;;;;;;;;;;;;;")
+ (rear-context-string)
+ (position . 1))
+("emacs_config"
+ (filename . "~/.emacs.d/init.el")
+ (front-context-string . ";;;;;;;;;;;;;;;;")
+ (rear-context-string)
+ (position . 1))
+)
