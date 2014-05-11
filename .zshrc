@@ -9,27 +9,30 @@ ZSH=$HOME/.unixrc/oh-my-zsh
 # that oh-my-zsh is loaded.
 ZSH_THEME="deyuan"
 
+# Change to z configuration.
+Z=$HOME/.unixrc/z
 
-# Set to this to use case-sensitive completion
+# Set to this to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
-# Comment this out to disable weekly auto-update checks
+# Comment this out to disable weekly auto-update checks.
 DISABLE_AUTO_UPDATE="true"
 
-# Uncomment following line if you want to disable colors in ls
+# Uncomment following line if you want to disable colors in ls.
 # DISABLE_LS_COLORS="true"
 
 # Uncomment following line if you want to disable autosetting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
-# Uncomment following line if you want red dots to be displayed while waiting for completion
+# Uncomment following line if you want red dots to be displayed while waiting
+# for completion.
 COMPLETION_WAITING_DOTS="true"
 
 # Disable beeping
 setopt NO_BEEP
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Which plugins would you like to load? (plugins can be found in $ZSH/plugins/*)
+# Custom plugins may be added to $ZSH/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git python ruby)
 
@@ -44,6 +47,7 @@ alias cp="cp -i"
 alias sgrep="grep -rnI -C3 --color=always" # colorful grep
 
 source $ZSH/oh-my-zsh.sh        # Re-exec shell script
+source $Z/z.sh                  # Enable z.sh
 bindkey -e                      # Bind keys
 
 
@@ -94,6 +98,5 @@ elif [[ `hostname` == "watermelon" ]]; then
     export PATH=$PATH:$HOME/.rvm/bin  # Add RVM to PATH for scripting
     export PATH=$PATH:/usr/local/go/bin         # Add go bin directory
     export PATH=$PATH:/usr/class/cs143/cool/bin # Add cool compiler directory
-    source ~/code/sources/z/z.sh                # enable z.sh
     # eval `dircolors ~/.dir_colors` # do not using annoying background for 'ls'
 fi

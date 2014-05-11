@@ -5,3 +5,6 @@
 	path = emacs
 	url = git://git.savannah.gnu.org/emacs.git
     ignore = dirty
+[submodule "z"]
+	path = z
+	url = https://github.com/rupa/z.git
