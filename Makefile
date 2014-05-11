@@ -43,7 +43,7 @@ emacs:
 # Install new unix environment includes:
 # 1. Update submodule, e.g. emacs, zsh, etc.
 # 2. Install symlink and packages using python scripts.
-install: basic
+install: basic emacs
 	cd scripts && python manager.py install
 	[ -f ~/.z ] || touch .z
 	chsh -s /usr/bin/zsh $$USER
