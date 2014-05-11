@@ -65,7 +65,7 @@ def install_all():
     ])
 
     print "--------------------"
-    print "  all done :)"
+    print "  Finish linking :)"
     print "--------------------"
 
 

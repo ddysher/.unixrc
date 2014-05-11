@@ -16,13 +16,16 @@ all:
 basic:
 	git submodule init
 	git submodule update
+ifeq ($(shell uname), Linux)
 	apt-get update
 	apt-get install -y git
 	apt-get install -y zsh
 	apt-get install -y build-essential
+endif
 
 
 emacs:
+ifeq ($(shell uname), Linux)
 	apt-get install -y texinfo
 	apt-get install -y libtool
 	apt-get install -y automake
@@ -37,6 +40,13 @@ emacs:
 	cd emacs && ./autogen.sh && ./configure
 	make -C emacs 
 	make -C emacs install
+endif
+ifeq ($(shell uname), Darwin)
+	cd emacs && ./autogen/copy_autogen && ./configure --with-ns
+	make -C emacs 
+	make -C emacs install
+endif
+
 
 
 # Install new unix environment includes:
@@ -44,6 +54,7 @@ emacs:
 # 2. Install symlink and packages using python scripts.
 install: basic emacs
 	cd scripts && python manager.py install
+	[ -f ~/.z ] || touch .z
 	chsh -s /usr/bin/zsh $$USER
 
 
