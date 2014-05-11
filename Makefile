@@ -18,7 +18,7 @@ basic:
 	apt-get install -y git
 	apt-get install -y zsh
 	apt-get install -y build-essential
-	chsh -s /bin/zsh $$USER
+	chsh -s /usr/bin/zsh $$USER
 
 
 emacs:
