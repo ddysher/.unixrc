@@ -14,6 +14,8 @@ all:
 
 
 basic:
+	git submodule init
+	git submodule update
 	apt-get update
 	apt-get install -y git
 	apt-get install -y zsh
@@ -41,8 +43,6 @@ emacs:
 # 1. Update submodule, e.g. emacs, zsh, etc.
 # 2. Install symlink and packages using python scripts.
 install: basic emacs
-	git submodule init
-	git submodule update
 	cd scripts && python manager.py install
 	chsh -s /usr/bin/zsh $$USER
 
