@@ -42,7 +42,7 @@ ifeq ($(shell uname), Linux)
 	make -C emacs install
 endif
 ifeq ($(shell uname), Darwin)
-	cd emacs && ./autogen/copy_autogen && ./configure --with-ns
+	cd emacs && ./autogen.sh && ./configure --with-ns
 	make -C emacs 
 	make -C emacs install
 endif
