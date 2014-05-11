@@ -64,10 +64,6 @@ def install_all():
         '.emacs.d',
     ])
 
-    print "--------------------"
-    print "  Finish linking :)"
-    print "--------------------"
-
 
 def main():
     if len(sys.argv) != 2:

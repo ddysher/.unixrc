@@ -1,0 +1,22 @@
+#
+# Basic dependencies.
+#
+git
+zsh
+build-essential
+#
+# Emacs Dependencies.
+#
+textinfo
+libtool
+automake
+libxpm-dev
+libpng-dev
+libgif-dev
+libjpeg-dev
+libtiff-dev
+libgtk-3-dev
+libncurses5-dev
+# Required for w3m-mode.
+w3m
+w3m-img

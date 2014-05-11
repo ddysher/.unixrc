@@ -3,12 +3,27 @@
 #
 # As a step by step work, currently only used for ubuntu.
 #
+# DISTRO=$(lsb_release -si)
+# ARCH=$(uname -m | sed 's/x86_//;s/i[3-6]86/32/')
+# VER=$(lsb_release -sr)
 
-OS=$(lsb_release -si)
-ARCH=$(uname -m | sed 's/x86_//;s/i[3-6]86/32/')
-VER=$(lsb_release -sr)
+
+# Platform related variables
+OS=$(shell uname)
+ifeq ($(OS), Linux)
+	DEPS_FILE="scripts/linux_deps"
+	PKG_TOOL=apt-get install
+	EMACS_CONFIG=""
+endif
+ifeq ($(OS), Darwin)
+	DEPS_FILE="scripts/darwin_deps"
+	PKG_TOOL=
+	EMACS_CONFIG="--with-ns"
+endif
+DEPS= $(shell grep -v "^\#" $(DEPS_FILE))
 
 
+# Rules
 all:
 	@echo Issue make install to install all the rc files.
 
@@ -16,46 +31,25 @@ all:
 basic:
 	git submodule init
 	git submodule update
-ifeq ($(shell uname), Linux)
-	apt-get update
-	apt-get install -y git
-	apt-get install -y zsh
-	apt-get install -y build-essential
-endif
-
+	$(foreach var, $(DEPS), $(PKG_TOOL) $(var);)
 
 emacs:
-ifeq ($(shell uname), Linux)
-	apt-get install -y texinfo
-	apt-get install -y libtool
-	apt-get install -y automake
-	apt-get install -y libxpm-dev
-	apt-get install -y libpng-dev
-	apt-get install -y libgif-dev
-	apt-get install -y libjpeg-dev
-	apt-get install -y libtiff-dev
-	apt-get install -y libgtk-3-dev
-	apt-get install -y libncurses5-dev
-	apt-get install -y w3m w3m-img # For w3m mode, not required for building
-	cd emacs && ./autogen.sh && ./configure
+	cd emacs && ./autogen.sh && ./configure $(EMACS_CONFIG)
 	make -C emacs 
 	make -C emacs install
-endif
-ifeq ($(shell uname), Darwin)
-	cd emacs && ./autogen.sh && ./configure --with-ns
-	make -C emacs 
-	make -C emacs install
-endif
 
 
 
 # Install new unix environment includes:
 # 1. Update submodule, e.g. emacs, zsh, etc.
 # 2. Install symlink and packages using python scripts.
-install: basic emacs
+install: basic
 	cd scripts && python manager.py install
 	[ -f ~/.z ] || touch .z
 	chsh -s /usr/bin/zsh $$USER
+	@echo "--------------------"
+	@echo "  Done :)"
+	@echo "--------------------"
 
 
-.PHONY: all clean basic emacs
+.PHONY: all basic emacs clean
