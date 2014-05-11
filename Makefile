@@ -18,6 +18,7 @@ basic:
 	apt-get install -y git
 	apt-get install -y zsh
 	apt-get install -y build-essential
+	chsh -s /bin/zsh $$USER
 
 
 emacs:
@@ -35,6 +36,7 @@ emacs:
 	cd emacs && ./autogen.sh && ./configure
 	make -C emacs 
 	make -C emacs install
+
 
 # Install new unix environment includes:
 # 1. Update submodule, e.g. emacs, zsh, etc.
