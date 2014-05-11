@@ -62,8 +62,7 @@ def install_all():
     map(install_homelink, [
         '.zshrc',
         '.emacs.d',
-        # gconf
-        '.gconf/apps/gnome-terminal/profiles/Default/%gconf.xml',
+        '.gconf',
     ])
 
     print "--------------------"
