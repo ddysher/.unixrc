@@ -18,7 +18,6 @@ basic:
 	apt-get install -y git
 	apt-get install -y zsh
 	apt-get install -y build-essential
-	chsh -s /usr/bin/zsh $$USER
 
 
 emacs:
@@ -45,6 +44,7 @@ install: basic emacs
 	git submodule init
 	git submodule update
 	cd scripts && python manager.py install
+	chsh -s /usr/bin/zsh $$USER
 
 
 .PHONY: all clean basic emacs
