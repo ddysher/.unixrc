@@ -13,7 +13,7 @@
  (rear-context-string)
  (position . 1))
 ("zsh-config"
- (filename . "~/.oh-my-zsh/.zshrc")
+ (filename . "~/.zshrc")
  (front-context-string . "# ;;;;;;;;;;;;;;")
  (rear-context-string)
  (position . 1))

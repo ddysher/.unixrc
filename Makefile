@@ -31,8 +31,8 @@ emacs:
 	apt-get install -y libgtk-3-dev
 	apt-get install -y libncurses5-dev
 	cd emacs && ./autogen.sh && ./configure
-	make -C emacs
-	make -C install
+	make -C emacs 
+	make -C emacs install
 
 # Install new unix environment includes:
 # 1. Update submodule, e.g. emacs, zsh, etc.
@@ -43,4 +43,4 @@ install: basic emacs
 	cd scripts && python manager.py install
 
 
-.PHONY: all clean
+.PHONY: all clean basic emacs
