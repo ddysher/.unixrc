@@ -45,7 +45,7 @@ emacs:
 # 2. Install symlink and packages using python scripts.
 install: basic emacs
 	cd scripts && python manager.py install
-	[ -f ~/.z ] || touch .z
+	[ -f ~/.z ] || touch ~/.z
 	chsh -s /usr/bin/zsh $$USER
 	@echo "--------------------"
 	@echo "  Done :)"
