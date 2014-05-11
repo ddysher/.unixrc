@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
+#
+# Install symlink and packages.
+#
+
 import os
 import sys
 import shutil
@@ -58,6 +62,8 @@ def install_all():
     map(install_homelink, [
         '.zshrc',
         '.emacs.d',
+        # gconf
+        '.gconf/apps/gnome-terminal/profiles/Default/%gconf.xml',
     ])
 
     print "--------------------"
