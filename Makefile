@@ -26,6 +26,7 @@ emacs:
 	apt-get install -y automake
 	apt-get install -y libxpm-dev
 	apt-get install -y libpng-dev
+	apt-get install -y libgif-dev
 	apt-get install -y libjpeg-dev
 	apt-get install -y libtiff-dev
 	apt-get install -y libgtk-3-dev
