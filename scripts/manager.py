@@ -62,7 +62,6 @@ def install_all():
     map(install_homelink, [
         '.zshrc',
         '.emacs.d',
-        '.gconf/apps/gnome-terminal',
     ])
 
     print "--------------------"
