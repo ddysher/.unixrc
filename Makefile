@@ -31,6 +31,7 @@ emacs:
 	apt-get install -y libtiff-dev
 	apt-get install -y libgtk-3-dev
 	apt-get install -y libncurses5-dev
+	apt-get install -y w3m w3m-img # For w3m mode, not required for building
 	cd emacs && ./autogen.sh && ./configure
 	make -C emacs 
 	make -C emacs install
