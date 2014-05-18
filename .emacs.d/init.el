@@ -31,6 +31,7 @@
 ;; General ones
 (require 'init-ido)
 (require 'init-erc)
+(require 'init-w3m)
 (require 'init-keys)
 (require 'init-theme)
 (require 'init-tramp)
@@ -56,8 +57,6 @@
 (require 'init-custom)
 
 ;; Conditional require
-(if *linux*
-    (require 'init-w3m))
 (if *goog-desktop*
     (load-file "/google/src/head/depot/eng/elisp/google.el"))
 

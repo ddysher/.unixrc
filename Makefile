@@ -23,7 +23,7 @@ endif
 DEPS= $(shell grep -v "^\#" $(DEPS_FILE))
 
 
-# Rules
+# Rules (TODO: curl and whoami)
 deps:
 	git submodule init
 	git submodule update
