@@ -40,6 +40,7 @@
 (require 'init-apache-mode)
 (require 'init-auto-complete)
 (require 'init-window-numbering)
+(require 'init-exec-path-from-shell)
 (require 'init-fill-column-indicator)
 
 ;; Init language (or related) mode
