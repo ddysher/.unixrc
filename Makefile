@@ -17,7 +17,7 @@ ifeq ($(OS), Linux)
 endif
 ifeq ($(OS), Darwin)
 	DEPS_FILE="scripts/darwin_deps"
-	PKG_TOOL=
+	PKG_TOOL=brew install
 	EMACS_CONFIG="--with-ns"
 endif
 DEPS= $(shell grep -v "^\#" $(DEPS_FILE))
@@ -31,7 +31,15 @@ all:
 basic:
 	git submodule init
 	git submodule update
+ifeq ($(OS), Darwin)
+	ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+	chown root $(shell which brew)
+endif
 	$(foreach var, $(DEPS), $(PKG_TOOL) $(var);)
+ifeq ($(OS), Darwin)
+	chown $(shell whoami) $(shell which brew)
+endif
+
 
 emacs:
 	cd emacs && ./autogen.sh && ./configure $(EMACS_CONFIG)
