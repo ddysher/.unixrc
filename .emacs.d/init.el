@@ -23,6 +23,7 @@
 (require 'init-preload-all-configs) ; preload config, must be called at first
 (require 'init-site-packages) ; init third party packages
 (require 'init-elpa)          ; init elpa managed packages
+(require 'init-exec-path-from-shell)    ; init emacs environment for Mac
 
 
 ;;------------------------------------------------------------------------------
@@ -40,7 +41,6 @@
 (require 'init-apache-mode)
 (require 'init-auto-complete)
 (require 'init-window-numbering)
-(require 'init-exec-path-from-shell)
 (require 'init-fill-column-indicator)
 
 ;; Init language (or related) mode
