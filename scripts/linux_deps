@@ -7,7 +7,7 @@ build-essential
 #
 # Emacs Dependencies.
 #
-textinfo
+texinfo
 libtool
 automake
 libxpm-dev

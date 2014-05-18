@@ -5,22 +5,15 @@
 (defvar *windows*  (eq system-type 'windows-nt))
 (defvar *cygwin*   (eq system-type 'cygwin))
 (defvar *darwin*   (eq system-type 'darwin))
-(defvar *linux*    (or (eq system-type 'gnu/linux)
-                       (eq system-type 'linux)))
-(defvar *unix*     (or *linux* (eq system-type 'usg-unix-v)
-                       (eq system-type 'berkeley-unix)))
+(defvar *linux*    (or (eq system-type 'gnu/linux) (eq system-type 'linux)))
 ;; Emacs version
 (defvar *emacs23*  (or (>= emacs-major-version 23)))
 (defvar *emacs24*  (or (>= emacs-major-version 24)))
 ;; System name (hostname)
-(defvar *home-desktop* (string= system-name
-                                "ubuntu-desktop"))
-(defvar *goog-desktop* (string= system-name
-                                "deyuan.pit.corp.google.com"))
-(defvar *macpro* (string= system-name
-                          "deyuan-macbookpro.roam.corp.google.com"))
-(defvar *macair* (string= system-name
-                          "Deyuans-MacBook-Air.local"))
+(defvar *home-desktop* (string= system-name "watermelon"))
+(defvar *goog-desktop* (string= system-name "deyuan.pit.corp.google.com"))
+(defvar *macpro* (string= system-name "deyuan-macbookpro.roam.corp.google.com"))
+(defvar *macair* (string= system-name "Deyuans-MacBook-Air.local"))
 
 
 ;;------------------------------------------------------------------------------

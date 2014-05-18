@@ -23,7 +23,7 @@
 ;; set M-e the same as C-e to release finger (original M-e move forward sentence)
 (global-set-key (kbd "M-e") 'move-end-of-line)
 
-;; scroll line by line
+;; Scroll line by line
 (defun scroll-down-in-place (n)
   (interactive "p")
   (previous-line n)

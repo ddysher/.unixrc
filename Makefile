@@ -12,7 +12,7 @@
 OS=$(shell uname)
 ifeq ($(OS), Linux)
 	DEPS_FILE="scripts/linux_deps"
-	PKG_TOOL=apt-get install
+	PKG_TOOL=apt-get install -y
 	EMACS_CONFIG=""
 endif
 ifeq ($(OS), Darwin)
@@ -24,11 +24,7 @@ DEPS= $(shell grep -v "^\#" $(DEPS_FILE))
 
 
 # Rules
-all:
-	@echo Issue make install to install all the rc files.
-
-
-basic:
+deps:
 	git submodule init
 	git submodule update
 ifeq ($(OS), Darwin)
@@ -46,12 +42,11 @@ emacs:
 	make -C emacs 
 	make -C emacs install
 
-
-
-# Install new unix environment includes:
+# Install new Unix environment includes:
 # 1. Update submodule, e.g. emacs, zsh, etc.
-# 2. Install symlink and packages using python scripts.
-install: basic emacs
+# 2. Install submodules and other packages.
+# 2. Install symlink using python scripts.
+install: deps emacs
 	cd scripts && python manager.py install
 	[ -f ~/.z ] || touch ~/.z
 	chsh -s /usr/bin/zsh $$USER
@@ -60,4 +55,4 @@ install: basic emacs
 	@echo "--------------------"
 
 
-.PHONY: all basic emacs clean
+.PHONY: all clean basic emacs
