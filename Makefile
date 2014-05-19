@@ -29,6 +29,7 @@ deps:
 	git submodule update
 ifeq ($(OS), Darwin)
 	ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+	brew update
 	chown root $(shell which brew)
 endif
 	$(foreach var, $(DEPS), $(PKG_TOOL) $(var);)
