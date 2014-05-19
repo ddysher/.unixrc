@@ -23,7 +23,7 @@ endif
 DEPS= $(shell grep -v "^\#" $(DEPS_FILE))
 
 
-# Rules (TODO: curl and whoami)
+# Rules (TODO: curl, whoami, ugly!)
 deps:
 	git submodule init
 	git submodule update
@@ -41,6 +41,10 @@ emacs:
 	cd emacs && ./autogen.sh && ./configure $(EMACS_CONFIG)
 	make -C emacs 
 	make -C emacs install
+ifeq ($(OS), Darwin)
+	yes | cp -r emacs/nextstep/Emacs.app /Applications
+endif
+
 
 # Install new Unix environment includes:
 # 1. Update submodule, e.g. emacs, zsh, etc.
