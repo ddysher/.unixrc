@@ -37,6 +37,7 @@
 ;;   C-c f geben-find-file
 ;;   C-c p geben-toggle-pause-at-entry-line-flag
 ;;   C-u t change redirection mode
+;;
 ;; Usage:
 ;;   M-x geben, then emacs is listening on port 9000, we need to append
 ;;   ?XDEBUG_SESSION_START=1 on any url to start debugging. In addition, there
