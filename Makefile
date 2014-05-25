@@ -7,6 +7,8 @@
 # ARCH=$(uname -m | sed 's/x86_//;s/i[3-6]86/32/')
 # VER=$(lsb_release -sr)
 
+# curl -kL https://raw.github.com/cstrap/monaco-font/master/install-font-ubuntu.sh | bash
+
 
 # Platform related variables
 OS=$(shell uname)
