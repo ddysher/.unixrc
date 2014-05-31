@@ -13,11 +13,13 @@
 
 (defun my-term-mode-hook ()
   (setq multi-term-program "/bin/zsh")  ; use zsh shell
+  (setq multi-term-switch-after-close nil) ; do not swith to other terminal when close
+  (setq multi-term-dedicated-window-height 20)
   (setq term-buffer-maximum-size 10000) ; increase max buffer size
   (setenv "TERMINFO" "~/.Terminfo")     ; what's this?
   (define-key term-mode-map [f9] 'term-toggle-mode)
   ;; delete some key bindings from elpa/xx/multi-term.el, which will give
-  ;; back their original meaning from term.el
+  ;; back their original meaning from term.el.
   (setq term-bind-key-alist
         (delete '("C-p" . previous-line) term-bind-key-alist))
   (setq term-bind-key-alist
