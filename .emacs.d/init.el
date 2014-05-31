@@ -7,8 +7,8 @@
 (defvar *darwin*   (eq system-type 'darwin))
 (defvar *linux*    (or (eq system-type 'gnu/linux) (eq system-type 'linux)))
 ;; Emacs version
-(defvar *emacs23*  (or (>= emacs-major-version 23)))
-(defvar *emacs24*  (or (>= emacs-major-version 24)))
+(defvar *emacs23*  (= emacs-major-version 23))
+(defvar *emacs24*  (= emacs-major-version 24))
 ;; System name (hostname)
 (defvar *home-desktop* (string= system-name "watermelon"))
 (defvar *goog-desktop* (string= system-name "deyuan.pit.corp.google.com"))
@@ -63,10 +63,10 @@
     (load-file "/google/src/head/depot/eng/elisp/google.el"))
 
 ;; Temporary & pending mode
-(require 'flex-mode)
-(require 'cool-mode)
-(require 'bison-mode)
-;;(require 'init-multi-web)
+;; (require 'flex-mode)
+;; (require 'cool-mode)
+;; (require 'bison-mode)
+;; (require 'init-multi-web)
 
 
 ;;------------------------------------------------------------------------------

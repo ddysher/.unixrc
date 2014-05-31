@@ -5,7 +5,6 @@
 (require-package 'jade-mode)
 
 
-;; Apply apache-mode to entire apache2 directory (including sub-directories)
 (require 'jade-mode)
 
 

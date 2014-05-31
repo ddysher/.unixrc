@@ -10,10 +10,12 @@
       w3m-file-name-coding-system 'utf-8
       w3m-input-coding-system 'utf-8
       w3m-output-coding-system 'utf-8
-      w3m-terminal-coding-system 'utf-8)
-(setq w3m-use-cookies t)
-(setq w3m-cookie-accept-bad-cookies t)
-(setq w3m-home-page "http://www.google.com")
+      w3m-terminal-coding-system 'utf-8
+      w3m-use-cookies t
+      w3m-cookie-accept-bad-cookies t
+      w3m-home-page "http://www.google.com"
+      w3m-search-default-engine "g"
+      w3m-default-display-inline-images t)
 
 (add-hook 'w3m-mode-hook
           (lambda ()
@@ -21,7 +23,8 @@
             (local-set-key [down] 'next-line)
             (local-set-key [C-up] 'w3m-previous-anchor)
             (local-set-key [C-down] 'w3m-next-anchor)
-            (local-set-key [right] 'w3m-view-next-page) ; [left] is properly set by w3m.el
+            ;; [left] is properly set by w3m.el
+            (local-set-key [right] 'w3m-view-next-page)
             (local-set-key (kbd "H") 'w3m-view-previous-page)
             (local-set-key (kbd "L") 'w3m-view-next-page)
             (local-set-key (kbd "M-n") 'scroll-up-in-place)
