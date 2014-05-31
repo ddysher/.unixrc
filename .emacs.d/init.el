@@ -7,8 +7,8 @@
 (defvar *darwin*   (eq system-type 'darwin))
 (defvar *linux*    (or (eq system-type 'gnu/linux) (eq system-type 'linux)))
 ;; Emacs version
-(defvar *emacs23*  (or (>= emacs-major-version 23)))
-(defvar *emacs24*  (or (>= emacs-major-version 24)))
+(defvar *emacs23*  (= emacs-major-version 23))
+(defvar *emacs24*  (= emacs-major-version 24))
 ;; System name (hostname)
 (defvar *home-desktop* (string= system-name "watermelon"))
 (defvar *goog-desktop* (string= system-name "deyuan.pit.corp.google.com"))
@@ -20,10 +20,10 @@
 ;; Bootstrap configs, need to execute before loading specific configs
 ;;------------------------------------------------------------------------------
 (add-to-list 'load-path (expand-file-name "inits" user-emacs-directory))
-(require 'init-preload-all-configs) ; preload config, must be called at first
-(require 'init-site-packages) ; init third party packages
-(require 'init-elpa)          ; init elpa managed packages
-(require 'init-exec-path-from-shell)    ; init emacs environment for Mac
+(require 'init-preload-all-configs) ; preload config, must be called first
+(require 'init-site-packages)       ; init third party packages
+(require 'init-elpa)                ; init elpa managed packages
+(require 'init-exec-path-from-shell) ; init emacs environment for Mac GUI
 
 
 ;;------------------------------------------------------------------------------
@@ -47,9 +47,10 @@
 (require 'init-cc-mode)
 (require 'init-go-mode)
 (require 'init-lua-mode)
-(require 'init-gud-mode)                ; python debug mode
+(require 'init-gud-mode)                ; debug python
 (require 'init-php-mode)
-(require 'init-geben-mode)              ; php debug mode
+(require 'init-jade-mode)
+(require 'init-geben-mode)              ; debug php
 (require 'init-coffee-mode)
 (require 'init-python-mode)
 (require 'init-markdown-mode)
@@ -62,11 +63,10 @@
     (load-file "/google/src/head/depot/eng/elisp/google.el"))
 
 ;; Temporary & pending mode
-(require 'flex-mode)
-(require 'cool-mode)
-(require 'bison-mode)
-;;(require 'init-multi-web)
-
+;; (require 'flex-mode)
+;; (require 'cool-mode)
+;; (require 'bison-mode)
+;; (require 'init-multi-web)
 
 
 ;;------------------------------------------------------------------------------

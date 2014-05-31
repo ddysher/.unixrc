@@ -7,4 +7,4 @@
 (add-hook 'objc-mode-hook 'my-objc-mode-hook)
 
 
-(provide 'init-python-mode)
+(provide 'init-objc-mode)
