@@ -29,9 +29,8 @@
 ;;------------------------------------------------------------------------------
 ;; Load configs for features and modes
 ;;------------------------------------------------------------------------------
-;; General ones
+;; General ones with configurations
 (require 'init-ido)
-(require 'init-erc)
 (require 'init-w3m)
 (require 'init-keys)
 (require 'init-theme)
@@ -43,20 +42,18 @@
 (require 'init-window-numbering)
 (require 'init-fill-column-indicator)
 
-;; Init language (or related) mode
+;; Init language (or related) mode with configurations
 (require 'init-cc-mode)
-(require 'init-go-mode)
 (require 'init-lua-mode)
 (require 'init-gud-mode)                ; debug python
-(require 'init-php-mode)
-(require 'init-jade-mode)
 (require 'init-geben-mode)              ; debug php
-(require 'init-coffee-mode)
 (require 'init-python-mode)
-(require 'init-markdown-mode)
 (require 'init-protobuf-mode)
 (require 'init-javascript-mode)
 (require 'init-custom)
+
+;; Simple mode that do not need configurations
+(require 'init-simple-misc-mode)
 
 ;; Conditional require
 (if *goog-desktop*
@@ -67,6 +64,8 @@
 ;; (require 'cool-mode)
 ;; (require 'bison-mode)
 ;; (require 'init-multi-web)
+
+
 
 
 ;;------------------------------------------------------------------------------

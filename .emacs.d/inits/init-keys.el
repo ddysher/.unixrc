@@ -24,6 +24,8 @@
 (global-set-key (kbd "M-e") 'move-end-of-line)
 ;; open a dedicated terminal window.
 (global-set-key (kbd "C-c C-t") 'multi-term)
+;; search all buffers for matching pattern.
+(global-set-key (kbd "C-c C-s") 'my-multi-occur-in-matching-buffers)
 
 ;; Scroll line by line
 (defun scroll-down-in-place (n)
@@ -39,6 +41,13 @@
   (interactive)
   (multi-term-dedicated-open)
   (multi-term-dedicated-select))
+
+(defun my-multi-occur-in-matching-buffers (regexp &optional allbufs)
+  "Show all lines matching REGEXP in all buffers."
+  (interactive (occur-read-primary-args))
+  (multi-occur-in-matching-buffers ".*" regexp)
+  (switch-to-buffer-other-window "*Occur*"))
+
 
 ;; Key bindings for Mac
 (if *darwin*
