@@ -4,9 +4,9 @@
 ;; Global key bindings
 (global-set-key [f1] 'find-file)        ; M-x open file (C-x-f)
 (global-set-key [f2] 'save-buffer)      ; M-x save file (C-x-s)
-(global-set-key [f3] 'other-window)     ; M-x other-window (C-x o)
+(global-set-key [f3] 'multi-term-dedicated)
 (global-set-key [f4] 'switch-to-buffer) ; M-x switch-to-buffer (C-x b)
-(global-set-key [f5] 'multi-term-dedicated)
+(global-set-key [f5] 'other-window)     ; M-x other-window (C-x o)
 (global-set-key [f6] 'replace-regexp)
 (global-set-key [f7] 'window-configuration-to-register) ; Save win conf (C-x r w)
 (global-set-key [f8] 'register-to-point) ; Jump to win conf (C-x r j)
