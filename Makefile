@@ -6,7 +6,6 @@
 # DISTRO=$(lsb_release -si)
 # ARCH=$(uname -m | sed 's/x86_//;s/i[3-6]86/32/')
 # VER=$(lsb_release -sr)
-
 # curl -kL https://raw.github.com/cstrap/monaco-font/master/install-font-ubuntu.sh | bash
 
 
@@ -25,6 +24,7 @@ endif
 DEPS= $(shell grep -v "^\#" $(DEPS_FILE))
 
 
+
 # Rules (TODO: curl, whoami, ugly!)
 deps:
 	git submodule init
@@ -35,9 +35,6 @@ ifeq ($(OS), Darwin)
 	chown root $(shell which brew)
 endif
 	$(foreach var, $(DEPS), $(PKG_TOOL) $(var);)
-ifeq ($(OS), Darwin)
-	chown $(shell whoami) $(shell which brew)
-endif
 
 
 emacs:

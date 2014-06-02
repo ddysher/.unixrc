@@ -16,6 +16,7 @@
 (defvar *macair* (string= system-name "Deyuans-MacBook-Air.local"))
 
 
+
 ;;------------------------------------------------------------------------------
 ;; Bootstrap configs, need to execute before loading specific configs
 ;;------------------------------------------------------------------------------
@@ -24,6 +25,7 @@
 (require 'init-site-packages)       ; init third party packages
 (require 'init-elpa)                ; init elpa managed packages
 (require 'init-exec-path-from-shell) ; init emacs environment for Mac GUI
+
 
 
 ;;------------------------------------------------------------------------------
@@ -64,7 +66,6 @@
 ;; (require 'cool-mode)
 ;; (require 'bison-mode)
 ;; (require 'init-multi-web)
-
 
 
 

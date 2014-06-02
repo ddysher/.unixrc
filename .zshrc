@@ -94,9 +94,10 @@ elif [[ `hostname` == "deyuan.pit.corp.google.com" ]]; then
     source /etc/bash_completion.d/g4d
     unsetopt correct_all      # do not autocorrect in work machine
 elif [[ `hostname` == "watermelon" ]]; then
-    export GOPATH=$HOME/code/langs/go # Go path
-    export PATH=$PATH:$HOME/.rvm/bin  # Add RVM to PATH for scripting
-    export PATH=$PATH:/usr/local/go/bin         # Add go bin directory
-    export PATH=$PATH:/usr/class/cs143/cool/bin # Add cool compiler directory
+    export PATH=$PATH:$HOME/.unixrc/arcanist/bin
+    # export GOPATH=$HOME/code/langs/go # Go path
+    # export PATH=$PATH:$HOME/.rvm/bin  # Add RVM to PATH for scripting
+    # export PATH=$PATH:/usr/local/go/bin         # Add go bin directory
+    # export PATH=$PATH:/usr/class/cs143/cool/bin # Add cool compiler directory
     # eval `dircolors ~/.dir_colors` # do not using annoying background for 'ls'
 fi
