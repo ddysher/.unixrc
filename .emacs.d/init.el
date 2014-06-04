@@ -57,12 +57,9 @@
 ;; Simple mode that do not need configurations
 (require 'init-simple-misc-mode)
 
-;; Conditional require. It should appear after regular init, since some keys
-;; need to be re-bound.
+;; Conditional require
 (if *goog-desktop*
-    (progn
-      (require init-google)
-      (load-file "/google/src/head/depot/eng/elisp/google.el")))
+    (load-file "/google/src/head/depot/eng/elisp/google.el"))
 
 ;; Temporary & pending mode
 ;; (require 'flex-mode)
