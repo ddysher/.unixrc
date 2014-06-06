@@ -65,13 +65,6 @@
     (load-file "/google/src/head/depot/eng/elisp/google.el"))
 
 
-;; Temporary & pending mode
-;; (require 'flex-mode)
-;; (require 'cool-mode)
-;; (require 'bison-mode)
-;; (require 'init-multi-web)
-
-
 
 ;;------------------------------------------------------------------------------
 ;; Automatic generated
