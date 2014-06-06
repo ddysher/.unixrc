@@ -16,7 +16,9 @@
   (if (package-installed-p package min-version)
       t
     (if (or (assoc package package-archive-contents) no-refresh)
-        (package-install package)
+        (progn
+          (package-refresh-contents)    ; refresh anyway
+          (package-install package))
       (progn
         (package-refresh-contents)
         (require-package package min-version t)))))
