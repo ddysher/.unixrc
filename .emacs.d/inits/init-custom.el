@@ -32,6 +32,8 @@
 (setq confirm-nonexistent-file-or-buffer nil)
 ;; turn off wrapping for long lines
 (set-default 'truncate-lines t)
+;; Disable bell when hit c-g
+(setq ring-bell-function 'ignore)
 ;; answer `y` & `n` for `yes` & `no
 (defalias 'yes-or-no-p 'y-or-n-p)
 ;; start server, used by emacsclient. `emacs` is alias to `emacsclient`
@@ -72,14 +74,6 @@
                       (equal major-mode 'erc-mode))
                   0
                 1))))
-
-;; Disable bell when hit c-g
-(setq ring-bell-function 'ignore)
-
-;; Kill all buffers except current active one
-(defun kill-other-buffers ()
-  (interactive)
-  (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 
 ;; Make active buffer more highlighted!
 (set-face-attribute 'mode-line

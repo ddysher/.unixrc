@@ -5,11 +5,10 @@
 (require 'lua-mode)
 
 
-(defun my-lua-mode-hook ()
-  ;; set lua's indent
+(defun lua-mode-custom-hook ()
   (setq lua-indent-level universal-indent-size))
 
-(add-hook 'lua-mode-hook 'my-lua-mode-hook)
+(add-hook 'lua-mode-hook 'lua-mode-custom-hook)
 
 
 (provide 'init-lua-mode)

@@ -31,11 +31,9 @@
 ;;------------------------------------------------------------------------------
 ;; Load configs for features and modes
 ;;------------------------------------------------------------------------------
-;; General ones with configurations
+;; General mode with configurations
 (require 'init-ido)
 (require 'init-w3m)
-(require 'init-keys)
-(require 'init-theme)
 (require 'init-tramp)
 (require 'init-multi-term)
 (require 'init-nginx-mode)
@@ -47,19 +45,25 @@
 ;; Init language (or related) mode with configurations
 (require 'init-cc-mode)
 (require 'init-lua-mode)
+(require 'init-js2-mode)
 (require 'init-gud-mode)                ; debug python
 (require 'init-geben-mode)              ; debug php
 (require 'init-python-mode)
 (require 'init-protobuf-mode)
-(require 'init-javascript-mode)
-(require 'init-custom)
 
-;; Simple mode that do not need configurations
+;; My custom mode, functions, etc.
+(require 'init-keys)
+(require 'init-theme)
+(require 'init-custom)
+(require 'init-functions)
+
+;; Simple mode that does not need configurations
 (require 'init-simple-misc-mode)
 
 ;; Conditional require
 (if *goog-desktop*
     (load-file "/google/src/head/depot/eng/elisp/google.el"))
+
 
 ;; Temporary & pending mode
 ;; (require 'flex-mode)
