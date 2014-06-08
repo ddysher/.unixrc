@@ -77,7 +77,7 @@ elif [[ `uname` == "Linux" ]]; then
     alias emacsnw="TERM=xterm-256color /usr/local/bin/emacs -nw"
     alias emacsserver="/usr/local/bin/emacs"
     alias ppj="python -mjson.tool"
-    export EDITOR="vim"
+    export EDITOR="emacsclient"
 fi
 
 
