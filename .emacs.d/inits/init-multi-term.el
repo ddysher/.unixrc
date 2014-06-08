@@ -47,8 +47,7 @@
   (add-to-list 'term-bind-key-alist '("C-p" . term-send-up))
   (add-to-list 'term-bind-key-alist '("C-n" . term-send-down))
   (add-to-list 'term-bind-key-alist '("C-y" . term-paste)))
-  ;; do not show unmodified in mode line
-  ;(setq mode-line-format (delq 'mode-line-modified mode-line-format)))
+
 
 (add-hook 'term-mode-hook 'term-mode-custom-hook)
 

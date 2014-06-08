@@ -34,18 +34,21 @@
 ;; General mode with configurations
 (require 'init-ido)
 (require 'init-w3m)
+(require 'init-smex)
 (require 'init-tramp)
 (require 'init-multi-term)
 (require 'init-nginx-mode)
 (require 'init-apache-mode)
 (require 'init-auto-complete)
 (require 'init-window-numbering)
+(require 'init-smartparens-mode)
 (require 'init-fill-column-indicator)
 
 ;; Init language (or related) mode with configurations
 (require 'init-cc-mode)
 (require 'init-lua-mode)
 (require 'init-js2-mode)
+(require 'init-web-mode)
 (require 'init-gud-mode)                ; debug python
 (require 'init-geben-mode)              ; debug php
 (require 'init-python-mode)

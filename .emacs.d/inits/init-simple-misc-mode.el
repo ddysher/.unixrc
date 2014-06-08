@@ -7,9 +7,6 @@
 (require-package 'coffee-mode)
 (require 'coffee-mode)
 
-;; (require-package 'csharp-mode)
-;; (require 'csharp-mode)
-
 (require-package 'jade-mode)
 (require 'jade-mode)
 
@@ -18,6 +15,7 @@
 
 (require-package 'php-mode)
 (require 'php-mode)
+
 
 ;; Temporary & pending mode
 ;; (require 'flex-mode)
