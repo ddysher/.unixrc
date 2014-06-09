@@ -11,11 +11,17 @@
 
 
 ;; Global settings
+;; setq-default will set values for buffers that do not have their own
+;; local variables, so we should use it for buffer-local variable.  For
+;; non buffer-local variable, we can just use setq.
+;;
 ;; set tab width globally, some other mode can change this locally.
 ;; note the  "default-tab-with" variable is obsolete
 (setq-default tab-width universal-indent-size)
 ;; use spaces where tab is needed
 (setq-default indent-tabs-mode nil)
+;; turn off wrapping for long lines
+(setq-default truncate-lines t)
 ;; no backup files (which end with ~)
 (setq make-backup-files nil)
 ;; no autosave files (surrounded by #)
@@ -30,8 +36,6 @@
 (setq ns-pop-up-frames nil)
 ;; do not need to confirm nonexistent file
 (setq confirm-nonexistent-file-or-buffer nil)
-;; turn off wrapping for long lines
-(set-default 'truncate-lines t)
 ;; Disable bell when hit c-g
 (setq ring-bell-function 'ignore)
 ;; answer `y` & `n` for `yes` & `no

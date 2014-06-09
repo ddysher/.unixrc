@@ -24,10 +24,15 @@
 (global-set-key (kbd "M-e") 'move-end-of-line)
 ;; open a dedicated terminal window.
 (global-set-key (kbd "C-c C-t") 'multi-term)
+;; search current buffer for matching pattern.
+(global-set-key (kbd "C-c s") 'search-buffer)
 ;; search all buffers for matching pattern.
 (global-set-key (kbd "C-c C-s") 'search-all-buffers)
 ;; search all buffers for matching pattern.
 (global-set-key (kbd "C-c C-e") 'split-desktop-window)
+;; list all buffers in new a window.
+(global-set-key (kbd "C-x C-b") 'buffer-menu)
+(global-set-key (kbd "C-c C-b") 'buffer-menu)
 
 
 ;; Key bindings for Mac

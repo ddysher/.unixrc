@@ -31,6 +31,12 @@
   (multi-occur-in-matching-buffers ".*" regexp)
   (switch-to-buffer-other-window "*Occur*"))
 
+(defun search-buffer (regexp &optional allbufs)
+  "Show all lines matching REGEXP in current buffer."
+  (interactive (occur-read-primary-args))
+  (occur regexp)
+  (switch-to-buffer-other-window "*Occur*"))
+
 (defun split-desktop-window ()
   (interactive)
   (split-window-below)
@@ -38,5 +44,6 @@
   (split-window-right)
   (balance-windows)
   (enlarge-window 15))
+
 
 (provide 'init-functions)
