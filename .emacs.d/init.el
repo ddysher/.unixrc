@@ -41,7 +41,6 @@
 (require 'init-apache-mode)
 (require 'init-auto-complete)
 (require 'init-window-numbering)
-(require 'init-smartparens-mode)
 (require 'init-fill-column-indicator)
 
 ;; Init language (or related) mode with configurations
