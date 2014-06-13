@@ -1,10 +1,16 @@
 [submodule "oh-my-zsh"]
-	path = oh-my-zsh
-	url = https://github.com/ddysher/oh-my-zsh.git
+    path = oh-my-zsh
+    url = https://github.com/ddysher/oh-my-zsh.git
 [submodule "emacs"]
-	path = emacs
-	url = git://git.savannah.gnu.org/emacs.git
+    path = emacs
+    url = git://git.savannah.gnu.org/emacs.git
     ignore = dirty
 [submodule "z"]
 	path = z
 	url = https://github.com/rupa/z.git
+[submodule "libphutil"]
+	path = libphutil
+	url = git://github.com/phacility/libphutil.git
+[submodule "arcanist"]
+	path = arcanist
+	url = git://github.com/phacility/arcanist.git

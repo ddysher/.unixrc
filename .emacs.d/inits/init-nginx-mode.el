@@ -7,6 +7,7 @@
 ;;                '("/etc/nginx/sites-available/.*" . nginx-mode))
 ;;------------------------------------------------------------------------------
 (require-package 'nginx-mode)
+(require 'nginx-mode)
 
 
 ;; Apply nginx-mode to entire nginx directory (including sub-directories)

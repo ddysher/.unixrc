@@ -16,6 +16,7 @@
 (defvar *macair* (string= system-name "Deyuans-MacBook-Air.local"))
 
 
+
 ;;------------------------------------------------------------------------------
 ;; Bootstrap configs, need to execute before loading specific configs
 ;;------------------------------------------------------------------------------
@@ -26,15 +27,14 @@
 (require 'init-exec-path-from-shell) ; init emacs environment for Mac GUI
 
 
+
 ;;------------------------------------------------------------------------------
 ;; Load configs for features and modes
 ;;------------------------------------------------------------------------------
-;; General ones
+;; General mode with configurations
 (require 'init-ido)
-(require 'init-erc)
 (require 'init-w3m)
-(require 'init-keys)
-(require 'init-theme)
+(require 'init-smex)
 (require 'init-tramp)
 (require 'init-multi-term)
 (require 'init-nginx-mode)
@@ -43,30 +43,29 @@
 (require 'init-window-numbering)
 (require 'init-fill-column-indicator)
 
-;; Init language (or related) mode
+;; Init language (or related) mode with configurations
 (require 'init-cc-mode)
-(require 'init-go-mode)
 (require 'init-lua-mode)
+(require 'init-js2-mode)
+(require 'init-web-mode)
 (require 'init-gud-mode)                ; debug python
-(require 'init-php-mode)
-(require 'init-jade-mode)
 (require 'init-geben-mode)              ; debug php
-(require 'init-coffee-mode)
 (require 'init-python-mode)
-(require 'init-markdown-mode)
 (require 'init-protobuf-mode)
-(require 'init-javascript-mode)
+
+;; My custom mode, functions, etc.
+(require 'init-keys)
+(require 'init-theme)
 (require 'init-custom)
+(require 'init-functions)
+
+;; Simple mode that does not need configurations
+(require 'init-simple-misc-mode)
 
 ;; Conditional require
 (if *goog-desktop*
     (load-file "/google/src/head/depot/eng/elisp/google.el"))
 
-;; Temporary & pending mode
-;; (require 'flex-mode)
-;; (require 'cool-mode)
-;; (require 'bison-mode)
-;; (require 'init-multi-web)
 
 
 ;;------------------------------------------------------------------------------

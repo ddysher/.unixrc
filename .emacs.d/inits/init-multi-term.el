@@ -11,7 +11,7 @@
       (term-char-mode)
     (term-line-mode)))
 
-(defun my-term-mode-hook ()
+(defun term-mode-custom-hook ()
   (setq multi-term-program "/bin/zsh")  ; use zsh shell
   (setq multi-term-switch-after-close nil) ; do not swith to other terminal when close
   (setq multi-term-dedicated-window-height 20)
@@ -47,10 +47,9 @@
   (add-to-list 'term-bind-key-alist '("C-p" . term-send-up))
   (add-to-list 'term-bind-key-alist '("C-n" . term-send-down))
   (add-to-list 'term-bind-key-alist '("C-y" . term-paste)))
-  ;; do not show unmodified in mode line
-  ;(setq mode-line-format (delq 'mode-line-modified mode-line-format)))
 
-(add-hook 'term-mode-hook 'my-term-mode-hook)
+
+(add-hook 'term-mode-hook 'term-mode-custom-hook)
 
 
 (provide 'init-multi-term)

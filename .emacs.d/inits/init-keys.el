@@ -4,9 +4,9 @@
 ;; Global key bindings
 (global-set-key [f1] 'find-file)        ; M-x open file (C-x-f)
 (global-set-key [f2] 'save-buffer)      ; M-x save file (C-x-s)
-(global-set-key [f3] 'other-window)     ; M-x other-window (C-x o)
+(global-set-key [f3] 'multi-term-dedicated)
 (global-set-key [f4] 'switch-to-buffer) ; M-x switch-to-buffer (C-x b)
-(global-set-key [f5] 'multi-term-dedicated)
+(global-set-key [f5] 'other-window)     ; M-x other-window (C-x o)
 (global-set-key [f6] 'replace-regexp)
 (global-set-key [f7] 'window-configuration-to-register) ; Save win conf (C-x r w)
 (global-set-key [f8] 'register-to-point) ; Jump to win conf (C-x r j)
@@ -24,21 +24,16 @@
 (global-set-key (kbd "M-e") 'move-end-of-line)
 ;; open a dedicated terminal window.
 (global-set-key (kbd "C-c C-t") 'multi-term)
+;; search current buffer for matching pattern.
+(global-set-key (kbd "C-c s") 'search-buffer)
+;; search all buffers for matching pattern.
+(global-set-key (kbd "C-c C-s") 'search-all-buffers)
+;; search all buffers for matching pattern.
+(global-set-key (kbd "C-c C-e") 'split-desktop-window)
+;; list all buffers in new a window.
+(global-set-key (kbd "C-x C-b") 'buffer-menu)
+(global-set-key (kbd "C-c C-b") 'buffer-menu)
 
-;; Scroll line by line
-(defun scroll-down-in-place (n)
-  (interactive "p")
-  (previous-line n)
-  (scroll-down n))
-(defun scroll-up-in-place (n)
-  (interactive "p")
-  (next-line n)
-  (scroll-up n))
-
-(defun multi-term-dedicated ()
-  (interactive)
-  (multi-term-dedicated-open)
-  (multi-term-dedicated-select))
 
 ;; Key bindings for Mac
 (if *darwin*

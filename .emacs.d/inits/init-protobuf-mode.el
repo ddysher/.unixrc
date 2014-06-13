@@ -5,10 +5,10 @@
 (require 'protobuf-mode)
 
 
-(defun my-protobuf-mode-hook ()
+(defun protobuf-mode-custom-hook ()
   (setq c-basic-offset universal-indent-size))
 
-(add-hook 'protobuf-mode-hook 'my-protobuf-mode-hook)
+(add-hook 'protobuf-mode-hook 'protobuf-mode-custom-hook)
 
 
 (provide 'init-protobuf-mode)

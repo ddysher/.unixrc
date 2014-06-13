@@ -7,13 +7,13 @@
 (require 'gud)
 
 
-(defun my-gud-mode-hook ()
+(defun gud-mode-custom-hook ()
   (define-key gud-mode-map '[f9] 'gud-cont)
   (define-key gud-mode-map '[f10] 'gud-next)
   (define-key gud-mode-map '[f11] 'gud-step)
   (define-key gud-mode-map '[f12] 'gud-break))
 
-(add-hook 'gud-mode-hook 'my-gud-mode-hook)
+(add-hook 'gud-mode-hook 'gud-mode-custom-hook)
 
 
 (provide 'init-gud-mode)

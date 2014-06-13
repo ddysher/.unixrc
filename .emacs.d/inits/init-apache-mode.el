@@ -3,6 +3,7 @@
 ;; elpa managed mode.
 ;;------------------------------------------------------------------------------
 (require-package 'apache-mode)
+(require 'apache-mode)
 
 
 ;; Apply apache-mode to entire apache2 directory (including sub-directories)
