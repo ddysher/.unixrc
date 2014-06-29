@@ -2,13 +2,13 @@
 ;; Bool values to decide which functions are available
 ;;------------------------------------------------------------------------------
 ;; System type
-(defvar *windows*  (eq system-type 'windows-nt))
-(defvar *cygwin*   (eq system-type 'cygwin))
-(defvar *darwin*   (eq system-type 'darwin))
-(defvar *linux*    (or (eq system-type 'gnu/linux) (eq system-type 'linux)))
+(defvar *windows* (eq system-type 'windows-nt))
+(defvar *cygwin*  (eq system-type 'cygwin))
+(defvar *darwin*  (eq system-type 'darwin))
+(defvar *linux*   (or (eq system-type 'gnu/linux) (eq system-type 'linux)))
 ;; Emacs version
-(defvar *emacs23*  (= emacs-major-version 23))
-(defvar *emacs24*  (= emacs-major-version 24))
+(defvar *emacs23* (= emacs-major-version 23))
+(defvar *emacs24* (= emacs-major-version 24))
 ;; System name (hostname)
 (defvar *home-desktop* (string= system-name "watermelon"))
 (defvar *goog-desktop* (string= system-name "deyuan.pit.corp.google.com"))
