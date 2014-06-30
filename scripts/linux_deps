@@ -3,7 +3,13 @@
 #
 git
 zsh
+extfat-fuse
+extfat-utils
 build-essential
+gnome-tweak-tool
+compizconfig-settings-manager
+compiz-plugins-extra
+ttf-wqy-zenhei
 #
 # Emacs Dependencies.
 #

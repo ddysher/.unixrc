@@ -53,7 +53,7 @@ endif
 install: deps emacs
 	cd scripts && python manager.py install
 	[ -f ~/.z ] || touch ~/.z
-	chsh -s /usr/bin/zsh $$USER
+	chsh -s /usr/bin/zsh $$USER	# not working if using sudo make install
 	@echo "--------------------"
 	@echo "  Done :)"
 	@echo "--------------------"
