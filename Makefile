@@ -54,6 +54,9 @@ install: deps emacs
 	cd scripts && python manager.py install
 	[ -f ~/.z ] || touch ~/.z
 	chsh -s /usr/bin/zsh $$USER	# not working if using sudo make install
+	git config --global user.email "deyuan.deng@gmail.com"
+	git config --global user.name "Deyuan Deng"
+	git config --global push.default simple
 	@echo "--------------------"
 	@echo "  Done :)"
 	@echo "--------------------"
