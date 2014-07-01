@@ -11,6 +11,7 @@ compizconfig-settings-manager
 compiz-plugins-extra
 ttf-wqy-zenhei
 ttf-droid
+wmctrl
 #
 # Emacs Dependencies.
 #

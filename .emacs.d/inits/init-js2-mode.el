@@ -8,9 +8,9 @@
 
 
 (defun js2-mode-custom-hook ()
-  (setq js2-basic-offset universal-indent-size))
+  (setq js2-basic-offset 2))
 (defun js-mode-custom-hook ()
-  (setq js-indent-level universal-indent-size))
+  (setq js-indent-level 2))
 
 
 ;; Use js2-mode as major mode for javascript.
