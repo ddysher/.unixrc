@@ -27,7 +27,7 @@
 ;; Show client name at mode line.
 (add-hook 'find-file-hook 'my-google3-hook)
 (add-hook 'dired-file-hook 'my-google3-hook)
-(load-file "/google/src/head/depot/eng/elisp/google.el"))
+(load-file "/google/src/head/depot/eng/elisp/google.el")
 
 
 (provide 'init-google)
