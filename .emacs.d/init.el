@@ -64,7 +64,7 @@
 
 ;; Conditional require
 (if *goog-desktop*
-    (load-file "/google/src/head/depot/eng/elisp/google.el"))
+    (require 'init-google))
 
 
 
