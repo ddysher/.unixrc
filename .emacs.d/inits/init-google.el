@@ -21,7 +21,7 @@
 
 (defun my-google3-hook ()
   (let ((client-name (google-g4-client default-directory)))
-    (if client-name
+    (if (and client-name (not (string-match client-name (buffer-name))))
         (rename-buffer (format "%s [%s]" (buffer-name) client-name)))))
 
 ;; Show client name at mode line.
