@@ -8,7 +8,9 @@
 
 
 (defun js2-mode-custom-hook ()
-  (setq js2-basic-offset 2))
+  (setq js2-basic-offset 2)
+  ;; It's perfectly legal to have return and value-return in the same function.
+  (setq js2-strict-inconsistent-return-warning nil))
 (defun js-mode-custom-hook ()
   (setq js-indent-level 2))
 
