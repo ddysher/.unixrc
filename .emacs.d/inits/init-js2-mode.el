@@ -8,6 +8,7 @@
 
 
 (defun js2-mode-custom-hook ()
+  ;; (tern-mode t)
   (setq js2-basic-offset 2)
   ;; It's perfectly legal to have return and value-return in the same function.
   (setq js2-strict-inconsistent-return-warning nil))
@@ -22,11 +23,11 @@
 ;; Add custom hook.
 (add-hook 'js2-mode-hook 'js2-mode-custom-hook)
 (add-hook 'js-mode-hook 'js-mode-custom-hook)
-(add-hook 'js2-mode-hook (lambda () (tern-mode t)))
-(eval-after-load 'tern
-   '(progn
-      (require 'tern-auto-complete)
-      (tern-ac-setup)))
+
+;; (eval-after-load 'tern
+;;    '(progn
+;;       (require 'tern-auto-complete)
+;;       (tern-ac-setup)))
 
 
 (provide 'init-js2-mode)

@@ -3,6 +3,7 @@
 #
 git
 zsh
+curl
 extfat-fuse
 extfat-utils
 build-essential
@@ -12,6 +13,7 @@ compiz-plugins-extra
 ttf-wqy-zenhei
 ttf-droid
 wmctrl
+markdown
 #
 # Emacs Dependencies.
 #

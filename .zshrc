@@ -95,6 +95,8 @@ elif [[ `hostname` == "deyuan.pit.corp.google.com" ]]; then
     unsetopt correct_all      # do not autocorrect in work machine
 elif [[ `hostname` == "watermelon" ]]; then
     export PATH=$PATH:$HOME/.unixrc/arcanist/bin
+    # export PATH=$PATH:$HOME/.unixrc/go/bin
+    # export GOROOT=$HOME/.unixrc/go
     # export GOPATH=$HOME/code/langs/go # Go path
     # export PATH=$PATH:$HOME/.rvm/bin  # Add RVM to PATH for scripting
     # export PATH=$PATH:/usr/local/go/bin         # Add go bin directory

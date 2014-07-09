@@ -16,6 +16,8 @@
 (require-package 'php-mode)
 (require 'php-mode)
 
+(require-package 'thrift)
+(require 'thrift)
 
 ;; Temporary & pending mode
 ;; (require 'flex-mode)
