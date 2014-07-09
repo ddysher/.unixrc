@@ -62,9 +62,11 @@
 (add-hook 'python-mode-hook (lambda () (setq show-trailing-whitespace t)))
 (add-hook 'emacs-lisp-mode-hook (lambda () (setq show-trailing-whitespace t)))
 (add-hook 'js-mode-hook (lambda () (setq show-trailing-whitespace t)))
+(add-hook 'js2-mode-hook (lambda () (setq show-trailing-whitespace t)))
 (add-hook 'latex-mode-hook (lambda () (setq show-trailing-whitespace t)))
 (add-hook 'asm-mode-hook (lambda () (setq show-trailing-whitespace t)))
 (add-hook 'markdown-mode-hook (lambda () (setq show-trailing-whitespace t)))
+(add-hook 'makefile-gmake-mode-hook (lambda () (setq show-trailing-whitespace t)))
 ;;(add-hook 'term-mode-hook (lambda() (yas-minor-mode -1)))
 
 ;; Highlight current line in every mode instead of term-mode and minibuffer;
