@@ -67,7 +67,7 @@
 (add-hook 'asm-mode-hook (lambda () (setq show-trailing-whitespace t)))
 (add-hook 'markdown-mode-hook (lambda () (setq show-trailing-whitespace t)))
 (add-hook 'makefile-gmake-mode-hook (lambda () (setq show-trailing-whitespace t)))
-;;(add-hook 'term-mode-hook (lambda() (yas-minor-mode -1)))
+(add-hook 'term-mode-hook (lambda() (text-scale-decrease 1)))
 
 ;; Highlight current line in every mode instead of term-mode and minibuffer;
 ;; using (global-hl-line-mode 1) will enable it in all buffers, and is not

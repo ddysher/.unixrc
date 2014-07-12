@@ -43,7 +43,13 @@
   (split-window-right)
   (split-window-right)
   (balance-windows)
-  (enlarge-window 15))
+  (enlarge-window 20) ; Bigger number results in smaller terminal area
+  (other-window 3)
+  (split-window-right)
+  (multi-term)
+  (other-window 1)
+  (multi-term)
+  (other-window 2))
 
 (defun revert-all-buffers ()
   "Refreshes all open buffers from their respective files."

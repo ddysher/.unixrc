@@ -5,9 +5,7 @@
 
 
 (load-theme 'zenburn t)
-(cond (*linux*
-       (set-default-font
-        "Droid Sans Mono-8")))
+(cond (*linux* (set-default-font "Inconsolata-10")))
 (cond (*macpro*
        (set-default-font
         "-apple-Monaco-medium-normal-normal-*-11-*-*-*-m-0-iso10646-1")))
