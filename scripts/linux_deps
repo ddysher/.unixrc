@@ -4,6 +4,7 @@
 git
 zsh
 curl
+wget
 extfat-fuse
 extfat-utils
 build-essential
@@ -12,8 +13,8 @@ compizconfig-settings-manager
 compiz-plugins-extra
 ttf-wqy-zenhei
 fonts-incosolata
-wmctrl
 markdown
+python-pip
 #
 # Emacs Dependencies.
 #
