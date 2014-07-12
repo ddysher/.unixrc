@@ -45,6 +45,7 @@
 
 ;; Init language (or related) mode with configurations
 (require 'init-cc-mode)
+(require 'init-sh-mode)
 (require 'init-lua-mode)
 (require 'init-js2-mode)
 (require 'init-web-mode)

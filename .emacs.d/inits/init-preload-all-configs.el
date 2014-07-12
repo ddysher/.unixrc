@@ -3,7 +3,7 @@
 ;;------------------------------------------------------------------------------
 (if *goog-desktop*
     (setq universal-indent-size 2)
-  (setq universal-indent-size 4))
+  (setq universal-indent-size 2))
 
 ;; Set these first, in case error occurs at startup.
 (setq make-backup-files nil) ;; no backup files (which end with ~)
