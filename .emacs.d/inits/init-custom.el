@@ -53,6 +53,7 @@
 (add-to-list 'auto-mode-alist '("\\.gitignore$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.gitmodules$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\BUILD$" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
 ;; Show trailing whitespaces on specific modes, hooks are added collectively
 ;; at this init-custom file, instead of adding at every mode. Note using
