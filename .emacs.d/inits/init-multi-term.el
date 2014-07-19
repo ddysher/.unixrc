@@ -17,6 +17,7 @@
   (setq multi-term-dedicated-window-height 20)
   (setq term-buffer-maximum-size 10000) ; increase max buffer size
   (setenv "TERMINFO" "~/.Terminfo")     ; what's this?
+  (text-scale-decrease 1)
   (define-key term-mode-map [f9] 'term-toggle-mode)
   ;; delete some key bindings from elpa/xx/multi-term.el, which will give
   ;; back their original meaning from term.el.
