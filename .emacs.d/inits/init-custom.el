@@ -82,17 +82,5 @@
                   0
                 1))))
 
-;; Make active buffer more highlighted!
-(set-face-attribute 'mode-line
-                    nil
-                    :foreground "gray80"
-                    :background "IndianRed4"
-                    :box '(:line-width 1 :style released-button))
-(set-face-attribute 'mode-line-inactive
-                    nil
-                    :foreground "#5F7F5F" ; color borrowed from zenburn-theme.el
-                    :background "#383838"
-                    :box '(:line-width 1 :style released-button))
-
 
 (provide 'init-custom)
