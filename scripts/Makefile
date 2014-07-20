@@ -39,7 +39,7 @@ endif
 
 emacs:
 	cd emacs && ./autogen.sh && ./configure $(EMACS_CONFIG)
-	make -C emacs 
+	make -C emacs
 	make -C emacs install
 ifeq ($(OS), Darwin)
 	yes | cp -r emacs/nextstep/Emacs.app /Applications

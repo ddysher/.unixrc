@@ -5,8 +5,8 @@ git
 zsh
 curl
 wget
-extfat-fuse
-extfat-utils
+exfat-fuse
+exfat-utils
 build-essential
 gnome-tweak-tool
 compizconfig-settings-manager

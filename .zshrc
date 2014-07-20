@@ -9,8 +9,8 @@ ZSH=$HOME/.unixrc/oh-my-zsh
 # that oh-my-zsh is loaded.
 ZSH_THEME="deyuan"
 
-# Change to z configuration.
-Z=$HOME/.unixrc/z
+# Change to pkg download directory.
+PKG_DIR=$HOME/.unixrc/tools/
 
 # Set to this to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -47,7 +47,7 @@ alias cp="cp -i"
 alias sgrep="grep -rnI -C3 --color=always" # colorful grep
 
 source $ZSH/oh-my-zsh.sh        # Re-exec shell script
-source $Z/z.sh                  # Enable z.sh
+source $PKG_DIR/z/z.sh          # Enable z.sh
 bindkey -e                      # Bind keys
 
 
@@ -94,7 +94,7 @@ elif [[ `hostname` == "deyuan.pit.corp.google.com" ]]; then
     source /etc/bash_completion.d/g4d
     unsetopt correct_all      # do not autocorrect in work machine
 elif [[ `hostname` == "watermelon" ]]; then
-    export PATH=$PATH:$HOME/.unixrc/arcanist/bin
+    export PATH=$PATH:$PKG_DIR/arcanist/bin
     # export PATH=$PATH:$HOME/.unixrc/go/bin
     # export GOROOT=$HOME/.unixrc/go
     # export GOPATH=$HOME/code/langs/go # Go path
