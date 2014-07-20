@@ -11,6 +11,6 @@
 [submodule "tools/libphutil"]
 	path = tools/libphutil
 	url = git://github.com/phacility/libphutil.git
-[submodule "tools/oh-my-zsh"]
-	path = tools/oh-my-zsh
+[submodule "oh-my-zsh"]
+	path = oh-my-zsh
 	url = https://github.com/ddysher/oh-my-zsh.git

@@ -10,7 +10,7 @@ ZSH=$HOME/.unixrc/oh-my-zsh
 ZSH_THEME="deyuan"
 
 # Change to pkg download directory.
-PKG_DIR=$HOME/.unixrc/tools/
+PKG_DIR=$HOME/.unixrc/tools
 
 # Set to this to use case-sensitive completion.
 # CASE_SENSITIVE="true"
