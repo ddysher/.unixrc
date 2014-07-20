@@ -2,7 +2,7 @@
 set +x
 
 #
-# Package versions. 'dev' means build from source.
+# Package versions
 #
 GO_VERSION="1.3"
 NODE_VERSION="v0.10.29"         # npm=v1.4.14, shipped with node
@@ -23,16 +23,11 @@ MONGODB_URL="http://fastdl.mongodb.org/linux/$MONGODB_PACKAGE"
 GO_PACKAGE="go$GO_VERSION.linux-amd64.tar.gz"
 GO_DIR="go"                     # package get renamed after unzip.
 GO_URL="http://golang.org/dl/$GO_PACKAGE"
+THRIFT_DIR="thrift"
 
 
-# Install system packages.
 function InstallSystemPkg() {
-  sudo true
-  if [[ $? -ne 0 ]]
-  then
-    echo "ERROR: You must be able to sudo to run this script.";
-    exit 1;
-  fi
+  # Update packages
   sudo apt-get update
   # Basic tools
   sudo apt-get install -y git wget curl build-essential exfat-fuse exfat-utils
@@ -43,17 +38,16 @@ function InstallSystemPkg() {
        compizconfig-settings-manager compiz-plugins-extra
   # Language tools
   sudo apt-get install -y markdown python-pip php5 php5-mysql php5-gd php5-dev \
-       php5-curl php-apc php5-cli php5-json
+       php5-curl php-apc php5-cli php5-json python-dev g++ libglib2.0-dev \
+       libevent-dev
 }
 
 
-# Install dev version of emacs to /usr/local/
 function InstallEmacs() {
-  echo "Installing Emacs from source..."
   # Install required packages for emacs.
-  sudo apt-get install -y \
-       texinfo libxpm-dev libpng-dev libgif-dev libjpeg-dev libtiff-dev \
-       libgtk-3-dev libncurses5-dev
+  sudo apt-get install -y texinfo libxpm-dev libpng-dev libgif-dev \
+       libjpeg-dev libtiff-dev libgtk-3-dev libncurses5-dev
+  # Build from source (emacs is a git-submodule).
   cd tools/emacs
   ./autogen.sh
   ./configure
@@ -63,88 +57,78 @@ function InstallEmacs() {
 }
 
 
-# Install Go to /usr/local/go/
 function InstallGo() {
-  echo "Installing GO Binary..."
-  if [[ ! -e $GO_PACKAGE ]]
-  then
+  if [[ ! -e $GO_PACKAGE ]]; then
     wget $GO_URL
   fi
-  if [[ -e /usr/local/go ]]
-  then
-    echo "Go exists under /usr/local/go. To reinstall, press ";
-    echo "RETURN, or ^C to cancel.";
-    read -e ignored
-    sudo rm -rf /usr/local/go
-  fi
-  # Go will be extracted and renamed to 'go' automatically.
+  # Keep it simple, force delete.
+  sudo rm -rf /usr/local/go
+  # Install Go to /usr/local/go/.
   sudo tar -C /usr/local -xvf $GO_PACKAGE
 }
 
 
-# Install NodeJs to /usr/local/nodejs/
 function InstallNodeJs() {
-  echo "Installing NodeJs Binary..."
-  if [[ ! -e $NODE_PACKAGE ]]
-  then
+  if [[ ! -e $NODE_PACKAGE ]]; then
     wget $NODE_URL
   fi
-  if [[ -e /usr/local/nodejs ]]
-  then
-    echo "Node.js exists under /usr/local/nodejs. To reinstall, press ";
-    echo "RETURN, or ^C to cancel.";
-    read -e ignored
-    sudo rm -rf /usr/local/nodejs
-  fi
-  sudo tar -C /usr/local -xvf $NODE_PACKAGE
-  sudo mv /usr/local/$NODE_DIR /usr/local/nodejs
+  sudo tar -C /usr/local -xvf $NODE_PACKAGE --strip 1
 }
 
 
-# Install MongoDB to /usr/local/mongodb/
 function InstallMongoDB() {
-  echo "Installing MongoDB Binary..."
-  if [[ ! -e $MONGODB_PACKAGE ]]
-  then
+  if [[ ! -e $MONGODB_PACKAGE ]]; then
     wget $MONGODB_URL
   fi
-  if [[ -e /usr/local/mongodb ]]
-  then
-    echo "MongoDB exists under /usr/local/mongodb. To reinstall, press ";
-    echo "RETURN, or ^C to cancel.";
-    read -e ignored
-    sudo rm -rf /usr/local/mongodb
-  fi
-  sudo tar -C /usr/local -xvf $MONGODB_PACKAGE
-  sudo mv /usr/local/$MONGODB_DIR /usr/local/mongodb
+  sudo tar -C /usr/local -xvf $MONGODB_PACKAGE --strip 1
 }
 
 
-# Setup system after installation. Note PATH is updated in .zshrc.
+function InstallThrift() {
+  # Basic build requirements and language support
+  sudo apt-get install -y libboost-dev libboost-test-dev flex bison pkg-config \
+       libboost-program-options-dev libssl-dev
+  if [[ ! -e $THRIFT_DIR ]]; then
+    git clone https://git-wip-us.apache.org/repos/asf/thrift.git $THRIFT_DIR
+  fi
+  # Build from source.
+  cd $THRIFT_DIR
+  if [[ $THRIFT_VERSION != "dev" ]]; then
+     git checkout tags/$THRIFT_VERSION
+  fi
+  ./bootstrap.sh
+  ./configure
+  make
+  sudo make install
+  cd -
+}
+
+
 function SetupEnvironment() {
-  # Intall important links.
+  # Use zsh
+	sudo chsh -s /usr/bin/zsh $USER
+  # Intall important links
   python manager.py install
-  if [[ ! -e ~/.z ]]
-  then
+  sudo ln -sf /usr/local/bin/emacs /usr/bin/emacs
+  sudo ln -sf /usr/local/bin/emacsclient /usr/bin/emacsclient
+  sudo ln -sf /usr/local/bin/node /usr/bin/node
+  sudo ln -sf /usr/local/bin/npm /usr/bin/npm
+  sudo ln -sf /usr/local/bin/mongod /usr/bin/mongod
+  # Set up z
+  if [[ ! -e ~/.z ]]; then
     touch ~/.z
   fi
-	sudo chsh -s /usr/bin/zsh $USER
+  # Set up git
 	git config --global user.email "deyuan.deng@gmail.com"
 	git config --global user.name "Deyuan Deng"
 	git config --global push.default simple
-  sudo ln -sf /usr/local/nodejs/bin/node /usr/bin/node
-  sudo ln -sf /usr/local/nodejs/bin/npm /usr/bin/npm
-  sudo ln -sf /usr/local/mongodb/bin/mongo /usr/bin/mongo
-  sudo ln -sf /usr/local/mongodb/bin/mongod /usr/bin/mongod
   # Set up MongoDB
   RC_LOCAL=`cat /etc/init.d/rc.local`
-  if [[ $RC_LOCAL != *mongod* ]]
-  then
+  if [[ $RC_LOCAL != *mongod* ]]; then
     MONGODB_CMD="echo 'mongod --fork --logpath /var/log/mongodb.log --logappend'"
     sudo sh -c "$MONGODB_CMD >> /etc/init.d/rc.local"
   fi
-  if [[ ! -d /data/db ]]
-  then
+  if [[ ! -d /data/db ]]; then
     sudo mkdir -p /data/db
   fi
   # Set up NodeJs
@@ -154,30 +138,34 @@ function SetupEnvironment() {
 
 
 function CleanUp() {
-  rm -rf $NODE_PACKAGE $MONGODB_PACKAGE $GO_PACKAGE
+  sudo rm -rf $NODE_PACKAGE $MONGODB_PACKAGE $GO_PACKAGE $THRIFT_DIR
+  cd /usr/local
+  sudo rm -rf ChangeLog GNU-AGPL-3.0 LICENSE README README.md THIRD-PARTY-NOTICES
+  cd -
 }
 
 
 ######################################################################
 #                         Start installation                         #
 ######################################################################
-#
-# Install system packages to /usr/.
-#
-InstallSystemPkg
+# #
+# # Install system packages to /usr/.
+# #
+# InstallSystemPkg
 
-#
-# Install packages to /usr/local/.
-#
-git submodule init
-git submodule update
-InstallEmacs
+# #
+# # Install packages to /usr/local/.
+# #
+# git submodule init
+# git submodule update
+# InstallEmacs
 InstallGo
-InstallNodeJs
-InstallMongoDB
+# InstallNodeJs
+# InstallMongoDB
+# InstallThrift
 
-#
-# Setup environment and clean up.
-#
-SetupEnvironment
-CleanUp
+# #
+# # Setup environment and clean up.
+# #
+# SetupEnvironment
+# CleanUp

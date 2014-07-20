@@ -44,8 +44,8 @@ plugins=(git python ruby)
 alias rm="rm -i"
 alias mv="mv -i"
 alias cp="cp -i"
-alias ppj="python -mjson.tool"             # beautify json print
-alias sgrep="grep -rnI -C3 --color=always" # colorful grep
+alias ppj="python -mjson.tool"             # Beautify json print
+alias sgrep="grep -rnI -C3 --color=always" # Colorful grep
 
 source $ZSH/oh-my-zsh.sh        # Re-exec shell script
 source $TOOLS/z/z.sh            # Enable z.sh
@@ -78,8 +78,7 @@ elif [[ `uname` == "Linux" ]]; then
   alias emacsnw="TERM=xterm-256color /usr/local/bin/emacs -nw"
   alias emacsserver="/usr/local/bin/emacs"
   export EDITOR="emacsclient"
-  export PATH=$PATH:$TOOLS/arcanist/bin
-  export PATH=$PATH:/usr/local/mongodb/bin:/usr/local/nodejs/bin:/usr/local/go/bin
+  export PATH=$PATH:$TOOLS/arcanist/bin:/usr/local/go/bin
 fi
 
 
@@ -94,7 +93,7 @@ if [[ `hostname` == "Deyuans-Macbook-Air.local" ]]; then
 elif [[ `hostname` == "deyuan.pit.corp.google.com" ]]; then
   export P4EDITOR="emacsclient"
   source /etc/bash_completion.d/g4d
-  unsetopt correct_all      # do not autocorrect in work machine
+  unsetopt correct_all      # Do not autocorrect
 elif [[ `hostname` == "watermelon" ]]; then
   # export GOROOT=$HOME/.unixrc/go
   # export GOPATH=$HOME/code/langs/go # Go path
