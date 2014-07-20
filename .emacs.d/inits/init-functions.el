@@ -39,6 +39,9 @@
 
 (defun split-desktop-window ()
   (interactive)
+  ;; Enable the hook only if working in the 'split mode'.
+  (add-hook 'window-numbering-before-hook
+            'window-numbering-mode-custom-hook)
   (split-window-below)
   (split-window-right)
   (split-window-right)
@@ -50,6 +53,12 @@
   (other-window 1)
   (multi-term)
   (other-window 2))
+
+(defun desplit-desktop-window()
+  (interactive)
+  (remove-hook 'window-numbering-before-hook
+               'window-numbering-mode-custom-hook))
+
 
 (defun revert-all-buffers ()
   "Refreshes all open buffers from their respective files."
