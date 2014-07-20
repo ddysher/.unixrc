@@ -151,21 +151,21 @@ function CleanUp() {
 # #
 # # Install system packages to /usr/.
 # #
-# InstallSystemPkg
+InstallSystemPkg
 
 # #
 # # Install packages to /usr/local/.
 # #
-# git submodule init
-# git submodule update
-# InstallEmacs
+git submodule init
+git submodule update
+InstallEmacs
 InstallGo
-# InstallNodeJs
-# InstallMongoDB
-# InstallThrift
+InstallNodeJs
+InstallMongoDB
+InstallThrift
 
 # #
 # # Setup environment and clean up.
 # #
-# SetupEnvironment
-# CleanUp
+SetupEnvironment
+CleanUp
