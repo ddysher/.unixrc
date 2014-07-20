@@ -10,7 +10,7 @@ ZSH=$HOME/.unixrc/oh-my-zsh
 ZSH_THEME="deyuan"
 
 # Change to pkg download directory.
-PKG_DIR=$HOME/.unixrc/tools
+TOOLS=$HOME/.unixrc/tools
 
 # Set to this to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -44,40 +44,42 @@ plugins=(git python ruby)
 alias rm="rm -i"
 alias mv="mv -i"
 alias cp="cp -i"
+alias ppj="python -mjson.tool"             # beautify json print
 alias sgrep="grep -rnI -C3 --color=always" # colorful grep
 
 source $ZSH/oh-my-zsh.sh        # Re-exec shell script
-source $PKG_DIR/z/z.sh          # Enable z.sh
+source $TOOLS/z/z.sh            # Enable z.sh
 bindkey -e                      # Bind keys
 
 
 
 ##-------------------------------------------------------------------------------
 ## Configs for Linux and Mac
+##   chrome:  open file in new tab (chrome should already be opened)
+##   emacs:   open file in new frame (GUI emacs should already be opened)
+##   emacsnw: open terminal emacs
+##   emacsserver: open emacs GUI
 ##-------------------------------------------------------------------------------
 if [[ `uname` == "Darwin" ]]; then
-    # chrome:  open file in new tab (chrome should already be opened)
-    # emacs:   open file in new frame (GUI emacs should already be opened)
-    # emacsnw: open terminal emacs
-    # emacsserver: open emacs GUI
-    alias chrome="open -a Google\ Chrome"
-    alias emacs="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
-    alias emacsnw="TERM=xterm-256color /Applications/Emacs.app/Contents/MacOS/Emacs -nw"
-    alias emacsserver="/Applications/Emacs.app/Contents/MacOS/Emacs"
-    export LESS=-RFX
-    export EDITOR="vim"
-    export TOMCAT_HOME=/Library/Tomcat
-    export HOMEBREW_TEMP=/usr/local/TEMP
-    export CLASSPATH=.:/Library/Java/Extensions
-    export PATH="/usr/local/heroku/bin:$PATH" # Added by the Heroku Toolbelt
-    source `brew --prefix`/etc/profile.d/z.sh
+  alias chrome="open -a Google\ Chrome"
+  alias emacs="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
+  alias emacsnw="TERM=xterm-256color /Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+  alias emacsserver="/Applications/Emacs.app/Contents/MacOS/Emacs"
+  export LESS=-RFX
+  export EDITOR="emacsclient"
+  export TOMCAT_HOME=/Library/Tomcat
+  export HOMEBREW_TEMP=/usr/local/TEMP
+  export CLASSPATH=.:/Library/Java/Extensions
+  export PATH="/usr/local/heroku/bin:$PATH" # Added by the Heroku Toolbelt
+  source `brew --prefix`/etc/profile.d/z.sh
 elif [[ `uname` == "Linux" ]]; then
-    alias chrome="google-chrome"
-    alias emacs="/usr/local/bin/emacsclient -n"
-    alias emacsnw="TERM=xterm-256color /usr/local/bin/emacs -nw"
-    alias emacsserver="/usr/local/bin/emacs"
-    alias ppj="python -mjson.tool"
-    export EDITOR="emacsclient"
+  alias chrome="google-chrome"
+  alias emacs="/usr/local/bin/emacsclient -n"
+  alias emacsnw="TERM=xterm-256color /usr/local/bin/emacs -nw"
+  alias emacsserver="/usr/local/bin/emacs"
+  export EDITOR="emacsclient"
+  export PATH=$PATH:$TOOLS/arcanist/bin
+  export PATH=$PATH:/usr/local/mongodb/bin:/usr/local/nodejs/bin:/usr/local/go/bin
 fi
 
 
@@ -86,20 +88,16 @@ fi
 ## Configs for different hosts
 ##-------------------------------------------------------------------------------
 if [[ `hostname` == "Deyuans-Macbook-Air.local" ]]; then
-    alias mysql=/usr/local/mysql/bin/mysql
-    alias mysqladmin=/usr/local/mysql/bin/mysqladmin
-    alias mysqld_safe=/usr/local/mysql/bin/mysqld_safe
+  alias mysql=/usr/local/mysql/bin/mysql
+  alias mysqladmin=/usr/local/mysql/bin/mysqladmin
+  alias mysqld_safe=/usr/local/mysql/bin/mysqld_safe
 elif [[ `hostname` == "deyuan.pit.corp.google.com" ]]; then
-    export P4EDITOR="emacsclient"
-    source /etc/bash_completion.d/g4d
-    unsetopt correct_all      # do not autocorrect in work machine
+  export P4EDITOR="emacsclient"
+  source /etc/bash_completion.d/g4d
+  unsetopt correct_all      # do not autocorrect in work machine
 elif [[ `hostname` == "watermelon" ]]; then
-    export PATH=$PATH:$PKG_DIR/arcanist/bin
-    # export PATH=$PATH:$HOME/.unixrc/go/bin
-    # export GOROOT=$HOME/.unixrc/go
-    # export GOPATH=$HOME/code/langs/go # Go path
-    # export PATH=$PATH:$HOME/.rvm/bin  # Add RVM to PATH for scripting
-    # export PATH=$PATH:/usr/local/go/bin         # Add go bin directory
-    # export PATH=$PATH:/usr/class/cs143/cool/bin # Add cool compiler directory
-    # eval `dircolors ~/.dir_colors` # do not using annoying background for 'ls'
+  # export GOROOT=$HOME/.unixrc/go
+  # export GOPATH=$HOME/code/langs/go # Go path
+  # export PATH=$PATH:$HOME/.rvm/bin  # Add RVM to PATH for scripting
+  # eval `dircolors ~/.dir_colors` # do not using annoying background for 'ls'
 fi
