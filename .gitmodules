@@ -4,6 +4,7 @@
 [submodule "tools/emacs"]
 	path = tools/emacs
 	url = git://git.savannah.gnu.org/emacs.git
+  ignore = dirty  
 [submodule "tools/z"]
 	path = tools/z
 	url = https://github.com/rupa/z.git
