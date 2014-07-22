@@ -21,8 +21,10 @@
 
 (defun my-google3-hook ()
   (let ((client-name (google-g4-client default-directory)))
+    ;; If client name is not nil, and it's not already in the buffer name.
     (if (and client-name (not (string-match client-name (buffer-name))))
-        (rename-buffer (format "%s [%s]" (buffer-name) client-name)))))
+        (rename-buffer (format "%s [%s] %d"
+                               (buffer-name) client-name (random 99))))))
 
 ;; Show client name at mode line.
 (add-hook 'find-file-hook 'my-google3-hook)
