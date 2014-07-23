@@ -46,7 +46,7 @@
   (split-window-right)
   (split-window-right)
   (balance-windows)
-  (enlarge-window 20) ; Bigger number results in smaller terminal area
+  (enlarge-window 25) ; Bigger number results in smaller terminal area
   (other-window 3)
   (split-window-right)
   (multi-term)
