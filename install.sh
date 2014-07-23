@@ -30,7 +30,8 @@ function InstallSystemPkg() {
   # Update packages
   sudo apt-get update
   # Basic tools
-  sudo apt-get install -y git wget curl build-essential exfat-fuse exfat-utils
+  sudo apt-get install -y git wget curl zsh build-essential \
+       exfat-fuse exfat-utils
   # Build tools
   sudo apt-get install -y cmake automake libtool
   # Customization tools
