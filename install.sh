@@ -30,13 +30,13 @@ function InstallSystemPkg() {
   # Update packages
   sudo apt-get update
   # Basic tools
-  sudo apt-get install -y git wget curl zsh build-essential \
+  sudo apt-get install -y git wget curl zsh mercurial build-essential \
        exfat-fuse exfat-utils
   # Build tools
   sudo apt-get install -y cmake automake libtool
   # Customization tools
   sudo apt-get install -y gnome-tweak-tool ttf-wqy-zenhei fonts-inconsolata \
-       compizconfig-settings-manager compiz-plugins-extra
+       compizconfig-settings-manager compiz-plugins-extra wmctrl
   # Language tools
   sudo apt-get install -y markdown python-pip php5 php5-mysql php5-gd php5-dev \
        php5-curl php-apc php5-cli php5-json python-dev g++ libglib2.0-dev \

@@ -6,11 +6,13 @@
 
 
 (defun window-numbering-mode-custom-hook(windows)
-  (dolist (window windows)
-    (if (equal (buffer-name (window-buffer window)) "*terminal<1>*")
-        (window-numbering-assign window 9))
-    (if (equal (buffer-name (window-buffer window)) "*terminal<2>*")
-        (window-numbering-assign window 0))))
+  (let ((counter 1))
+    (dolist (window windows)
+      (if (equal counter 4)
+          (window-numbering-assign window 9))
+      (if (equal counter 5)
+          (window-numbering-assign window 0))
+      (incf counter))))
 
 (window-numbering-mode t)
 
