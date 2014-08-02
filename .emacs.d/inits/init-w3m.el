@@ -38,15 +38,11 @@
 ;; (add-hook 'prog-mode-hook '(lambda () (local-set-key (kbd "C-c ; h") 'w3mext-hacker-search)))
 
 
-;; (setq w3m-use-toolbar t
-;;                                         ;w3m-use-tab     nil
-;;       w3m-key-binding 'info
-;;       )
+(setq w3m-use-toolbar t
+      ;; w3m-use-tab     nil
+      w3m-key-binding 'info)
 
-;; ;; show images in the browser
-;;                                         ;(setq w3m-default-display-inline-images t)
 
-;; (setq w3m-search-default-engine "g")
 ;; (eval-after-load "w3m-search" '(progn
 ;;                                         ; C-u S g RET <search term> RET
 ;;                                  (add-to-list 'w3m-search-engine-alist '("g" "http://www.google.com.au/search?hl=en&q=%s" utf-8))
