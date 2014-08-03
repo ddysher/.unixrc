@@ -2,4 +2,4 @@
 # name: assert
 # key: assert
 # --
-assert.${1:equal}($0);
+assert.${1:$$(yas-choose-value '("equal" "notEqual" "left"))}($0);

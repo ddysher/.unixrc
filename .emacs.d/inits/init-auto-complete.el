@@ -4,6 +4,7 @@
 (require-package 'auto-complete)
 (require 'auto-complete-config)
 
+
 ;; Enable auto completion globally, and use default setting.
 (global-auto-complete-mode t)
 (ac-config-default)
@@ -24,8 +25,5 @@
 ;; Distinguish case, default is smart.
 (setq ac-ignore-case nil)
 
-
-(ac-set-trigger-key "TAB")
-(ac-set-trigger-key "<tab>")
 
 (provide 'init-auto-complete)

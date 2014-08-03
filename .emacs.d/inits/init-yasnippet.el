@@ -14,6 +14,7 @@
 
 ;; Load all snippets.
 (yas-reload-all)
+(setq yas-prompt-functions '(yas-ido-prompt yas-completing-prompt))
 
 
 (provide 'init-yasnippet)
