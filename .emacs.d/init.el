@@ -36,8 +36,6 @@
 (require 'init-tramp)
 (require 'init-yasnippet)
 (require 'init-multi-term)
-(require 'init-nginx-mode)
-(require 'init-apache-mode)
 (require 'init-auto-complete)
 (require 'init-window-numbering)
 (require 'init-smartparens-mode)

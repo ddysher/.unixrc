@@ -2,8 +2,8 @@
 ;; Provide geben mode, although gun-mode is managed by elpa, there is some
 ;; conflictions between geben and other packages (e.g. erc), due to the
 ;; definition of (defadvice open-network-stream ....). I fix that problem and
-;; geben into site-lisp directory, so it is not managed by melpa. geben-mode
-;; is mainly used use for debugging PHP code.
+;; move geben into site-lisp directory, so it is not managed by melpa.
+;; geben-mode is mainly used use for debugging PHP code.
 ;;
 ;; Some basic command:
 ;;   SPC geben-step-again

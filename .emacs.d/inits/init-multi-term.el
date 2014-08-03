@@ -46,8 +46,7 @@
   (add-to-list 'term-bind-key-alist '("C-<backspace>" .
                                       term-send-backward-kill-word))
   (add-to-list 'term-bind-key-alist '("C-p" . term-send-up))
-  (add-to-list 'term-bind-key-alist '("C-n" . term-send-down))
-  (add-to-list 'term-bind-key-alist '("C-y" . term-paste)))
+  (add-to-list 'term-bind-key-alist '("C-n" . term-send-down)))
 
 
 (add-hook 'term-mode-hook 'term-mode-custom-hook)

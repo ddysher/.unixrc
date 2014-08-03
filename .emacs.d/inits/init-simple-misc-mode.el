@@ -19,6 +19,16 @@
 (require-package 'thrift)
 (require 'thrift)
 
+;; Apply apache-mode to entire apache2 directory (including sub-directories)
+(require-package 'apache-mode)
+(require 'apache-mode)
+(add-to-list 'auto-mode-alist '("/etc/apache2/.*" . apache-mode))
+
+;; Apply nginx-mode to entire nginx directory (including sub-directories)
+(require-package 'nginx-mode)
+(require 'nginx-mode)
+(add-to-list 'auto-mode-alist '("/etc/nginx/.*" . nginx-mode))
+
 ;; Temporary & pending mode
 ;; (require 'flex-mode)
 ;; (require 'cool-mode)

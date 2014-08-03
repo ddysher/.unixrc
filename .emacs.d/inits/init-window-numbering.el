@@ -5,7 +5,7 @@
 (require 'window-numbering)
 
 
-(defun window-numbering-mode-custom-hook(windows)
+(defun window-numbering-mode-custom-hook (windows)
   (let ((counter 1))
     (dolist (window windows)
       (if (equal counter 4)
