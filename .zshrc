@@ -44,6 +44,7 @@ plugins=(git python ruby)
 alias rm="rm -i"
 alias mv="mv -i"
 alias cp="cp -i"
+alias lg="ll --group-directories-first"
 alias ppj="python -mjson.tool"             # Beautify json print
 alias sgrep="grep -rnI -C3 --color=always" # Colorful grep
 
