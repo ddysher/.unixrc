@@ -7,12 +7,16 @@
 (require 'js2-mode)
 
 
-(defun js-mode-custom-hook ()
+(defun enable-yasnippets ()
   (yas-minor-mode)           ; Enable yasnippet minor mode for js mode
+  (add-to-list 'ac-sources 'ac-source-yasnippet))
+
+(defun js-mode-custom-hook ()
+  (enable-yasnippets)
   (setq js-indent-level universal-indent-size))
 
 (defun js2-mode-custom-hook ()
-  (yas-minor-mode)          ; Enable yasnippet minor mode for js2 mode
+  (enable-yasnippets)
   (setq js2-basic-offset universal-indent-size)
   (setq js2-strict-inconsistent-return-warning nil))
 
