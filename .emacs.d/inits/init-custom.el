@@ -6,8 +6,9 @@
 (column-number-mode)               ; show column number
 (global-auto-revert-mode t)        ; enable auto revert (e.g. git)
 (if window-system
-    (progn (tool-bar-mode -1)           ; disable tool bar
-	   (scroll-bar-mode -1)))           ; disable scroll bar
+    (progn
+      (tool-bar-mode -1)                ; disable tool bar
+      (scroll-bar-mode -1)))       ; disable scroll bar
 
 
 ;; Global settings
@@ -45,6 +46,8 @@
 (if (and (fboundp 'server-running-p)
          (not (server-running-p)))
     (server-start))
+;; Set location of bookmarks file, default is '~/.emacs.d/bookmarks'.
+(setq bookmark-default-file "~/.emacs.d/bookmarks")
 
 
 ;; Associate config mode to ".zsh-theme, .defs, BUILD, etc."

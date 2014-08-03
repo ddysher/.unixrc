@@ -5,6 +5,7 @@
 (require 'auto-complete-config)
 
 
+(setq ac-comphist-file "~/.emacs.d/ac-comphist.dat")
 (ac-config-default)
 (global-auto-complete-mode t)
 (setq ac-use-menu-map t)

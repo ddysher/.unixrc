@@ -1,6 +1,8 @@
 ;;------------------------------------------------------------------------------
 ;; Provide tramp, tramp mode is built-in with emacs. It works even not required
-;; explicitly.  Basic usage:
+;; explicitly.  Note we may need to configure tramp-auto-save-directory (or
+;; tramp-backup-directory-alist, etc) if auto save is enabled.
+;; Basic usage:
 ;;   C-x C-f /remotehost:filename  RET (or /method:user@remotehost:filename)
 ;; E.g:
 ;;   C-x C-f [F1] -> /deyuan.me:~/Documents/file  RET
