@@ -15,7 +15,7 @@
                       :foreground "#5F7F5F" :background "#383838"
                       :box '(:line-width 1 :style released-button)))
 
-;;(load-zenburn)
+(load-zenburn)
 (cond (*linux*  (set-default-font "Inconsolata-10")))
 (cond (*macpro* (set-default-font "Monaco-11")))
 (cond (*macair* (set-default-font "Monaco-12")))
