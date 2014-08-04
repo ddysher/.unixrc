@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: return on error
+# key: rtnerr
+# --
+if (${1:err}) {
+  callback($1);
+  return;
+}

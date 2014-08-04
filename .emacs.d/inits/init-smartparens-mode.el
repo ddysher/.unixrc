@@ -6,8 +6,9 @@
 (require 'smartparens)
 
 
-(smartparens-global-mode)
-(require 'smartparens-config)
+;; Disable smartparens for now.
+;; (require 'smartparens-config)
+;; (smartparens-global-mode t)
 
 
 (provide 'init-smartparens-mode)

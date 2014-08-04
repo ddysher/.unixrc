@@ -16,16 +16,14 @@
 (defvar *macair* (string= system-name "Deyuans-MacBook-Air.local"))
 
 
-
 ;;------------------------------------------------------------------------------
 ;; Bootstrap configs, need to execute before loading specific configs
 ;;------------------------------------------------------------------------------
 (add-to-list 'load-path (expand-file-name "inits" user-emacs-directory))
-(require 'init-preload-all-configs) ; preload config, must be called first
-(require 'init-site-packages)       ; init third party packages
-(require 'init-elpa)                ; init elpa managed packages
-(require 'init-exec-path-from-shell) ; init emacs environment for Mac GUI
-
+(require 'init-preload-all-configs)     ; must be called first
+(require 'init-site-packages)           ; init third party packages
+(require 'init-elpa)                    ; init elpa managed packages
+(require 'init-exec-path-from-shell)    ; init emacs for Mac GUI
 
 
 ;;------------------------------------------------------------------------------
@@ -36,11 +34,11 @@
 (require 'init-w3m)
 (require 'init-smex)
 (require 'init-tramp)
+(require 'init-yasnippet)
 (require 'init-multi-term)
-(require 'init-nginx-mode)
-(require 'init-apache-mode)
 (require 'init-auto-complete)
 (require 'init-window-numbering)
+(require 'init-smartparens-mode)
 (require 'init-fill-column-indicator)
 
 ;; Init language (or related) mode with configurations
@@ -66,7 +64,6 @@
 ;; Conditional require
 (if *goog-desktop*
     (require 'init-google))
-
 
 
 ;;------------------------------------------------------------------------------

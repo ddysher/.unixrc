@@ -2,6 +2,10 @@
 ;; Provide ido, which makes completing buffers and finding files much easier.
 ;; Note ido creates "ido.last" file under ~/.emacs.d directory.
 ;; http://www.emacswiki.org/cgi-bin/wiki/InteractivelyDoThings
+;; Usage:
+;;   C-j create file even if there is completion for the name. e.g. create file
+;;       init.el when there is init-abc.el.
+;;   C-l refresh directory content.
 ;;------------------------------------------------------------------------------
 (require 'ido)
 
@@ -9,9 +13,9 @@
 (ido-mode 'both)                        ; for buffers and files
 (setq ido-save-directory-list-file "~/.emacs.d/ido.last"
       ido-ignore-buffers                ; ignore these guys
-      '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*epc"
-        "^\*compilation" "^\*TAGS" "^session\.*" "^\*scratch" "^\*Help"
-        "^\*tramp")
+      '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
+        "^\*epc" "^\*compilation" "^\*TAGS" "^session\.*" "^\*scratch"
+        "^\*Help" "^\*tramp")
       ido-work-directory-list '("~/" "~/Desktop" "~/Documents")
       ido-enable-last-directory-history t ; remember last used dirs
       ido-max-work-directory-list 30      ; should be enough

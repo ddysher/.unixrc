@@ -6,6 +6,15 @@
   (interactive)
   (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 
+;; Kill all buffers except terminals.
+(defun kill-non-term-buffers ()
+  (interactive)
+  (let ((tokill '()))
+    (dolist (buffer (buffer-list))
+      (if (not (string-match "\*terminal<?>\*" (buffer-name buffer)))
+          (setq tokill (nconc tokill (list buffer)))))
+    (mapc 'kill-buffer tokill)))
+
 ;; Scroll down line by line.
 (defun scroll-down-in-place (n)
   (interactive "p")
@@ -58,7 +67,6 @@
   (interactive)
   (remove-hook 'window-numbering-before-hook
                'window-numbering-mode-custom-hook))
-
 
 (defun revert-all-buffers ()
   "Refreshes all open buffers from their respective files."

@@ -6,8 +6,9 @@
 (column-number-mode)               ; show column number
 (global-auto-revert-mode t)        ; enable auto revert (e.g. git)
 (if window-system
-    (progn (tool-bar-mode -1)           ; disable tool bar
-	   (scroll-bar-mode -1)))           ; disable scroll bar
+    (progn
+      (tool-bar-mode -1)                ; disable tool bar
+      (scroll-bar-mode -1)))       ; disable scroll bar
 
 
 ;; Global settings
@@ -16,7 +17,7 @@
 ;; non buffer-local variable, we can just use setq.
 ;;
 ;; set tab width globally, some other mode can change this locally.
-;; note the  "default-tab-with" variable is obsolete
+;; note the  "default-tab-with" variable is obsolete.
 (setq-default tab-width universal-indent-size)
 ;; use spaces where tab is needed
 (setq-default indent-tabs-mode nil)
@@ -46,7 +47,6 @@
          (not (server-running-p)))
     (server-start))
 
-
 ;; Associate config mode to ".zsh-theme, .defs, BUILD, etc."
 (add-to-list 'auto-mode-alist '("\\.zsh-theme$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.defs$" . conf-mode))
@@ -55,20 +55,20 @@
 (add-to-list 'auto-mode-alist '("\\BUILD$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
-;; Show trailing whitespaces on specific modes, hooks are added collectively
-;; at this init-custom file, instead of adding at every mode. Note using
-;; (setq-default show-trailing-whitespace t) will enable it in all buffers
-(add-hook 'c-mode-common-hook (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'lua-mode-hook  (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'python-mode-hook (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'emacs-lisp-mode-hook (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'js-mode-hook (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'js2-mode-hook (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'latex-mode-hook (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'asm-mode-hook (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'markdown-mode-hook (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'makefile-gmake-mode-hook (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'sh-mode-hook (lambda () (setq show-trailing-whitespace t)))
+;; Show trailing whitespaces on programming modes. Note that setq-default will
+;; enable it in all buffers.
+;; (add-hook 'c-mode-common-hook (lambda () (setq show-trailing-whitespace t)))
+;; (add-hook 'lua-mode-hook  (lambda () (setq show-trailing-whitespace t)))
+;; (add-hook 'python-mode-hook (lambda () (setq show-trailing-whitespace t)))
+;; (add-hook 'emacs-lisp-mode-hook (lambda () (setq show-trailing-whitespace t)))
+;; (add-hook 'js-mode-hook (lambda () (setq show-trailing-whitespace t)))
+;; (add-hook 'js2-mode-hook (lambda () (setq show-trailing-whitespace t)))
+;; (add-hook 'latex-mode-hook (lambda () (setq show-trailing-whitespace t)))
+;; (add-hook 'asm-mode-hook (lambda () (setq show-trailing-whitespace t)))
+;; (add-hook 'markdown-mode-hook (lambda () (setq show-trailing-whitespace t)))
+;; (add-hook 'makefile-gmake-mode-hook (lambda () (setq show-trailing-whitespace t)))
+;; (add-hook 'sh-mode-hook (lambda () (setq show-trailing-whitespace t)))
+(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
 ;; Highlight current line in every mode instead of term-mode and minibuffer;
 ;; using (global-hl-line-mode 1) will enable it in all buffers, and is not
