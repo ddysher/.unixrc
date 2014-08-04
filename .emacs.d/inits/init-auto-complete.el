@@ -14,8 +14,8 @@
 (define-key ac-menu-map "\C-n" 'ac-next)
 (define-key ac-menu-map "\C-p" 'ac-previous)
 
-;; Force an auto-complete, C-o was bound to open-line.
-(define-key ac-mode-map (kbd "C-o") 'auto-complete)
+;; Force an auto-complete.
+(define-key ac-mode-map (kbd "C-c o") 'auto-complete)
 
 ;; Faster shown menu map.
 (setq ac-delay 0.1)

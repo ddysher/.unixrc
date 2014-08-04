@@ -16,5 +16,10 @@
 (yas-reload-all)
 (setq yas-prompt-functions '(yas-ido-prompt yas-completing-prompt))
 
+;; Expand yasnippet using C-o, it was bound to open-line by default in emacs.
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
+(define-key yas-minor-mode-map (kbd "C-o") 'yas-expand)
+
 
 (provide 'init-yasnippet)
