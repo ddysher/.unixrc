@@ -17,6 +17,9 @@
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
 
+;; Enable autocomplete minor mode in web-mode.
+;; TODO
+
 (defun web-mode-custom-hook ()
   ;; Customize indentations (indentation inside code).
   (setq web-mode-markup-indent-offset universal-indent-size) ; HTML

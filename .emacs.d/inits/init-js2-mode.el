@@ -8,7 +8,8 @@
 
 
 (defun enable-yasnippets ()
-  (yas-minor-mode)           ; Enable yasnippet minor mode for js mode
+  "Enable yasnippet minor mode and add yasnippet to autocomplete source."
+  (yas-minor-mode)
   (add-to-list 'ac-sources 'ac-source-yasnippet))
 
 (defun js-mode-custom-hook ()
