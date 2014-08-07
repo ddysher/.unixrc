@@ -1,5 +1,6 @@
 ;;------------------------------------------------------------------------------
-;; Provide w3m, w3m is elpa managed package
+;; Provide w3m, w3m is elpa managed package.  This mode depends on external
+;; program; to use this mode, host system must have w3m command installed.
 ;;------------------------------------------------------------------------------
 (require-package 'w3m)
 (require 'w3m)
