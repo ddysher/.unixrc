@@ -19,21 +19,24 @@
 (require-package 'thrift)
 (require 'thrift)
 
-;; Apply apache-mode to entire apache2 directory (including sub-directories)
+;; Apply apache-mode to entire apache2 directory (including sub-directories).
 (require-package 'apache-mode)
 (require 'apache-mode)
 (add-to-list 'auto-mode-alist '("/etc/apache2/.*" . apache-mode))
 
-;; Apply nginx-mode to entire nginx directory (including sub-directories)
+;; Apply nginx-mode to entire nginx directory (including sub-directories).
 (require-package 'nginx-mode)
 (require 'nginx-mode)
 (add-to-list 'auto-mode-alist '("/etc/nginx/.*" . nginx-mode))
+
+;; Disable flycheck by default (annoying for some buffer, enable as needed).
+(require-package 'flycheck)
+
 
 ;; Temporary & pending mode
 ;; (require 'flex-mode)
 ;; (require 'cool-mode)
 ;; (require 'bison-mode)
-;; (require 'init-multi-web)
 
 
 (provide 'init-simple-misc-mode)

@@ -41,6 +41,10 @@ function InstallSystemPkg() {
   sudo apt-get install -y markdown python-pip php5 php5-mysql php5-gd php5-dev \
        php5-curl php-apc php5-cli php5-json python-dev g++ libglib2.0-dev \
        libevent-dev meld lua5.2
+
+  # Install packages from language package manager.
+  sudo pip install ipython
+  sudo pip install pylint
 }
 
 
