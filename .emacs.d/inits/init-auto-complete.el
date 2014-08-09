@@ -1,5 +1,5 @@
 ;;------------------------------------------------------------------------------
-;; Provide auto-complete mode
+;; Provide auto-complete mode, installed via MELPA.
 ;;------------------------------------------------------------------------------
 (require-package 'auto-complete)
 (require 'auto-complete-config)
@@ -17,13 +17,16 @@
 ;; Force an auto-complete.
 (define-key ac-mode-map (kbd "C-c o") 'auto-complete)
 
-;; Faster shown menu map.
+;; Shown menu map faster.
 (setq ac-delay 0.1)
 (setq ac-auto-show-menu 0.3)
 (setq ac-quick-help-delay 0.5)
 
 ;; Distinguish case, default is smart.
 (setq ac-ignore-case nil)
+
+;; Custom dictionary for major mode.
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 
 
 (provide 'init-auto-complete)
