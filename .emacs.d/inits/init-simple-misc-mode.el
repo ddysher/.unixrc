@@ -16,6 +16,9 @@
 (require-package 'php-mode)
 (require 'php-mode)
 
+(require-package 'yaml-mode)
+(require 'yaml-mode)
+
 (require-package 'thrift)
 (require 'thrift)
 
