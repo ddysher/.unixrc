@@ -23,10 +23,10 @@
 (setq-default indent-tabs-mode nil)
 ;; turn off wrapping for long lines
 (setq-default truncate-lines t)
-;; no backup files (which end with ~)
+;; no backup files (which end with ~); prefer version control tool instead
 (setq make-backup-files nil)
-;; no autosave files (surrounded by #)
-(setq auto-save-default nil)
+;; enable autosave files (surrounded by #); they will be deleted after save
+(setq auto-save-default t)
 ;; only highlight line in active buffer
 (setq hl-line-sticky-flag nil)
 ;; disable splash screen, enter *scratch* directly
