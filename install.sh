@@ -139,6 +139,12 @@ function SetupEnvironment() {
   # Set up NodeJs
   npm config set tmp /tmp
   sudo npm install -g express grunt grunt-cli bower
+  # Clone code
+  if [[ ! -d ~/code ]]; then
+    cd ~
+    git clone https://github.com/ddysher/code.git
+    cd -
+  fi
 }
 
 
@@ -153,14 +159,18 @@ function CleanUp() {
 ######################################################################
 #                         Start installation                         #
 ######################################################################
-# #
-# # Install system packages to /usr/.
-# #
+if [[ $USER = "root" ]]; then
+   echo "Do not run as root."
+   exit
+fi
+#
+# Install system packages to /usr/.
+#
 InstallSystemPkg
 
-# #
-# # Install packages to /usr/local/.
-# #
+#
+# Install packages to /usr/local/.
+#
 git submodule init
 git submodule update
 InstallEmacs
@@ -169,8 +179,8 @@ InstallNodeJs
 InstallMongoDB
 InstallThrift
 
-# #
-# # Setup environment and clean up.
-# #
+#
+# Setup environment and clean up.
+#
 SetupEnvironment
 CleanUp

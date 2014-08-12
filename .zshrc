@@ -80,6 +80,8 @@ elif [[ `uname` == "Linux" ]]; then
   alias emacsserver="/usr/local/bin/emacs"
   export EDITOR="emacsclient"
   export PATH=$PATH:$TOOLS/arcanist/bin:/usr/local/go/bin
+  export GOPATH=$HOME/code/source/go-workspace
+  export PATH=$PATH:$HOME/code/source/go-workspace/bin
 fi
 
 
@@ -96,8 +98,5 @@ elif [[ `hostname` == "deyuan.pit.corp.google.com" ]]; then
   source /etc/bash_completion.d/g4d
   unsetopt correct_all      # Do not autocorrect
 elif [[ `hostname` == "watermelon" ]]; then
-  # export GOROOT=$HOME/.unixrc/go
-  # export GOPATH=$HOME/code/langs/go # Go path
-  # export PATH=$PATH:$HOME/.rvm/bin  # Add RVM to PATH for scripting
   # eval `dircolors ~/.dir_colors` # do not using annoying background for 'ls'
 fi

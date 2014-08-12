@@ -10,8 +10,8 @@
 (global-set-key [f6] 'replace-regexp)
 (global-set-key [f7] 'window-configuration-to-register) ; Save win conf (C-x r w)
 (global-set-key [f8] 'register-to-point) ; Jump to win conf (C-x r j)
-(global-set-key [f9] 'delete-trailing-whitespace)
-(global-set-key [f10] 'bookmark-jump)	; M-x bookmark-jump (C-x r b)
+(global-set-key [f9] 'bookmark-jump)	; M-x bookmark-jump (C-x r b)
+(global-set-key [f10] 'delete-trailing-whitespace)
 (global-set-key [f12] 'revert-buffer)
 (global-set-key (kbd "ESC ESC") 'abort-recursive-edit) ; same as "C-g"
 ;; set M-p the same as "C-p + C-l" to release finger (no original M-p binding)
