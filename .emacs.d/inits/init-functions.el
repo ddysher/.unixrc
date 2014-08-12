@@ -54,18 +54,15 @@
   (split-window-below)
   (split-window-right)
   (split-window-right)
+  (balance-windows)
+  ;; Adjust horizontally; bigger number results in smaller terminal area.
+  (enlarge-window 25)
   (other-window 3)
   (split-window-right)
-  (split-window-right)
-  (split-window-right)
-  (other-window 2)
   (multi-term)
   (other-window 1)
   (multi-term)
-  (other-window 2)
-  (balance-windows)
-  ;; Adjust horizontally; bigger number results in smaller terminal area.
-  (enlarge-window 25))
+  (other-window 2))
 
 (defun desplit-desktop-window()
   (interactive)

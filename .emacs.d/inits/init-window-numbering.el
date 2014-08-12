@@ -8,9 +8,9 @@
 (defun window-numbering-mode-custom-hook (windows)
   (let ((counter 1))
     (dolist (window windows)
-      (if (equal counter 6)
+      (if (equal counter 4)
           (window-numbering-assign window 9))
-      (if (equal counter 7)
+      (if (equal counter 5)
           (window-numbering-assign window 0))
       (incf counter))))
 
