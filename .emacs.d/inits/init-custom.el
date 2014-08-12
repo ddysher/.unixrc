@@ -60,6 +60,8 @@
   "Hook for settings related to general programming modes."
   ;; show trailing whitespaces
   (setq show-trailing-whitespace t)
+  ;; turn off wrapping for long lines
+  (setq truncate-lines t)
   ;; highline current line
   (hl-line-mode 1))
 
