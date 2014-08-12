@@ -8,10 +8,11 @@
 (if window-system
     (progn
       (tool-bar-mode -1)                ; disable tool bar
-      (scroll-bar-mode -1)))       ; disable scroll bar
+      (scroll-bar-mode -1)))            ; disable scroll bar
 
-
+;;
 ;; Global settings
+;;
 ;; setq-default will set values for buffers that do not have their own
 ;; local variables, so we should use it for buffer-local variable.  For
 ;; non buffer-local variable, we can just use setq.
@@ -21,8 +22,6 @@
 (setq-default tab-width universal-indent-size)
 ;; use spaces where tab is needed
 (setq-default indent-tabs-mode nil)
-;; turn off wrapping for long lines
-(setq-default truncate-lines t)
 ;; no backup files (which end with ~); prefer version control tool instead
 (setq make-backup-files nil)
 ;; enable autosave files (surrounded by #); they will be deleted after save
@@ -46,8 +45,7 @@
 (if (and (fboundp 'server-running-p)
          (not (server-running-p)))
     (server-start))
-
-;; Associate config mode to ".zsh-theme, .defs, BUILD, etc."
+;; associate config mode to ".zsh-theme, .defs, BUILD, etc."
 (add-to-list 'auto-mode-alist '("\\.zsh-theme$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.defs$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.gitignore$" . conf-mode))
@@ -55,32 +53,17 @@
 (add-to-list 'auto-mode-alist '("\\BUILD$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
-;; Show trailing whitespaces on programming modes. Note that setq-default will
-;; enable it in all buffers.
-;; (add-hook 'c-mode-common-hook (lambda () (setq show-trailing-whitespace t)))
-;; (add-hook 'lua-mode-hook  (lambda () (setq show-trailing-whitespace t)))
-;; (add-hook 'python-mode-hook (lambda () (setq show-trailing-whitespace t)))
-;; (add-hook 'emacs-lisp-mode-hook (lambda () (setq show-trailing-whitespace t)))
-;; (add-hook 'js-mode-hook (lambda () (setq show-trailing-whitespace t)))
-;; (add-hook 'js2-mode-hook (lambda () (setq show-trailing-whitespace t)))
-;; (add-hook 'latex-mode-hook (lambda () (setq show-trailing-whitespace t)))
-;; (add-hook 'asm-mode-hook (lambda () (setq show-trailing-whitespace t)))
-;; (add-hook 'markdown-mode-hook (lambda () (setq show-trailing-whitespace t)))
-;; (add-hook 'makefile-gmake-mode-hook (lambda () (setq show-trailing-whitespace t)))
-;; (add-hook 'sh-mode-hook (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
+;;
+;; Prog mode settings
+;;
+(defun prog-mode-custom-hook ()
+  "Hook for settings related to general programming modes."
+  ;; show trailing whitespaces
+  (setq show-trailing-whitespace t)
+  ;; highline current line
+  (hl-line-mode 1))
 
-;; Highlight current line in every mode instead of term-mode and minibuffer;
-;; using (global-hl-line-mode 1) will enable it in all buffers, and is not
-;; overridable by hl-line-mode variable
-(add-hook 'minibuffer-setup-hook '(lambda () (hl-line-mode 0)))
-(add-hook 'after-change-major-mode-hook
-          '(lambda ()
-             (hl-line-mode
-              (if (or (equal major-mode 'term-mode)
-                      (equal major-mode 'erc-mode))
-                  0
-                1))))
+(add-hook 'prog-mode-hook 'prog-mode-custom-hook)
 
 
 (provide 'init-custom)
