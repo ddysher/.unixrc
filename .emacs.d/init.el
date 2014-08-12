@@ -32,6 +32,7 @@
 ;; General mode with configurations
 (require 'init-ido)
 (require 'init-w3m)
+(require 'init-erc)
 (require 'init-smex)
 (require 'init-tramp)
 (require 'init-yasnippet)
