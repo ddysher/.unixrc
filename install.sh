@@ -119,6 +119,7 @@ function SetupEnvironment() {
   sudo ln -sf /usr/local/bin/node /usr/bin/node
   sudo ln -sf /usr/local/bin/npm /usr/bin/npm
   sudo ln -sf /usr/local/bin/mongod /usr/bin/mongod
+  sudo ln -sf /usr/local/go/bin/go /usr/bin/go
   # Set up z
   if [[ ! -e ~/.z ]]; then
     touch ~/.z
@@ -145,6 +146,14 @@ function SetupEnvironment() {
     git clone https://github.com/ddysher/code.git
     cd -
   fi
+  # At last, source .zshrc
+  source ~/.zshrc
+}
+
+
+function InstallKubernetes() {
+  go get github.com/coreos/etcd
+  sudo ln -sf $GOPATH/bin/etcd /usr/bin/etcd
 }
 
 
@@ -178,6 +187,7 @@ InstallGo
 InstallNodeJs
 InstallMongoDB
 InstallThrift
+InstallKubernetes
 
 #
 # Setup environment and clean up.

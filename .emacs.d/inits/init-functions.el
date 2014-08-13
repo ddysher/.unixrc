@@ -51,18 +51,24 @@
   ;; Enable the hook only if working in the 'split mode'.
   (add-hook 'window-numbering-before-hook
             'window-numbering-mode-custom-hook)
+  ;; Splite window
   (split-window-below)
   (split-window-right)
   (split-window-right)
-  (balance-windows)
-  ;; Adjust horizontally; bigger number results in smaller terminal area.
-  (enlarge-window 25)
   (other-window 3)
   (split-window-right)
-  (multi-term)
+  (split-window-right)
+  ;; Adjust window
+  (balance-windows)
+  (shrink-window 25)                    ; shrink bottom windows
+  (shrink-window-horizontally 10)       ; shrink bottom left window
   (other-window 1)
   (multi-term)
+  (multi-term)
+  (other-window 1)
+  (shrink-window-horizontally 10)       ; shrink bottom right window
   (other-window 2))
+
 
 (defun desplit-desktop-window()
   (interactive)
