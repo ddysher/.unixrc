@@ -25,6 +25,9 @@
 (require 'thrift)
 (add-hook 'thrift-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
 
+(require-package 'dockerfile-mode)
+(require 'dockerfile-mode)
+
 ;; Apply apache-mode to entire apache2 directory (including sub-directories).
 (require-package 'apache-mode)
 (require 'apache-mode)
