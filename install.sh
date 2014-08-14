@@ -148,12 +148,11 @@ function SetupEnvironment() {
     git clone https://github.com/ddysher/code.git
     cd -
   fi
-  # At last, source .zshrc
-  source ~/.zshrc
 }
 
 
 function InstallKubernetes() {
+  export GOPATH=$HOME/code/source/go-workspace
   go get github.com/coreos/etcd
   sudo ln -sf $GOPATH/bin/etcd /usr/bin/etcd
 }
