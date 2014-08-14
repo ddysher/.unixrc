@@ -1,18 +1,19 @@
 #!/bin/bash
 set +x
 
+
 #
 # Package versions
 #
 GO_VERSION="1.3"
-NODE_VERSION="v0.10.29"         # npm=v1.4.14, shipped with node
+NODE_VERSION="v0.10.29"       # npm version v1.4.14, shipped with node
 EMACS_VERSION="dev"
 THRIFT_VERSION="dev"
 MONGODB_VERSION="2.6.3"
-
+VAGRANT_VERSION="1.6.3"
 
 #
-# DO NOT CHANGE (Assume Linux 64bit, rely on package naming convention).
+# DO NOT CHANGE (Assume Ubuntu 64bit, rely on package naming convention).
 #
 NODE_PACKAGE="node-$NODE_VERSION-linux-x64.tar.gz"
 NODE_DIR="node-$NODE_VERSION-linux-x64"
@@ -23,7 +24,8 @@ MONGODB_URL="http://fastdl.mongodb.org/linux/$MONGODB_PACKAGE"
 GO_PACKAGE="go$GO_VERSION.linux-amd64.tar.gz"
 GO_DIR="go"                     # package get renamed after unzip.
 GO_URL="http://golang.org/dl/$GO_PACKAGE"
-THRIFT_DIR="thrift"
+VAGRANT_PACKAGE="vagrant_${VAGRANT_VERSION}_x86_64.deb"
+VAGRANT_URL="https://dl.bintray.com/mitchellh/vagrant/$VAGRANT_PACKAGE"
 
 
 function InstallSystemPkg() {
@@ -93,13 +95,13 @@ function InstallThrift() {
   # Basic build requirements and language support
   sudo apt-get install -y libboost-dev libboost-test-dev flex bison pkg-config \
        libboost-program-options-dev libssl-dev
-  if [[ ! -e $THRIFT_DIR ]]; then
-    git clone https://git-wip-us.apache.org/repos/asf/thrift.git $THRIFT_DIR
+  if [[ ! -e thrift ]]; then
+    git clone https://git-wip-us.apache.org/repos/asf/thrift.git thrift
   fi
   # Build from source.
-  cd $THRIFT_DIR
+  cd thrift
   if [[ $THRIFT_VERSION != "dev" ]]; then
-     git checkout tags/$THRIFT_VERSION
+    git checkout tags/$THRIFT_VERSION
   fi
   ./bootstrap.sh
   ./configure
@@ -157,8 +159,15 @@ function InstallKubernetes() {
 }
 
 
+function InstallVagrant() {
+  wget $VAGRANT_URL
+  sudo dpkg -i $VAGRANT_PACKAGE
+}
+
+
 function CleanUp() {
-  sudo rm -rf $NODE_PACKAGE $MONGODB_PACKAGE $GO_PACKAGE $THRIFT_DIR
+  sudo rm -rf $NODE_PACKAGE $MONGODB_PACKAGE $GO_PACKAGE $VAGRANT_PACKAGE
+  sudo rm -rf thrift
   cd /usr/local
   sudo rm -rf ChangeLog GNU-AGPL-3.0 LICENSE README README.md THIRD-PARTY-NOTICES
   cd -
@@ -187,10 +196,13 @@ InstallGo
 InstallNodeJs
 InstallMongoDB
 InstallThrift
-InstallKubernetes
+InstallVagrant
 
 #
-# Setup environment and clean up.
+# Setup environment and install remainning stuff.
 #
 SetupEnvironment
+InstallKubernetes
+
+
 CleanUp
