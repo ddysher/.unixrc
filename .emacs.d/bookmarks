@@ -2,7 +2,17 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("modules_codegit"
+(("shell"
+ (filename . "~/code/language/shell/variables.sh")
+ (front-context-string . "#!/bin/bash\n\n\n# ")
+ (rear-context-string)
+ (position . 1))
+("install"
+ (filename . "~/.unixrc/install.sh")
+ (front-context-string . "#!/bin/bash\nset ")
+ (rear-context-string)
+ (position . 1))
+("modules_codegit"
  (filename . "~/code/.gitmodules")
  (front-context-string . "[submodule \"proj")
  (rear-context-string)
