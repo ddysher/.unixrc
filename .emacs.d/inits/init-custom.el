@@ -36,8 +36,11 @@
 (setq ns-pop-up-frames nil)
 ;; do not need to confirm nonexistent file
 (setq confirm-nonexistent-file-or-buffer nil)
-;; Disable bell when hit c-g
+;; disable bell when hit c-g
 (setq ring-bell-function 'ignore)
+;; move the pointer away on any key-press; emacs hides the mouse pointer
+;; only when typing a self-inserting char, see make-pointer-invisible
+(mouse-avoidance-mode 'banish)
 ;; answer `y` & `n` for `yes` & `no
 (defalias 'yes-or-no-p 'y-or-n-p)
 ;; start server, used by emacsclient. `emacs` is alias to `emacsclient`
