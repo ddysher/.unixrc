@@ -166,6 +166,15 @@ function InstallVagrant() {
 }
 
 
+function InstallDocker() {
+  # Only works for > 14.04
+  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+  sudo sh -c "echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
+  sudo apt-get update
+  sudo apt-get install lxc-docker
+}
+
+
 function CleanUp() {
   sudo rm -rf $NODE_PACKAGE $MONGODB_PACKAGE $GO_PACKAGE $VAGRANT_PACKAGE
   sudo rm -rf thrift
@@ -198,12 +207,11 @@ InstallNodeJs
 InstallMongoDB
 InstallThrift
 InstallVagrant
+InstallKubernetes
+InstallDocker
 
 #
-# Setup environment and install remainning stuff.
+# Setup environment and clean up.
 #
 SetupEnvironment
-InstallKubernetes
-
-
 CleanUp
