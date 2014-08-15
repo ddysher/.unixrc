@@ -154,7 +154,9 @@ function SetupEnvironment() {
 function InstallKubernetes() {
   export GOPATH=$HOME/code/source/go-workspace
   go get github.com/coreos/etcd
+  go get github.com/tools/godep
   sudo ln -sf $GOPATH/bin/etcd /usr/bin/etcd
+  sudo ln -sf $GOPATH/bin/godep /usr/bin/godep
 }
 
 
