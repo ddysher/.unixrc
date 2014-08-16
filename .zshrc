@@ -98,5 +98,9 @@ elif [[ `hostname` == "deyuan.pit.corp.google.com" ]]; then
   source /etc/bash_completion.d/g4d
   unsetopt correct_all      # Do not autocorrect
 elif [[ `hostname` == "watermelon" ]]; then
+  # The next line updates PATH for the Google Cloud SDK.
+  source '/home/deyuan/code/source/google-cloud-sdk/path.zsh.inc'
+  # The next line enables bash completion for gcloud.
+  source '/home/deyuan/code/source/google-cloud-sdk/completion.zsh.inc'
   # eval `dircolors ~/.dir_colors` # do not using annoying background for 'ls'
 fi
