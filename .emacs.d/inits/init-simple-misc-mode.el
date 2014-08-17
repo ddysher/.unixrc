@@ -7,9 +7,6 @@
 (require-package 'jade-mode)
 (require 'jade-mode)
 
-(require-package 'go-mode)
-(require 'go-mode)
-
 (require-package 'php-mode)
 (require 'php-mode)
 

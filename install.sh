@@ -155,6 +155,9 @@ function InstallKubernetes() {
   export GOPATH=$HOME/code/source/go-workspace
   go get github.com/coreos/etcd
   go get github.com/tools/godep
+  go get github.com/nsf/gocode
+  go get code.google.com/p/rog-go/exp/cmd/godef
+  # Link these binaries since we need to run some k8s scripts as root.
   sudo ln -sf $GOPATH/bin/etcd /usr/bin/etcd
   sudo ln -sf $GOPATH/bin/godep /usr/bin/godep
 }
