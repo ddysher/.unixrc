@@ -7,17 +7,10 @@
 (require 'js2-mode)
 
 
-(defun enable-yasnippets ()
-  "Enable yasnippet minor mode and add yasnippet to autocomplete source."
-  (yas-minor-mode)
-  (add-to-list 'ac-sources 'ac-source-yasnippet))
-
 (defun js-mode-custom-hook ()
-  (enable-yasnippets)
   (setq js-indent-level universal-indent-size))
 
 (defun js2-mode-custom-hook ()
-  (enable-yasnippets)
   (setq js2-basic-offset universal-indent-size)
   (setq js2-strict-inconsistent-return-warning nil))
 

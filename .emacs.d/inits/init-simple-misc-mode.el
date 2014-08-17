@@ -23,7 +23,6 @@
 
 (require-package 'thrift)
 (require 'thrift)
-(add-hook 'thrift-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
 
 (require-package 'dockerfile-mode)
 (require 'dockerfile-mode)
@@ -32,13 +31,11 @@
 (require-package 'apache-mode)
 (require 'apache-mode)
 (add-to-list 'auto-mode-alist '("/etc/apache2/.*" . apache-mode))
-(add-hook 'apache-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
 
 ;; Apply nginx-mode to entire nginx directory (including sub-directories).
 (require-package 'nginx-mode)
 (require 'nginx-mode)
 (add-to-list 'auto-mode-alist '("/etc/nginx/.*" . nginx-mode))
-(add-hook 'nginx-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
 
 ;; Disable flycheck by default (annoying for some buffer, enable as needed).
 (require-package 'flycheck)

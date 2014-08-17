@@ -64,7 +64,10 @@
   ;; turn off wrapping for long lines
   (setq truncate-lines t)
   ;; highline current line
-  (hl-line-mode 1))
+  (hl-line-mode 1)
+  ;; enable yasnippet minor mode and add yasnippet to autocomplete source
+  (yas-minor-mode)
+  (add-to-list 'ac-sources 'ac-source-yasnippet))
 
 (add-hook 'prog-mode-hook 'prog-mode-custom-hook)
 
