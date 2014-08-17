@@ -123,6 +123,7 @@ function SetupEnvironment() {
   sudo ln -sf /usr/local/bin/mongod /usr/bin/mongod
   sudo ln -sf /usr/local/go/bin/go /usr/bin/go
   sudo ln -sf /usr/local/go/bin/godoc /usr/bin/godoc
+  sudo ln -sf /usr/local/go/bin/gofmt /usr/bin/gofmt
   # Set up z
   if [[ ! -e ~/.z ]]; then
     touch ~/.z
