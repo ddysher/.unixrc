@@ -2,7 +2,17 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("shell"
+(("go"
+ (filename . "~/code/language/go/example/hello_pkg.go")
+ (front-context-string . "// This demonstr")
+ (rear-context-string)
+ (position . 1))
+("kubernetes"
+ (filename . "~/code/source/go-workspace/src/github.com/ddysher/kubernetes/README.md")
+ (front-context-string . "# Kubernetes\nKub")
+ (rear-context-string)
+ (position . 1))
+("shell"
  (filename . "~/code/language/shell/variables.sh")
  (front-context-string . "#!/bin/bash\n\n\n# ")
  (rear-context-string)
