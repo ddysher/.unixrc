@@ -3,7 +3,7 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("go"
- (filename . "~/code/language/go/example/hello_pkg.go")
+ (filename . "~/code/language/go/example/go_env.go")
  (front-context-string . "// This demonstr")
  (rear-context-string)
  (position . 1))

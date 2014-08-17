@@ -27,6 +27,7 @@
 
 
 (defun go-mode-custom-hook ()
+  (local-set-key (kbd "M-,") 'pop-tag-mark) ; same as M-*
   (local-set-key (kbd "M-.") 'godef-jump))
 
 (add-hook 'go-mode-hook 'go-mode-custom-hook)
