@@ -29,7 +29,7 @@
   (setq term-bind-key-alist
         (delete '("C-r" . isearch-backward) term-bind-key-alist))
   ;; use these three bindings to switch between line mode and char mode.
-  (add-to-list 'term-bind-key-alist '([f9] . term-toggle-mode))
+  (add-to-list 'term-bind-key-alist '("C-o" . term-toggle-mode))
   (add-to-list 'term-bind-key-alist '("C-c C-j" . term-line-mode))
   (add-to-list 'term-bind-key-alist '("C-c C-k" . term-char-mode))
   ;; use M-DEL, M-d to delete a word, previously set to 'backward-kill-word'
@@ -46,7 +46,7 @@
   (add-to-list 'term-bind-key-alist '("C-p" . term-send-up))
   (add-to-list 'term-bind-key-alist '("C-n" . term-send-down))
   ;; NOTE: key bindings below applies to line-mode.
-  (define-key term-mode-map [f9] 'term-toggle-mode)
+  (define-key term-mode-map (kbd "C-o") 'term-toggle-mode)
   (define-key term-mode-map (kbd "M-[") 'multi-term-prev)
   (define-key term-mode-map (kbd "M-]") 'multi-term-next))
 
