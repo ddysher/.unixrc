@@ -11,8 +11,8 @@
 ;;     snippets under ~/.emacs.d/snippets.
 ;;
 ;; Usage:
-;;   C-o : Expand yasnippet. Originally, yas-expand is bound to TAB, but it
-;;     doesn't work well with auto-complete; this file rebinds it to C-o.
+;;   C-q : Expand yasnippet. Originally, yas-expand is bound to TAB, but it
+;;     doesn't work well with auto-complete.
 ;;   M-x yas-reload-all: Reload all yasnippet, useful when new snippet is added
 ;;     in current emacs session.
 ;;------------------------------------------------------------------------------
@@ -24,10 +24,10 @@
 (yas-reload-all)
 (setq yas-prompt-functions '(yas-ido-prompt yas-completing-prompt))
 
-;; Expand yasnippet using C-o, it was bound to open-line by default in emacs.
+;; Expand yasnippet using C-q, which was bound to quoted-insert by default.
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
 (define-key yas-minor-mode-map (kbd "TAB") nil)
-(define-key yas-minor-mode-map (kbd "C-o") 'yas-expand)
+(define-key yas-minor-mode-map (kbd "C-q") 'yas-expand)
 
 
 (provide 'init-yasnippet)

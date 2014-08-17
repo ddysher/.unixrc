@@ -22,6 +22,7 @@
 (global-set-key (kbd "M-a") 'move-beginning-of-line)
 ;; set M-e the same as C-e to release finger (original M-e move forward sentence)
 (global-set-key (kbd "M-e") 'move-end-of-line)
+(global-set-key (kbd "C-o") 'switch-to-buffer)
 ;; open a dedicated terminal window.
 (global-set-key (kbd "C-c C-t") 'multi-term)
 ;; search current buffer for matching pattern.
