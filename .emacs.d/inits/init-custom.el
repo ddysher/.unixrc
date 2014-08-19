@@ -8,8 +8,9 @@
 (setq auto-revert-check-vc-info t) ; check version control
 (if window-system
     (progn
-      (tool-bar-mode -1)                ; disable tool bar
-      (scroll-bar-mode -1)))            ; disable scroll bar
+      (tool-bar-mode -1)               ; disable tool bar
+      (horizontal-scroll-bar-mode -1)  ; disable horizontal scroll bar
+      (scroll-bar-mode -1)))           ; disable vertical scroll bar
 
 ;;
 ;; Global settings
