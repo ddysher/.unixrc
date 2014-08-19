@@ -69,7 +69,6 @@
   (shrink-window-horizontally 10)       ; shrink bottom right window
   (other-window 2))
 
-
 (defun desplit-desktop-window()
   (interactive)
   (remove-hook 'window-numbering-before-hook

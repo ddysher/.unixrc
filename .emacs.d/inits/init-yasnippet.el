@@ -20,6 +20,10 @@
 (require 'yasnippet)
 
 
+;; Set yasnippet load directories. Here, we set to "~/.emacs.d/snippets" in
+;; order to overide default configuration.
+(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+
 ;; Load all snippets.
 (yas-reload-all)
 (setq yas-prompt-functions '(yas-ido-prompt yas-completing-prompt))

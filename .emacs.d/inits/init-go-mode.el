@@ -27,8 +27,12 @@
 
 
 (defun go-mode-custom-hook ()
-  (local-set-key (kbd "M-,") 'pop-tag-mark) ; same as M-*, but locally,
-  (local-set-key (kbd "M-.") 'godef-jump))
+  (setq gofmt-command "goimports")   ; use goimports instead of go-fmt
+  (add-hook 'before-save-hook 'gofmt-before-save) ; call go-fmt before saving
+  (local-set-key (kbd "M-,") 'pop-tag-mark) ; same as M-*, but locally
+  (local-set-key (kbd "M-.") 'godef-jump)
+  (local-set-key (kbd "C-c .") 'godef-jump-other-window))
+
 
 (add-hook 'go-mode-hook 'go-mode-custom-hook)
 (add-hook 'go-mode-hook 'go-eldoc-setup)
