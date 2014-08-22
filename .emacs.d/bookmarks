@@ -2,14 +2,19 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("go"
+(("python"
+ (filename . "~/code/language/python/assert.py")
+ (front-context-string . "def div(val1, va")
+ (rear-context-string)
+ (position . 1))
+("go"
  (filename . "~/code/language/go/example/go_env.go")
  (front-context-string . "// This demonstr")
  (rear-context-string)
  (position . 1))
 ("kubernetes"
- (filename . "~/code/source/go-workspace/src/github.com/ddysher/kubernetes/README.md")
- (front-context-string . "# Kubernetes\nKub")
+ (filename . "~/code/source/go-workspace/src/github.com/GoogleCloudPlatform/kubernetes/pkg/api/types.go")
+ (front-context-string . "/*\nCopyright 201")
  (rear-context-string)
  (position . 1))
 ("shell"
