@@ -85,8 +85,8 @@ function InstallSystemPkg() {
 
 
 function InstallThirdPartyPkg() {
-  sudo pip install ipython
-  sudo pip install pylint
+  sudo pip install ipython --upgrade
+  sudo pip install pylint --upgrade
 }
 
 
@@ -159,7 +159,9 @@ function SetupEnvironment() {
   # Use zsh
 	sudo chsh -s /usr/bin/zsh $USER
   # Intall important links
-  python manager.py install
+  sudo ln -sf ~/.unixrc/.emacs.d ~/.emacs.d
+  sudo ln -sf ~/.unixrc/.zshrc ~/.zshrc
+  sudo ln -sf /usr/local/bin/emacs /usr/bin/emacs
   sudo ln -sf /usr/local/bin/emacs /usr/bin/emacs
   sudo ln -sf /usr/local/bin/emacsclient /usr/bin/emacsclient
   sudo ln -sf /usr/local/bin/node /usr/bin/node
