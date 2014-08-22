@@ -165,6 +165,8 @@ function InstallDocker() {
   sudo sh -c "echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
   sudo apt-get update
   sudo apt-get install -y lxc-docker
+  # Give $USER non-root access
+  useradd -G docker username
 }
 
 
