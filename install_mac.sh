@@ -41,6 +41,8 @@ function InstallAll() {
   InstallThirdPartyPkg
   InstallEmacs
   InstallGo
+  InstallNodeJs
+  InstallMongoDB
 
   # # Setup environment and clean up.
   SetupEnvironment
@@ -57,8 +59,7 @@ function InstallSystemPkg() {
 
   # Basic packages
   echo "Installing packages..."
-  sudo brew install wget tree w3m pkg-config automake autoconf
-  sudo brew install mercurial node mongodb
+  sudo brew install wget tree w3m pkg-config automake autoconf mercurial
 
   # Resolve any conflict
   sudo brew link --overwrite node
@@ -100,6 +101,22 @@ function InstallGo() {
   go get github.com/nsf/gocode
   go get code.google.com/p/rog-go/exp/cmd/godef
   go get code.google.com/p/go.tools/cmd/goimports
+  sudo ln -sf /usr/local/go/bin/go /usr/bin/go
+}
+
+
+function InstallNodeJs() {
+  sudo brew install node
+  npm config set tmp /tmp
+  sudo npm install -g express grunt grunt-cli bower
+}
+
+
+function InstallMongoDB() {
+  sudo brew install mongodb
+  if [[ ! -d /data/db ]]; then
+    sudo mkdir -p /data/db
+  fi
 }
 
 
@@ -110,7 +127,6 @@ function SetupEnvironment() {
   rm -rf ~/.emacs.d ~/.zshrc	# Force delete first
   sudo ln -sf ~/.unixrc/.emacs.d ~/.emacs.d
   sudo ln -sf ~/.unixrc/.zshrc ~/.zshrc
-  sudo ln -sf /usr/local/go/bin/go /usr/bin/go
   # Set up z
   if [[ ! -e ~/.z ]]; then
     touch ~/.z
@@ -119,12 +135,6 @@ function SetupEnvironment() {
   git config --global user.email "deyuan.deng@gmail.com"
   git config --global user.name "Deyuan Deng"
   git config --global push.default simple
-  if [[ ! -d /data/db ]]; then
-    sudo mkdir -p /data/db
-  fi
-  # Set up NodeJs
-  npm config set tmp /tmp
-  sudo npm install -g express grunt grunt-cli bower
   # Clone code
   if [[ ! -d ~/code ]]; then
     cd ~
