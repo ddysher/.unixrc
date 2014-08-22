@@ -1,6 +1,25 @@
 #!/bin/bash
 set +x
 
+#
+# Mac version
+#
+MAC_VERSION=10.8
+
+#
+# Package versions
+# Package versions do not matter that much in Mac.
+#
+GO_VERSION="1.3"
+
+
+#
+# DO NOT CHANGE (Assume Ubuntu 64bit, rely on package naming convention).
+#
+GO_PACKAGE="go${GO_VERSION}.darwin-amd64-osx${MAC_VERSION}.tar.gz"
+GO_DIR="go"                     # package gets renamed after unzip.
+GO_URL="http://golang.org/dl/$GO_PACKAGE"
+
 
 #
 # Entry point
@@ -16,26 +35,41 @@ function InstallAll() {
   # Install system packages to /usr/.
   InstallSystemPkg
 
-  # Install packages to /usr/local/.
+  # # Install packages to /usr/local/.
   git submodule init
   git submodule update
   InstallThirdPartyPkg
   InstallEmacs
   InstallGo
 
-  # Setup environment and clean up.
+  # # Setup environment and clean up.
   SetupEnvironment
   CleanUp
 }
 
 
 function InstallSystemPkg() {
-  # Install homebrew
+  # Install and/or update homebrew
+  echo "Installing homebrew..."
   ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+  echo "Updating homebrew..."
+  brew update
+
+  # Basic packages
+  echo "Installing packages..."
+  sudo brew install wget tree w3m pkg-config automake autoconf
+  sudo brew install mercurial node mongodb
+
+  # Resolve any conflict
+  sudo brew link --overwrite node
 }
 
 
 function InstallThirdPartyPkg() {
+  # Newer version of python, also install pip. But unless necessary, prefer
+  # using default python.
+  #   sudo brew install python
+  sudo easy_install pip
   sudo pip install ipython --upgrade
   sudo pip install pylint --upgrade
 }
@@ -47,6 +81,7 @@ function InstallEmacs() {
   ./configure --with-ns
   make
   sudo make install
+  yes | cp -r nextstep/Emacs.app /Applications
   cd -
 }
 
@@ -59,52 +94,31 @@ function InstallGo() {
   sudo rm -rf /usr/local/go
   # Install Go to /usr/local/go/.
   sudo tar -C /usr/local -xvf $GO_PACKAGE
-}
-
-
-function InstallNodeJs() {
-  if [[ ! -e $NODE_PACKAGE ]]; then
-    wget $NODE_URL
-  fi
-  sudo tar -C /usr/local -xvf $NODE_PACKAGE --strip 1
-}
-
-
-function InstallMongoDB() {
-  if [[ ! -e $MONGODB_PACKAGE ]]; then
-    wget $MONGODB_URL
-  fi
-  sudo tar -C /usr/local -xvf $MONGODB_PACKAGE --strip 1
+  # Go tools
+  export GOPATH=$HOME/code/source/go-workspace
+  go get github.com/tools/godep
+  go get github.com/nsf/gocode
+  go get code.google.com/p/rog-go/exp/cmd/godef
+  go get code.google.com/p/go.tools/cmd/goimports
 }
 
 
 function SetupEnvironment() {
   # Use zsh
-	sudo chsh -s /usr/bin/zsh $USER
+  sudo chsh -s /usr/bin/zsh $USER
   # Intall important links
+  rm -rf ~/.emacs.d ~/.zshrc	# Force delete first
   sudo ln -sf ~/.unixrc/.emacs.d ~/.emacs.d
   sudo ln -sf ~/.unixrc/.zshrc ~/.zshrc
-  sudo ln -sf /usr/local/bin/emacs /usr/bin/emacs
-  sudo ln -sf /usr/local/bin/emacs /usr/bin/emacs
-  sudo ln -sf /usr/local/bin/emacsclient /usr/bin/emacsclient
-  sudo ln -sf /usr/local/bin/node /usr/bin/node
-  sudo ln -sf /usr/local/bin/npm /usr/bin/npm
-  sudo ln -sf /usr/local/bin/mongod /usr/bin/mongod
   sudo ln -sf /usr/local/go/bin/go /usr/bin/go
   # Set up z
   if [[ ! -e ~/.z ]]; then
     touch ~/.z
   fi
   # Set up git
-	git config --global user.email "deyuan.deng@gmail.com"
-	git config --global user.name "Deyuan Deng"
-	git config --global push.default simple
-  # Set up MongoDB
-  RC_LOCAL=`cat /etc/init.d/rc.local`
-  if [[ $RC_LOCAL != *mongod* ]]; then
-    MONGODB_CMD="echo 'mongod --fork --logpath /var/log/mongodb.log --logappend'"
-    sudo sh -c "$MONGODB_CMD >> /etc/init.d/rc.local"
-  fi
+  git config --global user.email "deyuan.deng@gmail.com"
+  git config --global user.name "Deyuan Deng"
+  git config --global push.default simple
   if [[ ! -d /data/db ]]; then
     sudo mkdir -p /data/db
   fi
@@ -121,10 +135,7 @@ function SetupEnvironment() {
 
 
 function CleanUp() {
-  sudo rm -rf $NODE_PACKAGE $MONGODB_PACKAGE $GO_PACKAGE $VAGRANT_PACKAGE
-  cd /usr/local
-  sudo rm -rf ChangeLog GNU-AGPL-3.0 LICENSE README README.md THIRD-PARTY-NOTICES
-  cd -
+  sudo rm -rf $GO_PACKAGE
 }
 
 

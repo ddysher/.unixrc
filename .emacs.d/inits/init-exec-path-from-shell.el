@@ -9,8 +9,8 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
-(if *home-desktop*
-    (exec-path-from-shell-copy-env "GOPATH"))
+;; 'GOPATH' should always be set in .zshrc.
+(exec-path-from-shell-copy-env "GOPATH")
 
 
 (provide 'init-exec-path-from-shell)

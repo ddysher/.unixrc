@@ -1,15 +1,15 @@
 #!/bin/bash
 set +x
 
-
 #
 # Package versions
 #
 GO_VERSION="1.3"
-NODE_VERSION="v0.10.31"
+NODE_VERSION="v0.10.31"         # node package contains npm
 EMACS_VERSION="dev"
 MONGODB_VERSION="2.6.3"
 VAGRANT_VERSION="1.6.3"
+
 
 #
 # DO NOT CHANGE (Assume Ubuntu 64bit, rely on package naming convention).
@@ -21,7 +21,7 @@ MONGODB_PACKAGE="mongodb-linux-x86_64-$MONGODB_VERSION.tgz"
 MONGODB_DIR="mongodb-linux-x86_64-$MONGODB_VERSION"
 MONGODB_URL="http://fastdl.mongodb.org/linux/$MONGODB_PACKAGE"
 GO_PACKAGE="go$GO_VERSION.linux-amd64.tar.gz"
-GO_DIR="go"                     # package get renamed after unzip.
+GO_DIR="go"                     # package gets renamed after unzip.
 GO_URL="http://golang.org/dl/$GO_PACKAGE"
 VAGRANT_PACKAGE="vagrant_${VAGRANT_VERSION}_x86_64.deb"
 VAGRANT_URL="https://dl.bintray.com/mitchellh/vagrant/$VAGRANT_PACKAGE"
@@ -108,6 +108,12 @@ function InstallGo() {
   sudo rm -rf /usr/local/go
   # Install Go to /usr/local/go/.
   sudo tar -C /usr/local -xvf $GO_PACKAGE
+  # Go tools
+  export GOPATH=$HOME/code/source/go-workspace
+  go get github.com/nsf/gocode
+  go get github.com/tools/godep
+  go get code.google.com/p/rog-go/exp/cmd/godef
+  go get code.google.com/p/go.tools/cmd/goimports
 }
 
 
@@ -138,18 +144,13 @@ function InstallDocker() {
   sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
   sudo sh -c "echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
   sudo apt-get update
-  sudo apt-get install lxc-docker
+  sudo apt-get install -y lxc-docker
 }
 
 
 function InstallKubernetes() {
-  export GOPATH=$HOME/code/source/go-workspace
-  go get github.com/coreos/etcd
-  go get github.com/tools/godep
-  go get github.com/nsf/gocode
-  go get code.google.com/p/rog-go/exp/cmd/godef
-  go get code.google.com/p/go.tools/cmd/goimports
   # Link these binaries since we need to run some k8s scripts as root.
+  go get github.com/coreos/etcd
   sudo ln -sf $GOPATH/bin/etcd /usr/bin/etcd
   sudo ln -sf $GOPATH/bin/godep /usr/bin/godep
 }
@@ -157,8 +158,9 @@ function InstallKubernetes() {
 
 function SetupEnvironment() {
   # Use zsh
-	sudo chsh -s /usr/bin/zsh $USER
+  sudo chsh -s /usr/bin/zsh $USER
   # Intall important links
+  rm -rf ~/.emacs.d ~/.zshrc	# Force delete first
   sudo ln -sf ~/.unixrc/.emacs.d ~/.emacs.d
   sudo ln -sf ~/.unixrc/.zshrc ~/.zshrc
   sudo ln -sf /usr/local/bin/emacs /usr/bin/emacs
@@ -173,10 +175,11 @@ function SetupEnvironment() {
     touch ~/.z
   fi
   # Set up git
-	git config --global user.email "deyuan.deng@gmail.com"
-	git config --global user.name "Deyuan Deng"
-	git config --global push.default simple
+  git config --global user.email "deyuan.deng@gmail.com"
+  git config --global user.name "Deyuan Deng"
+  git config --global push.default simple
   # Set up MongoDB
+  # TODO: A better solution for startup daemon.
   RC_LOCAL=`cat /etc/init.d/rc.local`
   if [[ $RC_LOCAL != *mongod* ]]; then
     MONGODB_CMD="echo 'mongod --fork --logpath /var/log/mongodb.log --logappend'"

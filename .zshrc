@@ -37,7 +37,6 @@ setopt NO_BEEP
 plugins=(git python ruby)
 
 
-
 ##------------------------------------------------------------------------------
 ## General configs for all machines
 ##------------------------------------------------------------------------------
@@ -52,6 +51,11 @@ source $ZSH/oh-my-zsh.sh        # Re-exec shell script
 source $TOOLS/z/z.sh            # Enable z.sh
 bindkey -e                      # Bind keys
 
+export EDITOR="emacsclient"     # TODO: make sure emacs server started
+export GOPATH=$HOME/code/source/go-workspace
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME/code/source/go-workspace/bin
+export PATH=$PATH:$TOOLS/arcanist/bin:
 
 
 ##-------------------------------------------------------------------------------
@@ -66,24 +70,14 @@ if [[ `uname` == "Darwin" ]]; then
   alias emacs="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
   alias emacsnw="TERM=xterm-256color /Applications/Emacs.app/Contents/MacOS/Emacs -nw"
   alias emacsserver="/Applications/Emacs.app/Contents/MacOS/Emacs"
-  export LESS=-RFX
-  export EDITOR="emacsclient"
-  export TOMCAT_HOME=/Library/Tomcat
   export HOMEBREW_TEMP=/usr/local/TEMP
-  export CLASSPATH=.:/Library/Java/Extensions
-  export PATH="/usr/local/heroku/bin:$PATH" # Added by the Heroku Toolbelt
   source `brew --prefix`/etc/profile.d/z.sh
 elif [[ `uname` == "Linux" ]]; then
   alias chrome="google-chrome"
   alias emacs="/usr/local/bin/emacsclient -n"
   alias emacsnw="TERM=xterm-256color /usr/local/bin/emacs -nw"
   alias emacsserver="/usr/local/bin/emacs"
-  export EDITOR="emacsclient"
-  export PATH=$PATH:$TOOLS/arcanist/bin:/usr/local/go/bin
-  export GOPATH=$HOME/code/source/go-workspace
-  export PATH=$PATH:$HOME/code/source/go-workspace/bin
 fi
-
 
 
 ##-------------------------------------------------------------------------------
@@ -96,7 +90,7 @@ if [[ `hostname` == "Deyuans-Macbook-Air.local" ]]; then
 elif [[ `hostname` == "deyuan.pit.corp.google.com" ]]; then
   export P4EDITOR="emacsclient"
   source /etc/bash_completion.d/g4d
-  unsetopt correct_all      # Do not autocorrect
+  unsetopt correct_all          # do not autocorrect
 elif [[ `hostname` == "watermelon" ]]; then
   # source '/home/deyuan/code/source/google-cloud-sdk/path.zsh.inc'
   # source '/home/deyuan/code/source/google-cloud-sdk/completion.zsh.inc'
