@@ -97,6 +97,9 @@ function InstallEmacs() {
   make
   sudo make install
   cd -
+  sudo ln -sf /usr/local/bin/emacs /usr/bin/emacs
+  sudo ln -sf /usr/local/bin/emacs /usr/bin/emacs
+  sudo ln -sf /usr/local/bin/emacsclient /usr/bin/emacsclient
 }
 
 
@@ -108,7 +111,8 @@ function InstallGo() {
   sudo rm -rf /usr/local/go
   # Install Go to /usr/local/go/.
   sudo tar -C /usr/local -xvf $GO_PACKAGE
-  # Go tools
+  # Setup Go and instll Go tools.
+  sudo ln -sf /usr/local/go/bin/go /usr/bin/go
   export GOPATH=$HOME/code/source/go-workspace
   go get github.com/nsf/gocode
   go get github.com/tools/godep
@@ -122,6 +126,11 @@ function InstallNodeJs() {
     wget $NODE_URL
   fi
   sudo tar -C /usr/local -xvf $NODE_PACKAGE --strip 1
+  # Set up NodeJs
+  sudo ln -sf /usr/local/bin/node /usr/bin/node
+  sudo ln -sf /usr/local/bin/npm /usr/bin/npm
+  npm config set tmp /tmp
+  sudo npm install -g express grunt grunt-cli bower
 }
 
 
@@ -130,6 +139,17 @@ function InstallMongoDB() {
     wget $MONGODB_URL
   fi
   sudo tar -C /usr/local -xvf $MONGODB_PACKAGE --strip 1
+  # Set up MongoDB
+  # TODO: A better solution for startup daemon.
+  sudo ln -sf /usr/local/bin/mongod /usr/bin/mongod
+  RC_LOCAL=`cat /etc/init.d/rc.local`
+  if [[ $RC_LOCAL != *mongod* ]]; then
+    MONGODB_CMD="echo 'mongod --fork --logpath /var/log/mongodb.log --logappend'"
+    sudo sh -c "$MONGODB_CMD >> /etc/init.d/rc.local"
+  fi
+  if [[ ! -d /data/db ]]; then
+    sudo mkdir -p /data/db
+  fi
 }
 
 
@@ -159,17 +179,10 @@ function InstallKubernetes() {
 function SetupEnvironment() {
   # Use zsh
   sudo chsh -s /usr/bin/zsh $USER
-  # Intall important links
+  # Intall links
   rm -rf ~/.emacs.d ~/.zshrc	# Force delete first
   sudo ln -sf ~/.unixrc/.emacs.d ~/.emacs.d
   sudo ln -sf ~/.unixrc/.zshrc ~/.zshrc
-  sudo ln -sf /usr/local/bin/emacs /usr/bin/emacs
-  sudo ln -sf /usr/local/bin/emacs /usr/bin/emacs
-  sudo ln -sf /usr/local/bin/emacsclient /usr/bin/emacsclient
-  sudo ln -sf /usr/local/bin/node /usr/bin/node
-  sudo ln -sf /usr/local/bin/npm /usr/bin/npm
-  sudo ln -sf /usr/local/bin/mongod /usr/bin/mongod
-  sudo ln -sf /usr/local/go/bin/go /usr/bin/go
   # Set up z
   if [[ ! -e ~/.z ]]; then
     touch ~/.z
@@ -178,19 +191,6 @@ function SetupEnvironment() {
   git config --global user.email "deyuan.deng@gmail.com"
   git config --global user.name "Deyuan Deng"
   git config --global push.default simple
-  # Set up MongoDB
-  # TODO: A better solution for startup daemon.
-  RC_LOCAL=`cat /etc/init.d/rc.local`
-  if [[ $RC_LOCAL != *mongod* ]]; then
-    MONGODB_CMD="echo 'mongod --fork --logpath /var/log/mongodb.log --logappend'"
-    sudo sh -c "$MONGODB_CMD >> /etc/init.d/rc.local"
-  fi
-  if [[ ! -d /data/db ]]; then
-    sudo mkdir -p /data/db
-  fi
-  # Set up NodeJs
-  npm config set tmp /tmp
-  sudo npm install -g express grunt grunt-cli bower
   # Clone code
   if [[ ! -d ~/code ]]; then
     cd ~
