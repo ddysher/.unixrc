@@ -166,7 +166,7 @@ function InstallDocker() {
   sudo apt-get update
   sudo apt-get install -y lxc-docker
   # Give $USER non-root access
-  sudo useradd -G docker username
+  sudo useradd -G docker $USER
 }
 
 
