@@ -1,7 +1,6 @@
 ;;------------------------------------------------------------------------------
 ;; Provide some custom functions, these are mostly bound to key short-cut.
 ;;------------------------------------------------------------------------------
-
 ;;
 ;; Window management
 ;;
@@ -53,7 +52,8 @@ split window, then put cursor at top left."
   (switch-to-buffer "\*scratch\*")
   (split-window-right)
   (split-window-below)
-  (shrink-window-horizontally 30))
+  (shrink-window-horizontally 30)
+  (enlarge-window 15))
 
 (defvar current-window-conf-register nil)
 
@@ -69,6 +69,10 @@ split window, then put cursor at top left."
       (window-configuration-to-register current-window-conf-register))
   (setq current-window-conf-register register))
 
+
+;;
+;; Buffer management
+;;
 (defun kill-other-buffers ()
   "Kill all buffers except current active one."
   (interactive)
@@ -108,6 +112,9 @@ split window, then put cursor at top left."
   (multi-occur-in-matching-buffers ".*" regexp)
   (switch-to-buffer-other-window "*Occur*"))
 
+;;
+;; Misc.
+;;
 ;; Scroll down line by line.
 (defun scroll-down-in-place (n)
   (interactive "p")
