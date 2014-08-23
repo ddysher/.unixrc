@@ -1,6 +1,10 @@
 ;;------------------------------------------------------------------------------
 ;; Provide some custom functions, these are mostly bound to key short-cut.
 ;;------------------------------------------------------------------------------
+
+;;
+;; Window management
+;;
 (defun start-workspace ()
   "Start custom workspace, i.e. window configuration."
   (interactive)
@@ -20,54 +24,9 @@
   (other-window 3)
   (window-configuration-to-register ?r))
 
-;; Kill all buffers except current active one.
-(defun kill-other-buffers ()
-  (interactive)
-  (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
-
-;; Kill all buffers except terminals.
-(defun kill-non-term-buffers ()
-  (interactive)
-  (let ((tokill '()))
-    (dolist (buffer (buffer-list))
-      (if (not (string-match "\*terminal<?>\*" (buffer-name buffer)))
-          (setq tokill (nconc tokill (list buffer)))))
-    (mapc 'kill-buffer tokill)))
-
-;; Scroll down line by line.
-(defun scroll-down-in-place (n)
-  (interactive "p")
-  (previous-line n)
-  (scroll-down n))
-
-;; Scroll up line by line.
-(defun scroll-up-in-place (n)
-  (interactive "p")
-  (next-line n)
-  (scroll-up n))
-
-;; Open a dedicated terminal and select it.
-(defun multi-term-dedicated ()
-  (interactive)
-  (multi-term-dedicated-open)
-  (multi-term-dedicated-select))
-
-;; Search all opened buffer for a regexp pattern.
-(defun search-all-buffers (regexp &optional allbufs)
-  "Show all lines matching REGEXP in all buffers."
-  (interactive (occur-read-primary-args))
-  (multi-occur-in-matching-buffers ".*" regexp)
-  (switch-to-buffer-other-window "*Occur*"))
-
-(defun search-buffer (regexp &optional allbufs)
-  "Show all lines matching REGEXP in current buffer."
-  (interactive (occur-read-primary-args))
-  (occur regexp)
-  (switch-to-buffer-other-window "*Occur*"))
-
 (defun split-desktop-window-regular ()
-  "Split desktop window for regular workflow. Clear window first, split window
-then put cursor at top left."
+  "Split desktop window for regular workflow. Clear window first,
+split window, then put cursor at top left."
   (interactive)
   (delete-other-windows)
   (switch-to-buffer "\*scratch\*")
@@ -87,8 +46,8 @@ then put cursor at top left."
   (other-window 1))
 
 (defun split-desktop-window-terminal ()
-  "Split desktop window for terminal workflow. Clear window first, split window
-then put cursor at top left."
+  "Split desktop window for terminal workflow. Clear window first,
+split window, then put cursor at top left."
   (interactive)
   (delete-other-windows)
   (switch-to-buffer "\*scratch\*")
@@ -96,21 +55,76 @@ then put cursor at top left."
   (split-window-below)
   (shrink-window-horizontally 30))
 
-(defun desplit-desktop-window()
+(defvar current-window-conf-register nil)
+
+(defadvice window-configuration-to-register
+    (after window-configuration-to-register-current-reg activate)
+  "Restore previous window configuration."
+  (setq current-window-conf-register register))
+
+(defadvice jump-to-register
+    (before jump-to-register-store-window-conf activate)
+  "Store current window configuration before jumping to another register."
+  (if current-window-conf-register
+      (window-configuration-to-register current-window-conf-register))
+  (setq current-window-conf-register register))
+
+(defun kill-other-buffers ()
+  "Kill all buffers except current active one."
   (interactive)
-  (remove-hook 'window-numbering-before-hook
-               'window-numbering-mode-custom-hook))
+  (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+
+(defun kill-non-term-buffers ()
+  "Kill all buffers except terminals."
+  (interactive)
+  (let ((tokill '()))
+    (dolist (buffer (buffer-list))
+      (if (not (string-match "\*terminal<?>\*" (buffer-name buffer)))
+          (setq tokill (nconc tokill (list buffer)))))
+    (mapc 'kill-buffer tokill)))
 
 (defun revert-all-buffers ()
-  "Refreshes all open buffers from their respective files."
+  "Revert all open non-modified buffers from their respective files."
   (interactive)
+  (setq count 0)
   (dolist (buf (buffer-list))
     (with-current-buffer buf
       (when (and (buffer-file-name)
                  (file-exists-p (buffer-file-name))
                  (not (buffer-modified-p)))
+        (incf count)
         (revert-buffer t t t) )))
-  (message "Refreshed open files."))
+  (message "Reverted %d non-modified open files." count))
+
+(defun search-buffer (regexp &optional allbufs)
+  "Show all lines matching REGEXP in current buffer."
+  (interactive (occur-read-primary-args))
+  (occur regexp)
+  (switch-to-buffer-other-window "*Occur*"))
+
+(defun search-all-buffers (regexp &optional allbufs)
+  "Show all lines matching REGEXP in all buffers."
+  (interactive (occur-read-primary-args))
+  (multi-occur-in-matching-buffers ".*" regexp)
+  (switch-to-buffer-other-window "*Occur*"))
+
+;; Scroll down line by line.
+(defun scroll-down-in-place (n)
+  (interactive "p")
+  (previous-line n)
+  (scroll-down n))
+
+;; Scroll up line by line.
+(defun scroll-up-in-place (n)
+  (interactive "p")
+  (next-line n)
+  (scroll-up n))
+
+;; Open a dedicated terminal and select it.
+(defun multi-term-dedicated ()
+  (interactive)
+  (multi-term-dedicated-open)
+  (multi-term-dedicated-select))
 
 
 (provide 'init-functions)
