@@ -37,6 +37,7 @@
 ;; Disable flycheck by default (annoying for some buffer, enable as needed).
 (require-package 'flycheck)
 
+(winner-mode 1)
 
 ;; Temporary & pending mode
 ;; (require 'flex-mode)

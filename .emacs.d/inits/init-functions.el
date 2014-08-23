@@ -1,6 +1,25 @@
 ;;------------------------------------------------------------------------------
 ;; Provide some custom functions, these are mostly bound to key short-cut.
 ;;------------------------------------------------------------------------------
+(defun start-workspace ()
+  "Start custom workspace, i.e. window configuration."
+  (interactive)
+  (add-hook 'window-numbering-before-hook
+            'window-numbering-mode-custom-hook)
+  ;; Create terminal window configuration.
+  (split-desktop-window-terminal)
+  (other-window 2)
+  (multi-term)
+  (multi-term)
+  (switch-to-buffer "\*terminal<1>\*")
+  (window-configuration-to-register ?t)
+  ;; Create regular window configuration.
+  (split-desktop-window-regular)
+  (other-window 4)
+  (switch-to-buffer "\*terminal<1>\*")
+  (other-window 3)
+  (window-configuration-to-register ?r))
+
 ;; Kill all buffers except current active one.
 (defun kill-other-buffers ()
   (interactive)
@@ -46,11 +65,12 @@
   (occur regexp)
   (switch-to-buffer-other-window "*Occur*"))
 
-(defun split-desktop-window ()
+(defun split-desktop-window-regular ()
+  "Split desktop window for regular workflow. Clear window first, split window
+then put cursor at top left."
   (interactive)
-  ;; Enable the hook only if working in the 'split mode'.
-  (add-hook 'window-numbering-before-hook
-            'window-numbering-mode-custom-hook)
+  (delete-other-windows)
+  (switch-to-buffer "\*scratch\*")
   ;; Splite window
   (split-window-below)
   (split-window-right)
@@ -58,16 +78,23 @@
   (other-window 3)
   (split-window-right)
   (split-window-right)
-  ;; Adjust window
+  ;; Adjust window size
   (balance-windows)
   (shrink-window 25)                    ; shrink bottom windows
   (shrink-window-horizontally 10)       ; shrink bottom left window
-  (other-window 1)
-  (multi-term)
-  (multi-term)
-  (other-window 1)
+  (other-window 2)
   (shrink-window-horizontally 10)       ; shrink bottom right window
-  (other-window 2))
+  (other-window 1))
+
+(defun split-desktop-window-terminal ()
+  "Split desktop window for terminal workflow. Clear window first, split window
+then put cursor at top left."
+  (interactive)
+  (delete-other-windows)
+  (switch-to-buffer "\*scratch\*")
+  (split-window-right)
+  (split-window-below)
+  (shrink-window-horizontally 30))
 
 (defun desplit-desktop-window()
   (interactive)
