@@ -59,7 +59,10 @@ the (text-scale-decrease 1), see below hook."
   (define-key term-mode-map (kbd "C-o") 'switch-to-buffer)
   (define-key term-mode-map (kbd "C-q") 'term-toggle-mode)
   (define-key term-mode-map (kbd "M-[") 'multi-term-prev)
-  (define-key term-mode-map (kbd "M-]") 'multi-term-next))
+  (define-key term-mode-map (kbd "M-]") 'multi-term-next)
+  (define-key term-mode-map (kbd "M-p") 'scroll-down-in-place)
+  (define-key term-mode-map (kbd "M-n") 'scroll-up-in-place)
+  (define-key term-mode-map (kbd "C-q") 'term-toggle-mode))
 
 
 (add-hook 'term-mode-hook 'term-mode-custom-hook)
