@@ -16,6 +16,10 @@
   (multi-term)
   (switch-to-buffer "\*terminal<1>\*")
   (window-configuration-to-register ?t)
+  ;; Create erc window configuration.
+  (split-desktop-window-erc)
+  (other-window 1)
+  (window-configuration-to-register ?e)
   ;; Create regular window configuration.
   (split-desktop-window-regular)
   (other-window 4)
@@ -54,6 +58,16 @@ split window, then put cursor at top left."
   (split-window-below)
   (shrink-window-horizontally 30)
   (enlarge-window 15))
+
+(defun split-desktop-window-erc ()
+  "Split desktop window for erc workflow. Clear window first,
+split window, then put cursor at top left."
+  (interactive)
+  (delete-other-windows)
+  (switch-to-buffer "\*scratch\*")
+  (split-window-right)
+  (split-window-right)
+  (balance-windows))
 
 (defvar current-window-conf-register nil)
 
