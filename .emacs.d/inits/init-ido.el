@@ -15,7 +15,7 @@
       ido-ignore-buffers                ; ignore these guys
       '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
         "^\*epc" "^\*compilation" "^\*TAGS" "^session\.*" "^\*scratch"
-        "^\*Help" "^\*tramp" "^\*Compile-Log")
+        "^\*Help" "^\*tramp" "^\*Compile-Log" "^\*go-eldoc")
       ido-work-directory-list '("~/" "~/Desktop" "~/Documents")
       ido-enable-last-directory-history t ; remember last used dirs
       ido-max-work-directory-list 30      ; should be enough

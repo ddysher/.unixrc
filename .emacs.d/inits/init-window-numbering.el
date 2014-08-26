@@ -6,15 +6,19 @@
 
 
 (defun window-numbering-mode-custom-hook (windows)
-  (let ((counter 1))
-    (dolist (window windows)
-      (if (equal counter 4)
-          (window-numbering-assign window 8))
-      (if (equal counter 5)
-          (window-numbering-assign window 9))
-      (if (equal counter 6)
-          (window-numbering-assign window 0))
-      (incf counter))))
+  "Change window number as needed."
+  (if (>= (length windows) 5)
+      (progn
+        (let ((counter 1)
+              (winlen (length windows)))
+          (dolist (window windows)
+            (if (equal counter (- winlen 2))
+                (window-numbering-assign window 8))
+            (if (equal counter (- winlen 1))
+                (window-numbering-assign window 9))
+            (if (equal counter winlen)
+                (window-numbering-assign window 0))
+            (incf counter))))))
 
 (window-numbering-mode t)
 (setq window-numbering-auto-assign-0-to-minibuffer nil)

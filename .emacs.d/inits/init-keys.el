@@ -30,11 +30,13 @@
 ;; search all buffers for matching pattern.
 (global-set-key (kbd "C-c C-s") 'search-all-buffers)
 ;; search all buffers for matching pattern.
-(global-set-key (kbd "C-c C-e") 'split-desktop-window)
+(global-set-key (kbd "C-c C-e") 'start-workspace)
 ;; list all buffers in new a window.
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
 (global-set-key (kbd "C-c C-b") 'buffer-menu)
-
+;; winner mode key bindings.
+(global-set-key (kbd "C-x 4 u") 'winner-undo)
+(global-set-key (kbd "C-x 4 r") 'winner-redo)
 
 ;; Key bindings for Mac
 (if *darwin*

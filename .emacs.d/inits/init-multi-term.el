@@ -6,10 +6,18 @@
 
 
 (defun term-toggle-mode ()
+  "Toggle terminal between char mode and line mode."
   (interactive)
   (if (term-in-line-mode)
       (term-char-mode)
     (term-line-mode)))
+
+(defun term-window-width ()
+  "The method is defined in term.el under emacs source.  Redefined it since
+terminal use smaller font size, while emacs still keep the same window size.
+The 1.15 scale is based on experiment. The method should be used along with
+the (text-scale-decrease 1), see below hook."
+  (/ (* (window-width) 115) 100))
 
 (defun term-mode-custom-hook ()
   (setq multi-term-program "/bin/zsh")  ; use zsh shell
@@ -51,7 +59,10 @@
   (define-key term-mode-map (kbd "C-o") 'switch-to-buffer)
   (define-key term-mode-map (kbd "C-q") 'term-toggle-mode)
   (define-key term-mode-map (kbd "M-[") 'multi-term-prev)
-  (define-key term-mode-map (kbd "M-]") 'multi-term-next))
+  (define-key term-mode-map (kbd "M-]") 'multi-term-next)
+  (define-key term-mode-map (kbd "M-p") 'scroll-down-in-place)
+  (define-key term-mode-map (kbd "M-n") 'scroll-up-in-place)
+  (define-key term-mode-map (kbd "C-q") 'term-toggle-mode))
 
 
 (add-hook 'term-mode-hook 'term-mode-custom-hook)
