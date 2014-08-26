@@ -71,6 +71,7 @@ if [[ `uname` == "Darwin" ]]; then
   alias emacsnw="TERM=xterm-256color /Applications/Emacs.app/Contents/MacOS/Emacs -nw"
   alias emacsserver="/Applications/Emacs.app/Contents/MacOS/Emacs"
   export HOMEBREW_TEMP=/usr/local/TEMP
+  export DOCKER_HOST=tcp://192.168.59.103:2375
   source `brew --prefix`/etc/profile.d/z.sh
 elif [[ `uname` == "Linux" ]]; then
   alias chrome="google-chrome"
