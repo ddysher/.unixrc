@@ -24,7 +24,7 @@ the (text-scale-decrease 1), see below hook."
   (setq multi-term-switch-after-close nil) ; don't switch to other term after close
   (setq multi-term-dedicated-window-height 20)
   (setq term-buffer-maximum-size 10000) ; increase max buffer size
-  (setq mode-line-format (delete 'mode-line-modified mode-line-format))
+  (setq-local mode-line-format (remq 'mode-line-modified mode-line-format))
   (setenv "TERMINFO" "~/.Terminfo")     ; what's this?
   (text-scale-decrease 1)               ; use smaller size for term
   ;; NOTE: key bindings below applies to char-mode.
