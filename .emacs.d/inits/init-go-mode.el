@@ -33,12 +33,11 @@
   (local-set-key (kbd "C-c .") 'godef-jump-other-window)
   ;; Workaround of a bug in godef (cannot jump if working in forked project).
   (if (and (string-match "/ddysher/kubernetes/" (buffer-file-name))
-           (not (string-match "\\[ddysher\\]" (buffer-name))))
-      (rename-buffer (format "%s [%s]" (buffer-name) "ddysher")))
+           (not (member "[ddysher] " 'mode-line-format)))
+      (add-to-list 'mode-line-format "[ddysher] "))
   (if (and (string-match "/GoogleCloudPlatform/kubernetes/" (buffer-file-name))
-           (not (string-match "\\[Google\\]" (buffer-name))))
-      (rename-buffer (format "%s [%s]" (buffer-name) "Google"))))
-
+           (not (member "[Google] " 'mode-line-format)))
+      (add-to-list 'mode-line-format "[Google] ")))
 
 (add-hook 'go-mode-hook 'go-mode-custom-hook)
 (add-hook 'go-mode-hook 'go-eldoc-setup)
