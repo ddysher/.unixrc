@@ -19,16 +19,13 @@
         (if (< ndirs 2) default
           (elt dirs (- ndirs 2)))))))
 
-(defun my-google3-hook ()
+(defun google3-custom-hook ()
   (let ((client-name (google-g4-client default-directory)))
-    ;; If client name is not nil, and it's not already in the buffer name.
-    (if (and client-name (not (string-match client-name (buffer-name))))
-        (rename-buffer (format "%s [%s] %d"
-                               (buffer-name) client-name (random 99))))))
+    ;; If client name is not nil, show client name at mode line.
+    (if client-name (add-to-list 'mode-line-format (format "[%s]  " client-name)))))
 
-;; Show client name at mode line.
-(add-hook 'find-file-hook 'my-google3-hook)
-(add-hook 'dired-file-hook 'my-google3-hook)
+(add-hook 'find-file-hook 'google3-custom-hook)
+(add-hook 'dired-file-hook 'google3-custom-hook)
 (load-file "/google/src/head/depot/eng/elisp/google.el")
 
 
