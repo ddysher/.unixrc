@@ -4,7 +4,7 @@
 ;; http://www.emacswiki.org/cgi-bin/wiki/InteractivelyDoThings
 ;; Usage:
 ;;   C-j create file even if there is completion for the name. e.g. create file
-;;       init.el when there is init-abc.el.
+;;       init.el when there is init-abc.el. Also used to open directory.
 ;;   C-l refresh directory content.
 ;;------------------------------------------------------------------------------
 (require 'ido)

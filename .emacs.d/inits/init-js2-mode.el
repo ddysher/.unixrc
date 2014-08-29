@@ -13,7 +13,6 @@
 (defun js2-mode-custom-hook ()
   ;; "C-c C-t" is bound to (js2-mode-toggle-hide-comments) in js2-mode.
   ;; Unset it to recover the behavior to (multi-term).
-  (local-unset-key (kbd "C-c C-t"))
   (setq js2-basic-offset universal-indent-size)
   (setq js2-strict-inconsistent-return-warning nil))
 
