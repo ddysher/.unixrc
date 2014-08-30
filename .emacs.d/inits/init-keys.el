@@ -5,7 +5,7 @@
 (global-set-key [f1] 'find-file)        ; M-x open file (C-x-f)
 (global-set-key [f2] 'save-buffer)      ; M-x save file (C-x-s)
 (global-set-key [f3] 'multi-term-dedicated)
-(global-set-key [f4] 'switch-to-buffer) ; M-x switch-to-buffer (C-x b)
+(global-set-key [f4] 'multi-term)
 (global-set-key [f5] 'other-window)     ; M-x other-window (C-x o)
 (global-set-key [f6] 'replace-regexp)
 (global-set-key [f7] 'window-configuration-to-register) ; Save win conf (C-x r w)
@@ -23,8 +23,6 @@
 ;; set M-e the same as C-e to release finger (original M-e move forward sentence)
 (global-set-key (kbd "M-e") 'move-end-of-line)
 (global-set-key (kbd "C-o") 'switch-to-buffer)
-;; open a terminal window.
-(global-set-key (kbd "C-c C-q") 'multi-term)
 ;; search current buffer for matching pattern.
 (global-set-key (kbd "C-c s") 'search-buffer)
 ;; search all buffers for matching pattern.

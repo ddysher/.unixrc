@@ -35,6 +35,7 @@
 (require 'init-erc)
 (require 'init-smex)
 (require 'init-tramp)
+(require 'init-org-mode)
 (require 'init-yasnippet)
 (require 'init-multi-term)
 (require 'init-auto-complete)
