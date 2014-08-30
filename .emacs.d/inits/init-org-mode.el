@@ -1,5 +1,6 @@
 ;;------------------------------------------------------------------------------
 ;; Provide org mode, built-in with emacs, but use package from MELPA.
+;; NOTE (require-package 'org) doesn't work correctly, need to install manually.
 ;;
 ;; Frequently used command:
 ;;   M-RET          org-meta-return
