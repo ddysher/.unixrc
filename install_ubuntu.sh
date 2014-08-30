@@ -156,6 +156,7 @@ function InstallMongoDB() {
 function InstallVagrant() {
   wget $VAGRANT_URL
   sudo dpkg -i $VAGRANT_PACKAGE
+  sudo wget https://raw.github.com/kura/vagrant-bash-completion/master/etc/bash_completion.d/vagrant -O /etc/bash_completion.d/vagrant
 }
 
 
