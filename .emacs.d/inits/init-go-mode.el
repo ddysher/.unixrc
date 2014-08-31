@@ -31,14 +31,7 @@
   (local-set-key (kbd "M-,") 'pop-tag-mark) ; same as M-*, but locally
   (local-set-key (kbd "M-.") 'godef-jump)
   (local-set-key (kbd "C-c .") 'godef-jump-other-window)
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  ;; Workaround of a bug in godef (cannot jump if working in forked project).
-  (if (and (string-match "/ddysher/kubernetes/" (buffer-file-name))
-           (not (member "[ddysher] " 'mode-line-format)))
-      (add-to-list 'mode-line-format "[ddysher] "))
-  (if (and (string-match "/GoogleCloudPlatform/kubernetes/" (buffer-file-name))
-           (not (member "[Google] " 'mode-line-format)))
-      (add-to-list 'mode-line-format "[Google] ")))
+  (add-hook 'before-save-hook 'gofmt-before-save))
 
 (add-hook 'go-mode-hook 'go-mode-custom-hook)
 (add-hook 'go-mode-hook 'go-eldoc-setup)
