@@ -55,7 +55,7 @@ export EDITOR="emacsclient"     # TODO: make sure emacs server started
 export GOPATH=$HOME/code/source/go-workspace
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/code/source/go-workspace/bin
-export PATH=$PATH:$TOOLS/arcanist/bin:
+export PATH=$PATH:$TOOLS/arcanist/bin
 
 
 ##-------------------------------------------------------------------------------
