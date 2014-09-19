@@ -51,11 +51,10 @@ source $ZSH/oh-my-zsh.sh        # Re-exec shell script
 source $TOOLS/z/z.sh            # Enable z.sh
 bindkey -e                      # Bind keys
 
-export EDITOR="emacsclient"     # TODO: make sure emacs server started
 export GOPATH=$HOME/code/source/go-workspace
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/code/source/go-workspace/bin
-export PATH=$PATH:$TOOLS/arcanist/bin:
+export PATH=$PATH:$TOOLS/arcanist/bin
 
 
 ##-------------------------------------------------------------------------------
@@ -70,6 +69,8 @@ if [[ `uname` == "Darwin" ]]; then
   alias emacs="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
   alias emacsnw="TERM=xterm-256color /Applications/Emacs.app/Contents/MacOS/Emacs -nw"
   alias emacsserver="/Applications/Emacs.app/Contents/MacOS/Emacs"
+  # Need full path for EDITOR variable in OSX.
+  export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
   export HOMEBREW_TEMP=/usr/local/TEMP
   export DOCKER_HOST=tcp://192.168.59.103:2375
   source `brew --prefix`/etc/profile.d/z.sh
@@ -78,6 +79,7 @@ elif [[ `uname` == "Linux" ]]; then
   alias emacs="/usr/local/bin/emacsclient -n"
   alias emacsnw="TERM=xterm-256color /usr/local/bin/emacs -nw"
   alias emacsserver="/usr/local/bin/emacs"
+  export EDITOR="emacsclient"     # TODO: make sure emacs server started
 fi
 
 

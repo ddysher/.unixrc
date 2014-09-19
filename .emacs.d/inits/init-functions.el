@@ -147,5 +147,9 @@ split window, then put cursor at top left."
   (multi-term-dedicated-open)
   (multi-term-dedicated-select))
 
+(defun show-emacs-pid ()
+  (interactive)
+  (message "emacs pid: %s" (emacs-pid)))
+
 
 (provide 'init-functions)
