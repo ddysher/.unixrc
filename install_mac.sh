@@ -59,7 +59,7 @@ function InstallSystemPkg() {
 
   # Basic packages
   echo "Installing packages..."
-  sudo brew install wget tree w3m pkg-config automake autoconf mercurial
+  sudo brew install wget tree w3m pkg-config automake autoconf mercurial ghostscript
 
   # Resolve any conflict
   sudo brew link --overwrite node
