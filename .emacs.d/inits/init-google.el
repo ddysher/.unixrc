@@ -24,6 +24,10 @@
     ;; If client name is not nil, show client name at mode line.
     (if client-name (add-to-list 'mode-line-format (format "[%s]  " client-name)))))
 
+(defun kill-client-buffers (client-name)
+  (interactive "sEnter client name:")
+  (message client-name))
+
 (add-hook 'find-file-hook 'google3-custom-hook)
 (add-hook 'dired-file-hook 'google3-custom-hook)
 (load-file "/google/src/head/depot/eng/elisp/google.el")

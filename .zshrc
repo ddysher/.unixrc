@@ -91,9 +91,11 @@ if [[ `hostname` == "Deyuans-Macbook-Air.local" ]]; then
   alias mysqladmin=/usr/local/mysql/bin/mysqladmin
   alias mysqld_safe=/usr/local/mysql/bin/mysqld_safe
 elif [[ `hostname` == "deyuan.pit.corp.google.com" ]]; then
+  unsetopt correct_all          # Do not autocorrect
   export P4EDITOR="emacsclient"
+  source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
+  source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
   source /etc/bash_completion.d/g4d
-  unsetopt correct_all          # do not autocorrect
 elif [[ `hostname` == "deyuan-macbookpro.roam.corp.google.com" ]]; then
   source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
   source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
