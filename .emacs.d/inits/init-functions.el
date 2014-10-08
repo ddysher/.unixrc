@@ -20,14 +20,40 @@
   (split-desktop-window-erc)
   (other-window 1)
   (window-configuration-to-register ?e)
-  ;; Create regular window configuration.
-  (split-desktop-window-regular)
+  ;; Create regular 2-window configuration.
+  (split-desktop-window-regular-2)
+  (other-window 3)
+  (switch-to-buffer "\*terminal<1>\*")
+  (other-window 2)
+  (window-configuration-to-register ?g)
+  ;; Create regular 3-window configuration.
+  (split-desktop-window-regular-3)
   (other-window 4)
   (switch-to-buffer "\*terminal<1>\*")
   (other-window 3)
   (window-configuration-to-register ?r))
 
-(defun split-desktop-window-regular ()
+(defun split-desktop-window-regular-2 ()
+  "Split desktop window for regular workflow. Clear window first,
+split window, then put cursor at top left."
+  (interactive)
+  (delete-other-windows)
+  (switch-to-buffer "\*scratch\*")
+  ;; Splite window
+  (split-window-below)
+  (split-window-right)
+  (other-window 2)
+  (split-window-right)
+  (split-window-right)
+  ;; Adjust window size
+  (balance-windows)
+  (shrink-window 25)                    ; shrink bottom windows
+  (shrink-window-horizontally 10)       ; shrink bottom left window
+  (other-window 2)
+  (shrink-window-horizontally 10)       ; shrink bottom right window
+  (other-window 1))
+
+(defun split-desktop-window-regular-3 ()
   "Split desktop window for regular workflow. Clear window first,
 split window, then put cursor at top left."
   (interactive)
@@ -42,7 +68,7 @@ split window, then put cursor at top left."
   (split-window-right)
   ;; Adjust window size
   (balance-windows)
-  (shrink-window 30)                    ; shrink bottom windows
+  (shrink-window 25)                    ; shrink bottom windows
   (shrink-window-horizontally 10)       ; shrink bottom left window
   (other-window 2)
   (shrink-window-horizontally 10)       ; shrink bottom right window
