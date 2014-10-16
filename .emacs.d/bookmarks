@@ -3,8 +3,8 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org"
- (filename . "~/Org/Everyday.org")
- (front-context-string)
+ (filename . "~/Org/General.org")
+ (front-context-string . "#+STARTUP: showa")
  (rear-context-string)
  (position . 1))
 ("elisp"
