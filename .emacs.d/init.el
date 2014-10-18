@@ -53,7 +53,7 @@
 (require 'init-gud-mode)                ; debug python
 (require 'init-geben-mode)              ; debug php
 (require 'init-python-mode)
-(require 'init-protobuf-mode)
+;;(require 'init-protobuf-mode)
 
 ;; My custom mode, functions, etc.
 (require 'init-keys)

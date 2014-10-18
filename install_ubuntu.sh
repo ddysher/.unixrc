@@ -51,7 +51,6 @@ function InstallAll() {
   InstallMongoDB
   InstallVagrant
   InstallDocker
-  InstallKubernetes
 
   # Setup environment and clean up.
   SetupEnvironment
@@ -168,14 +167,6 @@ function InstallDocker() {
   sudo apt-get install -y lxc-docker
   # Give $USER non-root access
   sudo usermod -a -G docker $USER
-}
-
-
-function InstallKubernetes() {
-  # Link these binaries since we need to run some k8s scripts as root.
-  go get github.com/coreos/etcd
-  sudo ln -sf $GOPATH/bin/etcd /usr/bin/etcd
-  sudo ln -sf $GOPATH/bin/godep /usr/bin/godep
 }
 
 
