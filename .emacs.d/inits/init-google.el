@@ -25,8 +25,13 @@
     (if client-name (add-to-list 'mode-line-format (format "[%s]  " client-name)))))
 
 (defun kill-client-buffers (client-name)
+  "Kill all buffers associated with given client."
   (interactive "sEnter client name:")
-  (message client-name))
+  (dolist (buffer (buffer-list))
+    (if (buffer-file-name buffer)
+        (if (string-match client-name (buffer-file-name buffer))
+            (kill-buffer buffer))))))
+
 
 (add-hook 'find-file-hook 'google3-custom-hook)
 (add-hook 'dired-file-hook 'google3-custom-hook)
