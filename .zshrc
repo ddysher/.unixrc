@@ -51,10 +51,11 @@ source $ZSH/oh-my-zsh.sh        # Re-exec shell script
 source $TOOLS/z/z.sh            # Enable z.sh
 bindkey -e                      # Bind keys
 
+# Globally export go workspace, binary, project script.
 export GOPATH=$HOME/code/source/go-workspace
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/code/source/go-workspace/bin
-export PATH=$PATH:$TOOLS/arcanist/bin
+export PATH=$PATH:$HOME/code/source/go-workspace/src/github.com/GoogleCloudPlatform/kubernetes/cluster
 
 
 ##-------------------------------------------------------------------------------
