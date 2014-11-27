@@ -101,7 +101,7 @@ elif [[ `hostname` == "deyuan-macbookpro.roam.corp.google.com" ]]; then
   source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
   source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
 elif [[ `hostname` == "watermelon" ]]; then
-  # source '$HOME/code/source/google-cloud-sdk/path.zsh.inc'
-  # source '$HOME/code/source/google-cloud-sdk/completion.zsh.inc'
+  source '$HOME/code/source/google-cloud-sdk/path.zsh.inc'
+  source '$HOME/code/source/google-cloud-sdk/completion.zsh.inc'
   # eval `dircolors ~/.dir_colors` # do not using annoying background for 'ls'
 fi
