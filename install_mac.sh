@@ -53,7 +53,7 @@ function InstallAll() {
 function InstallSystemPkg() {
   # Install and/or update homebrew
   echo "Installing homebrew..."
-  ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   echo "Updating homebrew..."
   brew update
 
