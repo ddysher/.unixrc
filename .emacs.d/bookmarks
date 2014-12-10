@@ -13,8 +13,8 @@
  (rear-context-string)
  (position . 1))
 ("python"
- (filename . "~/code/language/python/assert.py")
- (front-context-string . "def div(val1, va")
+ (filename . "~/code/language/python/string.py")
+ (front-context-string . "# Experiment wit")
  (rear-context-string)
  (position . 1))
 ("go"

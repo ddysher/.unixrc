@@ -30,7 +30,7 @@
   (dolist (buffer (buffer-list))
     (if (buffer-file-name buffer)
         (if (string-match client-name (buffer-file-name buffer))
-            (kill-buffer buffer))))))
+            (kill-buffer buffer)))))
 
 
 (add-hook 'find-file-hook 'google3-custom-hook)
