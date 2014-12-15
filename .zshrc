@@ -56,6 +56,8 @@ export GOPATH=$HOME/code/source/go-workspace
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/code/source/go-workspace/bin
 export PATH=$PATH:$HOME/code/source/go-workspace/src/github.com/GoogleCloudPlatform/kubernetes/cluster
+source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
+source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
 
 
 ##-------------------------------------------------------------------------------
@@ -93,14 +95,8 @@ if [[ `hostname` == "Deyuans-Macbook-Air.local" ]]; then
 elif [[ `hostname` == "deyuan.pit.corp.google.com" ]]; then
   unsetopt correct_all          # Do not autocorrect
   export P4EDITOR="emacsclient"
-  source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
-  source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
   source /etc/bash_completion.d/g4d
 elif [[ `hostname` == "deyuan-macbookpro.roam.corp.google.com" ]]; then
-  source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
-  source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
 elif [[ `hostname` == "watermelon" ]]; then
-  source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
-  source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
   # eval `dircolors ~/.dir_colors` # do not using annoying background for 'ls'
 fi
