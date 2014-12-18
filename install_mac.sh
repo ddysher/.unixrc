@@ -77,6 +77,9 @@ function InstallThirdPartyPkg() {
 
 
 function InstallEmacs() {
+  cd tools
+  git clone git://git.savannah.gnu.org/emacs.git
+  cd -
   cd tools/emacs
   ./autogen.sh
   ./configure --with-ns
