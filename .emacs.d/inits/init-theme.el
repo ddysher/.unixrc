@@ -16,8 +16,10 @@
                       :box '(:line-width 1 :style released-button)))
 
 (load-zenburn)
+;; Generic fonts
 (cond (*linux*  (set-default-font "Inconsolata-10")))
-(cond (*macpro* (set-default-font "Monaco-11")))
+(cond (*darwin* (set-default-font "Monaco-11")))
+;; Machine specifc fonts
 (cond (*macair* (set-default-font "Monaco-12")))
 
 
