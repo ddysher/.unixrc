@@ -8,6 +8,7 @@
 (setq erc-hide-list '("JOIN" "PART" "QUIT" "NICK"))
 ;; Set default erc server to "deyuan.me", which has znc bouncer running.
 ;; To connect, use "deyuan.me:6667". Note password is username:password.
+;; Original setting is "irc.freenode.net".
 (setq erc-server "deyuan.me")
 
 (defun erc-mode-custom-hook ()
