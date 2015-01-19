@@ -4,16 +4,19 @@ set +x
 #
 # Package versions
 #
-GO_VERSION="1.3"
-NODE_VERSION="v0.10.31"         # node package contains npm
-EMACS_VERSION="dev"
+GO_VERSION="1.4"
+EMACS_VERSION="24.4"
+VAGRANT_VERSION="1.7.2"
+NODE_VERSION="v0.10.35"
 MONGODB_VERSION="2.6.3"
-VAGRANT_VERSION="1.6.3"
 
 
 #
 # DO NOT CHANGE (Assume Ubuntu 64bit, rely on package naming convention).
 #
+EMACS_PKG="emacs-${EMACS_VERSION}.tar.xz"
+EMACS_DIR="emacs-${EMACS_VERSION}"
+EMACS_URL="http://gnu.mirror.constant.com/emacs/emacs-${EMACS_VERSION}.tar.xz"
 NODE_PACKAGE="node-$NODE_VERSION-linux-x64.tar.gz"
 NODE_DIR="node-$NODE_VERSION-linux-x64"
 NODE_URL="http://nodejs.org/dist/$NODE_VERSION/$NODE_PACKAGE"
@@ -29,32 +32,31 @@ VAGRANT_URL="https://dl.bintray.com/mitchellh/vagrant/$VAGRANT_PACKAGE"
 
 #
 # Entry point
-# NOTE: the installation order matters.
 #
 function InstallAll() {
-
   if [[ $USER = "root" ]]; then
     echo "Do not run as root, configuration depends on user name."
     exit
   fi
 
-  # Install system packages to /usr/.
+  # Install system managed packages.
   InstallSystemPkg
 
-  # Install packages to /usr/local/.
+  # Install third party managed package.
+  InstallThirdPartyPkg
+
+  # Install packages.
   git submodule init
   git submodule update
-  InstallThirdPartyPkg
+  InstallDocker
   InstallEmacs
   InstallGo
-  InstallNodeJs
   InstallMongoDB
+  InstallNodeJs
   InstallVagrant
-  InstallDocker
 
-  # Setup environment and clean up.
+  # Setup environment.
   SetupEnvironment
-  CleanUp
 }
 
 
@@ -73,13 +75,17 @@ function InstallSystemPkg() {
        compizconfig-settings-manager compiz-plugins-extra
   # Language tools
   sudo apt-get install -y \
-       markdown python-pip php5 php5-mysql php5-gd php5-dev php5-curl \
-       php-apc php5-cli php5-json python-dev g++ libglib2.0-dev \
-       libevent-dev meld lua5.2
-  # Install required packages for emacs.
+       markdown lua5.2 ruby2.0 \
+       python-pip python-dev \
+       default-jre default-jdk \
+       php5 php5-mysql php5-gd php5-dev php5-curl php-apc php5-cli php5-json \
+       g++ libglib2.0-dev libevent-dev meld
+  # Required system packages for emacs
   sudo apt-get install -y \
        texinfo libxpm-dev libpng-dev libgif-dev libjpeg-dev libtiff-dev \
        libgtk-3-dev libncurses5-dev w3m
+  # Entertainment
+  sudo apt-get install -y vlc
 }
 
 
@@ -90,10 +96,12 @@ function InstallThirdPartyPkg() {
 
 
 function InstallEmacs() {
-  cd tools
-  git clone git://git.savannah.gnu.org/emacs.git
-  cd -
-  cd tools/emacs
+  if [[ ! -e ${EMACS_PACKAGE} ]]; then
+    wget ${EMACS_URL}
+  fi
+
+  tar -xvf ${EMACS_PACKAGE}
+  cd ${EMACS_DIR}
   ./autogen.sh
   ./configure
   make
@@ -102,6 +110,8 @@ function InstallEmacs() {
   sudo ln -sf /usr/local/bin/emacs /usr/bin/emacs
   sudo ln -sf /usr/local/bin/emacs /usr/bin/emacs
   sudo ln -sf /usr/local/bin/emacsclient /usr/bin/emacsclient
+  rm -rf ${EMACS_PACKAGE}
+  rm -rf ${EMACS_DIR}
 }
 
 
@@ -120,6 +130,7 @@ function InstallGo() {
   go get github.com/tools/godep
   go get code.google.com/p/rog-go/exp/cmd/godef
   go get code.google.com/p/go.tools/cmd/goimports
+  rm -rf $GO_PACKAGE
 }
 
 
@@ -133,6 +144,10 @@ function InstallNodeJs() {
   sudo ln -sf /usr/local/bin/npm /usr/bin/npm
   npm config set tmp /tmp
   sudo npm install -g express grunt grunt-cli bower
+  rm -rf $NODE_PACKAGE
+  cd /usr/local
+  sudo rm -rf ChangeLog GNU-AGPL-3.0 LICENSE README README.md THIRD-PARTY-NOTICES
+  cd -
 }
 
 
@@ -140,6 +155,7 @@ function InstallMongoDB() {
   if [[ ! -e $MONGODB_PACKAGE ]]; then
     wget $MONGODB_URL
   fi
+  # MongoDB has one more level of directory.
   sudo tar -C /usr/local -xvf $MONGODB_PACKAGE --strip 1
   # Set up MongoDB
   # TODO: A better solution for startup daemon.
@@ -152,13 +168,16 @@ function InstallMongoDB() {
   if [[ ! -d /data/db ]]; then
     sudo mkdir -p /data/db
   fi
+  rm -rf $MONGODB_PACKAGE
 }
 
 
 function InstallVagrant() {
-  wget $VAGRANT_URL
+  if [[ ! -e $VAGRANT_PACKAGE ]]; then
+    wget $VAGRANT_URL
+  fi
   sudo dpkg -i $VAGRANT_PACKAGE
-  sudo wget https://raw.github.com/kura/vagrant-bash-completion/master/etc/bash_completion.d/vagrant -O /etc/bash_completion.d/vagrant
+  rm -rf $VAGRANT_PACKAGE
 }
 
 
@@ -168,7 +187,7 @@ function InstallDocker() {
   sudo sh -c "echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
   sudo apt-get update
   sudo apt-get install -y lxc-docker
-  # Give $USER non-root access
+  # Give $USER non-root access, need restart for this to work.
   sudo usermod -a -G docker $USER
 }
 
@@ -194,14 +213,6 @@ function SetupEnvironment() {
     git clone https://github.com/ddysher/code.git
     cd -
   fi
-}
-
-
-function CleanUp() {
-  sudo rm -rf $NODE_PACKAGE $MONGODB_PACKAGE $GO_PACKAGE $VAGRANT_PACKAGE
-  cd /usr/local
-  sudo rm -rf ChangeLog GNU-AGPL-3.0 LICENSE README README.md THIRD-PARTY-NOTICES
-  cd -
 }
 
 

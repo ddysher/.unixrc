@@ -34,7 +34,7 @@ setopt NO_BEEP
 # Which plugins would you like to load? (plugins can be found in $ZSH/plugins/*)
 # Custom plugins may be added to $ZSH/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git python ruby)
+plugins=(git python go vagrant)
 
 
 ##------------------------------------------------------------------------------
