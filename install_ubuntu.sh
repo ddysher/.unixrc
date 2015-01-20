@@ -14,7 +14,7 @@ MONGODB_VERSION="2.6.3"
 #
 # DO NOT CHANGE (Assume Ubuntu 64bit, rely on package naming convention).
 #
-EMACS_PKG="emacs-${EMACS_VERSION}.tar.xz"
+EMACS_PACKAGE="emacs-${EMACS_VERSION}.tar.xz"
 EMACS_DIR="emacs-${EMACS_VERSION}"
 EMACS_URL="http://gnu.mirror.constant.com/emacs/emacs-${EMACS_VERSION}.tar.xz"
 NODE_PACKAGE="node-$NODE_VERSION-linux-x64.tar.gz"
