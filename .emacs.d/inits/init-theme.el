@@ -17,7 +17,7 @@
 
 (load-zenburn)
 ;; Generic fonts
-(cond (*linux*  (set-default-font "Inconsolata-10")))
+(cond (*linux*  (set-default-font "Inconsolata-8")))
 (cond (*darwin* (set-default-font "Monaco-11")))
 ;; Machine specifc fonts
 (cond (*macair* (set-default-font "Monaco-12")))

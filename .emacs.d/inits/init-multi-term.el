@@ -12,12 +12,12 @@
       (term-char-mode)
     (term-line-mode)))
 
-(defun term-window-width ()
-  "The method is defined in term.el under emacs source.  Redefined it since
-terminal use smaller font size, while emacs still keep the same window size.
-The 1.15 scale is based on experiment. The method should be used along with
-the (text-scale-decrease 1), see below hook."
-  (/ (* (window-width) 115) 100))
+;; (defun term-window-width ()
+;;   "The method is defined in term.el under emacs source.  Redefined it since
+;; terminal use smaller font size, while emacs still keep the same window size.
+;; The 1.15 scale is based on experiment. The method should be used along with
+;; the (text-scale-decrease 1), see below hook."
+;;   (/ (* (window-width) 115) 100))
 
 (defun term-mode-custom-hook ()
   (setq multi-term-program "/bin/zsh")  ; use zsh shell
@@ -26,7 +26,7 @@ the (text-scale-decrease 1), see below hook."
   (setq term-buffer-maximum-size 10000) ; increase max buffer size
   (setq-local mode-line-format (remq 'mode-line-modified mode-line-format))
   (setenv "TERMINFO" "~/.Terminfo")     ; what's this?
-  (text-scale-decrease 1)               ; use smaller size for term
+  ;; (text-scale-decrease 1)               ; use smaller size for term
   ;; NOTE: key bindings below applies to char-mode.
   ;; delete some key bindings from elpa/xx/multi-term.el.
   (setq term-bind-key-alist

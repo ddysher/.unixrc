@@ -12,8 +12,8 @@
 (setq erc-server "deyuan.me")
 
 (defun erc-mode-custom-hook ()
-  (setq truncate-lines t)
-  (text-scale-decrease 1))
+  ;; (text-scale-decrease 1)               ; use smaller size for term
+  (setq truncate-lines t) )
 
 (add-hook 'erc-mode-hook 'erc-mode-custom-hook)
 
