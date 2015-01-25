@@ -234,6 +234,8 @@ function SetupEnvironment() {
     git clone https://github.com/ddysher/code.git
     cd -
   fi
+  # Link etcd (TODO: better way)
+  sudo ln -sf ~/code/source/go-workspace/bin/etcd /usr/bin/etcd
 }
 
 

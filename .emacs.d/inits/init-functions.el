@@ -47,10 +47,10 @@ split window, then put cursor at top left."
   (split-window-right)
   ;; Adjust window size
   (balance-windows)
-  (shrink-window 25)                    ; shrink bottom windows
-  (shrink-window-horizontally 10)       ; shrink bottom left window
+  (shrink-window 30)                    ; shrink bottom windows
+  (shrink-window-horizontally 15)       ; shrink bottom left window
   (other-window 2)
-  (shrink-window-horizontally 10)       ; shrink bottom right window
+  (shrink-window-horizontally 15)       ; shrink bottom right window
   (other-window 1))
 
 (defun split-desktop-window-regular-3 ()
@@ -68,10 +68,10 @@ split window, then put cursor at top left."
   (split-window-right)
   ;; Adjust window size
   (balance-windows)
-  (shrink-window 25)                    ; shrink bottom windows
-  (shrink-window-horizontally 10)       ; shrink bottom left window
+  (shrink-window 30)                    ; shrink bottom windows
+  (shrink-window-horizontally 15)       ; shrink bottom left window
   (other-window 2)
-  (shrink-window-horizontally 10)       ; shrink bottom right window
+  (shrink-window-horizontally 15)       ; shrink bottom right window
   (other-window 1))
 
 (defun split-desktop-window-terminal ()
