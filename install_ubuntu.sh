@@ -66,7 +66,8 @@ function InstallSystemPkg() {
   sudo apt-get update
   # Basic tools
   sudo apt-get install -y \
-       git wget curl zsh mercurial build-essential exfat-fuse exfat-utils
+       git wget curl zsh mercurial build-essential exfat-fuse exfat-utils \
+       terminator
   # Build tools
   sudo apt-get install -y \
        cmake automake libtool
