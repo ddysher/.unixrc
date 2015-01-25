@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org"
+(("tool"
+ (filename . "~/code/tool/README.md")
+ (front-context-string . "## Experiment wi")
+ (rear-context-string)
+ (position . 1))
+("org"
  (filename . "~/Org/General.org")
  (front-context-string . "#+STARTUP: showa")
  (rear-context-string)
