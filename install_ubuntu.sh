@@ -4,12 +4,12 @@ set +x
 #
 # Package versions
 #
-GO_VERSION="1.4"
 EMACS_VERSION="24.4"
-VAGRANT_VERSION="1.7.2"
-NODE_VERSION="v0.10.35"
+GO_VERSION="1.4"
 MONGODB_VERSION="2.6.3"
-
+NODE_VERSION="v0.10.35"
+VAGRANT_VERSION="1.7.2"
+VIRTUALBOX_VERSION="4.3"
 
 #
 # DO NOT CHANGE (Assume Ubuntu 64bit, rely on package naming convention).
@@ -17,15 +17,15 @@ MONGODB_VERSION="2.6.3"
 EMACS_PACKAGE="emacs-${EMACS_VERSION}.tar.xz"
 EMACS_DIR="emacs-${EMACS_VERSION}"
 EMACS_URL="http://gnu.mirror.constant.com/emacs/emacs-${EMACS_VERSION}.tar.xz"
-NODE_PACKAGE="node-$NODE_VERSION-linux-x64.tar.gz"
-NODE_DIR="node-$NODE_VERSION-linux-x64"
-NODE_URL="http://nodejs.org/dist/$NODE_VERSION/$NODE_PACKAGE"
-MONGODB_PACKAGE="mongodb-linux-x86_64-$MONGODB_VERSION.tgz"
-MONGODB_DIR="mongodb-linux-x86_64-$MONGODB_VERSION"
-MONGODB_URL="http://fastdl.mongodb.org/linux/$MONGODB_PACKAGE"
 GO_PACKAGE="go$GO_VERSION.linux-amd64.tar.gz"
 GO_DIR="go"                     # package gets renamed after unzip.
 GO_URL="http://golang.org/dl/$GO_PACKAGE"
+MONGODB_PACKAGE="mongodb-linux-x86_64-$MONGODB_VERSION.tgz"
+MONGODB_DIR="mongodb-linux-x86_64-$MONGODB_VERSION"
+MONGODB_URL="http://fastdl.mongodb.org/linux/$MONGODB_PACKAGE"
+NODE_PACKAGE="node-$NODE_VERSION-linux-x64.tar.gz"
+NODE_DIR="node-$NODE_VERSION-linux-x64"
+NODE_URL="http://nodejs.org/dist/$NODE_VERSION/$NODE_PACKAGE"
 VAGRANT_PACKAGE="vagrant_${VAGRANT_VERSION}_x86_64.deb"
 VAGRANT_URL="https://dl.bintray.com/mitchellh/vagrant/$VAGRANT_PACKAGE"
 
@@ -55,6 +55,7 @@ function InstallAll() {
   InstallNodeJs
   InstallOwncloud
   InstallVagrant
+  InstallVirtualbox
 
   # Setup environment.
   SetupEnvironment
@@ -183,6 +184,15 @@ function InstallVagrant() {
 }
 
 
+function InstallVirtualbox() {
+  sudo sh -c "echo deb http://download.virtualbox.org/virtualbox/debian trusty contrib > /etc/apt/sources.list.d/virtualbox.list"
+  wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+  rm -rf oracle_vbox.asc
+  sudo apt-get update
+  sudo apt-get install -y virtualbox-${VIRTUALBOX_VERSION}
+}
+
+
 function InstallDocker() {
   # Only works for ubuntu >= 14.04
   sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
@@ -192,6 +202,7 @@ function InstallDocker() {
   # Give $USER non-root access, need restart for this to work.
   sudo usermod -a -G docker $USER
 }
+
 
 function InstallOwncloud() {
   wget http://download.opensuse.org/repositories/isv:ownCloud:desktop/xUbuntu_14.04/Release.key
