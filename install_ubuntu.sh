@@ -53,6 +53,7 @@ function InstallAll() {
   InstallGo
   InstallMongoDB
   InstallNodeJs
+  InstallOwncloud
   InstallVagrant
 
   # Setup environment.
@@ -191,6 +192,14 @@ function InstallDocker() {
   sudo usermod -a -G docker $USER
 }
 
+function InstallOwncloud() {
+  wget http://download.opensuse.org/repositories/isv:ownCloud:desktop/xUbuntu_14.04/Release.key
+  sudo apt-key add - < Release.key
+  rm -rf Release.key
+  sudo sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/xUbuntu_14.04/ /' > /etc/apt/sources.list.d/owncloud-client.list"
+  sudo apt-get update
+  sudo apt-get install -y owncloud-client
+}
 
 function SetupEnvironment() {
   # Use zsh
