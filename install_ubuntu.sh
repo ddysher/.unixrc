@@ -217,9 +217,9 @@ function SetupEnvironment() {
   # Use zsh
   sudo chsh -s /usr/bin/zsh $USER
   # Intall links
-  rm -rf ~/.emacs.d ~/.zshrc	# Force delete first
-  sudo ln -sf ~/.unixrc/.emacs.d ~/.emacs.d
-  sudo ln -sf ~/.unixrc/.zshrc ~/.zshrc
+  ln -sf ~/.unixrc/.emacs.d ~/.emacs.d
+  ln -sf ~/.unixrc/.zshrc ~/.zshrc
+  ln -sf ~/.unixrc/.config/terminator .config/terminator
   # Set up z
   if [[ ! -e ~/.z ]]; then
     touch ~/.z

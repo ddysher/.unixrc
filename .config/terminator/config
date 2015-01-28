@@ -1,0 +1,26 @@
+[global_config]
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  handle_size = 2
+[keybindings]
+  insert_number = None
+  switch_to_tab_1 = None
+[profiles]
+  [[default]]
+    use_system_font = False
+    background_darkness = 1.06
+    background_image = None
+    foreground_color = "#ffffff"
+    show_titlebar = False
+    font = Inconsolata Medium 10
+    background_color = "#2e3436"
+    scrollback_infinite = True
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+      profile = default
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]
