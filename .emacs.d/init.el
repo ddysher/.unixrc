@@ -52,6 +52,7 @@
 (require 'init-js2-mode)
 (require 'init-web-mode)
 (require 'init-gud-mode)                ; debug python
+(require 'init-java-mode)
 (require 'init-geben-mode)              ; debug php
 (require 'init-python-mode)
 ;;(require 'init-protobuf-mode)
