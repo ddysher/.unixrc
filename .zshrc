@@ -53,9 +53,9 @@ bindkey -e                      # Bind keys
 
 # Globally export go workspace, binary, project script.
 export GOPATH=$HOME/code/source/go-workspace
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$HOME/code/source/go-workspace/bin
-export PATH=$PATH:$HOME/code/source/go-workspace/src/github.com/GoogleCloudPlatform/kubernetes/cluster
+export PATH=/usr/local/go/bin:$PATH
+export PATH=$HOME/code/source/go-workspace/bin:$PATH
+export PATH=$HOME/code/source/go-workspace/src/github.com/GoogleCloudPlatform/kubernetes/cluster:$PATH
 source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
 source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
 
