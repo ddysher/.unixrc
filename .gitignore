@@ -1,2 +1,3 @@
 # Directories to ignore
 tools/emacs
+.emacs.d/.python-environments

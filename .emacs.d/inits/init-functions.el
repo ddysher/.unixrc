@@ -9,6 +9,10 @@
   (interactive)
   (add-hook 'window-numbering-before-hook
             'window-numbering-mode-custom-hook)
+  ;; Create simple window configuration.
+  (split-desktop-window-simple)
+  (other-window 1)
+  (window-configuration-to-register ?s)
   ;; Create terminal window configuration.
   (split-desktop-window-terminal)
   (other-window 2)
@@ -32,6 +36,15 @@
   (switch-to-buffer "\*terminal<1>\*")
   (other-window 3)
   (window-configuration-to-register ?r))
+
+(defun split-desktop-window-simple ()
+  "Split desktop window for simple workflow. Clear window first,
+split window, then put cursor at top left."
+  (interactive)
+  (delete-other-windows)
+  (switch-to-buffer "\*scratch\*")
+  ;; Splite window
+  (split-window-right))
 
 (defun split-desktop-window-regular-2 ()
   "Split desktop window for regular workflow. Clear window first,

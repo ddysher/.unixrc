@@ -10,6 +10,7 @@ MONGODB_VERSION="2.6.3"
 NODE_VERSION="v0.10.35"
 VAGRANT_VERSION="1.7.2"
 VIRTUALBOX_VERSION="4.3"
+GLOBAL_VERSION="6.4"
 
 #
 # DO NOT CHANGE (Assume Ubuntu 64bit, rely on package naming convention).
@@ -28,7 +29,9 @@ NODE_DIR="node-$NODE_VERSION-linux-x64"
 NODE_URL="http://nodejs.org/dist/$NODE_VERSION/$NODE_PACKAGE"
 VAGRANT_PACKAGE="vagrant_${VAGRANT_VERSION}_x86_64.deb"
 VAGRANT_URL="https://dl.bintray.com/mitchellh/vagrant/$VAGRANT_PACKAGE"
-
+GLOBAL_PACKAGE="global-${GLOBAL_VERSION}.tar.gz"
+GLOBAL_DIR="global-${GLOBAL_VERSION}"
+GLOBAL_URI="http://tamacom.com/global/${GLOBAL_PACKAGE}"
 
 #
 # Entry point
@@ -83,7 +86,7 @@ function InstallSystemPkg() {
        default-jre default-jdk \
        php5 php5-mysql php5-gd php5-dev php5-curl php-apc php5-cli php5-json \
        g++ libglib2.0-dev libevent-dev meld
-  # Required system packages for emacs
+  # Required system packages for building emacs
   sudo apt-get install -y \
        texinfo libxpm-dev libpng-dev libgif-dev libjpeg-dev libtiff-dev \
        libgtk-3-dev libncurses5-dev w3m
@@ -95,6 +98,8 @@ function InstallSystemPkg() {
 function InstallThirdPartyPkg() {
   sudo pip install ipython --upgrade
   sudo pip install pylint --upgrade
+  sudo pip install virtualenv --upgrade
+  sudo pip install jedi --upgrade # For emacs jedi plugin
 }
 
 
@@ -102,7 +107,6 @@ function InstallEmacs() {
   if [[ ! -e ${EMACS_PACKAGE} ]]; then
     wget ${EMACS_URL}
   fi
-
   tar -xvf ${EMACS_PACKAGE}
   cd ${EMACS_DIR}
   ./autogen.sh
@@ -115,6 +119,18 @@ function InstallEmacs() {
   sudo ln -sf /usr/local/bin/emacsclient /usr/bin/emacsclient
   rm -rf ${EMACS_PACKAGE}
   rm -rf ${EMACS_DIR}
+
+  if [[ ! -e ${GLOBAL_PACKAGE} ]]; then
+    wget ${GLOBAL_URI}
+  fi
+  tar -xvf ${GLOBAL_PACKAGE}
+  cd ${GLOBAL_DIR}
+  ./configure
+  make
+  sudo make install
+  cd -
+  rm -rf ${GLOBAL_PACKAGE}
+  rm -rf ${GLOBAL_DIR}
 }
 
 
