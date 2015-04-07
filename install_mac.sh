@@ -73,6 +73,9 @@ function InstallThirdPartyPkg() {
   sudo easy_install pip
   sudo pip install ipython --upgrade
   sudo pip install pylint --upgrade
+  sudo pip install virtualenv --upgrade
+  sudo pip install jedi --upgrade # For emacs jedi plugin
+  sudo pip install epc --upgrade  # For emacs jedi plugin
 }
 
 
