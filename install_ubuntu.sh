@@ -57,6 +57,7 @@ function InstallAll() {
   InstallMongoDB
   InstallNodeJs
   InstallOwncloud
+  InstallRuby
   InstallVagrant
   InstallVirtualbox
 
@@ -189,6 +190,13 @@ function InstallMongoDB() {
     sudo mkdir -p /data/db
   fi
   rm -rf $MONGODB_PACKAGE
+}
+
+
+function InstallRuby() {
+  # Just clone the repos, note PATH setting in .zshrc.
+  git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+  git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 }
 
 
