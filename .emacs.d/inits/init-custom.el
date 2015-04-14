@@ -29,7 +29,7 @@
 ;; no backup files (which end with ~); prefer version control tool instead
 (setq make-backup-files nil)
 ;; enable autosave files (surrounded by #); they will be deleted after save
-(setq auto-save-default t)
+(setq auto-save-default nil)
 ;; only highlight line in active buffer
 (setq hl-line-sticky-flag nil)
 ;; disable splash screen, enter *scratch* directly
