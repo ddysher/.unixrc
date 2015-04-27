@@ -23,7 +23,7 @@
  (rear-context-string)
  (position . 1))
 ("go"
- (filename . "~/code/language/go/example/go_env.go")
+ (filename . "~/code/language/go/example/gopath.go")
  (front-context-string . "// This demonstr")
  (rear-context-string)
  (position . 1))
