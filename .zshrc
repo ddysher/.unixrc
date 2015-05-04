@@ -53,6 +53,7 @@ bindkey -e                      # Bind keys
 
 # Globally export go workspace, binary, project script, etc.
 export GOPATH=$HOME/code/source/go-workspace
+export CDPATH=$CDPATH:$GOPATH/src
 export PATH=/usr/local/go/bin:$PATH
 export PATH=$HOME/.rbenv/bin:$PATH
 export PATH=$HOME/code/source/go-workspace/bin:$PATH
