@@ -26,11 +26,12 @@
 (add-hook 'js2-mode-hook 'js2-mode-custom-hook)
 
 ;; Disable tern mode for now.
-;; (eval-after-load 'tern
-;;    '(progn
-;;       (require 'tern-auto-complete)
-;;       (tern-mode t)
-;;       (tern-ac-setup)))
+(when nil
+  (eval-after-load 'tern
+    '(progn
+       (require 'tern-auto-complete)
+       (tern-mode t)
+       (tern-ac-setup))))
 
 
 (provide 'init-js2-mode)

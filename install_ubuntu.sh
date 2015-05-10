@@ -1,10 +1,11 @@
 #!/bin/bash
 set +x
 
+# TODO: Convert to Ansible
 #
 # Package versions
 #
-EMACS_VERSION="24.4"
+EMACS_VERSION="24.5"
 GO_VERSION="1.4"
 MONGODB_VERSION="2.6.3"
 NODE_VERSION="v0.10.35"

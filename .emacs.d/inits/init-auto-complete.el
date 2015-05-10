@@ -17,7 +17,7 @@
 ;; Force an auto-complete.
 (define-key ac-mode-map (kbd "C-c o") 'auto-complete)
 
-;; Shown menu map faster.
+;; Show menu map faster.
 (setq ac-delay 0.1)
 (setq ac-auto-show-menu 0.3)
 (setq ac-quick-help-delay 0.5)
