@@ -35,7 +35,7 @@
 
 (add-hook 'find-file-hook 'google3-custom-hook)
 (add-hook 'dired-file-hook 'google3-custom-hook)
-(load-file "/google/src/head/depot/eng/elisp/google.el")
+(load-file "/google/src/head/depot/google3/devtools/editors/emacs/google.el")
 
 
 (provide 'init-google)

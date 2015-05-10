@@ -20,6 +20,7 @@
 ;;------------------------------------------------------------------------------
 ;; Bootstrap configs, need to execute before loading specific configs
 ;;------------------------------------------------------------------------------
+;; This will add "~/.emacs.d/inits" to emacs load path.
 (add-to-list 'load-path (expand-file-name "inits" user-emacs-directory))
 (require 'init-preload-all-configs)     ; must be called first
 (require 'init-site-packages)           ; init third party packages
@@ -55,7 +56,7 @@
 (require 'init-java-mode)
 (require 'init-geben-mode)              ; debug php
 (require 'init-python-mode)
-;;(require 'init-protobuf-mode)
+(require 'init-protobuf-mode)
 
 ;; My custom mode, functions, etc.
 (require 'init-keys)

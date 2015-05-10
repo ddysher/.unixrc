@@ -43,9 +43,10 @@
 (winner-mode 1)
 
 ;; Temporary & pending mode
-;; (require 'flex-mode)
-;; (require 'cool-mode)
-;; (require 'bison-mode)
+(when nil
+  (require 'flex-mode)
+  (require 'cool-mode)
+  (require 'bison-mode))
 
 
 (provide 'init-simple-misc-mode)

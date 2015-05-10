@@ -7,8 +7,9 @@
 
 
 ;; Disable smartparens for now.
-;; (require 'smartparens-config)
-;; (smartparens-global-mode t)
+(when nil
+  (require 'smartparens-config)
+  (smartparens-global-mode t))
 
 
 (provide 'init-smartparens-mode)
