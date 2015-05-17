@@ -1,15 +1,16 @@
 ;;------------------------------------------------------------------------------
 ;; Provide python mode, python-mode is built-in emacs mode.
 ;;
-;; Jedi is a Python It also helps you to find information about Python objects,
-;; such as docstring, function arguments and code location. To enable jedi,
-;; following packages are needed in emacs:
+;; Jedi is a static analysis tool for Python. It helps you to find information
+;; about Python objects, such as docstring, function arguments and code location.
+;; To enable jedi, following packages are needed in emacs:
 ;;   EPC, deferred.el, auto-complete and python-environment.el.
 ;; Also, following command and packages need to be installed in host OS:
 ;;   virtualenv, jedi, python-epc and argparse.
 ;;
 ;; Install Python server (jediepcserver.py) by running
 ;;   M-x jedi:install-server in Emacs
+;; The above command needs to be ran only once.
 ;;------------------------------------------------------------------------------
 (require-package 'epc)
 (require-package 'deferred)
