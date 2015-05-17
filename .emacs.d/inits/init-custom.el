@@ -28,7 +28,7 @@
 (setq-default indent-tabs-mode nil)
 ;; disable backup files (which end with ~); prefer version control tool instead
 (setq make-backup-files nil)
-;; disable autosave files (surrounded by #); they will be deleted after save 
+;; disable autosave files (surrounded by #); they will be deleted after save
 (setq auto-save-default nil)
 ;; only highlight line in active buffer
 (setq hl-line-sticky-flag nil)
