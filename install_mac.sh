@@ -10,12 +10,16 @@ MAC_VERSION=10.8
 # Package versions
 # Package versions do not matter that much in Mac.
 #
-GO_VERSION="1.3"
+EMACS_VERSION="24.5"
+GO_VERSION="1.4"
 
 
 #
-# DO NOT CHANGE (Assume Ubuntu 64bit, rely on package naming convention).
+# DO NOT CHANGE (Assume Mac, rely on package naming convention).
 #
+EMACS_PACKAGE="emacs-${EMACS_VERSION}.tar.xz"
+EMACS_DIR="emacs-${EMACS_VERSION}"
+EMACS_URL="http://gnu.mirror.constant.com/emacs/emacs-${EMACS_VERSION}.tar.xz"
 GO_PACKAGE="go${GO_VERSION}.darwin-amd64-osx${MAC_VERSION}.tar.gz"
 GO_DIR="go"                     # package gets renamed after unzip.
 GO_URL="http://golang.org/dl/$GO_PACKAGE"
@@ -80,16 +84,19 @@ function InstallThirdPartyPkg() {
 
 
 function InstallEmacs() {
-  cd tools
-  git clone git://git.savannah.gnu.org/emacs.git
-  cd -
-  cd tools/emacs
+  if [[ ! -e ${EMACS_PACKAGE} ]]; then
+    wget ${EMACS_URL}
+  fi
+  tar -xvf ${EMACS_PACKAGE}
+  cd ${EMACS_DIR}
   ./autogen.sh
   ./configure --with-ns
   make
   sudo make install
   yes | cp -r nextstep/Emacs.app /Applications
-  cd -
+
+  rm -rf ${EMACS_PACKAGE}
+  rm -rf ${EMACS_DIR}
 }
 
 

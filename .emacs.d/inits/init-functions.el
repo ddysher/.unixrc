@@ -42,9 +42,7 @@
 split window, then put cursor at top left."
   (interactive)
   (delete-other-windows)
-  (switch-to-buffer "\*scratch\*")
-  ;; Splite window
-  (split-window-right))
+  (switch-to-buffer "\*scratch\*"))
 
 (defun split-desktop-window-regular-2 ()
   "Split desktop window for regular workflow. Clear window first,
