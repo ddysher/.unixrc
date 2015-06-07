@@ -38,6 +38,7 @@
 (require 'init-smex)
 (require 'init-tramp)
 (require 'init-org-mode)
+(require 'init-livedown)
 (require 'init-yasnippet)
 (require 'init-multi-term)
 (require 'init-auto-complete)
