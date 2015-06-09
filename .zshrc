@@ -51,15 +51,17 @@ source $ZSH/oh-my-zsh.sh        # Re-exec shell script
 source $TOOLS/z/z.sh            # Enable z.sh
 bindkey -e                      # Bind keys
 
+# Install google cloud sdk (install it first so path below will appear first).
+source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
+source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
+# Easy access to kubectl.
+export PATH=$HOME/code/source/go-workspace/src/github.com/GoogleCloudPlatform/kubernetes/_output/local/go/bin:$PATH
 # Globally export go workspace, binary, project script, etc.
 export GOPATH=$HOME/code/source/go-workspace
 export CDPATH=$CDPATH:$GOPATH/src
 export PATH=/usr/local/go/bin:$PATH
 export PATH=$HOME/.rbenv/bin:$PATH
 export PATH=$HOME/code/source/go-workspace/bin:$PATH
-export PATH=$HOME/code/source/go-workspace/src/github.com/GoogleCloudPlatform/kubernetes/cluster:$PATH
-source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
-source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
 
 if type "rbenv" >/dev/null; then
   eval "$(rbenv init -)"
