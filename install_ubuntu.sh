@@ -277,6 +277,7 @@ function SetupEnvironment() {
   # Intall links
   ln -sf ~/.unixrc/.emacs.d ~/.emacs.d
   ln -sf ~/.unixrc/.zshrc ~/.zshrc
+  mkdir -p ~/.config
   ln -sf ~/.unixrc/.config/terminator ~/.config/terminator
   # Set up z
   if [[ ! -e ~/.z ]]; then
