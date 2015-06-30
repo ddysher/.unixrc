@@ -1,14 +1,15 @@
 #!/bin/bash
 set +x
 
-# TODO: Convert to Ansible
 #
 # Package versions
 #
+DOCKER_VERSION="1.7.0"
 EMACS_VERSION="24.5"
-GO_VERSION="1.4"
-MONGODB_VERSION="2.6.3"
-NODE_VERSION="v0.10.35"
+ETCD_VERSION="v2.0.13"
+GO_VERSION="1.4.2"
+MONGODB_VERSION="3.0.4"
+NODE_VERSION="v0.12.5"
 VAGRANT_VERSION="1.7.2"
 VIRTUALBOX_VERSION="4.3"
 GLOBAL_VERSION="6.4"
@@ -19,8 +20,11 @@ GLOBAL_VERSION="6.4"
 EMACS_PACKAGE="emacs-${EMACS_VERSION}.tar.xz"
 EMACS_DIR="emacs-${EMACS_VERSION}"
 EMACS_URL="http://gnu.mirror.constant.com/emacs/emacs-${EMACS_VERSION}.tar.xz"
+ETCD_URL="https://github.com/coreos/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-amd64.tar.gz"
+ETCD_PACKAGE="etcd-${ETCD_VERSION}-linux-amd64.tar.gz"
+ETCD_DIR="etcd-${ETCD_VERSION}-linux-amd64"
 GO_PACKAGE="go$GO_VERSION.linux-amd64.tar.gz"
-GO_DIR="go"                     # package gets renamed after unzip.
+GO_DIR="go"                     # Package gets renamed after unzip.
 GO_URL="http://golang.org/dl/$GO_PACKAGE"
 MONGODB_PACKAGE="mongodb-linux-x86_64-$MONGODB_VERSION.tgz"
 MONGODB_DIR="mongodb-linux-x86_64-$MONGODB_VERSION"
@@ -34,6 +38,7 @@ GLOBAL_PACKAGE="global-${GLOBAL_VERSION}.tar.gz"
 GLOBAL_DIR="global-${GLOBAL_VERSION}"
 GLOBAL_URI="http://tamacom.com/global/${GLOBAL_PACKAGE}"
 
+
 #
 # Entry point
 #
@@ -43,17 +48,15 @@ function InstallAll() {
     exit
   fi
 
-  # Install system managed packages.
-  InstallSystemPkg
+  InstallBasicPackages
+  InstallCustomizationPackages
 
-  # Install third party managed package.
-  InstallThirdPartyPkg
-
-  # Install packages.
   git submodule init
   git submodule update
+
   InstallDocker
   InstallEmacs
+  InstallEtcd
   InstallGo
   InstallMongoDB
   InstallNodeJs
@@ -62,51 +65,54 @@ function InstallAll() {
   InstallVagrant
   InstallVirtualbox
 
-  # Setup environment.
   SetupEnvironment
 }
 
 
-function InstallSystemPkg() {
-  # Update packages
+# Install basic packages directly from system or thirdparty managed repositories.
+function InstallBasicPackages() {
+  # Install basic tools
   sudo apt-get update
-  # Basic tools
   sudo apt-get install -y \
        git wget curl zsh mercurial build-essential exfat-fuse exfat-utils \
-       terminator
-  # Build tools
+       cmake automake libtool meld terminator wmctrl ttf-wqy-zenhei \
+       fonts-inconsolata
+  # Install language tools
   sudo apt-get install -y \
-       cmake automake libtool
-  # Customization tools
-  sudo apt-get install -y \
-       gnome-tweak-tool ttf-wqy-zenhei fonts-inconsolata wmctrl \
-       compizconfig-settings-manager compiz-plugins-extra
-  # Language tools
-  sudo apt-get install -y \
-       markdown lua5.2 ruby2.0 \
-       python-pip python-dev \
-       default-jre default-jdk \
-       php5 php5-mysql php5-gd php5-dev php5-curl php-apc php5-cli php5-json \
-       g++ libglib2.0-dev libevent-dev meld
-  # Required system packages for building emacs
-  sudo apt-get install -y \
-       texinfo libxpm-dev libpng-dev libgif-dev libjpeg-dev libtiff-dev \
-       libgtk-3-dev libncurses5-dev w3m
-  # Entertainment
-  sudo apt-get install -y vlc
-}
-
-
-function InstallThirdPartyPkg() {
+       markdown python-pip python-dev g++ libglib2.0-dev libevent-dev
   sudo pip install ipython --upgrade
   sudo pip install pylint --upgrade
   sudo pip install virtualenv --upgrade
-  sudo pip install jedi --upgrade # For emacs jedi plugin
-  sudo pip install epc --upgrade  # For emacs jedi plugin
 }
 
 
+# Install packages used to customize ubuntu (14.04).
+function InstallCustomizationPackages() {
+  sudo apt-get install -y \
+       gnome-tweak-tool compizconfig-settings-manager compiz-plugins-extra
+}
+
+
+# Only works for ubuntu >= 14.04
+function InstallDocker() {
+  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+  sudo sh -c "echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
+  sudo apt-get update
+  sudo apt-get install -y lxc-docker-${DOCKER_VERSION}
+  # Give current user non-root access, need restart machine for this to work.
+  sudo usermod -a -G docker $USER
+}
+
+
+# Installs emacs from source code, and other plugins.
 function InstallEmacs() {
+  # Install required package for building emacs and plugins.
+  sudo apt-get update
+  sudo apt-get install -y \
+       texinfo libxpm-dev libpng-dev libgif-dev libjpeg-dev libtiff-dev \
+       libgtk-3-dev libncurses5-dev w3m python-pip
+
+  # Install stock emacs.
   if [[ ! -e ${EMACS_PACKAGE} ]]; then
     wget ${EMACS_URL}
   fi
@@ -123,6 +129,7 @@ function InstallEmacs() {
   rm -rf ${EMACS_PACKAGE}
   rm -rf ${EMACS_DIR}
 
+  # Install global, a taging system for emacs.
   if [[ ! -e ${GLOBAL_PACKAGE} ]]; then
     wget ${GLOBAL_URI}
   fi
@@ -134,9 +141,26 @@ function InstallEmacs() {
   cd -
   rm -rf ${GLOBAL_PACKAGE}
   rm -rf ${GLOBAL_DIR}
+
+  # For emacs jedi plugin
+  sudo pip install jedi --upgrade
+  sudo pip install epc --upgrade
 }
 
 
+# Install etcd binaries directly (copy to /usr/local/bin).
+function InstallEtcd() {
+  if [[ ! -e ${ETCD_PACKAGE} ]]; then
+    wget ${ETCD_URL}
+  fi
+  tar xzvf ${ETCD_PACKAGE}
+  sudo cp ${ETCD_DIR}/etcd ${ETCD_DIR}/etcdctl /usr/local/bin
+  sudo ln -sf /usr/local/bin/etcd /usr/bin/etcd
+  rm -rf ${ETCD_PACKAGE} ${ETCD_DIR}
+}
+
+
+# Install go binaries directly (copy to /usr/local/go).
 function InstallGo() {
   if [[ ! -e $GO_PACKAGE ]]; then
     wget $GO_URL
@@ -145,26 +169,62 @@ function InstallGo() {
   sudo rm -rf /usr/local/go
   # Install Go to /usr/local/go/.
   sudo tar -C /usr/local -xvf $GO_PACKAGE
-  # Setup Go and instll Go tools.
+  # Make go available to root.
   sudo ln -sf /usr/local/go/bin/go /usr/bin/go
+  # Make sure we have GOPATH.
+  if [[ ! -d ~/code ]]; then
+    cd ~
+    git clone https://github.com/ddysher/code.git
+    cd -
+  fi
   export GOPATH=$HOME/code/source/go-workspace
+  # Instll Go tools.
   go get github.com/nsf/gocode
   go get github.com/tools/godep
-  go get code.google.com/p/rog-go/exp/cmd/godef
-  go get code.google.com/p/go.tools/cmd/goimports
+  go get github.com/rogpeppe/godef
+  go get golang.org/x/tools/cmd/goimports
   rm -rf $GO_PACKAGE
 }
 
 
+# Install mongodb binaries directly (copy to /usr/local/bin). All mongodb
+# binaries start with mongo*. Reinstall will overwrite them.
+function InstallMongoDB() {
+  if [[ ! -e $MONGODB_PACKAGE ]]; then
+    wget $MONGODB_URL
+  fi
+  # MongoDB has one more level of directory.
+  sudo tar -C /usr/local -xvf $MONGODB_PACKAGE --strip 1
+  # Make mongod available to root.
+  sudo ln -sf /usr/local/bin/mongod /usr/bin/mongod
+  # Create data directory.
+  if [[ ! -d /data/db ]]; then
+    sudo mkdir -p /data/db
+  fi
+  rm -rf $MONGODB_PACKAGE
+  # Set up MongoDB to start on boot. TODO: A better solution for startup daemon.
+  if false; then
+    RC_LOCAL=`cat /etc/init.d/rc.local`
+    if [[ $RC_LOCAL != *mongod* ]]; then
+      MONGODB_CMD="echo 'mongod --fork --logpath /var/log/mongodb.log --logappend'"
+      sudo sh -c "$MONGODB_CMD >> /etc/init.d/rc.local"
+    fi
+  fi
+}
+
+
+# Install nodejs binaries directly (copy to /usr/local). Uninstall is hard.
+# Reinstall will overwrite old version.
 function InstallNodeJs() {
   if [[ ! -e $NODE_PACKAGE ]]; then
     wget $NODE_URL
   fi
   sudo tar -C /usr/local -xvf $NODE_PACKAGE --strip 1
-  # Set up NodeJs
+  # Make nodejs available to root.
   sudo ln -sf /usr/local/bin/node /usr/bin/node
   sudo ln -sf /usr/local/bin/npm /usr/bin/npm
   npm config set tmp /tmp
+  # Install common packages used with nodejs
   sudo npm install -g express grunt grunt-cli bower
   rm -rf $NODE_PACKAGE
   cd /usr/local
@@ -173,34 +233,25 @@ function InstallNodeJs() {
 }
 
 
-function InstallMongoDB() {
-  if [[ ! -e $MONGODB_PACKAGE ]]; then
-    wget $MONGODB_URL
-  fi
-  # MongoDB has one more level of directory.
-  sudo tar -C /usr/local -xvf $MONGODB_PACKAGE --strip 1
-  # Set up MongoDB
-  # TODO: A better solution for startup daemon.
-  sudo ln -sf /usr/local/bin/mongod /usr/bin/mongod
-  RC_LOCAL=`cat /etc/init.d/rc.local`
-  if [[ $RC_LOCAL != *mongod* ]]; then
-    MONGODB_CMD="echo 'mongod --fork --logpath /var/log/mongodb.log --logappend'"
-    sudo sh -c "$MONGODB_CMD >> /etc/init.d/rc.local"
-  fi
-  if [[ ! -d /data/db ]]; then
-    sudo mkdir -p /data/db
-  fi
-  rm -rf $MONGODB_PACKAGE
+# Install owncloud client, for ubuntu 14.04
+function InstallOwncloud() {
+  wget http://download.opensuse.org/repositories/isv:ownCloud:desktop/xUbuntu_14.04/Release.key
+  sudo apt-key add - < Release.key
+  rm -rf Release.key
+  sudo sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/xUbuntu_14.04/ /' > /etc/apt/sources.list.d/owncloud-client.list"
+  sudo apt-get update
+  sudo apt-get install -y owncloud-client
 }
 
 
+# Install ruby - just clone rbenv, and set PATH in .zshrc.
 function InstallRuby() {
-  # Just clone the repos, note PATH setting in .zshrc.
   git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
   git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 }
 
 
+# Install vagrant using dpkg.
 function InstallVagrant() {
   if [[ ! -e $VAGRANT_PACKAGE ]]; then
     wget $VAGRANT_URL
@@ -210,6 +261,7 @@ function InstallVagrant() {
 }
 
 
+# Install virtualbox.
 function InstallVirtualbox() {
   sudo sh -c "echo deb http://download.virtualbox.org/virtualbox/debian trusty contrib > /etc/apt/sources.list.d/virtualbox.list"
   wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
@@ -218,26 +270,6 @@ function InstallVirtualbox() {
   sudo apt-get install -y virtualbox-${VIRTUALBOX_VERSION}
 }
 
-
-function InstallDocker() {
-  # Only works for ubuntu >= 14.04
-  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-  sudo sh -c "echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
-  sudo apt-get update
-  sudo apt-get install -y lxc-docker
-  # Give $USER non-root access, need restart for this to work.
-  sudo usermod -a -G docker $USER
-}
-
-
-function InstallOwncloud() {
-  wget http://download.opensuse.org/repositories/isv:ownCloud:desktop/xUbuntu_14.04/Release.key
-  sudo apt-key add - < Release.key
-  rm -rf Release.key
-  sudo sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/xUbuntu_14.04/ /' > /etc/apt/sources.list.d/owncloud-client.list"
-  sudo apt-get update
-  sudo apt-get install -y owncloud-client
-}
 
 function SetupEnvironment() {
   # Use zsh
@@ -260,8 +292,6 @@ function SetupEnvironment() {
     git clone https://github.com/ddysher/code.git
     cd -
   fi
-  # Link etcd (TODO: better way)
-  sudo ln -sf ~/code/source/go-workspace/bin/etcd /usr/bin/etcd
 }
 
 
