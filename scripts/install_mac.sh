@@ -160,6 +160,3 @@ function SetupEnvironment() {
 function CleanUp() {
   sudo rm -rf $GO_PACKAGE
 }
-
-
-InstallAll

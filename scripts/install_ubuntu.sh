@@ -1,6 +1,8 @@
 #!/bin/bash
 set +x
 
+# Installation script for ubuntu14.04 local host.
+
 #
 # Package versions
 #
@@ -251,6 +253,35 @@ function InstallRuby() {
 }
 
 
+# Install and setup shadowsocks for ubuntu.
+# After installation, start local proxy via:
+#   $ sslocal -s $server-ip -p 8388 -b 127.0.0.1 -l 1080 -k $password -t 600 -m aes-256-cfb
+# This will start a local proxy running on 127.0.0.1:1080.
+#
+# To use the proxy on command line, run:
+#   $ proxychains zsh
+# This will bring up a new zsh session where all traffic is proxied.
+function InstallShadowsocks() {
+  sudo apt-get update
+  sudo apt-get install -y python-pip proxychains
+  sudo pip install shadowsocks
+
+  sudo cat <<EOF > /etc/shadowsocks.json
+strict_chain
+proxy_dns
+remote_dns_subnet 224
+tcp_read_time_out 15000
+tcp_connect_time_out 8000
+localnet 127.0.0.0/255.0.0.0
+quiet_mode
+
+[ProxyList]
+socks5  127.0.0.1 1080
+}
+EOF
+}
+
+
 # Install vagrant using dpkg.
 function InstallVagrant() {
   if [[ ! -e $VAGRANT_PACKAGE ]]; then
@@ -294,6 +325,3 @@ function SetupEnvironment() {
     cd -
   fi
 }
-
-
-InstallAll
