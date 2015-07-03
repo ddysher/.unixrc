@@ -6,12 +6,14 @@ set +x
 
 function InstallAll() {
   InstallBasicPackages
-
   InstallShadowsocks
   InstallOwncloud
+  InstallZnc
 
-  # Optional based on cloudprovider.
-  ChangeHostname "vultr.guest" "pitaya"
+  if false; then
+    ChangeHostname "vultr.guest" "pitaya" # Only Used for vultr cloudprovider
+    CreateUser "deyuan"                   # Optionlly create a user
+  fi
 }
 
 
@@ -66,8 +68,13 @@ function InstallOwncloud() {
   DEBIAN_FRONTEND=noninteractive apt-get -q -y install mysql-server
   sudo apt-get install -y --force-yes owncloud
 
+  # Create a config file for apache to serve 'owncloud.deyuan.me'. If the domain
+  # is not attached to the machine, then it will have no effect. Owncloud can be
+  # accessed from $public_ip/owncloud.
+  sudo mkdir /etc/ssl/apache
+  sudo cp ~/.unixrc/scripts/ssl/apache/* /etc/ssl/apache
   sudo cat <<EOF > /etc/apache2/sites-available/owncloud.conf
-<VirtualHost *:80>
+<VirtualHost owncloud.deyuan.me:80>
   ServerName owncloud.deyuan.me
   # Redirect all requests to https. Note the root "/" is relative to domain
   # 'owncloud.deyuan.me'. E.g. if we change "/" to "abc", we'll be redirected
@@ -75,7 +82,7 @@ function InstallOwncloud() {
   Redirect "/" "https://owncloud.deyuan.me"
 </VirtualHost>
 
-<VirtualHost *:443>
+<VirtualHost owncloud.deyuan.me:443>
   ServerName owncloud.deyuan.me
   ServerAdmin webmaster@localhost
   DocumentRoot /var/www/owncloud
@@ -85,8 +92,8 @@ function InstallOwncloud() {
 
   SSLEngine on
 
-  SSLCertificateFile  /etc/ssl/certs/ssl-cert-snakeoil.pem
-  SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+  SSLCertificateFile /etc/ssl/apache/deyuan.me.crt
+  SSLCertificateKeyFile /etc/ssl/apache/deyuan.me.key
 
   <FilesMatch "\.(cgi|shtml|phtml|php)$">
     SSLOptions +StdEnvVars
@@ -109,6 +116,104 @@ EOF
 }
 
 
+# Install Znc for IRC chat (running as daemon). Example configuration file:
+# Version = 1.6.0
+# <Listener l>
+#   Port = 5000
+#   IPv4 = true
+#   IPv6 = false
+#   SSL = true
+# </Listener>
+# LoadModule = webadmin
+#
+# <User ddysher>
+#   Pass       = sha256#5ff062957ecdab93248024c5e5140a113b9215665de830f51f5e808102f7adb4#W_FZ-2/zxhieih:K.Byy#
+#   Admin      = true
+#   Nick       = ddysher
+#   AltNick    = deyuan
+#   Ident      = ddysher
+#   RealName   = Deyuan Deng
+#   LoadModule = chansaver
+#   LoadModule = controlpanel
+#
+#   <Network freenode>
+#     LoadModule = simple_away
+#     Server     = irc.freenode.net 6667
+#   </Network>
+# </User>
+#
+# Notes:
+# [ ** ] To connect to this ZNC you need to connect to it as your IRC server
+# [ ** ] using the port that you supplied.  You have to supply your login info
+# [ ** ] as the IRC server password like this: user/network:pass or user:pass.
+function InstallZnc() {
+  sudo apt-get update
+  sudo apt-get install -y python-software-properties
+  sudo add-apt-repository -y ppa:teward/znc
+  sudo apt-get update
+  sudo apt-get install -y znc znc-dbg znc-dev znc-perl znc-python znc-tcl
+  sudo apt-get install -y libapache2-mod-proxy-html libxml2-dev # For apache proxy
+
+  sudo useradd --create-home -d /var/lib/znc --system --shell /sbin/nologin --comment "Account to run ZNC daemon" --user-group znc
+  sudo mkdir /var/lib/znc
+  sudo chown znc:znc /var/lib/znc
+  # Do not start ZNC when creating conf; otherwise, systemctl will fail.
+  sudo -u znc /usr/bin/znc --datadir=/var/lib/znc --makeconf
+
+  # Create a config file for apache to serve 'znc.deyuan.me'. Note we assume
+  # znc will listen on port 5000.
+  sudo mkdir /etc/ssl/apache
+  sudo cp ~/.unixrc/scripts/ssl/apache/* /etc/ssl/apache
+  sudo cat <<EOF > /etc/apache2/sites-available/znc.conf
+<VirtualHost znc.deyuan.me:80>
+  ServerName znc.deyuan.me
+  Redirect "/" "https://znc.deyuan.me"
+</VirtualHost>
+
+<VirtualHost znc.deyuan.me:443>
+  ServerName znc.deyuan.me
+
+  ProxyPreserveHost On
+  SSLEngine on
+
+  SSLCertificateFile /etc/ssl/apache/deyuan.me.crt
+  SSLCertificateKeyFile /etc/ssl/apache/deyuan.me.key
+
+  ProxyPass / http://localhost:5000/
+  ProxyPassReverse / http://localhost:5000/
+</VirtualHost>
+EOF
+
+  sudo cat <<EOF > /etc/systemd/system/znc.service
+[Unit]
+Description=ZNC, an advanced IRC bouncer
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/znc -f --datadir=/var/lib/znc
+User=znc
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+  sudo systemctl start znc
+
+  sudo a2ensite znc.conf
+  sudo a2enmod proxy
+  sudo a2enmod proxy_http
+  sudo a2enmod proxy_ajp
+  sudo a2enmod rewrite
+  sudo a2enmod deflate
+  sudo a2enmod headers
+  sudo a2enmod proxy_balancer
+  sudo a2enmod proxy_connect
+  sudo a2enmod proxy_html
+  sudo a2enmod xml2enc
+  sudo systemctl restart apache2.service
+}
+
+
 function ChangeHostname() {
   if grep -Fxq "$1" /etc/hostname
   then
@@ -123,4 +228,11 @@ function ChangeHostname() {
     echo "" >> /etc/hosts
     echo "127.0.0.1  $2" >> /etc/hosts
   fi
+}
+
+
+function CreateUser() {
+  sudo useradd $1 -m -s /bin/bash
+  sudo passwd $1
+  sudo echo "$1 ALL=(ALL) ALL" >> /etc/sudoers
 }

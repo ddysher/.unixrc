@@ -266,7 +266,8 @@ function InstallShadowsocks() {
   sudo apt-get install -y python-pip proxychains
   sudo pip install shadowsocks
 
-  sudo cat <<EOF > /etc/shadowsocks.json
+  mkdir ~/.proxychains
+  sudo cat <<EOF > ~/.proxychains/proxychains.conf
 strict_chain
 proxy_dns
 remote_dns_subnet 224
