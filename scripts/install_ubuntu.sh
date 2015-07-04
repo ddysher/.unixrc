@@ -264,7 +264,10 @@ function InstallRuby() {
 #
 # To use the proxy on command line, run:
 #   $ proxychains4 zsh
-# This will bring up a new zsh session where all traffic is proxied.
+# This will bring up a new zsh session where all traffic will be proxied. Note
+# however, commands using sudo will not be proxied since it will run in a new
+# sudo context; therefore, we need to use sudo and proxychains4 together, e.g.:
+#   $ sudo proxychains4 apt-get update
 function InstallShadowsocks() {
   sudo apt-get update
   sudo apt-get install -y python-pip
