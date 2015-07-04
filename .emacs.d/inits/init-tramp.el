@@ -13,5 +13,15 @@
 
 (setq tramp-default-method "ssh")
 
+;; Define a function to advice around 'tramp-sh-handle-vc-registered'. The
+;; function doesn't call orign-func, which means 'tramp-sh-handle-vc-registered'
+;; is disabled. 'tramp-sh-handle-vc-registered-around' is defined in tramp.el
+;; to manage files opened under version control system (e.g. if the file in
+;; remote host is controlled via git, then the buffer will show Git-master).
+;; The process is slow and log is spammy, and using vc in tramp is not common,
+;; so disable it.
+(defun tramp-sh-handle-vc-registered-around (orig-fun &rest args))
+(advice-add 'tramp-sh-handle-vc-registered :around #'tramp-sh-handle-vc-registered-around)
+
 
 (provide 'init-tramp)

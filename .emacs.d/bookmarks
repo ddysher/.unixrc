@@ -38,7 +38,7 @@
  (rear-context-string)
  (position . 1))
 ("install"
- (filename . "~/.unixrc/install_ubuntu.sh")
+ (filename . "~/.unixrc/scripts/install_ubuntu.sh")
  (front-context-string . "#!/bin/bash\nset ")
  (rear-context-string)
  (position . 1))

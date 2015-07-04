@@ -9,12 +9,13 @@ set +x
 DOCKER_VERSION="1.7.0"
 EMACS_VERSION="24.5"
 ETCD_VERSION="v2.0.13"
+GLOBAL_VERSION="6.4"
 GO_VERSION="1.4.2"
 MONGODB_VERSION="3.0.4"
 NODE_VERSION="v0.12.5"
+PROXYCHAINS_VERSION="4.10"
 VAGRANT_VERSION="1.7.2"
 VIRTUALBOX_VERSION="4.3"
-GLOBAL_VERSION="6.4"
 
 #
 # DO NOT CHANGE (Assume Ubuntu 64bit, rely on package naming convention).
@@ -25,6 +26,9 @@ EMACS_URL="http://gnu.mirror.constant.com/emacs/emacs-${EMACS_VERSION}.tar.xz"
 ETCD_URL="https://github.com/coreos/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-amd64.tar.gz"
 ETCD_PACKAGE="etcd-${ETCD_VERSION}-linux-amd64.tar.gz"
 ETCD_DIR="etcd-${ETCD_VERSION}-linux-amd64"
+GLOBAL_PACKAGE="global-${GLOBAL_VERSION}.tar.gz"
+GLOBAL_DIR="global-${GLOBAL_VERSION}"
+GLOBAL_URI="http://tamacom.com/global/${GLOBAL_PACKAGE}"
 GO_PACKAGE="go$GO_VERSION.linux-amd64.tar.gz"
 GO_DIR="go"                     # Package gets renamed after unzip.
 GO_URL="http://golang.org/dl/$GO_PACKAGE"
@@ -34,11 +38,11 @@ MONGODB_URL="http://fastdl.mongodb.org/linux/$MONGODB_PACKAGE"
 NODE_PACKAGE="node-$NODE_VERSION-linux-x64.tar.gz"
 NODE_DIR="node-$NODE_VERSION-linux-x64"
 NODE_URL="http://nodejs.org/dist/$NODE_VERSION/$NODE_PACKAGE"
+PROXYCHAINS_URL="https://github.com/rofl0r/proxychains-ng/archive/v${PROXYCHAINS_VERSION}.tar.gz"
+PROXYCHAINS_PACKAGE="v${PROXYCHAINS_VERSION}.tar.gz"
+PROXYCHAINS_DIR="proxychains-ng-${PROXYCHAINS_VERSION}"
 VAGRANT_PACKAGE="vagrant_${VAGRANT_VERSION}_x86_64.deb"
-VAGRANT_URL="https://dl.bintray.com/mitchellh/vagrant/$VAGRANT_PACKAGE"
-GLOBAL_PACKAGE="global-${GLOBAL_VERSION}.tar.gz"
-GLOBAL_DIR="global-${GLOBAL_VERSION}"
-GLOBAL_URI="http://tamacom.com/global/${GLOBAL_PACKAGE}"
+VAGRANT_URL="https://dl.bintray.com/mitchellh/vagrant/${VAGRANT_PACKAGE}"
 
 
 #
@@ -259,14 +263,25 @@ function InstallRuby() {
 # This will start a local proxy running on 127.0.0.1:1080.
 #
 # To use the proxy on command line, run:
-#   $ proxychains zsh
+#   $ proxychains4 zsh
 # This will bring up a new zsh session where all traffic is proxied.
 function InstallShadowsocks() {
   sudo apt-get update
-  sudo apt-get install -y python-pip proxychains
+  sudo apt-get install -y python-pip
   sudo pip install shadowsocks
 
-  mkdir ~/.proxychains
+  # Install proxychains-ng
+  if [[ ! -e ${PROXYCHAINS_PACKAGE} ]]; then
+    wget ${PROXYCHAINS_URL}
+  fi
+  tar -xvf ${PROXYCHAINS_PACKAGE}
+  cd ${PROXYCHAINS_DIR}
+  ./configure --prefix=/usr --sysconfdir=/etc
+  sudo make install
+  cd -
+  rm -rf ${PROXYCHAINS_DIR} ${PROXYCHAINS_PACKAGE}
+
+  mkdir -p ~/.proxychains
   sudo cat <<EOF > ~/.proxychains/proxychains.conf
 strict_chain
 proxy_dns
@@ -278,7 +293,6 @@ quiet_mode
 
 [ProxyList]
 socks5  127.0.0.1 1080
-}
 EOF
 }
 
