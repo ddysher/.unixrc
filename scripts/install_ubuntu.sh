@@ -80,7 +80,7 @@ function InstallBasicPackages() {
   # Install basic tools
   sudo apt-get update
   sudo apt-get install -y \
-       git wget curl zsh mercurial build-essential exfat-fuse exfat-utils \
+       wget curl zsh mercurial build-essential exfat-fuse exfat-utils \
        cmake automake libtool meld terminator wmctrl ttf-wqy-zenhei \
        fonts-inconsolata
   # Install language tools
@@ -89,6 +89,11 @@ function InstallBasicPackages() {
   sudo pip install ipython --upgrade
   sudo pip install pylint --upgrade
   sudo pip install virtualenv --upgrade
+  # Install latest git.
+  sudo apt-get autoremove -y git
+  sudo add-apt-repository -y ppa:git-core/ppa
+  sudo apt-get update
+  sudo apt-get install -y git
 }
 
 
