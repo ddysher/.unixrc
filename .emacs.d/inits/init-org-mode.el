@@ -2,7 +2,7 @@
 ;; Provide org mode, built-in with emacs, but use package from MELPA.
 ;; NOTE (require-package 'org) doesn't work correctly, need to install manually.
 ;;
-;; Frequently used command:
+;; Common commands:
 ;;   M-Left     Promote one level for current heading.
 ;;   M-Right    Demote one level for current heading.
 ;;   M-Return   Continue to next line with the same heading level.

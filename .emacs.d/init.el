@@ -73,6 +73,10 @@
   (require 'init-google)
   (require 'google))
 
+;; Only install chinese-pyim in linux: we can use sougou in Mac easily.
+(when *linux*
+  (require 'init-chinese-pyim))
+
 
 ;;------------------------------------------------------------------------------
 ;; Automatic generated
@@ -83,6 +87,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(livedown:autostart nil)
+ '(livedown:open t)
+ '(livedown:port 1337)
  '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

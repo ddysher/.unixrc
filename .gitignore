@@ -1,3 +1,8 @@
-# Directories to ignore
-tools/emacs
+# Emacs plugin jedi creates the directory.
 .emacs.d/.python-environments
+
+# chinese-pyim personal dict keeps changing - noisy.
+.emacs.d/pyim/pyim-personal.txt
+
+# The file is ~20M, pull separately.
+.emacs.d/pyim/dicts/pyim-bigdict.pyim

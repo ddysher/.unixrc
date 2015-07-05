@@ -10,7 +10,7 @@
 ;;
 ;; Install Python server (jediepcserver.py) by running
 ;;   M-x jedi:install-server in Emacs
-;; The above command needs to be ran only once.
+;; The above command needs to run only once.
 ;;------------------------------------------------------------------------------
 (require-package 'epc)
 (require-package 'deferred)
