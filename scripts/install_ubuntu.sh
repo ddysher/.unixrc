@@ -322,6 +322,7 @@ function InstallVirtualbox() {
 
 function SetupEnvironment() {
   # Use zsh
+  sudo apt-get install -y zsh
   sudo chsh -s /usr/bin/zsh $USER
   # Intall links
   ln -sf ~/.unixrc/.emacs.d ~/.emacs.d

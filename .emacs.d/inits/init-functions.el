@@ -93,7 +93,7 @@ split window, then put cursor at top left."
   (switch-to-buffer "\*scratch\*")
   (split-window-right)
   (split-window-below)
-  (shrink-window-horizontally 30)
+  (shrink-window-horizontally 40)
   (enlarge-window 15))
 
 (defun split-desktop-window-erc ()

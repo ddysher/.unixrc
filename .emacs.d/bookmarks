@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("tool"
+(("caicloud-deploy"
+ (filename . "~/code/source/go-workspace/src/github.com/caicloud/cluster-deploy/README.md")
+ (front-context-string . "Cluster deploy c")
+ (rear-context-string)
+ (position . 1))
+("tool"
  (filename . "~/code/tool/README.md")
  (front-context-string . "## Experiment wi")
  (rear-context-string)

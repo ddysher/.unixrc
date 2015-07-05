@@ -40,11 +40,12 @@ plugins=(git python go vagrant)
 ##------------------------------------------------------------------------------
 ## General configs for all machines
 ##------------------------------------------------------------------------------
-alias rm="rm -i"
-alias mv="mv -i"
 alias cp="cp -i"
 alias lg="ll --group-directories-first"
+alias mv="mv -i"
+alias pc="proxychains4"
 alias ppj="python -mjson.tool"             # Beautify json print
+alias rm="rm -i"
 alias sgrep="grep -rnI -C3 --color=always" # Colorful grep
 
 source $ZSH/oh-my-zsh.sh        # Re-exec shell script
