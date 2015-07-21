@@ -3,7 +3,8 @@
 ;; https://github.com/tumashu/chinese-pyim
 ;;
 ;; Common commands:
-;;   M-x pyim-dicts-manager - Manage all dictionaries
+;;   M-x pyim-dicts-manager - Manage all dictionaries.
+;;   M-x pyim-restart - Restart chinese pyim.
 ;;
 ;; Notes:
 ;; 1. Dictionary 'pyim-bigdict' is ~20M so it is ignored; to install:
