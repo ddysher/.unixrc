@@ -234,7 +234,7 @@
 	<key>NSWindow Frame Preferences</key>
 	<string>393 170 924 485 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>39 57 802 502 0 0 1440 877 </string>
+	<string>39 225 784 572 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>658 27 822 491 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -1028,7 +1028,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/deyuan/.unixrc/tools</string>
+	<string>/Users/deyuan/.unixrc/.config/iterm2</string>
 	<key>PromptOnClose</key>
 	<true/>
 	<key>PromptOnQuit</key>
