@@ -110,10 +110,10 @@ function InstallGo() {
   sudo tar -C /usr/local -xvf $GO_PACKAGE
   # Go tools
   export GOPATH=$HOME/code/source/go-workspace
-  go get github.com/tools/godep
   go get github.com/nsf/gocode
-  go get code.google.com/p/rog-go/exp/cmd/godef
-  go get code.google.com/p/go.tools/cmd/goimports
+  go get github.com/tools/godep
+  go get github.com/rogpeppe/godef
+  go get golang.org/x/tools/cmd/goimports
   sudo ln -sf /usr/local/go/bin/go /usr/bin/go
 }
 

@@ -25,7 +25,10 @@
   (setq multi-term-dedicated-window-height 20)
   (setq term-buffer-maximum-size 10000) ; increase max buffer size
   (setq-local mode-line-format (remq 'mode-line-modified mode-line-format))
-  (setenv "TERMINFO" "~/.Terminfo")     ; what's this?
+  ;; Used in Mac to fix '4m' issue (wrong character in zsh). Need to run the
+  ;; following command first:
+  ;; $ tic -o ~/.Terminfo /Applications/Emacs.app/Contents/Resources/etc/e/eterm-color.ti
+  (setenv "TERMINFO" "~/.Terminfo")
   ;; (text-scale-decrease 1)               ; use smaller size for term
   ;; NOTE: key bindings below applies to char-mode.
   ;; delete some key bindings from elpa/xx/multi-term.el.

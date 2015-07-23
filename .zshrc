@@ -81,7 +81,7 @@ if [[ `uname` == "Darwin" ]]; then
   alias emacsnw="TERM=xterm-256color /Applications/Emacs.app/Contents/MacOS/Emacs -nw"
   alias emacsserver="/Applications/Emacs.app/Contents/MacOS/Emacs"
   # Need full path for EDITOR variable in OSX.
-  export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
+  export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
   export HOMEBREW_TEMP=/usr/local/TEMP
   source `brew --prefix`/etc/profile.d/z.sh
 elif [[ `uname` == "Linux" ]]; then
