@@ -67,6 +67,13 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
+		<key>0x60-0x100000</key>
+		<dict>
+			<key>Action</key>
+			<integer>22</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
 		<key>0x66-0x140000</key>
 		<dict>
 			<key>Action</key>
@@ -234,13 +241,15 @@
 	<key>NSWindow Frame Preferences</key>
 	<string>393 170 924 485 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>13 115 886 572 0 0 1440 877 </string>
+	<string>0 277 910 600 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>196 114 970 586 0 0 1440 877 </string>
+	<string>470 44 970 586 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>13 324 586 446 0 0 1440 877 </string>
+	<string>-3 5 1336 488 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>225 296 1060 581 0 0 1440 877 </string>
+	<string>394 207 970 586 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 4</key>
+	<string>251 101 1126 586 0 0 1440 877 </string>
 	<key>NeverWarnAboutShortLivedSessions_19F2B670-1873-448C-962B-21D7015A3963</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -981,7 +990,7 @@
 	<key>NoSyncTimeOfLastPromo</key>
 	<real>459209374.65610099</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>461426648.44155502</real>
+	<real>462499952.32018501</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -1048,7 +1057,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-08-16T13:57:28Z</date>
+	<date>2015-08-30T06:39:41Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
