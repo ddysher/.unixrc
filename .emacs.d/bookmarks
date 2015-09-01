@@ -33,7 +33,7 @@
  (rear-context-string)
  (position . 1))
 ("kubernetes"
- (filename . "~/code/source/go-workspace/src/github.com/GoogleCloudPlatform/kubernetes/pkg/api/types.go")
+ (filename . "~/code/source/go-workspace/src/k8s.io/kubernetes/README.md")
  (front-context-string . "/*\nCopyright 201")
  (rear-context-string)
  (position . 1))

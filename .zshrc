@@ -56,7 +56,7 @@ bindkey -e                      # Bind keys
 source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
 source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
 # Easy access to kubectl.
-export PATH=$HOME/code/source/go-workspace/src/github.com/GoogleCloudPlatform/kubernetes/_output/local/go/bin:$PATH
+export PATH=$HOME/code/source/go-workspace/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
 # Globally export go workspace, binary, project script, etc.
 export GOPATH=$HOME/code/source/go-workspace
 export CDPATH=$CDPATH:$GOPATH/src
