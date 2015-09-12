@@ -3,7 +3,7 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("caicloud-deploy"
- (filename . "~/code/source/go-workspace/src/github.com/caicloud/cluster-deploy/README.md")
+ (filename . "~/code/source/go-workspace/src/github.com/caicloud/cluster-manager/README.md")
  (front-context-string . "Cluster deploy c")
  (rear-context-string)
  (position . 1))
