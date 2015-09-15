@@ -81,6 +81,13 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
+		<key>0x71-0x100000</key>
+		<dict>
+			<key>Action</key>
+			<integer>22</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
 		<key>0x9-0x100000</key>
 		<dict>
 			<key>Action</key>
@@ -239,13 +246,13 @@
 	<key>NSTableView Sort Ordering KeyBingingTable</key>
 	<array/>
 	<key>NSWindow Frame Preferences</key>
-	<string>393 170 924 485 0 0 1440 877 </string>
+	<string>174 151 924 485 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 277 910 600 0 0 1440 877 </string>
+	<string>31 80 1120 656 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>470 44 970 586 0 0 1440 877 </string>
+	<string>5 49 1432 460 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>-3 5 1336 488 0 0 1440 877 </string>
+	<string>11 52 970 586 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
 	<string>394 207 970 586 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
@@ -824,7 +831,7 @@
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>10000</integer>
+			<integer>0</integer>
 			<key>Scrollback With Status Bar</key>
 			<false/>
 			<key>Scrollback in Alternate Screen</key>
@@ -968,7 +975,7 @@
 			<key>Triggers</key>
 			<array/>
 			<key>Unlimited Scrollback</key>
-			<false/>
+			<true/>
 			<key>Use Bold Font</key>
 			<true/>
 			<key>Use Bright Bold</key>
@@ -990,7 +997,7 @@
 	<key>NoSyncTimeOfLastPromo</key>
 	<real>459209374.65610099</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>462499952.32018501</real>
+	<real>463915424.95295501</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -1057,7 +1064,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-08-30T06:39:41Z</date>
+	<date>2015-09-15T12:31:00Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
