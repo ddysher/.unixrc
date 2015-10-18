@@ -34,7 +34,7 @@ setopt NO_BEEP
 # Which plugins would you like to load? (plugins can be found in $ZSH/plugins/*)
 # Custom plugins may be added to $ZSH/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git python go vagrant)
+plugins=(git python go vagrant docker)
 
 
 ##------------------------------------------------------------------------------
@@ -47,24 +47,27 @@ alias pc="proxychains4"
 alias ppj="python -mjson.tool"             # Beautify json print
 alias rm="rm -i"
 alias sgrep="grep -rnI -C3 --color=always" # Colorful grep
+alias drm="docker rm"
+alias dps="docker ps"
 
 source $ZSH/oh-my-zsh.sh        # Re-exec shell script
 source $TOOLS/z/z.sh            # Enable z.sh
 bindkey -e                      # Bind keys
 
-# Install google cloud sdk (install it first so path below will appear first).
-source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
-source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
-# Easy access to kubectl.
+# Kubernetes environment.
+[[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
+[[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
 export PATH=$HOME/code/source/go-workspace/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
-# Globally export go workspace, binary, project script, etc.
+
+# Go environment.
 export GOPATH=$HOME/code/source/go-workspace
 export CDPATH=$CDPATH:$GOPATH/src
 export PATH=/usr/local/go/bin:$PATH
-export PATH=$HOME/.rbenv/bin:$PATH
 export PATH=$HOME/code/source/go-workspace/bin:$PATH
 
+# Ruby environment.
 if type "rbenv" >/dev/null; then
+  export PATH=$HOME/.rbenv/bin:$PATH
   eval "$(rbenv init -)"
 fi
 
@@ -100,6 +103,7 @@ if [[ `hostname` == "Deyuans-Macbook-Air.local" ]]; then
   alias mysql=/usr/local/mysql/bin/mysql
   alias mysqladmin=/usr/local/mysql/bin/mysqladmin
   alias mysqld_safe=/usr/local/mysql/bin/mysqld_safe
+elif [[ `hostname` == "Deyuans-Macbook-Pro.local" ]]; then
 elif [[ `hostname` == "deyuan.pit.corp.google.com" ]]; then
   unsetopt correct_all          # Do not autocorrect
   export P4EDITOR="emacsclient"

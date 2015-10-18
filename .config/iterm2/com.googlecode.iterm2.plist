@@ -246,9 +246,9 @@
 	<key>NSTableView Sort Ordering KeyBingingTable</key>
 	<array/>
 	<key>NSWindow Frame Preferences</key>
-	<string>174 151 924 485 0 0 1440 900 </string>
+	<string>70 262 924 485 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>31 80 1120 656 0 0 1440 877 </string>
+	<string>31 150 970 586 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>5 49 1432 460 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -870,7 +870,7 @@
 			<key>Shortcut</key>
 			<string></string>
 			<key>Silence Bell</key>
-			<false/>
+			<true/>
 			<key>Smart Cursor Color</key>
 			<true/>
 			<key>Smart Selection Rules</key>
@@ -997,7 +997,7 @@
 	<key>NoSyncTimeOfLastPromo</key>
 	<real>459209374.65610099</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>463915424.95295501</real>
+	<real>464054367.81094497</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -1064,7 +1064,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-09-15T12:31:00Z</date>
+	<date>2015-09-16T12:30:58Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
