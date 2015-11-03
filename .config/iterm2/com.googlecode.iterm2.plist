@@ -53,20 +53,6 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
-		<key>0x5b-0x40000</key>
-		<dict>
-			<key>Action</key>
-			<integer>2</integer>
-			<key>Text</key>
-			<string></string>
-		</dict>
-		<key>0x5d-0x40000</key>
-		<dict>
-			<key>Action</key>
-			<integer>0</integer>
-			<key>Text</key>
-			<string></string>
-		</dict>
 		<key>0x60-0x100000</key>
 		<dict>
 			<key>Action</key>
@@ -85,6 +71,20 @@
 		<dict>
 			<key>Action</key>
 			<integer>22</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
+		<key>0x7b-0xa0000</key>
+		<dict>
+			<key>Action</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
+		<key>0x7d-0xa0000</key>
+		<dict>
+			<key>Action</key>
+			<integer>0</integer>
 			<key>Text</key>
 			<string></string>
 		</dict>
@@ -219,9 +219,9 @@
 	<key>MaxVertically</key>
 	<false/>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/Downloads</string>
+	<string>~</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
-	<string>{712, 448}</string>
+	<string>{827, 642}</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
@@ -246,17 +246,9 @@
 	<key>NSTableView Sort Ordering KeyBingingTable</key>
 	<array/>
 	<key>NSWindow Frame Preferences</key>
-	<string>70 262 924 485 0 0 1440 900 </string>
+	<string>325 167 924 485 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>31 150 970 586 0 0 1440 877 </string>
-	<key>NSWindow Frame iTerm Window 1</key>
-	<string>5 49 1432 460 0 0 1440 877 </string>
-	<key>NSWindow Frame iTerm Window 2</key>
-	<string>11 52 970 586 0 0 1440 877 </string>
-	<key>NSWindow Frame iTerm Window 3</key>
-	<string>394 207 970 586 0 0 1440 877 </string>
-	<key>NSWindow Frame iTerm Window 4</key>
-	<string>251 101 1126 586 0 0 1440 877 </string>
+	<string>162 91 780 536 0 0 1440 877 </string>
 	<key>NeverWarnAboutShortLivedSessions_19F2B670-1873-448C-962B-21D7015A3963</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -995,9 +987,9 @@
 		</dict>
 	</array>
 	<key>NoSyncTimeOfLastPromo</key>
-	<real>459209374.65610099</real>
+	<real>468256679.789693</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>464054367.81094497</real>
+	<real>468256679.79032499</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -1060,11 +1052,11 @@
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>http://iterm2.com/appcasts/testing.xml</string>
+	<string>https://iterm2.com/appcasts/testing.xml</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-09-16T12:30:58Z</date>
+	<date>2015-11-03T15:17:28Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -1116,6 +1108,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>2.1.1</string>
+	<string>2.1.4</string>
 </dict>
 </plist>
