@@ -10,7 +10,7 @@
   (add-hook 'window-numbering-before-hook
             'window-numbering-mode-custom-hook)
   ;; Create simple window configuration.
-  (split-desktop-window-simple)
+  (split-desktop-window-regular-1)
   (other-window 1)
   (window-configuration-to-register ?s)
   ;; Create terminal window configuration.
@@ -37,16 +37,14 @@
   (other-window 3)
   (window-configuration-to-register ?r))
 
-(defun split-desktop-window-simple ()
-  "Split desktop window for simple workflow. Clear window first,
-split window, then put cursor at top left."
+(defun split-desktop-window-regular-1 ()
+  "regular-1 is just one big window"
   (interactive)
   (delete-other-windows)
   (switch-to-buffer "\*scratch\*"))
 
 (defun split-desktop-window-regular-2 ()
-  "Split desktop window for regular workflow. Clear window first,
-split window, then put cursor at top left."
+  "regular-2 splits main workspace to two windows."
   (interactive)
   (delete-other-windows)
   (switch-to-buffer "\*scratch\*")
@@ -58,15 +56,15 @@ split window, then put cursor at top left."
   (split-window-right)
   ;; Adjust window size
   (balance-windows)
-  (shrink-window 30)                    ; shrink bottom windows
-  (shrink-window-horizontally 15)       ; shrink bottom left window
+  ;; Up to this point, lower windows takes up 50% space.
+  (shrink-window (/ (* (window-body-height) 7) 10)) ; shrink bottom windows to 3/10 of its current size
+  (shrink-window-horizontally (/ (* (window-width) 3) 10)) ; shrink bottom left window to 7/10 of its current size
   (other-window 2)
-  (shrink-window-horizontally 15)       ; shrink bottom right window
+  (shrink-window-horizontally (/ (* (window-width) 3) 10)) ; shrink bottom right window to 7/10 of its current size
   (other-window 1))
 
 (defun split-desktop-window-regular-3 ()
-  "Split desktop window for regular workflow. Clear window first,
-split window, then put cursor at top left."
+  "regular-3 splits main workspace to three windows."
   (interactive)
   (delete-other-windows)
   (switch-to-buffer "\*scratch\*")
@@ -79,10 +77,11 @@ split window, then put cursor at top left."
   (split-window-right)
   ;; Adjust window size
   (balance-windows)
-  (shrink-window 30)                    ; shrink bottom windows
-  (shrink-window-horizontally 15)       ; shrink bottom left window
+  ;; Up to this point, lower windows takes up 50% space.
+  (shrink-window (/ (* (window-body-height) 7) 10)) ; shrink bottom windows to 3/10 of its current size
+  (shrink-window-horizontally (/ (* (window-width) 3) 10)) ; shrink bottom left window to 7/10 of its current size
   (other-window 2)
-  (shrink-window-horizontally 15)       ; shrink bottom right window
+  (shrink-window-horizontally (/ (* (window-width) 3) 10)) ; shrink bottom right window to 7/10 of its current size
   (other-window 1))
 
 (defun split-desktop-window-terminal ()
@@ -162,6 +161,31 @@ split window, then put cursor at top left."
   (interactive (occur-read-primary-args))
   (multi-occur-in-matching-buffers ".*" regexp)
   (switch-to-buffer-other-window "*Occur*"))
+
+(defun text-scale-increase-all-buffers ()
+  "Increate all buffers' size by one"
+  (interactive)
+  (dolist (buf (buffer-list))
+    (with-current-buffer buf
+      (text-scale-increase 1)))
+  (message "Increased all buffers' size"))
+
+(defun text-scale-decrease-all-buffers ()
+  "Increate all buffers' size by one"
+  (interactive)
+  (dolist (buf (buffer-list))
+    (with-current-buffer buf
+      (text-scale-increase -1)))
+  (message "Decreased all buffers' size"))
+
+(defun text-scale-reset-all-buffers ()
+  "Increate all buffers' size by one"
+  (interactive)
+  (dolist (buf (buffer-list))
+    (with-current-buffer buf
+      (text-scale-increase 0)))
+  (message "Reset all buffers' size"))
+
 
 ;;
 ;; Misc.

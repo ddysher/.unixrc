@@ -43,6 +43,9 @@
 ;; Disable flycheck by default (annoying for some buffer, enable as needed).
 (require-package 'flycheck)
 
+(require-package `edit-server)
+(edit-server-start)
+
 (winner-mode 1)
 
 ;; Temporary & pending mode

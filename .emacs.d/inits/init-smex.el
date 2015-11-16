@@ -2,6 +2,8 @@
 ;; Provide smex mode. Smex is a M-x enhancement for Emacs. Built on top of Ido,
 ;; it provides a convenient interface to your recently and most frequently used
 ;; commands. And to all the other commands, too. It's elpa managed mode.
+;;
+;; Disabled by default in favor of helm.
 ;;------------------------------------------------------------------------------
 (require-package 'smex)
 (require 'smex)

@@ -32,10 +32,9 @@
 ;; Load configs for features and modes
 ;;------------------------------------------------------------------------------
 ;; General mode with configurations
-(require 'init-ido)
 (require 'init-w3m)
 (require 'init-erc)
-(require 'init-smex)
+(require 'init-helm)
 (require 'init-tramp)
 (require 'init-org-mode)
 (require 'init-livedown)
