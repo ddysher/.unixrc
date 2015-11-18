@@ -30,14 +30,4 @@
       ido-confirm-unique-completion t) ; wait for RET, even with unique completion
 
 
-(defun sudo-edit (&optional arg)
-  ;; Edit currently visited file as root, or open a new file as root if current
-  ;; buffer does not associate with a file.
-  (interactive "P")
-  (if (or arg (not buffer-file-name))
-      (find-file (concat "/sudo:root@localhost:"
-                         (ido-read-file-name "Find file(as root): ")))
-    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
-
-
 (provide 'init-ido)
