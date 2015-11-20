@@ -6,12 +6,13 @@
 (require 'helm)
 
 
-;; Basic config from helm, see elpa/helm-xxxx/helm-config.el
-(require 'helm-config)
+;; Basic config from helm, copied from elpa/helm-xxxx/helm-config.el. Main
+;; customization is to disable helm find files and use ido. Helm grep, etc
+;; is enabled.
+(require 'init-helm-config)
 
 (helm-mode 1)
 (helm-adaptive-mode 1)
-(setq helm-ff-auto-update-initial-value t)
 
 
 (provide 'init-helm)

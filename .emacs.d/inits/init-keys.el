@@ -2,13 +2,13 @@
 ;; Keyboard bindings
 ;;------------------------------------------------------------------------------
 ;; Global key bindings
-(global-set-key [f1] 'find-file)        ; M-x open file (C-x-f), remapped to helm
+(global-set-key [f1] 'find-file)        ; M-x open file (C-x-f)
 (global-set-key [f2] 'save-buffer)      ; M-x save file (C-x-s)
 (global-set-key [f3] 'other-window)     ; M-x other-window (C-x o)
 (global-set-key [f4] 'multi-term-dedicated)
 (global-set-key [f5] 'multi-term)
 (global-set-key [f6] 'replace-regexp)
-(global-set-key [f7] 'search-all-buffers)
+(global-set-key [f7] 'helm-do-grep)
 (global-set-key [f8] 'register-to-point) ; Jump to win conf (C-x r j)
 (global-set-key [f9] 'bookmark-jump) ; M-x bookmark-jump (C-x r b) (C-x r m)
 (global-set-key [f10] 'delete-trailing-whitespace)
@@ -22,7 +22,7 @@
 (global-set-key (kbd "M-a") 'move-beginning-of-line)
 ;; set M-e the same as C-e to release finger (original M-e move forward sentence)
 (global-set-key (kbd "M-e") 'move-end-of-line)
-(global-set-key (kbd "C-o") 'switch-to-buffer) ; remapped to helm
+(global-set-key (kbd "C-o") 'switch-to-buffer)
 ;; search current buffer for matching pattern.
 (global-set-key (kbd "C-c s") 'search-buffer)
 ;; search all buffers for matching pattern.

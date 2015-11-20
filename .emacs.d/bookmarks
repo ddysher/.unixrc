@@ -2,9 +2,14 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("caicloud-deploy"
+(("kuberized-caicloud"
+ (filename . "~/code/source/go-workspace/src/github.com/caicloud/kuberized-caicloud/README.md")
+ (front-context-string . "<!-- START docto")
+ (rear-context-string)
+ (position . 1))
+("caicloud-cds"
  (filename . "~/code/source/go-workspace/src/github.com/caicloud/cluster-manager/README.md")
- (front-context-string . "Cluster deploy c")
+ (front-context-string . "# Cluster Manage")
  (rear-context-string)
  (position . 1))
 ("tool"

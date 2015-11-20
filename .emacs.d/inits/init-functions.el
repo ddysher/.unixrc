@@ -92,8 +92,10 @@ split window, then put cursor at top left."
   (switch-to-buffer "\*scratch\*")
   (split-window-right)
   (split-window-below)
-  (shrink-window-horizontally 40)
-  (enlarge-window 15))
+  (shrink-window-horizontally (/ (* (window-width) 4) 10))
+  (other-window 1)
+  (shrink-window (/ (* (window-body-height) 3) 10))
+  (other-window 2))
 
 (defun split-desktop-window-erc ()
   "Split desktop window for erc workflow. Clear window first,

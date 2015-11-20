@@ -49,6 +49,10 @@ alias rm="rm -i"
 alias sgrep="grep -rnI -C3 --color=always" # Colorful grep
 alias drm="docker rm"
 alias dps="docker ps"
+alias cnpm="npm --registry=https://registry.npm.taobao.org \
+--cache=$HOME/.npm/.cache/cnpm \
+--disturl=https://npm.taobao.org/dist \
+--userconfig=$HOME/.cnpmrc"
 
 source $ZSH/oh-my-zsh.sh        # Re-exec shell script
 source $TOOLS/z/z.sh            # Enable z.sh
