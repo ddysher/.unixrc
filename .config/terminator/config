@@ -1,9 +1,22 @@
 [global_config]
   enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
-  handle_size = 2
+  handle_size = 1
+  tab_position = left
 [keybindings]
   insert_number = None
-  switch_to_tab_1 = None
+  switch_to_tab_10 = <Alt>0
+  next_tab = <Shift><Alt>braceright
+  prev_tab = <Shift><Alt>braceleft
+  switch_to_tab_6 = <Alt>6
+  switch_to_tab_7 = <Alt>7
+  switch_to_tab_4 = <Alt>4
+  switch_to_tab_5 = <Alt>5
+  switch_to_tab_2 = <Alt>2
+  switch_to_tab_3 = <Alt>3
+  switch_to_tab_1 = <Alt>1
+  new_tab = <Primary>t
+  switch_to_tab_8 = <Alt>8
+  switch_to_tab_9 = <Alt>9
 [profiles]
   [[default]]
     use_system_font = False

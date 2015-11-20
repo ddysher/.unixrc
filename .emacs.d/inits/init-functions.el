@@ -92,8 +92,10 @@ split window, then put cursor at top left."
   (switch-to-buffer "\*scratch\*")
   (split-window-right)
   (split-window-below)
-  (shrink-window-horizontally 40)
-  (enlarge-window 15))
+  (shrink-window-horizontally (/ (* (window-width) 4) 10))
+  (other-window 1)
+  (shrink-window (/ (* (window-body-height) 3) 10))
+  (other-window 2))
 
 (defun split-desktop-window-erc ()
   "Split desktop window for erc workflow. Clear window first,
@@ -211,6 +213,15 @@ split window, then put cursor at top left."
 (defun show-emacs-pid ()
   (interactive)
   (message "emacs pid: %s" (emacs-pid)))
+
+(defun sudo-edit (&optional arg)
+  ;; Edit currently visited file as root, or open a new file as root if current
+  ;; buffer does not associate with a file.
+  (interactive "P")
+  (if (or arg (not buffer-file-name))
+      (find-file (concat "/sudo:root@localhost:"
+                         (ido-read-file-name "Find file(as root): ")))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 
 (provide 'init-functions)
