@@ -197,7 +197,6 @@ function InstallGo() {
   rm -rf $GO_PACKAGE
 }
 
-
 # Install mongodb binaries directly (copy to /usr/local/bin). All mongodb
 # binaries start with mongo*. Reinstall will overwrite them.
 function InstallMongoDB() {

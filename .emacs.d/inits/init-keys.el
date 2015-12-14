@@ -8,7 +8,7 @@
 (global-set-key [f4] 'multi-term-dedicated)
 (global-set-key [f5] 'multi-term)
 (global-set-key [f6] 'replace-regexp)
-(global-set-key [f7] 'helm-do-grep)
+(global-set-key [f7] 'helm-do-grep-recursive)
 (global-set-key [f8] 'register-to-point) ; Jump to win conf (C-x r j)
 (global-set-key [f9] 'bookmark-jump) ; M-x bookmark-jump (C-x r b) (C-x r m)
 (global-set-key [f10] 'delete-trailing-whitespace)

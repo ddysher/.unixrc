@@ -13,8 +13,12 @@
 ;; System name (hostname)
 (defvar *home-desktop* (string= system-name "watermelon"))
 (defvar *goog-desktop* (string= system-name "deyuan.pit.corp.google.com"))
-(defvar *macpro* (string= system-name "Deyuans-MacBook-Pro.local"))
-(defvar *macair* (string= system-name "Deyuans-MacBook-Air.local"))
+(defvar *macpro*
+  (or (string= system-name "Deyuans-MacBook-Pro.local")
+      (string= system-name "MacBook-Pro.local")))
+(defvar *macair*
+  (or (string= system-name "Deyuans-MacBook-Air.local")
+      (string= system-name "MacBook-Air.local")))
 
 
 ;;------------------------------------------------------------------------------
