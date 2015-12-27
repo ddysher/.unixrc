@@ -67,6 +67,20 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
+		<key>0x6e-0x80000</key>
+		<dict>
+			<key>Action</key>
+			<integer>21</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
+		<key>0x70-0x80000</key>
+		<dict>
+			<key>Action</key>
+			<integer>20</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
 		<key>0x71-0x100000</key>
 		<dict>
 			<key>Action</key>
@@ -260,9 +274,9 @@
 	<key>NSTableView Sort Ordering KeyBingingTable</key>
 	<array/>
 	<key>NSWindow Frame Preferences</key>
-	<string>325 167 924 485 0 0 1440 900 </string>
+	<string>135 152 924 485 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>169 154 970 586 0 0 1440 877 </string>
+	<string>470 128 970 586 0 0 1440 877 </string>
 	<key>NeverWarnAboutShortLivedSessions_19F2B670-1873-448C-962B-21D7015A3963</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -1003,7 +1017,7 @@
 	<key>NoSyncTimeOfLastPromo</key>
 	<real>468256679.789693</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>469250062.096919</real>
+	<real>471856037.78305399</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -1070,7 +1084,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-11-16T07:48:04Z</date>
+	<date>2015-12-16T04:07:35Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>

@@ -87,6 +87,10 @@ if [[ `uname` == "Darwin" ]]; then
   alias emacs="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
   alias emacsnw="TERM=xterm-256color /Applications/Emacs.app/Contents/MacOS/Emacs -nw"
   alias emacsserver="/Applications/Emacs.app/Contents/MacOS/Emacs"
+  # Docker is running in a VM, see code/tool/vagrant/ubuntu/Vagrantfile (docker-machine
+  # is not stable). Note this only works in current shell session, i.e. if running a
+  # script which has `docker` command, "-H" option won't take effect.
+  alias docker="docker -H=192.168.33.33:2375"
   # Need full path for EDITOR variable in OSX.
   export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
   export HOMEBREW_TEMP=/usr/local/TEMP
