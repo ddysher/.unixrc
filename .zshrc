@@ -63,17 +63,17 @@ bindkey -e                      # Bind keys
 # Kubernetes environment.
 [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
 [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
-export PATH=$HOME/code/source/go-workspace/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
+export PATH=$PATH:$HOME/code/source/go-workspace/src/k8s.io/kubernetes/_output/local/go/bin
 
 # Go environment.
 export GOPATH=$HOME/code/source/go-workspace
 export CDPATH=$CDPATH:$GOPATH/src
-export PATH=/usr/local/go/bin:$PATH
-export PATH=$HOME/code/source/go-workspace/bin:$PATH
+export PATH=$PATH:$HOME/code/source/go-workspace/bin
+export PATH=$PATH:/usr/local/go/bin
 
 # Ruby environment.
 if type "rbenv" >/dev/null; then
-  export PATH=$HOME/.rbenv/bin:$PATH
+  export PATH=$PATH:$HOME/.rbenv/bin
   eval "$(rbenv init -)"
 fi
 
@@ -89,12 +89,10 @@ if [[ `uname` == "Darwin" ]]; then
   alias emacs="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
   alias emacsnw="TERM=xterm-256color /Applications/Emacs.app/Contents/MacOS/Emacs -nw"
   alias emacsserver="/Applications/Emacs.app/Contents/MacOS/Emacs"
-  # Docker is running in a VM, see code/tool/vagrant/ubuntu/Vagrantfile (docker-machine
-  # is not stable). Note this only works in current shell session, i.e. if running a
-  # script which has `docker` command, "-H" option won't take effect.
-  alias docker="docker -H=192.168.33.33:2375"
   # Need full path for EDITOR variable in OSX.
   export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
+  # Docker is running in caicloud onebox virtual machine.
+  export DOCKER_HOST="192.168.225.225:2375"
   export HOMEBREW_TEMP=/usr/local/TEMP
 elif [[ `uname` == "Linux" ]]; then
   alias chrome="google-chrome"
@@ -112,7 +110,13 @@ if [[ `hostname` == "Deyuans-Macbook-Air.local" ]]; then
   alias mysql=/usr/local/mysql/bin/mysql
   alias mysqladmin=/usr/local/mysql/bin/mysqladmin
   alias mysqld_safe=/usr/local/mysql/bin/mysqld_safe
-elif [[ `hostname` == "Deyuans-Macbook-Pro.local" ]]; then
+elif [[ `hostname` == "Deyuans-MacBook-Pro.local" ]]; then
+  # Due to MacOS SIP (System Integration Protection), installing python libraries
+  # will be rejected if it touches '/System' directory. It is thus recommended to
+  # install per user, i.e. "pip install ipython --user". This is needed for MacOS
+  # ElCapitan. The path is updated to include the binaries installed for current
+  # user. Use "python -m site" to see all system path.
+  export PATH=$PATH:$HOME/Library/Python/2.7/bin
 elif [[ `hostname` == "deyuan.pit.corp.google.com" ]]; then
   unsetopt correct_all          # Do not autocorrect
   export P4EDITOR="emacsclient"
