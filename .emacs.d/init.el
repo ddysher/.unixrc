@@ -39,7 +39,7 @@
 (require 'init-w3m)
 (require 'init-ido)
 (require 'init-erc)
-(require 'init-helm)
+(require 'init-smex)
 (require 'init-tramp)
 (require 'init-org-mode)
 (require 'init-livedown)

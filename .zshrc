@@ -96,7 +96,6 @@ if [[ `uname` == "Darwin" ]]; then
   # Need full path for EDITOR variable in OSX.
   export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
   export HOMEBREW_TEMP=/usr/local/TEMP
-  source `brew --prefix`/etc/profile.d/z.sh
 elif [[ `uname` == "Linux" ]]; then
   alias chrome="google-chrome"
   alias emacs="/usr/local/bin/emacsclient -n"
