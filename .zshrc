@@ -63,12 +63,12 @@ bindkey -e                      # Bind keys
 # Kubernetes environment.
 [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
 [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
-export PATH=$PATH:$HOME/code/source/go-workspace/src/k8s.io/kubernetes/_output/local/go/bin
+export PATH=$PATH:$HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin
 
 # Go environment.
-export GOPATH=$HOME/code/source/go-workspace
+export GOPATH=$HOME/code/workspace
 export CDPATH=$CDPATH:$GOPATH/src
-export PATH=$PATH:$HOME/code/source/go-workspace/bin
+export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/usr/local/go/bin
 
 # Ruby environment.
