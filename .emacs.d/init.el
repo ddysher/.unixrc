@@ -39,6 +39,7 @@
 (require 'init-w3m)
 (require 'init-ido)
 (require 'init-erc)
+;; (require 'init-helm)
 (require 'init-smex)
 (require 'init-tramp)
 (require 'init-org-mode)
@@ -61,7 +62,7 @@
 (require 'init-java-mode)
 (require 'init-geben-mode)              ; debug php
 (require 'init-python-mode)
-(require 'init-protobuf-mode)
+;; (require 'init-protobuf-mode)
 
 ;; My custom mode, functions, etc.
 (require 'init-keys)

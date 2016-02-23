@@ -1,8 +1,8 @@
 ;;------------------------------------------------------------------------------
 ;; Provide go mode, managed by MELPA.  Serveral methods in go-mode needs go
 ;; related binaries be properly set, e.g. godoc, dodef, etc.  For my configs,
-;; all these binaries are installed under ~/code/source/go-workspace/bin, refer
-;; to ~/.unixrc/install.sh. The go environment variables are set in .zshrc.
+;; all these binaries are installed under ~/code/workspace/bin, refer to
+;; ~/.unixrc/install.sh. The go environment variables are set in .zshrc.
 ;;
 ;; Feature:
 ;;   go-autocomplete: Provide context sensitive auto completion for Go. The

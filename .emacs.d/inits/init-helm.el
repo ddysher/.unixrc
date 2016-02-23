@@ -9,7 +9,7 @@
 ;; Basic config from helm, copied from elpa/helm-xxxx/helm-config.el. Main
 ;; customization is to disable helm find files and use ido. Helm grep, etc
 ;; is enabled.
-(require 'init-helm-config)
+(require 'helm-config)
 
 (helm-mode 1)
 (helm-adaptive-mode 1)

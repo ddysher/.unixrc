@@ -3,12 +3,12 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("kuberized-caicloud"
- (filename . "~/code/source/go-workspace/src/github.com/caicloud/kuberized-caicloud/README.md")
+ (filename . "~/code/workspace/src/github.com/caicloud/kuberized-caicloud/README.md")
  (front-context-string . "<!-- START docto")
  (rear-context-string)
  (position . 1))
 ("caicloud-cds"
- (filename . "~/code/source/go-workspace/src/github.com/caicloud/cluster-manager/README.md")
+ (filename . "~/code/workspace/src/github.com/caicloud/cluster-manager/README.md")
  (front-context-string . "# Cluster Manage")
  (rear-context-string)
  (position . 1))
@@ -38,7 +38,7 @@
  (rear-context-string)
  (position . 1))
 ("kubernetes"
- (filename . "~/code/source/go-workspace/src/k8s.io/kubernetes/README.md")
+ (filename . "~/code/workspace/src/k8s.io/kubernetes/README.md")
  (front-context-string . "/*\nCopyright 201")
  (rear-context-string)
  (position . 1))
