@@ -95,13 +95,6 @@
 			<key>Text</key>
 			<string>19F2B670-1873-448C-962B-21D7015A3963</string>
 		</dict>
-		<key>0x77-0x80000</key>
-		<dict>
-			<key>Action</key>
-			<integer>25</integer>
-			<key>Text</key>
-			<string>Close</string>
-		</dict>
 		<key>0x7b-0xa0000</key>
 		<dict>
 			<key>Action</key>
@@ -247,36 +240,21 @@
 	<key>MaxVertically</key>
 	<false/>
 	<key>NSNavLastRootDirectory</key>
-	<string>~</string>
+	<string>~/Documents</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
-	<string>{827, 642}</string>
+	<string>{712, 459}</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
 	<string></string>
 	<key>NSScrollAnimationEnabled</key>
 	<false/>
-	<key>NSTableView Columns KeyBingingTable</key>
-	<array>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErATCG
-		</data>
-		<string>198</string>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErATGG
-		</data>
-		<string>302</string>
-	</array>
-	<key>NSTableView Hidden Columns KeyBingingTable</key>
-	<array/>
-	<key>NSTableView Sort Ordering KeyBingingTable</key>
-	<array/>
 	<key>NSWindow Frame Preferences</key>
-	<string>135 152 924 485 0 0 1440 900 </string>
+	<string>265 264 924 485 0 0 1440 900 </string>
+	<key>NSWindow Frame SUStatusFrame</key>
+	<string>116 42 384 129 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>470 128 970 586 0 0 1440 877 </string>
+	<string>0 37 970 586 0 0 1440 877 </string>
 	<key>NeverWarnAboutShortLivedSessions_19F2B670-1873-448C-962B-21D7015A3963</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -1014,10 +992,12 @@
 			<string>/Users/deyuandeng</string>
 		</dict>
 	</array>
+	<key>NoSyncHaveShownPromoWithId_4</key>
+	<true/>
 	<key>NoSyncTimeOfLastPromo</key>
-	<real>468256679.789693</real>
+	<real>477926008.33109403</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>471856037.78305399</real>
+	<real>480042012.50950801</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -1066,7 +1046,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/deyuan/.unixrc/.config/iterm2</string>
+	<string>/Users/deyuandeng/.unixrc/.config/iterm2</string>
 	<key>PromptOnClose</key>
 	<true/>
 	<key>PromptOnQuit</key>
@@ -1084,7 +1064,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-12-16T04:07:35Z</date>
+	<date>2016-03-19T01:00:09Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
