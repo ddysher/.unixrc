@@ -72,7 +72,7 @@ export PATH=/usr/local/go/bin:$PATH
 export PATH=$GOPATH/bin:$PATH
 
 # Ruby environment.
-if type "rbenv" >/dev/null; then
+if [ -x $HOME/.rbenv/bin/rbenv ]; then
   export PATH=$PATH:$HOME/.rbenv/bin
   eval "$(rbenv init -)"
 fi
