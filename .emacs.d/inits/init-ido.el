@@ -29,5 +29,11 @@
       ido-auto-merge-work-directories-length -1 ; do not auto merge
       ido-confirm-unique-completion t) ; wait for RET, even with unique completion
 
+(add-to-list 'ido-ignore-files ".DS_Store")
+(add-to-list 'ido-ignore-files ".owncloudsync.log")
+(add-to-list 'ido-ignore-files ".csync_journal.db")
+(add-to-list 'ido-ignore-files ".csync_journal.db-shm")
+(add-to-list 'ido-ignore-files ".csync_journal.db-wal")
+
 
 (provide 'init-ido)
