@@ -7,7 +7,9 @@
 
 (defun window-numbering-mode-custom-hook (windows)
   "Change window number as needed."
-  (if (>= (length windows) 5)
+  (if (and (>= (length windows) 5)
+           (or (equal current-window-conf-register ?g)
+               (equal current-window-conf-register ?r)))
       (progn
         (let ((counter 1)
               (winlen (length windows)))
@@ -22,6 +24,5 @@
 
 (window-numbering-mode t)
 (setq window-numbering-auto-assign-0-to-minibuffer nil)
-
 
 (provide 'init-window-numbering)

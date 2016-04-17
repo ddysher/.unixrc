@@ -15,16 +15,15 @@
   (window-configuration-to-register ?s)
   ;; Create terminal window configuration.
   (split-desktop-window-terminal)
-  (other-window 2)
   (multi-term)
-  (multi-term)
-  (switch-to-buffer "\*terminal<1>\*")
-  (window-configuration-to-register ?t)
-  ;; Create erc window configuration.
-  (split-desktop-window-erc)
   (other-window 1)
-  (window-configuration-to-register ?e)
-  ;; Create regular 2-window configuration.
+  (multi-term)
+  (other-window 1)
+  (multi-term)
+  (other-window 1)
+  (multi-term)
+  (other-window 1)
+  (window-configuration-to-register ?t)
   (split-desktop-window-regular-2)
   (other-window 3)
   (switch-to-buffer "\*terminal<1>\*")
@@ -90,22 +89,11 @@ split window, then put cursor at top left."
   (interactive)
   (delete-other-windows)
   (switch-to-buffer "\*scratch\*")
-  (split-window-right)
   (split-window-below)
-  (shrink-window-horizontally (/ (* (window-width) 4) 10))
-  (other-window 1)
-  (shrink-window (/ (* (window-body-height) 3) 10))
+  (split-window-right)
+  (other-window 2)
+  (split-window-right)
   (other-window 2))
-
-(defun split-desktop-window-erc ()
-  "Split desktop window for erc workflow. Clear window first,
-split window, then put cursor at top left."
-  (interactive)
-  (delete-other-windows)
-  (switch-to-buffer "\*scratch\*")
-  (split-window-right)
-  (split-window-right)
-  (balance-windows))
 
 (defvar current-window-conf-register nil)
 
