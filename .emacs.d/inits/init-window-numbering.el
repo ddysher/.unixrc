@@ -6,7 +6,8 @@
 
 
 (defun window-numbering-mode-custom-hook (windows)
-  "Change window number as needed."
+  "Change window number as needed. To match exact conf-register, use
+ (if (equal current-window-conf-register ?t)"
   (if (and (>= (length windows) 5)
            (or (equal current-window-conf-register ?g)
                (equal current-window-conf-register ?r)))
@@ -16,16 +17,6 @@
           (dolist (window windows)
             (if (equal counter (- winlen 2))
                 (window-numbering-assign window 8))
-            (if (equal counter (- winlen 1))
-                (window-numbering-assign window 9))
-            (if (equal counter winlen)
-                (window-numbering-assign window 0))
-            (incf counter)))))
-  (if (equal current-window-conf-register ?t)
-      (progn
-        (let ((counter 1)
-              (winlen (length windows)))
-          (dolist (window windows)
             (if (equal counter (- winlen 1))
                 (window-numbering-assign window 9))
             (if (equal counter winlen)

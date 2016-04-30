@@ -21,8 +21,6 @@
   (other-window 1)
   (multi-term)
   (other-window 1)
-  (multi-term)
-  (other-window 1)
   (window-configuration-to-register ?t)
   (split-desktop-window-regular-2)
   (other-window 3)
@@ -90,8 +88,7 @@ split window, then put cursor at top left."
   (delete-other-windows)
   (switch-to-buffer "\*scratch\*")
   (split-window-below)
-  (split-window-below)
-  (other-window 2)
+  (other-window 1)
   (split-window-right)
   (other-window 2))
 
