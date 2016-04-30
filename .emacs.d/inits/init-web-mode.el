@@ -4,15 +4,24 @@
 (require-package 'web-mode)
 (require 'web-mode)
 
-(add-to-list 'auto-mode-alist '("\\.erb\\'"    . web-mode)) ;; ERB
-(add-to-list 'auto-mode-alist '("\\.html?\\'"  . web-mode)) ;; Plain HTML
-(add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode)) ;; JS + JSX
-(add-to-list 'auto-mode-alist '("\\.es6\\'"    . web-mode)) ;; ES6
-(add-to-list 'auto-mode-alist '("\\.css\\'"    . web-mode)) ;; CSS
-(add-to-list 'auto-mode-alist '("\\.scss\\'"   . web-mode)) ;; SCSS
-(add-to-list 'auto-mode-alist '("\\.php\\'"    . web-mode)) ;; PHP
-(add-to-list 'auto-mode-alist '("\\.blade\\.php\\'" . web-mode)) ;; Blade template
+;; Associate theses files with web-mode. Note for javascript, we use web-mode
+;; as well for its jsx support.
+(add-to-list 'auto-mode-alist '("\\.phtml\\'"     . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'"   . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'"   . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'"  . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'"    . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'"  . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.es6\\'"    . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css\\'"    . web-mode))
+(add-to-list 'auto-mode-alist '("\\.scss\\'"   . web-mode))
+(add-to-list 'auto-mode-alist '("\\.php\\'"    . web-mode))
+(add-to-list 'auto-mode-alist '("\\.blade\\.php\\'" . web-mode))
 
+;; Use jsx context type for .jsx and .js files.
 (setq web-mode-content-types-alist
       '(("jsx" . "\\.js[x]?\\'")
         ("javascript" . "\\.es6?\\'")))
@@ -34,22 +43,16 @@
 
 (setq web-mode-enable-auto-pairing t)
 (setq web-mode-enable-css-colorization t)
+
 ;; Customize indentations (indentation inside code).
-(setq web-mode-markup-indent-offset 2) ; HTML
-(setq web-mode-css-indent-offset 2)    ; CSS
-(setq web-mode-code-indent-offset 2)   ; Script
+(setq web-mode-markup-indent-offset 2) ; html
+(setq web-mode-css-indent-offset 2)    ; css
+(setq web-mode-code-indent-offset 2)   ; script
+
 ;; Customize padding (indentation inside tags).
-(setq web-mode-style-padding 2)       ; For <style> parts
+(setq web-mode-style-padding 2)       ; for <style> parts
 (setq web-mode-script-padding 2)      ; for <script> parts
 
-
-;; disable jshint since we prefer eslint checking
-(with-eval-after-load 'flycheck
-  (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers
-                        '(javascript-jshint)))
-  ;; use eslint with web-mode for jsx files
-  (flycheck-add-mode 'javascript-eslint 'web-mode))
 
 ;; Enable autocomplete minor mode in web-mode.
 (setq web-mode-ac-sources-alist
@@ -57,6 +60,10 @@
                          ac-source-abbrev
                          ac-source-dictionary
                          ac-source-words-in-same-mode-buffers))
+        ("jsx" . (ac-source-yasnippet
+                  ac-source-abbrev
+                  ac-source-dictionary
+                  ac-source-words-in-same-mode-buffers))
         ("html" . (ac-source-yasnippet
                    ac-source-abbrev
                    ac-source-dictionary
@@ -75,7 +82,7 @@
 (defun web-mode-before-auto-complete-custom-hooks ()
   (let ((web-mode-cur-language
          (web-mode-language-at-pos)))
-    (if (string= web-mode-cur-language "javascript")
+    (if (or (string= web-mode-cur-language "javascript") (string= web-mode-cur-language "jsx"))
         (yas-activate-extra-mode 'js-mode)
       (yas-deactivate-extra-mode 'js-mode))
     (if (string= web-mode-cur-language "html")
