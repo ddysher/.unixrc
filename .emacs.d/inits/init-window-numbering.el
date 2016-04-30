@@ -20,7 +20,18 @@
                 (window-numbering-assign window 9))
             (if (equal counter winlen)
                 (window-numbering-assign window 0))
+            (incf counter)))))
+  (if (equal current-window-conf-register ?t)
+      (progn
+        (let ((counter 1)
+              (winlen (length windows)))
+          (dolist (window windows)
+            (if (equal counter (- winlen 1))
+                (window-numbering-assign window 9))
+            (if (equal counter winlen)
+                (window-numbering-assign window 0))
             (incf counter))))))
+
 
 (window-numbering-mode t)
 (setq window-numbering-auto-assign-0-to-minibuffer nil)

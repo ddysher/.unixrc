@@ -23,7 +23,7 @@
   (setq multi-term-program "/bin/zsh")  ; use zsh shell
   (setq multi-term-switch-after-close nil) ; don't switch to other term after close
   (setq multi-term-dedicated-window-height 20)
-  (setq term-buffer-maximum-size 10000) ; increase max buffer size
+  (setq term-buffer-maximum-size 100000) ; increase max buffer size
   (setq-local mode-line-format (remq 'mode-line-modified mode-line-format))
   ;; Used in Mac to fix '4m' issue (wrong character in zsh). Need to run the
   ;; following command first:

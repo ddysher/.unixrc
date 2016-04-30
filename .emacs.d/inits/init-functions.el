@@ -90,7 +90,7 @@ split window, then put cursor at top left."
   (delete-other-windows)
   (switch-to-buffer "\*scratch\*")
   (split-window-below)
-  (split-window-right)
+  (split-window-below)
   (other-window 2)
   (split-window-right)
   (other-window 2))
