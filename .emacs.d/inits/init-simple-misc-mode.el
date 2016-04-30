@@ -43,17 +43,16 @@
 ;; Disable flycheck by default (annoying for some buffer, enable as needed).
 (require-package 'flycheck)
 
+;; Start emacs server, to accept opening files from client, e.g. command line.
 (require-package `edit-server)
 (edit-server-start)
 
+;; Winner Mode is a global minor mode. When activated, it allows you to "undo
+;; (and "redo") changes in the window configuration with the key commands
+;; 'C-c left; and 'C-c right'.
 (winner-mode 1)
 
-;; Temporary & pending mode
-(when nil
-  (require 'flex-mode)
-  (require 'cool-mode)
-  (require 'bison-mode))
-
+;; Display ansi color in emacs buffer, instead of characters like '[3m]'.
 (require 'ansi-color)
 (defun display-ansi-colors ()
   (interactive)

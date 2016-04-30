@@ -189,12 +189,6 @@ split window, then put cursor at top left."
   (next-line n)
   (scroll-up n))
 
-;; Open a dedicated terminal and select it.
-(defun multi-term-dedicated ()
-  (interactive)
-  (multi-term-dedicated-open)
-  (multi-term-dedicated-select))
-
 (defun show-emacs-pid ()
   (interactive)
   (message "emacs pid: %s" (emacs-pid)))
@@ -207,12 +201,5 @@ split window, then put cursor at top left."
       (find-file (concat "/sudo:root@localhost:"
                          (ido-read-file-name "Find file(as root): ")))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
-
-(defun helm-do-grep-recursive (&optional non-recursive)
-  "Like `helm-do-grep', but greps recursively by default."
-  (interactive "P")
-  (let* ((current-prefix-arg (not non-recursive))
-         (helm-current-prefix-arg non-recursive))
-    (call-interactively 'helm-do-grep)))
 
 (provide 'init-functions)

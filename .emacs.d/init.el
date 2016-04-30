@@ -1,5 +1,5 @@
 ;;------------------------------------------------------------------------------
-;; Bool values to decide which functions are available
+;; Bool values for init files to decide which functions are available
 ;;------------------------------------------------------------------------------
 ;; System type
 (defvar *windows* (eq system-type 'windows-nt))
@@ -22,7 +22,7 @@
 
 
 ;;------------------------------------------------------------------------------
-;; Bootstrap configs, need to execute before loading specific configs
+;; Bootstrap configs need to be executed before loading specific configs
 ;;------------------------------------------------------------------------------
 ;; This will add "~/.emacs.d/inits" to emacs load path.
 (add-to-list 'load-path (expand-file-name "inits" user-emacs-directory))
@@ -35,12 +35,12 @@
 ;;------------------------------------------------------------------------------
 ;; Load configs for features and modes
 ;;------------------------------------------------------------------------------
-;; General mode with configurations
+;; General mode with configurations.
 (require 'init-w3m)
 (require 'init-ido)
 (require 'init-erc)
-;; (require 'init-helm)
 (require 'init-smex)
+(require 'init-helm)
 (require 'init-tramp)
 (require 'init-org-mode)
 (require 'init-livedown)
@@ -49,21 +49,26 @@
 (require 'init-multi-term)
 (require 'init-auto-complete)
 (require 'init-window-numbering)
-(require 'init-smartparens-mode)
 (require 'init-fill-column-indicator)
+;; Disabled general modes, for tracking.
+;; (require 'init-smartparens-mode)
 
-;; Init language (or related) mode with configurations
+;; Initialize language related modes that requires configurations.
 (require 'init-cc-mode)
 (require 'init-sh-mode)
 (require 'init-go-mode)
 (require 'init-lua-mode)
 (require 'init-js2-mode)
 (require 'init-web-mode)
-(require 'init-gud-mode)                ; debug python
+(require 'init-gud-mode)
 (require 'init-java-mode)
-(require 'init-geben-mode)              ; debug php
 (require 'init-python-mode)
+;; Disabled language modes, for tracking
+;; (require 'init-geben-mode)
 ;; (require 'init-protobuf-mode)
+;; (require 'flex-mode)
+;; (require 'cool-mode)
+;; (require 'bison-mode))
 
 ;; My custom mode, functions, etc.
 (require 'init-keys)
@@ -71,7 +76,7 @@
 (require 'init-custom)
 (require 'init-functions)
 
-;; Simple mode that does not need configurations
+;; Simple mode that does not need configurations.
 (require 'init-simple-misc-mode)
 
 ;; Conditional require

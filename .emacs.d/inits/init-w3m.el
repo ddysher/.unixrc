@@ -1,6 +1,7 @@
 ;;------------------------------------------------------------------------------
 ;; Provide w3m, w3m is elpa managed package.  This mode depends on external
-;; program; to use this mode, host system must have w3m command installed.
+;; program, to use this mode, host system must have 'w3m' command installed.
+;; E.g. brew install w3m, sudo apt-get install w3m
 ;;------------------------------------------------------------------------------
 (require-package 'w3m)
 (require 'w3m)

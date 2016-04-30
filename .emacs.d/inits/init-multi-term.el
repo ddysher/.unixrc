@@ -12,6 +12,12 @@
       (term-char-mode)
     (term-line-mode)))
 
+;; Open a dedicated terminal and select it.
+(defun multi-term-dedicated ()
+  (interactive)
+  (multi-term-dedicated-open)
+  (multi-term-dedicated-select))
+
 ;; (defun term-window-width ()
 ;;   "The method is defined in term.el under emacs source.  Redefined it since
 ;; terminal use smaller font size, while emacs still keep the same window size.

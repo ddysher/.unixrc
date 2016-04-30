@@ -9,6 +9,7 @@
 ;; Notes:
 ;; 1. Dictionary 'pyim-bigdict' is ~20M so it is ignored; to install:
 ;;    wget http://tumashu.github.io/chinese-pyim-bigdict/pyim-bigdict.pyim -P ~/.emacs.d/pyim/dicts
+;; 2. Only enabled on Linux, use "C-;" to toggle input method.
 ;;------------------------------------------------------------------------------
 (require-package 'chinese-pyim)
 (require 'chinese-pyim)
