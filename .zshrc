@@ -77,6 +77,9 @@ if [ -x $HOME/.rbenv/bin/rbenv ]; then
   eval "$(rbenv init -)"
 fi
 
+# Add misc useful tools to PATH
+export PATH=$PATH:$HOME/code/tool/scripts
+
 ##-------------------------------------------------------------------------------
 ## Configs for Linux and Mac
 ##   chrome:  open file in new tab (chrome should already be opened)

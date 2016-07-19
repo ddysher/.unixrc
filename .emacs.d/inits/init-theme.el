@@ -17,11 +17,13 @@
 
 (load-zenburn)
 ;; Generic fonts
-(cond (*linux*  (set-default-font "Inconsolata-8")))
+(cond (*linux*  (set-default-font "Inconsolata-10")))
 (cond (*darwin* (set-default-font "Monaco-10")))
 ;; Machine specifc fonts
 (cond (*macair* (set-default-font "Monaco-10")))
 (cond (*macpro* (set-default-font "Monaco-10")))
 
+;; Font when launching new frame.
+(cond (*linux* (setq default-frame-alist '((font . "Inconsolata-10")))))
 
 (provide 'init-theme)
