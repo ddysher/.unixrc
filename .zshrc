@@ -94,8 +94,6 @@ if [[ `uname` == "Darwin" ]]; then
   alias emacsserver="/Applications/Emacs.app/Contents/MacOS/Emacs"
   # Need full path for EDITOR variable in OSX.
   export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
-  # Docker is running in caicloud onebox virtual machine.
-  export DOCKER_HOST="192.168.225.225:2375"
   export HOMEBREW_TEMP=/usr/local/TEMP
 elif [[ `uname` == "Linux" ]]; then
   alias chrome="google-chrome"

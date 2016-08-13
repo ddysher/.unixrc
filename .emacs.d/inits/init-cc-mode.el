@@ -1,18 +1,21 @@
 ;;------------------------------------------------------------------------------
 ;; Provide cc mode, cc-mode is built-in emacs mode, for c, c++, java, etc.
 ;;
-;; ggtags is a pakcage for c/c++ tagging. It uses GNU GLOBAL as its tagging
-;; system.  To use ggtags, first install GNU GLOBAL. For a project, use:
-;; ggtags-create-tags to create GTAGS first.  Use M-x ggtags-mode to enable
-;; tags; or put (ggtags-mode 1) in cc-mode-custoe-hook().  ggtags-mode is
-;; disabled by default as it requires GTAGS file for evary file, annoying.
-;; A better approach would be to enable it in certain directory.
+;; Browsing c/c++ source code requires a bit of configuration; right now, we only
+;; configure tags. A bit of terms:
+;; - ctags is a command to generate 'tags' file which is the tag file for vi.
+;;   Exuberant ctags extends ctags, and Universal ctags continues its development.
+;; - etags is a command to generate 'TAGS' file which is the tag file for Emacs.
+;; - gtags is a command to generate tag files for GLOBAL (GTAGS, GRTAGS, GPATH).
+;;   GNU GLOBAL is a source code tagging system.
+;; - ggtags is emacs frontend to GNU Global source code tagging system.
 ;;------------------------------------------------------------------------------
 (require-package 'ggtags)
 
 
 (defun cc-mode-custom-hook ()
-  (local-set-key (kbd "M-.") 'ggtags-find-definition)
+  (ggtags-mode 1)
+  (local-set-key (kbd "M-.") 'ggtags-find-tag-dwim)
   (local-set-key (kbd "M-,") 'ggtags-prev-mark)
   (setq c-basic-offset universal-indent-size)
   (setq c-default-style "bsd")
