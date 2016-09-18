@@ -101,6 +101,7 @@
  '(livedown:autostart nil)
  '(livedown:open t)
  '(livedown:port 1337)
+ '(safe-local-variable-values (quote ((c-indent-level . 4))))
  '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
