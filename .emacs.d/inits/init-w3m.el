@@ -29,7 +29,7 @@
       w3m-terminal-coding-system 'utf-8
       w3m-use-cookies t
       w3m-cookie-accept-bad-cookies t
-      w3m-home-page "http://www.google.com"
+      w3m-home-page "http://www.baidu.com"
       w3m-search-default-engine "g"
       w3m-default-display-inline-images t)
 
