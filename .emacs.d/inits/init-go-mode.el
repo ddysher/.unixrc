@@ -1,6 +1,6 @@
 ;;------------------------------------------------------------------------------
-;; Provide go mode, managed by MELPA.  Serveral methods in go-mode requires go
-;; related binaries be properly set, e.g. godoc, dodef, etc.  For my configs,
+;; Provide go mode, managed by MELPA. Serveral methods in go-mode requires go
+;; related binaries be properly set, e.g. godoc, dodef, etc.  For this config,
 ;; all these binaries are installed under ~/code/workspace/bin. Go environment
 ;; variables are set in ~/.unixrc/.zshrc. Tools installed:
 ;;   go get github.com/nsf/gocode
@@ -29,6 +29,8 @@
 ;;   C-c C-a    ; add a package to import (usually we import package via goimports,
 ;;              ; but this can be usefull when wanting to use gocode, as gocode
 ;;              ; can't autocomplete if the package is not impoted)
+;;   C-c C-f ?  ; quite a few commands have C-c C-f prefix, e.g. 'a' for jumping
+;;              ; to function argument, 'r' for jumping to function return value
 ;;------------------------------------------------------------------------------
 (require-package 'go-mode)
 (require 'go-mode)
