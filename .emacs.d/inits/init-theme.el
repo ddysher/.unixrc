@@ -20,7 +20,7 @@
 (cond (*linux*  (set-default-font "Inconsolata-10")))
 (cond (*darwin* (set-default-font "Monaco-10")))
 ;; Machine specifc fonts
-(cond (*macair* (set-default-font "Monaco-10")))
+(cond (*macair* (set-default-font "Monaco-11")))
 (cond (*macpro* (set-default-font "Monaco-11")))
 
 ;; Font when launching new frame.
