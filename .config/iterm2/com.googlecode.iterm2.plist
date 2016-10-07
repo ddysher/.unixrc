@@ -6,6 +6,8 @@
 	<true/>
 	<key>AllowClipboardAccess</key>
 	<false/>
+	<key>AlternateMouseScroll</key>
+	<true/>
 	<key>AnimateDimming</key>
 	<false/>
 	<key>AppleAntiAliasingThreshold</key>
@@ -279,10 +281,14 @@
 	<string>140 655 400 129 0 0 1920 1057 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>650 508 620 392 0 0 1920 1057 </string>
+	<key>NSWindow Frame SessionsPreferences</key>
+	<string>269 139 606 456 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>469 132 918 495 0 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 37 970 587 0 0 1920 1057 </string>
+	<string>24 47 1130 627 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 1</key>
+	<string>247 107 1130 627 0 0 1440 900 </string>
 	<key>NeverWarnAboutShortLivedSessions_19F2B670-1873-448C-962B-21D7015A3963</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -1146,7 +1152,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-09-21T08:06:44Z</date>
+	<date>2016-09-30T04:35:28Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -1198,6 +1204,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.8</string>
+	<string>3.0.10</string>
 </dict>
 </plist>
