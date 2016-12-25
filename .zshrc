@@ -36,6 +36,13 @@ setopt NO_BEEP
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git python go vagrant docker-docker k8s-kubernetes)
 
+##------------------------------------------------------------------------------
+## Special configs
+##------------------------------------------------------------------------------
+if [[ `uname` == "Darwin" ]]; then
+  # Homebrew requires /usr/local/bin to appear before /usr/bin.
+  export PATH=/usr/local/bin:$PATH
+fi
 
 ##------------------------------------------------------------------------------
 ## General configs for all machines
@@ -63,12 +70,17 @@ bindkey -e                      # Bind keys
 # Kubernetes environment.
 [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
 [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
-export PATH=$HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
+if [ -d $HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin ]; then
+  export PATH=$HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
+fi
 
 # Go environment.
 export GOPATH=$HOME/code/workspace
 export CDPATH=$CDPATH:$GOPATH/src
-export PATH=/usr/local/go/bin:$PATH
+if [[ `uname` != "Darwin" ]]; then
+  # Use Homebrew to manage go binary in Darwin, which is under /usr/local/bin.
+  export PATH=/usr/local/go/bin:$PATH
+fi
 export PATH=$GOPATH/bin:$PATH
 
 # Ruby environment.
@@ -102,7 +114,6 @@ elif [[ `uname` == "Linux" ]]; then
   alias emacsserver="/usr/local/bin/emacs"
   export EDITOR="emacsclient"     # TODO: make sure emacs server started
 fi
-
 
 ##-------------------------------------------------------------------------------
 ## Configs for different hosts
