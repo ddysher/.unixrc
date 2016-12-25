@@ -40,7 +40,9 @@ plugins=(git python go vagrant docker-docker k8s-kubernetes)
 ## Special configs
 ##------------------------------------------------------------------------------
 if [[ `uname` == "Darwin" ]]; then
-  # Homebrew requires /usr/local/bin to appear before /usr/bin.
+  # Homebrew requires /usr/local/bin and /usr/local/sbin, and /usr/local/bin
+  # should to appear before /usr/bin.
+  export PATH=/usr/local/sbin:$PATH
   export PATH=/usr/local/bin:$PATH
 fi
 
