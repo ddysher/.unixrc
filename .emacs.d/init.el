@@ -61,6 +61,7 @@
 (require 'init-js2-mode)
 (require 'init-web-mode)
 (require 'init-gud-mode)
+(require 'init-rust-mode)
 (require 'init-java-mode)
 (require 'init-python-mode)
 ;; Disabled language modes, for tracking

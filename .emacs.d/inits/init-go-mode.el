@@ -1,34 +1,42 @@
 ;;------------------------------------------------------------------------------
-;; Provide go mode, managed by MELPA. Serveral methods in go-mode requires go
-;; related binaries be properly set, e.g. godoc, dodef, etc.  For this config,
-;; all these binaries are installed under ~/code/workspace/bin. Go environment
-;; variables are set in ~/.unixrc/.zshrc. Tools installed:
+;; Provide go mode, managed by MELPA. Several methods in go-mode requires go
+;; related binaries to be properly set, e.g. gocode, godoc, godef, etc; and are
+;; accessible from emacs. Tools installed:
 ;;   go get github.com/nsf/gocode
 ;;   go get github.com/tools/godep
 ;;   go get github.com/rogpeppe/godef
+;;   go get golang.org/x/tools/cmd/guru
 ;;   go get golang.org/x/tools/cmd/goimports
-;;   go get golang.org/x/tools/cmd/oracle
 ;;
-;; Feature:
-;;   go-autocomplete: Provide context sensitive auto completion for Go.
-;;     - https://github.com/nsf/gocode/
-;;     The feature needs auto-complete be set up first; also, it needs gocode
-;;     installed on the system (gocode in PATH), and needs to load a file under
-;;     emacs/go-autocomplete.el (optional if installed from elpa).
-;;   go-eldoc: Show function signature, variable definition in mini-buffer,
-;;     use gocode as underline tool.
-;;   go-oracle: Advanced tool for source code analysis
-;;     - https://docs.google.com/document/d/1SLk36YRjjMgKqe490mSRzOPYEDe0Y_WQNRv-EiFYUyw/view
-;;     go-oracle only works with go1.6 vendor support, e.g. it won't honor Godeps
+;; In addition to the above tools, we also need to include corresponding packages
+;; for them to work with emacs:
+;;   go-autocomplete
+;;   go-eldoc
+;;   go-guru
+;;
+;; Features:
+;;   go-autocomplete provides context sensitive auto completion for Go. The
+;;     feature comes with gocode (https://github.com/nsf/gocode), and requires
+;;     auto-complete-mode or company-mode to be set up. gocode is client/server
+;;     architecture for caching purposes (to speed up auto completion). Note,
+;;     to enable auto completion on unimported packages, use:
+;;       "gocode set unimported-packages true".
+;;     For more detail, see github project homepage.
+;;   go-eldoc shows function signature, variable definition, etc in mini-buffer
+;;     at cursor point; it uses gocode as underline tool. eldoc is not exclusive
+;;     to golang, it is a buffer-local minor mode that helps with looking up
+;;     various documentation.
+;;   go-guru: Advanced tool for Go source code analysis. For large project,
+;;     go-guru can be a bit slow. For detail, see http://golang.org/s/using-guru
 ;;
 ;; Usage:
-;;   M-x godoc  ; give a package name, show docs in view-mode
-;;   M-x gofmt  ; format current go buffer
 ;;   M-.        ; jump to the definition of symbol
 ;;   M-*        ; jump back
-;;   C-c C-a    ; add a package to import (usually we import package via goimports,
-;;              ; but this can be usefull when wanting to use gocode, as gocode
-;;              ; can't autocomplete if the package is not impoted)
+;;   M-x godoc  ; give a package name, show docs in view-mode
+;;   M-x gofmt  ; format current go buffer (will be called when saving file)
+;;   M-x go-guru-set-scope  ; set scope for go-guru analysis
+;;   M-x go-guru-referrers  ; show all refs to thing denoted by selected identifier
+;;   C-c C-a    ; add a package to import
 ;;   C-c C-f ?  ; quite a few commands have C-c C-f prefix, e.g. 'a' for jumping
 ;;              ; to function argument, 'r' for jumping to function return value
 ;;------------------------------------------------------------------------------
@@ -39,6 +47,8 @@
 (require 'go-autocomplete)
 
 (require-package 'go-eldoc)
+
+(require-package 'go-guru)
 
 
 (defun go-mode-custom-hook ()
