@@ -328,11 +328,12 @@ function SetupEnvironment() {
   # Use zsh
   sudo apt-get install -y zsh
   sudo chsh -s /usr/bin/zsh $USER
-  # Intall links
+  # Install links
   ln -sf ~/.unixrc/.emacs.d ~/.emacs.d
   ln -sf ~/.unixrc/.zshrc ~/.zshrc
   mkdir -p ~/.config
   ln -sf ~/.unixrc/.config/terminator ~/.config/terminator
+  ln -sf ~/.unixrc/.config/gtk-3.0 ~/.config/gtk-3.0
   ln -sf ~/.unixrc/.Xmodmap ~/.Xmodmap
   ln -sf ~/.unixrc/.xprofile ~/.xprofile
   # Set up z

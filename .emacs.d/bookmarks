@@ -18,7 +18,7 @@
  (rear-context-string)
  (position . 1))
 ("org"
- (filename . "~/org/general.org")
+ (filename . "~/Org/general.org")
  (front-context-string . "#+STARTUP: showa")
  (rear-context-string)
  (position . 1))
