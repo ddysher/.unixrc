@@ -334,6 +334,7 @@ function SetupEnvironment() {
   mkdir -p ~/.config
   ln -sf ~/.unixrc/.config/terminator ~/.config/terminator
   ln -sf ~/.unixrc/.Xmodmap ~/.Xmodmap
+  ln -sf ~/.unixrc/.xprofile ~/.xprofile
   # Set up z
   if [[ ! -e ~/.z ]]; then
     touch ~/.z
