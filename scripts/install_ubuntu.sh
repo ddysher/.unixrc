@@ -333,6 +333,7 @@ function SetupEnvironment() {
   ln -sf ~/.unixrc/.zshrc ~/.zshrc
   mkdir -p ~/.config
   ln -sf ~/.unixrc/.config/terminator ~/.config/terminator
+  ln -sf ~/.unixrc/.Xmodmap ~/.Xmodmap
   # Set up z
   if [[ ! -e ~/.z ]]; then
     touch ~/.z

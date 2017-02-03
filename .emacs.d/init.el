@@ -2,6 +2,13 @@
 ;; Bool values for init files to decide which functions are available
 ;;------------------------------------------------------------------------------
 ;; System type
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (defvar *windows* (eq system-type 'windows-nt))
 (defvar *cygwin*  (eq system-type 'cygwin))
 (defvar *darwin*  (eq system-type 'darwin))
@@ -102,6 +109,9 @@
  '(livedown:autostart nil)
  '(livedown:open t)
  '(livedown:port 1337)
+ '(package-selected-packages
+   (quote
+    (chinese-pyim edit-server flycheck nginx-mode apache-mode hackernews dockerfile-mode thrift yaml-mode markdown-mode php-mode jade-mode coffee-mode zenburn-theme jedi python-environment epc rust-mode web-mode tern-auto-complete tern js2-mode lua-mode go-guru go-eldoc go-autocomplete go-mode ggtags fill-column-indicator window-numbering auto-complete multi-term magit yasnippet helm smex w3m exec-path-from-shell)))
  '(safe-local-variable-values (quote ((c-indent-level . 4))))
  '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces

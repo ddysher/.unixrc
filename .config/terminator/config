@@ -30,9 +30,9 @@
 [profiles]
   [[default]]
     background_color = "#2e3436"
-    background_darkness = 1.06
-    background_image = None
-    font = Inconsolata Medium 10
+    background_darkness = 1.0
+    cursor_color = "#ffffff"
+    font = Inconsolata 11
     foreground_color = "#ffffff"
     scroll_on_output = False
     scrollback_infinite = True
