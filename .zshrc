@@ -80,7 +80,9 @@ fi
 export GOPATH=$HOME/code/workspace
 export CDPATH=$CDPATH:$GOPATH/src
 if [[ `uname` != "Darwin" ]]; then
-  # Use Homebrew to manage go binary in Darwin, which is under /usr/local/bin.
+  # For non-Mac, set PATH for golang bin path. In mac, go is installed using
+  # homebrew, which manages binaries under /usr/local/bin, so it's unnecessary
+  # to set PATH here.
   export PATH=/usr/local/go/bin:$PATH
 fi
 export PATH=$GOPATH/bin:$PATH
@@ -109,6 +111,7 @@ if [[ `uname` == "Darwin" ]]; then
   # Need full path for EDITOR variable in OSX.
   export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
   export HOMEBREW_TEMP=/usr/local/TEMP
+  export GOROOT=/usr/local/opt/go/libexec
 elif [[ `uname` == "Linux" ]]; then
   alias chrome="google-chrome"
   alias emacs="/usr/local/bin/emacsclient -n"
