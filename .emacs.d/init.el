@@ -106,12 +106,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("98cc377af705c0f2133bb6d340bf0becd08944a588804ee655809da5d8140de6" "5dc0ae2d193460de979a463b907b4b2c6d2c9c4657b2e9e66b8898d2592e3de5" default)))
  '(livedown:autostart nil)
  '(livedown:open t)
  '(livedown:port 1337)
  '(package-selected-packages
    (quote
-    (chinese-pyim edit-server flycheck nginx-mode apache-mode hackernews dockerfile-mode thrift yaml-mode markdown-mode php-mode jade-mode coffee-mode zenburn-theme jedi python-environment epc rust-mode web-mode tern-auto-complete tern js2-mode lua-mode go-guru go-eldoc go-autocomplete go-mode ggtags fill-column-indicator window-numbering auto-complete multi-term magit yasnippet helm smex w3m exec-path-from-shell)))
+    (material-theme chinese-pyim edit-server flycheck nginx-mode apache-mode hackernews dockerfile-mode thrift yaml-mode markdown-mode php-mode jade-mode coffee-mode zenburn-theme jedi python-environment epc rust-mode web-mode tern-auto-complete tern js2-mode lua-mode go-guru go-eldoc go-autocomplete go-mode ggtags fill-column-indicator window-numbering auto-complete multi-term magit yasnippet helm smex w3m exec-path-from-shell)))
  '(safe-local-variable-values (quote ((c-indent-level . 4))))
  '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces

@@ -2,6 +2,7 @@
 ;; Load theme and font
 ;;------------------------------------------------------------------------------
 (require-package 'zenburn-theme)
+(require-package 'material-theme)
 
 
 (defun load-zenburn ()
@@ -15,7 +16,14 @@
                       :foreground "#5F7F5F" :background "#383838"
                       :box '(:line-width 1 :style released-button)))
 
-(load-zenburn)
+(defun load-material ()
+  (load-theme `material t))
+
+;; Load commonly used themes, options are listed below:
+;;   (load-zenburn)
+;;   (load-material)
+(load-material)
+
 ;; Generic fonts
 (cond (*linux*  (set-default-font "Inconsolata-10")))
 (cond (*darwin* (set-default-font "Monaco-10")))
