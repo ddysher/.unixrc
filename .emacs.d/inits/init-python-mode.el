@@ -6,7 +6,7 @@
 ;; To enable jedi, following packages are needed in emacs:
 ;;   EPC, deferred.el, auto-complete and python-environment.el.
 ;; Also, following command and packages need to be installed in host OS (use pip
-;;   install): virtualenv, jedi, python-epc and argparse.
+;;   install): virtualenv, jedi, python-epc (or epc) and argparse.
 ;;
 ;; Install Python server (jediepcserver.py) by running
 ;;   M-x jedi:install-server in Emacs

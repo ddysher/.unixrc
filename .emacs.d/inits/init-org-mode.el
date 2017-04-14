@@ -22,6 +22,7 @@
 (setq org-log-done t)
 (setq org-agenda-files '("~/org/general.org"))
 (setq org-src-tab-acts-natively t)
+(setq org-src-fontify-natively t) ; enable native source code hightlight
 
 (defun org-agenda--mode-custom-hook ()
   (text-scale-decrease 1))         ; use smaller size for agenda mode.
