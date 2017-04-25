@@ -70,11 +70,14 @@ source $TOOLS/z/z.sh            # Enable z.sh
 bindkey -e                      # Bind keys
 
 # Kubernetes environment.
-[[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
-[[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
 if [ -d $HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin ]; then
   export PATH=$HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
 fi
+
+# Cloud environment.
+[[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
+[[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
+[[ -f "$HOME/code/source/azure-cli/az.completion" ]] && source "/home/deyuan/code/source/azure-cli/az.completion"
 
 # Go environment.
 export GOPATH=$HOME/code/workspace
