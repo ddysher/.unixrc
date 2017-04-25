@@ -41,8 +41,8 @@
 (add-to-list 'auto-mode-alist '("/etc/nginx/.*" . nginx-mode))
 
 (require-package 'matlab-mode)
+(require 'matlab)
 (add-to-list 'auto-mode-alist '("\\.m\\'" . matlab-mode))
-(require 'matlab-mode)
 
 ;; Disable flycheck by default (annoying for some buffer, enable as needed).
 (require-package 'flycheck)
