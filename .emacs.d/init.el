@@ -114,7 +114,7 @@
  '(livedown:port 1337)
  '(package-selected-packages
    (quote
-    (matlab-mode wc-mode material-theme chinese-pyim edit-server flycheck nginx-mode apache-mode hackernews dockerfile-mode thrift yaml-mode markdown-mode php-mode jade-mode coffee-mode zenburn-theme jedi python-environment epc rust-mode web-mode tern-auto-complete tern js2-mode lua-mode go-guru go-eldoc go-autocomplete go-mode ggtags fill-column-indicator window-numbering auto-complete multi-term magit yasnippet helm smex w3m exec-path-from-shell)))
+    (neotree matlab-mode wc-mode material-theme chinese-pyim edit-server flycheck nginx-mode apache-mode hackernews dockerfile-mode thrift yaml-mode markdown-mode php-mode jade-mode coffee-mode zenburn-theme jedi python-environment epc rust-mode web-mode tern-auto-complete tern js2-mode lua-mode go-guru go-eldoc go-autocomplete go-mode ggtags fill-column-indicator window-numbering auto-complete multi-term magit yasnippet helm smex w3m exec-path-from-shell)))
  '(safe-local-variable-values (quote ((c-indent-level . 4))))
  '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces
