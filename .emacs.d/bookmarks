@@ -7,6 +7,21 @@
  (front-context-string . "/*\nCopyright 201")
  (rear-context-string)
  (position . 1))
+("kube/pkg/volume.go"
+ (filename . "~/code/workspace/src/k8s.io/kubernetes/pkg/volume/volume.go")
+ (front-context-string . "/*\nCopyright 201")
+ (rear-context-string)
+ (position . 1))
+("kube/pkg/kubelet.go"
+ (filename . "~/code/workspace/src/k8s.io/kubernetes/pkg/kubelet/kubelet.go")
+ (front-context-string . "/*\nCopyright 201")
+ (rear-context-string)
+ (position . 1))
+("kubernetes"
+ (filename . "~/code/workspace/src/k8s.io/kubernetes/README.md")
+ (front-context-string . "/*\nCopyright 201")
+ (rear-context-string)
+ (position . 1))
 ("tool"
  (filename . "~/code/tool/README.md")
  (front-context-string . "## Experiment wi")
@@ -30,11 +45,6 @@
 ("go"
  (filename . "~/code/language/go/example/gopath.go")
  (front-context-string . "// This demonstr")
- (rear-context-string)
- (position . 1))
-("kubernetes"
- (filename . "~/code/workspace/src/k8s.io/kubernetes/README.md")
- (front-context-string . "/*\nCopyright 201")
  (rear-context-string)
  (position . 1))
 ("shell"
@@ -65,16 +75,6 @@
 ("emacs_config"
  (filename . "~/.emacs.d/init.el")
  (front-context-string . ";;;;;;;;;;;;;;;;")
- (rear-context-string)
- (position . 1))
-("kube/pkg/volume.go"
- (filename . "~/code/workspace/src/k8s.io/kubernetes/pkg/volume/volume.go")
- (front-context-string . "/*\nCopyright 201")
- (rear-context-string)
- (position . 1))
-("kube/pkg/kubelet.go"
- (filename . "~/code/workspace/src/k8s.io/kubernetes/pkg/kubelet/kubelet.go")
- (front-context-string . "/*\nCopyright 201")
  (rear-context-string)
  (position . 1))
 )
