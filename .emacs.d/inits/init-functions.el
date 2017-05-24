@@ -87,10 +87,10 @@ split window, then put cursor at top left."
   (interactive)
   (delete-other-windows)
   (switch-to-buffer "\*scratch\*")
-  (split-window-below)
-  (other-window 1)
   (split-window-right)
-  (other-window 2))
+  (split-window-below)
+  (shrink-window-horizontally (/ (* (window-width) 3) 10))) ; shrink left window to 7/10 of its current size
+
 
 (defvar current-window-conf-register nil)
 

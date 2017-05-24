@@ -23,8 +23,8 @@
                 (window-numbering-assign window 0))
             (incf counter))))))
 
-
 (window-numbering-mode t)
 (setq window-numbering-auto-assign-0-to-minibuffer nil)
+
 
 (provide 'init-window-numbering)

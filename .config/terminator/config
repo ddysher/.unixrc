@@ -31,6 +31,7 @@
   [[default]]
     background_color = "#2e3436"
     background_darkness = 1.0
+    background_image = None
     cursor_color = "#ffffff"
     font = Inconsolata 10
     foreground_color = "#ffffff"

@@ -36,6 +36,18 @@
 (global-set-key (kbd "C-x 4 u") 'winner-undo)
 (global-set-key (kbd "C-x 4 r") 'winner-redo)
 
+;; add key bindings to window numbering mode (apart from M-1, M-2, etc)
+(global-set-key (kbd "C-0") 'select-window-0)
+(global-set-key (kbd "C-1") 'select-window-1)
+(global-set-key (kbd "C-2") 'select-window-2)
+(global-set-key (kbd "C-3") 'select-window-3)
+(global-set-key (kbd "C-4") 'select-window-4)
+(global-set-key (kbd "C-5") 'select-window-5)
+(global-set-key (kbd "C-6") 'select-window-6)
+(global-set-key (kbd "C-7") 'select-window-7)
+(global-set-key (kbd "C-8") 'select-window-8)
+(global-set-key (kbd "C-9") 'select-window-9)
+
 ;; Key bindings for Mac
 (if *darwin*
     (progn
