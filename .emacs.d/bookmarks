@@ -2,7 +2,22 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("kube/v1/types.go"
+(("cadvisor/fs.go"
+ (filename . "~/code/workspace/src/github.com/google/cadvisor/fs/fs.go")
+ (front-context-string . "func NewFsInfo(c")
+ (rear-context-string . "tring]string\n}\n\n")
+ (position . 2128))
+("cadvisor/manager.go"
+ (filename . "~/code/workspace/src/github.com/google/cadvisor/manager/manager.go")
+ (front-context-string . "func New(memoryC")
+ (rear-context-string . " a new manager.\n")
+ (position . 5898))
+("cadvisor/cadvisor.go"
+ (filename . "~/code/workspace/src/github.com/google/cadvisor/cadvisor.go")
+ (front-context-string . "func main() {\n	d")
+ (rear-context-string . "CPU usage.\")\n}\n\n")
+ (position . 3857))
+("kube/v1/types.go"
  (filename . "~/code/workspace/src/k8s.io/kubernetes/pkg/api/v1/types.go")
  (front-context-string . "/*\nCopyright 201")
  (rear-context-string)
@@ -14,9 +29,9 @@
  (position . 1))
 ("kube/pkg/kubelet.go"
  (filename . "~/code/workspace/src/k8s.io/kubernetes/pkg/kubelet/kubelet.go")
- (front-context-string . "/*\nCopyright 201")
- (rear-context-string)
- (position . 1))
+ (front-context-string . "func NewMainKube")
+ (rear-context-string . "ld happen here.\n")
+ (position . 11971))
 ("kubernetes"
  (filename . "~/code/workspace/src/k8s.io/kubernetes/README.md")
  (front-context-string . "/*\nCopyright 201")
