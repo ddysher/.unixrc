@@ -34,7 +34,7 @@ setopt NO_BEEP
 # Which plugins would you like to load? (plugins can be found in $ZSH/plugins/*)
 # Custom plugins may be added to $ZSH/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git python go vagrant docker-docker k8s-kubernetes)
+plugins=(git python go vagrant docker-docker)
 
 ##------------------------------------------------------------------------------
 ## Special configs
@@ -72,6 +72,9 @@ bindkey -e                      # Bind keys
 # Kubernetes environment.
 if [ -d $HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin ]; then
   export PATH=$HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
+  # This is effectively how kubectl plugin works; but since kubectl locates at
+  # 'weird' location, don't use it directly.
+  source <(kubectl completion zsh)
 fi
 
 # Cloud environment.

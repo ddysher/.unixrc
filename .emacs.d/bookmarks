@@ -83,8 +83,8 @@
  (rear-context-string)
  (position . 1))
 ("zsh-config"
- (filename . "~/.zshrc")
- (front-context-string . "# ;;;;;;;;;;;;;;")
+ (filename . "~/.unixrc/.zshrc")
+ (front-context-string . "##--------------")
  (rear-context-string)
  (position . 1))
 ("emacs_config"
