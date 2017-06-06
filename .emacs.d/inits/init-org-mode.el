@@ -11,6 +11,7 @@
 ;;   C-c C-s    Add scheduled time.
 ;;   C-c C-d    Add deadline time.
 ;;   C-c C-x C-a   Archive heading.
+;;   C-c '      Edit source code.
 ;;------------------------------------------------------------------------------
 (require-package 'org)
 (require 'org)
