@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("cadvisor/fs.go"
+(("org/kube/apis.org"
+ (filename . "~/org/projects/kubernetes/apis.org")
+ (front-context-string . "#+STARTUP: conte")
+ (rear-context-string)
+ (position . 1))
+("cadvisor/fs.go"
  (filename . "~/code/workspace/src/github.com/google/cadvisor/fs/fs.go")
  (front-context-string . "func NewFsInfo(c")
  (rear-context-string . "tring]string\n}\n\n")
