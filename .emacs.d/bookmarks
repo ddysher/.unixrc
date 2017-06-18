@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("kube-incubator/external-storage/README.md"
+(("org/kube/practice"
+ (filename . "~/org/projects/kubernetes/practice/")
+ (front-context-string . "  /home/deyuan/o")
+ (rear-context-string)
+ (position . 1))
+("kube-incubator/external-storage/README.md"
  (filename . "~/code/workspace/src/github.com/kubernetes-incubator/external-storage/README.md")
  (front-context-string . "# External Stora")
  (rear-context-string)
