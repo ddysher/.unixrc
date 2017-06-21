@@ -35,6 +35,7 @@
     cursor_color = "#ffffff"
     font = Inconsolata 10
     foreground_color = "#ffffff"
+    scroll_on_output = False
     scrollback_infinite = True
     show_titlebar = False
     use_system_font = False
