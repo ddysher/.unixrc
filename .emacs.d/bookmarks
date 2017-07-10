@@ -33,7 +33,7 @@
  (rear-context-string . "CPU usage.\")\n}\n\n")
  (position . 3857))
 ("kube/v1/types.go"
- (filename . "~/code/workspace/src/k8s.io/kubernetes/pkg/api/v1/types.go")
+ (filename . "~/code/workspace/src/k8s.io/kubernetes/pkg/api/types.go")
  (front-context-string . "/*\nCopyright 201")
  (rear-context-string)
  (position . 1))

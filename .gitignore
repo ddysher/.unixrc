@@ -1,11 +1,10 @@
 # Emacs plugin jedi creates the directory.
 .emacs.d/.python-environments
 
-# chinese-pyim personal dict keeps changing - noisy.
-.emacs.d/pyim/pyim-personal.txt
-
-# The file is ~20M, pull separately.
-.emacs.d/pyim/dicts/pyim-bigdict.pyim
+# Ignore chinese-pyim, including:
+#   pyim-personal.txt - personal dict keeps changing, noisy.
+#   pyim-bigdict.pyim - the file is ~20M, pull separately.
+.emacs.d/pyim
 
 # Ignore bookmarks on folder GUI since it is path dependent.
 .config/gtk-3.0/bookmarks
