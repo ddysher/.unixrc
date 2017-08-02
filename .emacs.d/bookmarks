@@ -33,7 +33,7 @@
  (rear-context-string . "CPU usage.\")\n}\n\n")
  (position . 3857))
 ("kube/v1/types.go"
- (filename . "~/code/workspace/src/k8s.io/kubernetes/pkg/api/types.go")
+ (filename . "~/code/workspace/src/k8s.io/kubernetes/pkg/api/v1/types.go")
  (front-context-string . "/*\nCopyright 201")
  (rear-context-string)
  (position . 1))
@@ -72,9 +72,9 @@
  (front-context-string . "# Experiment wit")
  (rear-context-string)
  (position . 1))
-("go"
- (filename . "~/code/language/go/example/gopath.go")
- (front-context-string . "// This demonstr")
+("golang"
+ (filename . "~/code/language/go/example/hello.go")
+ (front-context-string . "// Go 'hello wor")
  (rear-context-string)
  (position . 1))
 ("shell"
