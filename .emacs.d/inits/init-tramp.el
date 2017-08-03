@@ -23,5 +23,16 @@
 (defun tramp-sh-handle-vc-registered-around (orig-fun &rest args))
 (advice-add 'tramp-sh-handle-vc-registered :around #'tramp-sh-handle-vc-registered-around)
 
+;; Quickly open up a file in vagrant dev environment.
+;; Usage:
+;;   M-x tramp-vagrant-kubernetes
+;; Requirements:
+;;   1. ubuntu box is running at IP address 192.168.33.33
+;;   2. kubernetes located in /home/vagrant/code/workspace/src/k8s.io/kubernetes
+;;   3. can ssh to ubuntu box without password
+(defun tramp-vagrant-kubernetes ()
+  (interactive)
+  (find-file "/sshx:vagrant@192.168.33.33:/home/vagrant/code/workspace/src/k8s.io/kubernetes/README.md"))
+
 
 (provide 'init-tramp)
