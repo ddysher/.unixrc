@@ -2,8 +2,8 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org/kube/practice"
- (filename . "~/org/projects/kubernetes/practice/")
+(("code/kube/practice"
+ (filename . "~/code/projects/kubernetes/practice/")
  (front-context-string . "  /home/deyuan/o")
  (rear-context-string)
  (position . 1))
@@ -12,8 +12,8 @@
  (front-context-string . "# External Stora")
  (rear-context-string)
  (position . 1))
-("org/kube/apis.org"
- (filename . "~/org/projects/kubernetes/apis.org")
+("code/kube/apis.code"
+ (filename . "~/code/projects/kubernetes/apis.org")
  (front-context-string . "#+STARTUP: conte")
  (rear-context-string)
  (position . 1))
@@ -57,8 +57,8 @@
  (front-context-string . "## Experiment wi")
  (rear-context-string)
  (position . 1))
-("org"
- (filename . "~/org/general.org")
+("code"
+ (filename . "~/code/general.org")
  (front-context-string . "#+STARTUP: showa")
  (rear-context-string)
  (position . 1))
@@ -105,6 +105,16 @@
 ("emacs_config"
  (filename . "~/.emacs.d/init.el")
  (front-context-string . ";;;;;;;;;;;;;;;;")
+ (rear-context-string)
+ (position . 1))
+("code/kube/apis.org"
+ (filename . "~/code/projects/kubernetes/apis.org")
+ (front-context-string . "#+STARTUP: conte")
+ (rear-context-string)
+ (position . 1))
+("org"
+ (filename . "~/code/general.org")
+ (front-context-string . "#+STARTUP: showa")
  (rear-context-string)
  (position . 1))
 )

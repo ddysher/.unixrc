@@ -29,6 +29,7 @@
 
 (add-to-list 'ido-ignore-files ".DS_Store")
 (add-to-list 'ido-ignore-files ".owncloudsync.log")
+(add-to-list 'ido-ignore-files "._sync")
 (add-to-list 'ido-ignore-files ".csync_journal.db")
 (add-to-list 'ido-ignore-files ".csync_journal.db-shm")
 (add-to-list 'ido-ignore-files ".csync_journal.db-wal")
