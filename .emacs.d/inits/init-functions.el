@@ -55,9 +55,9 @@
   (balance-windows)
   ;; Up to this point, lower windows takes up 50% space.
   (shrink-window (/ (* (window-body-height) 7) 10)) ; shrink bottom windows to 3/10 of its current size
-  (shrink-window-horizontally (/ (* (window-width) 3) 10)) ; shrink bottom left window to 7/10 of its current size
+  (shrink-window-horizontally (/ (* (window-width) 5) 10)) ; shrink bottom left window to half of its current size
   (other-window 2)
-  (shrink-window-horizontally (/ (* (window-width) 3) 10)) ; shrink bottom right window to 7/10 of its current size
+  (shrink-window-horizontally (/ (* (window-width) 5) 10)) ; shrink bottom right window to half of its current size
   (other-window 1))
 
 (defun split-desktop-window-regular-3 ()
@@ -76,9 +76,9 @@
   (balance-windows)
   ;; Up to this point, lower windows takes up 50% space.
   (shrink-window (/ (* (window-body-height) 7) 10)) ; shrink bottom windows to 3/10 of its current size
-  (shrink-window-horizontally (/ (* (window-width) 3) 10)) ; shrink bottom left window to 7/10 of its current size
+  (shrink-window-horizontally (/ (* (window-width) 5) 10)) ; shrink bottom left window to half of its current size
   (other-window 2)
-  (shrink-window-horizontally (/ (* (window-width) 3) 10)) ; shrink bottom right window to 7/10 of its current size
+  (shrink-window-horizontally (/ (* (window-width) 5) 10)) ; shrink bottom right window to half of its current size
   (other-window 1))
 
 (defun split-desktop-window-terminal ()

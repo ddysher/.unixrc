@@ -100,7 +100,7 @@ if [ -x $HOME/.rbenv/bin/rbenv ]; then
 fi
 
 # Add misc useful tools to PATH
-export PATH=$PATH:$HOME/code/tool/scripts
+export PATH=$PATH:$HOME/code/tools/scripts
 
 ##-------------------------------------------------------------------------------
 ## Configs for Linux and Mac
