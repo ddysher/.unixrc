@@ -4,6 +4,9 @@
 (require-package 'coffee-mode)
 (require 'coffee-mode)
 
+(require-package 'scala-mode)
+(require 'scala-mode)
+
 (require-package 'jade-mode)
 (require 'jade-mode)
 
