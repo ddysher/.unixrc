@@ -34,5 +34,12 @@
   (interactive)
   (find-file "/sshx:vagrant@192.168.33.33:/home/vagrant/code/workspace/src/k8s.io/kubernetes/README.md"))
 
+(defun tramp-mangosteen-org ()
+  (interactive)
+  (find-file "/sshx:deyuan@192.168.3.34:/home/deyuan/code/general.org"))
+
+(defun tramp-sugarcane-org ()
+  (interactive)
+  (find-file "/sshx:deyuan@192.168.8.53:/home/deyuan/code/general.org"))
 
 (provide 'init-tramp)
