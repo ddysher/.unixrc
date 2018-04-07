@@ -71,9 +71,9 @@
 (require 'init-rust-mode)
 (require 'init-java-mode)
 (require 'init-python-mode)
+(require 'init-protobuf-mode)
 ;; Disabled language modes, for tracking
 ;; (require 'init-geben-mode)
-;; (require 'init-protobuf-mode)
 ;; (require 'flex-mode)
 ;; (require 'cool-mode)
 ;; (require 'bison-mode))
@@ -114,7 +114,7 @@
  '(livedown:port 1337)
  '(package-selected-packages
    (quote
-    (cmake-font-lock cmake-mode neotree matlab-mode wc-mode material-theme chinese-pyim edit-server flycheck nginx-mode apache-mode hackernews dockerfile-mode thrift yaml-mode markdown-mode php-mode jade-mode coffee-mode zenburn-theme jedi python-environment epc rust-mode web-mode tern-auto-complete tern js2-mode lua-mode go-guru go-eldoc go-autocomplete go-mode ggtags fill-column-indicator window-numbering auto-complete multi-term magit yasnippet helm smex w3m exec-path-from-shell)))
+    (scala-mode protobuf-mode cmake-font-lock cmake-mode neotree matlab-mode wc-mode material-theme chinese-pyim edit-server flycheck nginx-mode apache-mode hackernews dockerfile-mode thrift yaml-mode markdown-mode php-mode jade-mode coffee-mode zenburn-theme jedi python-environment epc rust-mode web-mode tern-auto-complete tern js2-mode lua-mode go-guru go-eldoc go-autocomplete go-mode ggtags fill-column-indicator window-numbering auto-complete multi-term magit yasnippet helm smex w3m exec-path-from-shell)))
  '(safe-local-variable-values (quote ((c-indent-level . 4))))
  '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces
