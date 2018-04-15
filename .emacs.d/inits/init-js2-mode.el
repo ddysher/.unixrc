@@ -1,11 +1,15 @@
 ;;------------------------------------------------------------------------------
-;; Provide javascript mode, javascript-mode is built-in emacs mode
+;; Provide js2 mode, js2-mode is elpa managed package
+;;
+;;------------------------------------------------------------------------------
+;; Code Analyzer
+;;
+;; Use tern for code analysis (https://github.com/ternjs/tern).
 ;;------------------------------------------------------------------------------
 (require-package 'js2-mode)
 (require-package 'tern)
 (require-package 'tern-auto-complete)
 (require 'js2-mode)
-
 
 (defun js-mode-custom-hook ()
   (setq js-indent-level universal-indent-size))
@@ -32,6 +36,5 @@
        (require 'tern-auto-complete)
        (tern-mode t)
        (tern-ac-setup))))
-
 
 (provide 'init-js2-mode)

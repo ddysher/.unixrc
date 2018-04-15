@@ -4,9 +4,6 @@
 (require-package 'coffee-mode)
 (require 'coffee-mode)
 
-(require-package 'scala-mode)
-(require 'scala-mode)
-
 (require-package 'jade-mode)
 (require 'jade-mode)
 
@@ -26,9 +23,6 @@
 
 (require-package 'dockerfile-mode)
 (require 'dockerfile-mode)
-
-(require-package 'magit)
-(require 'magit)
 
 (require-package 'hackernews)
 (require 'hackernews)
@@ -59,7 +53,7 @@
 
 ;; Winner Mode is a global minor mode. When activated, it allows you to "undo
 ;; (and "redo") changes in the window configuration with the key commands
-;; 'C-c left; and 'C-c right'.
+;; 'C-c left'; and 'C-c right'.
 (winner-mode 1)
 
 ;; Display ansi color in emacs buffer, instead of characters like '[3m]'.

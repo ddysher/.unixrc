@@ -3,7 +3,6 @@
 ;;------------------------------------------------------------------------------
 (require 'package)
 
-
 ;; Package archives source
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 ;; 'melpa' is sufficient for the most cases, so comment out the following sources.
@@ -25,6 +24,5 @@
         (require-package package min-version t)))))
 
 (package-initialize)
-
 
 (provide 'init-elpa)

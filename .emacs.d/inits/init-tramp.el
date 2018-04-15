@@ -1,7 +1,9 @@
 ;;------------------------------------------------------------------------------
-;; Provide tramp, tramp mode is built-in with emacs. It works even not required
-;; explicitly.  Note we may need to configure tramp-auto-save-directory (or
+;; Provide tramp, tramp mode is built-in with emacs. It works without explicitly
+;; enabled. Note we may need to configure tramp-auto-save-directory (or
 ;; tramp-backup-directory-alist, etc) if auto save is enabled.
+;;
+;;------------------------------------------------------------------------------
 ;; Basic usage:
 ;;   C-x C-f /remotehost:filename  RET (or /method:user@remotehost:filename)
 ;; E.g:
@@ -9,7 +11,6 @@
 ;;   C-x C-f [F1] -> /ssh:root@deyuan.me:~/Documents/file  RET
 ;;------------------------------------------------------------------------------
 (require 'tramp)
-
 
 (setq tramp-default-method "ssh")
 
@@ -23,9 +24,11 @@
 (defun tramp-sh-handle-vc-registered-around (orig-fun &rest args))
 (advice-add 'tramp-sh-handle-vc-registered :around #'tramp-sh-handle-vc-registered-around)
 
-;; Quickly open up a file in vagrant dev environment.
-;; Usage:
+;; Quickly open up a file in remote environment.
+;;
+;; Example Usage:
 ;;   M-x tramp-vagrant-kubernetes
+;;
 ;; Requirements:
 ;;   1. ubuntu box is running at IP address 192.168.33.33
 ;;   2. kubernetes located in /home/vagrant/code/workspace/src/k8s.io/kubernetes

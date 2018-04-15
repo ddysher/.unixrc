@@ -1,14 +1,15 @@
 ;;------------------------------------------------------------------------------
 ;; Provide ido, which makes completing buffers and finding files much easier.
-;; Note ido creates "ido.last" file under ~/.emacs.d directory.
-;; http://www.emacswiki.org/cgi-bin/wiki/InteractivelyDoThings
+;; Note ido creates "ido.last" file under "~/.emacs.d" directory.
+;;   http://www.emacswiki.org/cgi-bin/wiki/InteractivelyDoThings
+;;
+;;------------------------------------------------------------------------------
 ;; Usage:
 ;;   C-j create file even if there is completion for the name. e.g. create file
 ;;       init.el when there is init-abc.el. Also used to open directory.
 ;;   C-l refresh directory content.
 ;;------------------------------------------------------------------------------
 (require 'ido)
-
 
 (ido-mode 'both)                        ; for buffers and files
 (setq ido-save-directory-list-file "~/.emacs.d/ido.last"
@@ -33,6 +34,5 @@
 (add-to-list 'ido-ignore-files ".csync_journal.db")
 (add-to-list 'ido-ignore-files ".csync_journal.db-shm")
 (add-to-list 'ido-ignore-files ".csync_journal.db-wal")
-
 
 (provide 'init-ido)

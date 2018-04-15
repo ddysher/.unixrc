@@ -8,5 +8,4 @@
 
 (add-hook 'java-mode-hook 'java-mode-custom-hook)
 
-
 (provide 'init-java-mode)

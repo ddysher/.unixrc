@@ -3,7 +3,6 @@
 ;;------------------------------------------------------------------------------
 (require 'erc)
 
-
 ;; Do not show the following notification.
 (setq erc-hide-list '("JOIN" "PART" "QUIT" "NICK"))
 ;; Set default erc server to "deyuan.me", which has znc bouncer running.
@@ -17,7 +16,6 @@
   (setq erc-ignore-list '("*bot" "jenkins-k8s*" "travis*"))
   ;; (text-scale-decrease 1)               ; use smaller size for term
   (setq truncate-lines t) )
-
 
 (defcustom erc-foolish-content '("*pull request*")
   "Regular expressions to identify foolish content.
@@ -38,6 +36,5 @@ Usually what happens is that you add the bots to
      (setq erc-insert-this nil))))
 
 (add-hook 'erc-mode-hook 'erc-mode-custom-hook)
-
 
 (provide 'init-erc)

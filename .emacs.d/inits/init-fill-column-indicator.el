@@ -4,10 +4,8 @@
 ;;------------------------------------------------------------------------------
 (require-package 'fill-column-indicator)
 
-
 (when (not *cygwin*)
   (require 'fill-column-indicator)
   (setq fci-rule-column 80))
-
 
 (provide 'init-fill-column-indicator)

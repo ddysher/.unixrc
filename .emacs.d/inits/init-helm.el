@@ -5,7 +5,6 @@
 (require-package 'helm)
 (require 'helm)
 
-
 (helm-mode 1)
 (helm-adaptive-mode 1)
 
@@ -15,6 +14,5 @@
   ;; files type
   (interactive)
     (helm-do-grep-1 (list default-directory) t nil))
-
 
 (provide 'init-helm)

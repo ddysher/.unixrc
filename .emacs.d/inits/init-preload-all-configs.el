@@ -13,5 +13,4 @@
 (setq make-backup-files nil) ;; no backup files (which end with ~)
 (setq auto-save-default nil) ;; no autosave files (surrounded by #)
 
-
 (provide 'init-preload-all-configs)

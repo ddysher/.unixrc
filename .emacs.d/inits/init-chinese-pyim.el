@@ -1,6 +1,6 @@
 ;;------------------------------------------------------------------------------
 ;; Provide chinese-pyim, a very elegant chinese input method:
-;; https://github.com/tumashu/chinese-pyim
+;;   https://github.com/tumashu/chinese-pyim
 ;;
 ;; Common commands:
 ;;   M-x pyim-dicts-manager - Manage all dictionaries.
@@ -14,10 +14,8 @@
 (require-package 'chinese-pyim)
 (require 'chinese-pyim)
 
-
 (setq default-input-method "chinese-pyim")
 (global-set-key (kbd "C-;") 'toggle-input-method)
-
 
 ;; A list of all dictionries.
 (setq pyim-dicts
@@ -25,6 +23,5 @@
          :file "~/.emacs.d/pyim/dicts/pyim-bigdict.pyim"
          :coding utf-8-unix
          :dict-type pinyin-dict)))
-
 
 (provide 'init-chinese-pyim)

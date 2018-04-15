@@ -7,5 +7,4 @@
 
 (add-hook 'sh-mode-hook 'sh-mode-custom-hook)
 
-
 (provide 'init-sh-mode)

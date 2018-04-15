@@ -4,7 +4,6 @@
 (require-package 'auto-complete)
 (require 'auto-complete-config)
 
-
 ;; Enable auto completion globally, and use default setting.
 (global-auto-complete-mode t)
 (ac-config-default)
@@ -27,6 +26,5 @@
 
 ;; Custom dictionary for major mode.
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-
 
 (provide 'init-auto-complete)

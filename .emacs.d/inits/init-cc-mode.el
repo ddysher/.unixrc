@@ -12,7 +12,6 @@
 ;;------------------------------------------------------------------------------
 (require-package 'ggtags)
 
-
 (defun cc-mode-custom-hook ()
   (ggtags-mode 1)
   (local-set-key (kbd "M-.") 'ggtags-find-tag-dwim)
@@ -24,6 +23,5 @@
 
 (add-hook 'c-mode-hook 'cc-mode-custom-hook)
 (add-hook 'c++-mode-hook 'cc-mode-custom-hook)
-
 
 (provide 'init-cc-mode)

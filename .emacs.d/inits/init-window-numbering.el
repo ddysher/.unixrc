@@ -4,7 +4,6 @@
 (require-package 'window-numbering)
 (require 'window-numbering)
 
-
 (defun window-numbering-mode-custom-hook (windows)
   "Change window number as needed. To match exact conf-register, use
  (if (equal current-window-conf-register ?t)"
@@ -25,6 +24,5 @@
 
 (window-numbering-mode t)
 (setq window-numbering-auto-assign-0-to-minibuffer nil)
-
 
 (provide 'init-window-numbering)

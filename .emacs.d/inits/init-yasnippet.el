@@ -1,7 +1,7 @@
 ;;------------------------------------------------------------------------------
-;; Provide yasnippet mode, managed by MELPA.  Yasnippet mode is a template
-;; system for Emacs. It allows you to type an abbreviation and automatically
-;; expand it into function templates.
+;; Provide yasnippet mode, managed by MELPA. Yasnippet mode is a template system
+;; for Emacs. It allows you to type an abbreviation and automatically expand it
+;; into function templates.
 ;;
 ;; Configuration:
 ;;   Use (yas-global-mode 1) to enable yasnippet globally; or (yas-reload-all)
@@ -11,14 +11,13 @@
 ;;     snippets under ~/.emacs.d/snippets.
 ;;
 ;; Usage:
-;;   C-q : Expand yasnippet. Originally, yas-expand is bound to TAB, but it
-;;     doesn't work well with auto-complete.
+;;   C-q Expand yasnippet. Originally, yas-expand is bound to TAB, but it doesn't
+;;     work well with auto-complete.
 ;;   M-x yas-reload-all: Reload all yasnippet, useful when new snippet is added
 ;;     in current emacs session.
 ;;------------------------------------------------------------------------------
 (require-package 'yasnippet)
 (require 'yasnippet)
-
 
 ;; Set yasnippet load directories. Here, we set to "~/.emacs.d/snippets" in
 ;; order to overide default configuration.
@@ -32,6 +31,5 @@
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
 (define-key yas-minor-mode-map (kbd "TAB") nil)
 (define-key yas-minor-mode-map (kbd "C-q") 'yas-expand)
-
 
 (provide 'init-yasnippet)

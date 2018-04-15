@@ -1,5 +1,5 @@
 ;;------------------------------------------------------------------------------
-;; Provide rust mode, managed by MELPA.
+;; Provide rust mode, managed by melpa.
 ;;------------------------------------------------------------------------------
 (require-package 'rust-mode)
 (require 'rust-mode)

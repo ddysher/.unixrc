@@ -2,7 +2,7 @@
 ;; Provide magit mode - a mode to work with git
 ;;------------------------------------------------------------------------------
 (require-package 'magit)
-
+(require 'magit-mode)
 
 ;; By default, magit opens status buffer in another window. Here we reset
 ;; "magit-display-buffer-function" function to open status buffer in current
@@ -23,6 +23,5 @@
 ;; Key bindings for magit. magit-status is most commonly used.
 (global-set-key (kbd "C-c g") 'magit-status)
 (global-set-key (kbd "C-c C-g") 'magit-status)
-
 
 (provide 'init-magit-mode)

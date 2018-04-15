@@ -1,11 +1,10 @@
 ;;------------------------------------------------------------------------------
 ;; Provide w3m, w3m is elpa managed package.  This mode depends on external
-;; program, to use this mode, host system must have 'w3m' command installed.
-;; E.g. brew install w3m, sudo apt-get install w3m
+;; program; to use this mode, host system must have 'w3m' command installed.
+;; E.g. brew install w3m, sudo apt-get install w3m, etc
 ;;------------------------------------------------------------------------------
 (require-package 'w3m)
 (require 'w3m)
-
 
 (defun w3m-mode-custom-hook ()
   (local-set-key [up] 'previous-line)
@@ -32,6 +31,5 @@
       w3m-home-page "http://www.baidu.com"
       w3m-search-default-engine "g"
       w3m-default-display-inline-images t)
-
 
 (provide 'init-w3m)

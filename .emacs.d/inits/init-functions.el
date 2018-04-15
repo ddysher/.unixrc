@@ -91,7 +91,6 @@ split window, then put cursor at top left."
   (split-window-below)
   (shrink-window-horizontally (/ (* (window-width) 3) 10))) ; shrink left window to 7/10 of its current size
 
-
 (defvar current-window-conf-register nil)
 
 (defadvice window-configuration-to-register

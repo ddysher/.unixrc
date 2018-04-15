@@ -4,7 +4,6 @@
 (require-package 'multi-term)
 (require 'multi-term)
 
-
 (defun term-toggle-mode ()
   "Toggle terminal between char mode and line mode."
   (interactive)
@@ -74,8 +73,6 @@
   (define-key term-mode-map (kbd "M-n") 'scroll-up-in-place)
   (define-key term-mode-map (kbd "C-q") 'term-toggle-mode))
 
-
 (add-hook 'term-mode-hook 'term-mode-custom-hook)
-
 
 (provide 'init-multi-term)

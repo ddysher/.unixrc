@@ -1,5 +1,5 @@
 ;;------------------------------------------------------------------------------
-;; Provide web mode, a major mode for editing html template.
+;; Provide web mode, a major mode for editing web related files.
 ;;------------------------------------------------------------------------------
 (require-package 'web-mode)
 (require 'web-mode)
@@ -95,6 +95,5 @@
 (add-hook 'web-mode-hook 'web-mode-custom-hook)
 (add-hook 'web-mode-before-auto-complete-hooks
           'web-mode-before-auto-complete-custom-hooks)
-
 
 (provide 'init-web-mode)

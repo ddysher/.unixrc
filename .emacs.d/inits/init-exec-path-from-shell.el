@@ -5,7 +5,6 @@
 (require-package 'exec-path-from-shell)
 (require 'exec-path-from-shell)
 
-
 ;; For both Mac and Linux, load shell path if starting from window.
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))

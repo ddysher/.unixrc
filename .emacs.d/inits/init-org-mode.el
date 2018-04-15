@@ -16,7 +16,6 @@
 (require-package 'org)
 (require 'org)
 
-
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-return-follows-link t)
@@ -29,6 +28,5 @@
   (text-scale-decrease 1))         ; use smaller size for agenda mode.
 
 (add-hook 'org-agenda-mode-hook 'org-agenda--mode-custom-hook)
-
 
 (provide 'init-org-mode)

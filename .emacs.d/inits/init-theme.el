@@ -4,7 +4,6 @@
 (require-package 'zenburn-theme)
 (require-package 'material-theme)
 
-
 (defun load-zenburn ()
   (load-theme 'zenburn t)
   ;; Make active buffer more highlighted, used with zenburn. Color code borrowed

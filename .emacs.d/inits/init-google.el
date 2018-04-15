@@ -32,10 +32,8 @@
         (if (string-match client-name (buffer-file-name buffer))
             (kill-buffer buffer)))))
 
-
 (add-hook 'find-file-hook 'google3-custom-hook)
 (add-hook 'dired-file-hook 'google3-custom-hook)
 (load-file "/usr/share/emacs/site-lisp/google/google.el")
-
 
 (provide 'init-google)

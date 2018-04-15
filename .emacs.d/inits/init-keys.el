@@ -14,14 +14,15 @@
 (global-set-key [f10] 'delete-trailing-whitespace)
 (global-set-key [f12] 'revert-buffer)
 (global-set-key (kbd "ESC ESC") 'abort-recursive-edit) ; same as "C-g"
-;; set M-p the same as "C-p + C-l" to release finger (no original M-p binding)
+;; set M-p the same as "C-p + C-l" to relief finger (no original M-p binding)
 (global-set-key (kbd "M-p") 'scroll-down-in-place)
-;; set M-n the same as "C-n + C-l" to release finger (no original M-n binding)
+;; set M-n the same as "C-n + C-l" to relief finger (no original M-n binding)
 (global-set-key (kbd "M-n") 'scroll-up-in-place)
-;; set M-a the same as C-a to release finger (original M-a move backward sentence)
+;; set M-a the same as C-a to relief finger (original M-a move backward sentence)
 (global-set-key (kbd "M-a") 'move-beginning-of-line)
-;; set M-e the same as C-e to release finger (original M-e move forward sentence)
+;; set M-e the same as C-e to relief finger (original M-e move forward sentence)
 (global-set-key (kbd "M-e") 'move-end-of-line)
+;; pop up buffer selection in mini buffer.
 (global-set-key (kbd "C-o") 'switch-to-buffer)
 ;; search current buffer for matching pattern.
 (global-set-key (kbd "C-c s") 'search-buffer)
@@ -32,6 +33,9 @@
 ;; list all buffers in new a window.
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
 (global-set-key (kbd "C-c C-b") 'buffer-menu)
+;; navigate buffer quickly
+(global-set-key (kbd "C-,") 'previous-buffer)
+(global-set-key (kbd "C-.") 'next-buffer)
 ;; winner mode key bindings.
 (global-set-key (kbd "C-x 4 u") 'winner-undo)
 (global-set-key (kbd "C-x 4 r") 'winner-redo)
