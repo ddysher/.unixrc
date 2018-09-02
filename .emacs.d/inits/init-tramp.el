@@ -43,6 +43,6 @@
 
 (defun tramp-sugarcane-org ()
   (interactive)
-  (find-file "/sshx:deyuan@192.168.8.53:/home/deyuan/code/general.org"))
+  (find-file "/sshx:deyuan@192.168.10.216:/home/deyuan/code/general.org"))
 
 (provide 'init-tramp)
