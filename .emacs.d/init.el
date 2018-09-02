@@ -72,6 +72,7 @@
 (require 'init-scala-mode)
 (require 'init-python-mode)
 (require 'init-protobuf-mode)
+(require 'init-markdown-mode)
 ;; Disabled language modes, for tracking.
 ;; (require 'init-geben-mode)
 ;; (require 'flex-mode)

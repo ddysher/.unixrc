@@ -10,10 +10,6 @@
 (require-package 'php-mode)
 (require 'php-mode)
 
-(require-package 'markdown-mode)
-(require 'markdown-mode)
-(add-hook 'markdown-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
-
 (require-package 'yaml-mode)
 (require 'yaml-mode)
 (add-hook 'yaml-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
