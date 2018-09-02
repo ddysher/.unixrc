@@ -11,7 +11,8 @@
   (call-process-shell-command
    (format "doctoc %s"
            (shell-quote-argument (buffer-file-name))))
-  (revert-without-query))
+  (revert-buffer t t)
+  (message "markdown table of contents updated"))
 
 (defun markdown-custom-hook()
   (run-hooks 'prog-mode-hook)
