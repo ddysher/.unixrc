@@ -18,6 +18,8 @@
   (run-hooks 'prog-mode-hook)
   (local-set-key (kbd "C-c C-c d") 'markdown-doctoc)
   (local-set-key (kbd "M-p") 'scroll-down-in-place)
+  (local-set-key (kbd "M-RET") 'markdown-insert-list-item)
+  (local-set-key (kbd "M-<return>") 'markdown-insert-list-item)
   ;; Change 'M-p' and 'M-n' to bindings that I used to. By default, they
   ;; are bount to 'markdown-previous-link' and 'markdown-next-link'.
   (local-set-key (kbd "M-p") 'scroll-down-in-place)

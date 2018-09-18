@@ -34,7 +34,7 @@ setopt NO_BEEP
 # Which plugins would you like to load? (plugins can be found in $ZSH/plugins/*)
 # Custom plugins may be added to $ZSH/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git python go vagrant docker-docker)
+plugins=(git python go vagrant docker-docker jump)
 
 ##------------------------------------------------------------------------------
 ## Special configs
@@ -58,6 +58,7 @@ alias rm="rm -i"
 alias sgrep="grep -rnI -C3 --color=always" # Colorful grep
 alias drm="docker rm"
 alias dps="docker ps"
+alias j="jump"
 alias cnpm="npm --registry=https://registry.npm.taobao.org \
 --cache=$HOME/.npm/.cache/cnpm \
 --disturl=https://npm.taobao.org/dist \
