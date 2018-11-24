@@ -1,4 +1,10 @@
 ##-------------------------------------------------------------------------------
+## Switches
+##-------------------------------------------------------------------------------
+# Enable/Disable cloud envs which contains cli, libraries for gcp, azure, etc
+CLOUD_ENV=${CLOUD_ENV:-"false"} # "true" or "false"
+
+##-------------------------------------------------------------------------------
 ## Zsh configs
 ##-------------------------------------------------------------------------------
 # Change to your oh-my-zsh configuration.
@@ -9,23 +15,22 @@ ZSH=$HOME/.unixrc/oh-my-zsh
 # that oh-my-zsh is loaded.
 ZSH_THEME="deyuan"
 
-# Change to pkg download directory.
-TOOLS=$HOME/.unixrc/tools
+# Figure out the SHORT hostname.
+# This is copied from oh-my-zsh.sh to move the location of the current completion
+# dump file under ~/.cache/zsh, otherwise there will be a lot of .zcompdump files
+# under home directory.
+if [[ "$OSTYPE" = darwin* ]]; then
+  # macOS's $HOST changes with dhcp, etc. Use ComputerName if possible.
+  SHORT_HOST=$(scutil --get ComputerName 2>/dev/null) || SHORT_HOST=${HOST/.*/}
+else
+  SHORT_HOST=${HOST/.*/}
+fi
+ZSH_COMPDUMP=$HOME/.cache/zsh/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}
 
-# Set to this to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Comment this out to disable weekly auto-update checks.
+# Disable weekly auto-update checks.
 DISABLE_AUTO_UPDATE="true"
 
-# Uncomment following line if you want to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment following line if you want red dots to be displayed while waiting
-# for completion.
+# Display red dots while waiting for completion.
 COMPLETION_WAITING_DOTS="true"
 
 # Disable beeping
@@ -37,39 +42,18 @@ setopt NO_BEEP
 plugins=(git python go vagrant docker-docker jump)
 
 ##------------------------------------------------------------------------------
-## Special configs
+## Special configs that must run at first
 ##------------------------------------------------------------------------------
 if [[ `uname` == "Darwin" ]]; then
-  # Homebrew requires /usr/local/bin and /usr/local/sbin, and /usr/local/bin
-  # should to appear before /usr/bin.
+  # Homebrew requires "/usr/local/bin" and "/usr/local/sbin", and both
+  # directories should appear before "/usr/bin".
   export PATH=/usr/local/sbin:$PATH
   export PATH=/usr/local/bin:$PATH
 fi
 
 ##------------------------------------------------------------------------------
-## General configs for all machines
+## Development environment configs
 ##------------------------------------------------------------------------------
-alias cp="cp -i"
-alias lg="ll --group-directories-first"
-alias mv="mv -i"
-alias pc="proxychains4"
-alias ppj="python -mjson.tool"             # Beautify json print
-alias rm="rm -i"
-alias sgrep="grep -rnI -C3 --color=always" # Colorful grep
-alias drm="docker rm"
-alias dps="docker ps"
-alias j="jump"
-alias cnpm="npm --registry=https://registry.npm.taobao.org \
---cache=$HOME/.npm/.cache/cnpm \
---disturl=https://npm.taobao.org/dist \
---userconfig=$HOME/.cnpmrc"
-alias docker-ip='function _dip() { docker inspect --format "{{ .NetworkSettings.IPAddress }}" $1; };_dip'
-alias docker-pid='function _dpid() { docker inspect --format "{{ .State.Pid }}" $1; };_dpid'
-
-source $ZSH/oh-my-zsh.sh        # Re-exec shell script
-source $TOOLS/z/z.sh            # Enable z.sh
-bindkey -e                      # Bind keys
-
 # Kubernetes environment.
 if [ -d $HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin ]; then
   export PATH=$HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
@@ -79,9 +63,11 @@ if [ -d $HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin ]; then
 fi
 
 # Cloud environment.
-[[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
-[[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
-[[ -f "$HOME/code/source/azure-cli/az.completion" ]] && source "/home/deyuan/code/source/azure-cli/az.completion"
+if [[ "${CLOUD_ENV}" == "true" ]]; then
+  [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
+  [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
+  [[ -f "$HOME/code/source/azure-cli/az.completion" ]] && source "/home/deyuan/code/source/azure-cli/az.completion"
+fi
 
 # Go environment.
 export GOPATH=$HOME/code/workspace
@@ -95,12 +81,42 @@ fi
 export PATH=$GOPATH/bin:$PATH
 
 # Ruby environment.
-if [ -x $HOME/.rbenv/bin/rbenv ]; then
+if [ -d $HOME/.rbenv ]; then
   export PATH=$PATH:$HOME/.rbenv/bin
   eval "$(rbenv init -)"
 fi
 
-# Add misc useful tools to PATH
+# Python environment.
+if [ -d $HOME/.pyenv ]; then
+  export PATH="$HOME/.pyenv:$PATH"
+  eval "$(pyenv init -)"
+fi
+
+##------------------------------------------------------------------------------
+## General configs for all machines
+##------------------------------------------------------------------------------
+alias cp="cp -i"
+alias lg="ll --group-directories-first"
+alias mv="mv -i"
+alias pc="proxychains4"
+alias ppj="python -mjson.tool"  # Beautify json print
+alias rm="rm -i"
+alias sgrep="grep -rnI -C3 --color=always" # Colorful grep
+alias drm="docker rm"
+alias dps="docker ps"
+alias j="jump"
+alias cnpm="npm --registry=https://registry.npm.taobao.org \
+--cache=$HOME/.npm/.cache/cnpm \
+--disturl=https://npm.taobao.org/dist \
+--userconfig=$HOME/.cnpmrc"
+alias docker-ip='function _dip() { docker inspect --format "{{ .NetworkSettings.IPAddress }}" $1; };_dip'
+alias docker-pid='function _dpid() { docker inspect --format "{{ .State.Pid }}" $1; };_dpid'
+
+source $ZSH/oh-my-zsh.sh          # Re-exec shell script
+source $HOME/.unixrc/tools/z/z.sh # Enable z.sh
+bindkey -e                        # Bind keys
+
+# Add misc useful scripts to PATH.
 export PATH=$PATH:$HOME/code/tools/scripts
 
 ##-------------------------------------------------------------------------------
@@ -140,12 +156,14 @@ elif [[ `hostname` == "Deyuans-MacBook-Pro.local" ]]; then
   # install per user, i.e. "pip install ipython --user". This is needed for MacOS
   # ElCapitan. The path is updated to include the binaries installed for current
   # user. Use "python -m site" to see all system path.
-  export PATH=$PATH:$HOME/Library/Python/2.7/bin
+  # Update: comment this out in favor of pyenv.
+  # export PATH=$PATH:$HOME/Library/Python/2.7/bin
 elif [[ `hostname` == "deyuan.pit.corp.google.com" ]]; then
   unsetopt correct_all          # Do not autocorrect
   export P4EDITOR="emacsclient"
   source /etc/bash_completion.d/g4d
 elif [[ `hostname` == "deyuan-macbookpro.roam.corp.google.com" ]]; then
 elif [[ `hostname` == "watermelon" ]]; then
-  # eval `dircolors ~/.dir_colors` # do not using annoying background for 'ls'
+  # Do not using annoying background for 'ls'
+  # eval `dircolors ~/.dir_colors`
 fi
