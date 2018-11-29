@@ -19,15 +19,15 @@
 ;;   python-epc (pip install epc) - python implementation of emacs epc stack, https://github.com/tkf/python-epc
 ;;   argparse - parsing args
 ;;
-;; Install Python server (jediepcserver.py) by running
+;; Install Python server (jediepcserver.py) by running:
 ;;   M-x jedi:install-server in Emacs
 ;; The command only needs to run once.
 ;;
-;; How Jedi.el works. Jedi.el calls Python methods in jedi through EPC protocol.
-;; Emacs side implementation of EPC is epc.el and Python side is python-epc. There
-;; is a process running (EPC server side), e.g.
+;; How Jedi.el works (http://tkf.github.io/emacs-jedi/latest/#how-it-works):
+;; Jedi.el calls Python methods in jedi through EPC protocol. Emacs side
+;; implementation of EPC is epc.el and Python side is python-epc. There is a
+;; process running (EPC server side), e.g.
 ;;   ~/.emacs.d/.python-environments/default/bin/python ~/.emacs.d/.python-environments/default/bin/jediepcserver
-;; http://tkf.github.io/emacs-jedi/latest/#how-it-works
 ;;
 ;;------------------------------------------------------------------------------
 ;; Debugging
@@ -37,11 +37,27 @@
 ;;
 ;; Usage:
 ;;   M-x pdb, then input the script path
+;;
+;;------------------------------------------------------------------------------
+;; PyEnv
+;;
+;; The python version inside emacs is determined while launching emacs, which
+;; means changing python version using command like `pyenv global 3.6.7` doesn't
+;; work (e.g. if a package is only installed in python version 2.7, then code
+;; jump doesn't work). To change version in emacs, use:
+;;   M-x pyenv-mode-set
+;; To unset change, run:
+;;   M-x pyenv-mode-unset
+;; To check current python version, run:
+;;   M-x run-python
+;;
+;; If a file is already opened with another python version, try revert-buffer.
 ;;------------------------------------------------------------------------------
 (require-package 'epc)
 (require-package 'deferred)
 (require-package 'python-environment)
 (require-package 'jedi)
+(require-package 'pyenv-mode)
 (require 'jedi)
 (require 'gud)
 
@@ -59,6 +75,7 @@
 (add-hook 'python-mode-hook 'python-mode-custom-hook)
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
+(pyenv-mode)
 
 (defvar jedi:goto-stack '())
 

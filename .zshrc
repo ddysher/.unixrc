@@ -25,6 +25,7 @@ if [[ "$OSTYPE" = darwin* ]]; then
 else
   SHORT_HOST=${HOST/.*/}
 fi
+[[ ! -d "$HOME/.cache/zsh" ]] && mkdir $HOME/.cache/zsh
 ZSH_COMPDUMP=$HOME/.cache/zsh/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}
 
 # Disable weekly auto-update checks.
@@ -167,3 +168,4 @@ elif [[ `hostname` == "watermelon" ]]; then
   # Do not using annoying background for 'ls'
   # eval `dircolors ~/.dir_colors`
 fi
+
