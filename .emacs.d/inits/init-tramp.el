@@ -45,4 +45,8 @@
   (interactive)
   (find-file "/sshx:deyuan@192.168.10.216:/home/deyuan/code/general.org"))
 
+(defun tramp-ssh-gpu ()
+  (interactive)
+  (find-file "/sshx:root@10.20.100.1|sshx:deyuan@10.130.1.2#1579:/home/deyuan/code/general.org"))
+
 (provide 'init-tramp)
