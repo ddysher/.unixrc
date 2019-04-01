@@ -1,6 +1,9 @@
 ;;------------------------------------------------------------------------------
 ;; Provide simple mode that do not need configurations.
 ;;------------------------------------------------------------------------------
+(require-package 'wsd-mode)
+(require 'wsd-mode)
+
 (require-package 'coffee-mode)
 (require 'coffee-mode)
 
