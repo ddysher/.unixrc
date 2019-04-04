@@ -27,26 +27,21 @@
 ;; Quickly open up a file in remote environment.
 ;;
 ;; Example Usage:
-;;   M-x tramp-vagrant-kubernetes
+;;   M-x tramp-mangosteen
 ;;
 ;; Requirements:
-;;   1. ubuntu box is running at IP address 192.168.33.33
-;;   2. kubernetes located in /home/vagrant/code/workspace/src/k8s.io/kubernetes
-;;   3. can ssh to ubuntu box without password
-(defun tramp-vagrant-kubernetes ()
-  (interactive)
-  (find-file "/sshx:vagrant@192.168.33.33:/home/vagrant/code/workspace/src/k8s.io/kubernetes/README.md"))
-
+;;   - file '.zshrc' exists
+;;   - password-less ssh
 (defun tramp-mangosteen-org ()
   (interactive)
-  (find-file "/sshx:deyuan@192.168.3.34:/home/deyuan/code/general.org"))
+  (find-file "/sshx:deyuan@192.168.3.34:/home/deyuan/.zshrc"))
 
 (defun tramp-sugarcane-org ()
   (interactive)
-  (find-file "/sshx:deyuan@192.168.10.216:/home/deyuan/code/general.org"))
+  (find-file "/sshx:deyuan@192.168.10.216:/home/deyuan/.zshrc"))
 
 (defun tramp-ssh-gpu ()
   (interactive)
-  (find-file "/sshx:root@10.20.100.1|sshx:deyuan@10.130.1.2#1579:/home/deyuan/code/general.org"))
+  (find-file "/sshx:root@10.20.100.1|sshx:deyuan@10.130.1.2#1579:/home/deyuan/.zshrc"))
 
 (provide 'init-tramp)
