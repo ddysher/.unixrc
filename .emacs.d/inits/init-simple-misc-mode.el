@@ -4,6 +4,9 @@
 (require-package 'wsd-mode)
 (require 'wsd-mode)
 
+(require-package 'ein)
+(require 'ein)
+
 (require-package 'coffee-mode)
 (require 'coffee-mode)
 
