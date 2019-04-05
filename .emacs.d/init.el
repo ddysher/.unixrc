@@ -61,6 +61,7 @@
 ;; (require 'init-smartparens-mode)
 
 ;; Initialize language related modes that requires configurations.
+(require 'init-ag-mode)
 (require 'init-cc-mode)
 (require 'init-sh-mode)
 (require 'init-go-mode)
@@ -97,7 +98,6 @@
 (when *linux*
   (require 'init-chinese-pyim))
 
-
 ;;------------------------------------------------------------------------------
 ;; Automatic generated
 ;;------------------------------------------------------------------------------
@@ -115,7 +115,7 @@
  '(livedown:port 1337)
  '(package-selected-packages
    (quote
-    (ein wsd-mode pyenv-mode ensime sbt-mode scala-mode protobuf-mode cmake-font-lock cmake-mode neotree matlab-mode wc-mode material-theme chinese-pyim edit-server flycheck nginx-mode apache-mode hackernews dockerfile-mode thrift yaml-mode markdown-mode php-mode jade-mode coffee-mode zenburn-theme jedi python-environment epc rust-mode web-mode tern-auto-complete tern js2-mode lua-mode go-guru go-eldoc go-autocomplete go-mode ggtags fill-column-indicator window-numbering auto-complete multi-term magit yasnippet helm smex w3m exec-path-from-shell)))
+    (ag ein ensime sbt-mode scala-mode protobuf-mode cmake-font-lock cmake-mode neotree matlab-mode wc-mode material-theme chinese-pyim edit-server flycheck nginx-mode apache-mode hackernews dockerfile-mode thrift yaml-mode markdown-mode php-mode jade-mode coffee-mode zenburn-theme jedi python-environment epc rust-mode web-mode tern-auto-complete tern js2-mode lua-mode go-guru go-eldoc go-autocomplete go-mode ggtags fill-column-indicator window-numbering auto-complete multi-term magit yasnippet helm smex w3m exec-path-from-shell)))
  '(safe-local-variable-values (quote ((c-indent-level . 4))))
  '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces

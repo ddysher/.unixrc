@@ -7,6 +7,9 @@
 (require-package 'ein)
 (require 'ein)
 
+(require-package 'ag)
+(require 'ag)
+
 (require-package 'coffee-mode)
 (require 'coffee-mode)
 
