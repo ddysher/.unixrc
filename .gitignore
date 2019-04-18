@@ -6,8 +6,11 @@
 #   pyim-bigdict.pyim - the file is ~20M, pull separately.
 .emacs.d/pyim
 
-# Ignore transient directory, .e.g transient/history.el
+# Ignore transient directory, e.g transient/history.el
 .emacs.d/transient/
+
+# Ignore url directory, e.g. url/cookies
+.emacs.d/url/
 
 # Ignore bookmarks on folder GUI since it is path dependent.
 .config/gtk-3.0/bookmarks
