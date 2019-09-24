@@ -53,47 +53,6 @@ if [[ `uname` == "Darwin" ]]; then
 fi
 
 ##------------------------------------------------------------------------------
-## Development environment configs
-##------------------------------------------------------------------------------
-# Kubernetes environment.
-if [ -d $HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin ]; then
-  export PATH=$HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
-  # This is effectively how kubectl plugin works; but since kubectl locates at
-  # 'weird' location, don't use it directly.
-  source <(kubectl completion zsh)
-fi
-
-# Cloud environment.
-if [[ "${CLOUD_ENV}" == "true" ]]; then
-  [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
-  [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
-  [[ -f "$HOME/code/source/azure-cli/az.completion" ]] && source "/home/deyuan/code/source/azure-cli/az.completion"
-fi
-
-# Go environment.
-export GOPATH=$HOME/code/workspace
-export CDPATH=$CDPATH:$GOPATH/src
-if [[ `uname` != "Darwin" ]]; then
-  # For non-Mac, set PATH for golang bin path. In mac, go is installed using
-  # homebrew, which manages binaries under /usr/local/bin, so it's unnecessary
-  # to set PATH here.
-  export PATH=/usr/local/go/bin:$PATH
-fi
-export PATH=$GOPATH/bin:$PATH
-
-# Ruby environment.
-if [ -d $HOME/.rbenv ]; then
-  export PATH=$PATH:$HOME/.rbenv/bin
-  eval "$(rbenv init -)"
-fi
-
-# Python environment.
-if [ -d $HOME/.pyenv ]; then
-  export PATH="$HOME/.pyenv:$PATH"
-  eval "$(pyenv init -)"
-fi
-
-##------------------------------------------------------------------------------
 ## General configs for all machines
 ##------------------------------------------------------------------------------
 alias cp="cp -i"
@@ -116,9 +75,6 @@ alias docker-pid='function _dpid() { docker inspect --format "{{ .State.Pid }}" 
 source $ZSH/oh-my-zsh.sh          # Re-exec shell script
 source $HOME/.unixrc/tools/z/z.sh # Enable z.sh
 bindkey -e                        # Bind keys
-
-# Add misc useful scripts to PATH.
-export PATH=$PATH:$HOME/code/tools/scripts
 
 ##-------------------------------------------------------------------------------
 ## Configs for Linux and Mac
@@ -169,3 +125,46 @@ elif [[ `hostname` == "watermelon" ]]; then
   # eval `dircolors ~/.dir_colors`
 fi
 
+##------------------------------------------------------------------------------
+## Development environment configs
+##------------------------------------------------------------------------------
+# Kubernetes environment.
+if [ -d $HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin ]; then
+  export PATH=$PATH:$HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin
+  # This is effectively how kubectl plugin works; but since kubectl locates at
+  # 'weird' location, don't use it directly.
+  source <(kubectl completion zsh)
+fi
+
+# Cloud environment.
+if [[ "${CLOUD_ENV}" == "true" ]]; then
+  [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
+  [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
+  [[ -f "$HOME/code/source/azure-cli/az.completion" ]] && source "/home/deyuan/code/source/azure-cli/az.completion"
+fi
+
+# Go environment.
+export GOPATH=$HOME/code/workspace
+export CDPATH=$CDPATH:$GOPATH/src
+if [[ `uname` != "Darwin" ]]; then
+  # For non-Mac, set PATH for golang bin path. In mac, go is installed using
+  # homebrew, which manages binaries under /usr/local/bin, so it's unnecessary
+  # to set PATH here.
+  export PATH=/usr/local/go/bin:$PATH
+fi
+export PATH=$GOPATH/bin:$PATH
+
+# Ruby environment.
+if [ -d $HOME/.rbenv ]; then
+  export PATH=$PATH:$HOME/.rbenv/bin
+  eval "$(rbenv init -)"
+fi
+
+# Python environment.
+if [ -d $HOME/.pyenv ]; then
+  export PATH=$PATH:$HOME/.pyenv
+  eval "$(pyenv init -)"
+fi
+
+# Add misc useful scripts to PATH.
+export PATH=$PATH:$HOME/code/tools/scripts
