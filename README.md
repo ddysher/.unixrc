@@ -67,15 +67,18 @@ mkdir -p ~/.config
 
 ln -sf ~/.unixrc/.emacs.d ~/.emacs.d
 ln -sf ~/.unixrc/.zshrc ~/.zshrc
+
 ln -sf ~/.unixrc/.config/terminator ~/.config/terminator
-ln -sf ~/.unixrc/.config/gtk-3.0/settings.ini ~/.config/gtk-3.0/settings.ini
+ln -sf ~/.unixrc/.config/gtk-3.0 ~/.config/gtk-3.0
+ln -sf ~/.unixrc/.config/.fonts.conf ~/.fonts.conf
 
 # 'Xmodmap' change Caps to Ctrl in X11.
-ln -sf ~/.unixrc/.Xmodmap ~/.Xmodmap
+ln -sf ~/.unixrc/.config/.Xmodmap ~/.Xmodmap
 
 # 'xprofile' set environment variables required by fcitx.
-ln -sf ~/.unixrc/.xprofile ~/.xprofile
-ln -sf ~/.unixrc/.npmrc ~/.npmrc
+ln -sf ~/.unixrc/.config/.xprofile ~/.xprofile
+
+ln -sf ~/.unixrc/.config/.npmrc ~/.npmrc
 ```
 
 ## Misc
