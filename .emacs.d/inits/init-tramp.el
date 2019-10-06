@@ -40,6 +40,10 @@
   (interactive)
   (find-file "/sshx:deyuan@192.168.10.216:/home/deyuan/.zshrc"))
 
+(defun tramp-cherries-org ()
+  (interactive)
+  (find-file "/sshx:deyuan@192.168.50.179:/home/deyuan/.zshrc"))
+
 (defun tramp-ssh-gpu ()
   (interactive)
   (find-file "/sshx:root@10.20.100.1|sshx:deyuan@10.130.1.2#1579:/home/deyuan/.zshrc"))
