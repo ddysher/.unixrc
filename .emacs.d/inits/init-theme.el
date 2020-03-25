@@ -24,13 +24,10 @@
 (load-material)
 
 ;; Generic fonts
-(cond (*linux*  (set-default-font "Inconsolata-10")))
-(cond (*darwin* (set-default-font "Monaco-10")))
+(cond (*linux*  (set-frame-font "dejavu sans mono-10")))
+(cond (*darwin* (set-frame-font "Monaco-10")))
 ;; Machine specifc fonts
-(cond (*macair* (set-default-font "Monaco-11")))
-(cond (*macpro* (set-default-font "Monaco-11")))
-
-;; Font when launching new frame.
-(cond (*linux* (setq default-frame-alist '((font . "Inconsolata-10")))))
+(cond (*macair* (set-frame-font "Monaco-11")))
+(cond (*macpro* (set-frame-font "Monaco-11")))
 
 (provide 'init-theme)
