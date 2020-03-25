@@ -94,9 +94,9 @@
   (require 'init-google)
   (require 'google))
 
-;; Only install chinese-pyim in linux: we can use sougou in Mac easily.
+;; Only install pyim in linux: we can use sougou in Mac easily.
 (when *linux*
-  (require 'init-chinese-pyim))
+  (require 'init-pyim))
 
 ;;------------------------------------------------------------------------------
 ;; Automatic generated
