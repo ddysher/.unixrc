@@ -1,5 +1,5 @@
 ;;------------------------------------------------------------------------------
-;; Provide pyim, a very elegant chinese input method:
+;; Provide pyim, an elegant chinese input method:
 ;;   https://github.com/tumashu/pyim
 ;;
 ;; Common commands:
@@ -8,10 +8,11 @@
 ;;
 ;; Notes:
 ;; 1. Dictionary 'pyim-bigdict' is ~20M so it is ignored; to install:
-;;    wget http://tumashu.github.io/pyim-bigdict/pyim-bigdict.pyim.gz -P ~/.emacs.d/pyim/dicts
+;;    wget http://tumashu.github.io/pyim-bigdict/pyim-bigdict.pyim -P ~/.emacs.d/pyim/dicts
 ;; 2. Only enabled on Linux, use "C-;" to toggle input method.
 ;;------------------------------------------------------------------------------
 (require-package 'pyim)
+(require-package 'pyim-basedict)
 (require 'pyim)
 (require 'pyim-basedict)
 
