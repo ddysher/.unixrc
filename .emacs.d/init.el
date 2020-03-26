@@ -13,10 +13,11 @@
 (defvar *cygwin*  (eq system-type 'cygwin))
 (defvar *darwin*  (eq system-type 'darwin))
 (defvar *linux*   (or (eq system-type 'gnu/linux) (eq system-type 'linux)))
-;; Emacs version
+;; Emacs major version
 (defvar *emacs23* (= emacs-major-version 23))
 (defvar *emacs24* (= emacs-major-version 24))
 (defvar *emacs25* (= emacs-major-version 25))
+(defvar *emacs26* (= emacs-major-version 26))
 ;; System name (hostname)
 (defvar *home-desktop* (string= system-name "watermelon"))
 (defvar *goog-desktop* (string= system-name "deyuan.pit.corp.google.com"))
