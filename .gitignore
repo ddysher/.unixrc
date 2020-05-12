@@ -14,3 +14,6 @@
 
 # Ignore bookmarks on folder GUI since it is path dependent.
 .config/gtk-3.0/bookmarks
+
+# Ignore srecode-map due to conflicts in different OSes and it's not used for now.
+.emacs.d/srecode-map.el
