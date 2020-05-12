@@ -36,6 +36,7 @@
 ;; navigate buffer quickly
 (global-set-key (kbd "C-,") 'previous-buffer)
 (global-set-key (kbd "C-.") 'next-buffer)
+(global-set-key (kbd "C-/") 'next-buffer)
 ;; winner mode key bindings.
 (global-set-key (kbd "C-x 4 u") 'winner-undo)
 (global-set-key (kbd "C-x 4 r") 'winner-redo)
@@ -64,18 +65,5 @@
       (global-set-key (kbd "C-s-<right>") 'enlarge-window-horizontally)
       (global-set-key (kbd "C-s-<down>") 'shrink-window)
       (global-set-key (kbd "C-s-<up>") 'enlarge-window)))
-
-(if *linux*
-    (progn
-      (setq mac-command-modifier 'meta) ; set the Command key as Meta
-      (setq mac-control-modifier 'ctrl) ; set the Control key as Control
-      (setq mac-option-modifier 'super) ; set the left Option key as Super
-      (setq mac-right-option-modifier 'hyper) ; set the right Option key as Hyper
-      ;; control window size ('s' is Super, bound to 'win')
-      (global-set-key (kbd "s-<left>") 'shrink-window-horizontally)
-      (global-set-key (kbd "s-<right>") 'enlarge-window-horizontally)
-      (global-set-key (kbd "s-<down>") 'shrink-window)
-      (global-set-key (kbd "s-<up>") 'enlarge-window)))
-
 
 (provide 'init-keys)
