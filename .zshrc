@@ -69,8 +69,9 @@ alias cnpm="npm --registry=https://registry.npm.taobao.org \
 --cache=$HOME/.npm/.cache/cnpm \
 --disturl=https://npm.taobao.org/dist \
 --userconfig=$HOME/.cnpmrc"
-alias docker-ip='function _dip() { docker inspect --format "{{ .NetworkSettings.IPAddress }}" $1; };_dip'
-alias docker-pid='function _dpid() { docker inspect --format "{{ .State.Pid }}" $1; };_dpid'
+alias mkcd='function _mkcd() { mkdir -p "$@" && cd "$@"; }; _mkcd'
+alias docker-ip='function _dip() { docker inspect --format "{{ .NetworkSettings.IPAddress }}" $1; }; _dip'
+alias docker-pid='function _dpid() { docker inspect --format "{{ .State.Pid }}" $1; }; _dpid'
 
 source $ZSH/oh-my-zsh.sh          # Re-exec shell script
 source $HOME/.unixrc/tools/z/z.sh # Enable z.sh
