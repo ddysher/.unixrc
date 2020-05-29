@@ -23,8 +23,10 @@
 ;;   (load-material)
 (load-material)
 
-;; Generic fonts
-(cond (*linux*  (set-frame-font "dejavu sans mono-10")))
+;; Load fonts, options are:
+;; (cond (*linux*  (set-default-font "Source Code Pro")))
+(cond (*linux*  (set-default-font "-*-Hack-normal-normal-normal-*-11-*-*-*-m-0-iso10646-1")))
+
 (cond (*darwin* (set-frame-font "Monaco-10")))
 ;; Machine specifc fonts
 (cond (*macair* (set-frame-font "Monaco-11")))
