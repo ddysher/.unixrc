@@ -1,20 +1,10 @@
-;;;; Emacs Bookmark Format Version 1 ;;;;
+;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*- 
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("code/kube/practice"
- (filename . "~/code/projects/kubernetes/practice/")
- (front-context-string . "  /home/deyuan/o")
- (rear-context-string)
- (position . 1))
-("kube-incubator/external-storage/README.md"
- (filename . "~/code/workspace/src/github.com/kubernetes-incubator/external-storage/README.md")
- (front-context-string . "# External Stora")
- (rear-context-string)
- (position . 1))
-("code/kube/apis.code"
- (filename . "~/code/projects/kubernetes/apis.org")
- (front-context-string . "#+STARTUP: conte")
+(("kube.api.appsv1"
+ (filename . "~/code/workspace/src/k8s.io/api/apps/v1/types.go")
+ (front-context-string . "/*\nCopyright 201")
  (rear-context-string)
  (position . 1))
 ("cadvisor/fs.go"
@@ -32,17 +22,17 @@
  (front-context-string . "func main() {\n	d")
  (rear-context-string . "CPU usage.\")\n}\n\n")
  (position . 3857))
-("kube/v1/types.go"
- (filename . "~/code/workspace/src/k8s.io/kubernetes/pkg/api/v1/types.go")
+("kube.api.corev1"
+ (filename . "~/code/workspace/src/k8s.io/api/core/v1/types.go")
  (front-context-string . "/*\nCopyright 201")
  (rear-context-string)
  (position . 1))
-("kube/pkg/volume.go"
+("kube.pkg.volume.go"
  (filename . "~/code/workspace/src/k8s.io/kubernetes/pkg/volume/volume.go")
  (front-context-string . "/*\nCopyright 201")
  (rear-context-string)
  (position . 1))
-("kube/pkg/kubelet.go"
+("kube.pkg.kubelet.go"
  (filename . "~/code/workspace/src/k8s.io/kubernetes/pkg/kubelet/kubelet.go")
  (front-context-string . "func NewMainKube")
  (rear-context-string . "ld happen here.\n")
@@ -105,11 +95,6 @@
 ("emacs_config"
  (filename . "~/.emacs.d/init.el")
  (front-context-string . ";;;;;;;;;;;;;;;;")
- (rear-context-string)
- (position . 1))
-("code/kube/apis.org"
- (filename . "~/code/projects/kubernetes/apis.org")
- (front-context-string . "#+STARTUP: conte")
  (rear-context-string)
  (position . 1))
 ("org"
