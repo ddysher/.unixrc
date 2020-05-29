@@ -83,4 +83,7 @@
 (add-hook 'go-mode-hook 'go-eldoc-setup)
 (add-hook 'before-save-hook 'gofmt-before-save)
 
+;; Set GO111MODULE to "off" to speed up godef.
+(setenv "GO111MODULE" "off")
+
 (provide 'init-go-mode)
