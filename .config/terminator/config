@@ -2,6 +2,7 @@
   enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   handle_size = 1
   tab_position = left
+  title_font = Hack 9
 [keybindings]
   insert_number = None
   new_tab = <Primary>t
@@ -32,7 +33,7 @@
     background_color = "#2e3436"
     background_darkness = 1.0
     cursor_color = "#ffffff"
-    font = Inconsolata 10
+    font = Source Code Pro 9
     foreground_color = "#ffffff"
     scrollback_infinite = True
     show_titlebar = False
