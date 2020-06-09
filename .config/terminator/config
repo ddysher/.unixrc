@@ -1,15 +1,13 @@
 [global_config]
-  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   handle_size = 1
   tab_position = left
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   title_font = Hack 9
 [keybindings]
-  insert_number = None
   new_tab = <Primary>t
   next_tab = <Shift><Alt>braceright
   prev_tab = <Shift><Alt>braceleft
   switch_to_tab_1 = <Alt>1
-  switch_to_tab_10 = <Alt>0
   switch_to_tab_2 = <Alt>2
   switch_to_tab_3 = <Alt>3
   switch_to_tab_4 = <Alt>4
@@ -18,6 +16,18 @@
   switch_to_tab_7 = <Alt>7
   switch_to_tab_8 = <Alt>8
   switch_to_tab_9 = <Alt>9
+  switch_to_tab_10 = <Alt>0
+  insert_number = None
+[profiles]
+  [[default]]
+    background_color = "#2e3436"
+    background_darkness = 1.0
+    cursor_color = "#ffffff"
+    font = Source Code Pro 9
+    foreground_color = "#ffffff"
+    show_titlebar = False
+    scrollback_infinite = True
+    use_system_font = False
 [layouts]
   [[default]]
     [[[child1]]]
@@ -28,13 +38,3 @@
       parent = ""
       type = Window
 [plugins]
-[profiles]
-  [[default]]
-    background_color = "#2e3436"
-    background_darkness = 1.0
-    cursor_color = "#ffffff"
-    font = Source Code Pro 9
-    foreground_color = "#ffffff"
-    scrollback_infinite = True
-    show_titlebar = False
-    use_system_font = False
