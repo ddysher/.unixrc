@@ -15,19 +15,19 @@
   (window-configuration-to-register ?s)
   ;; Create terminal window configuration.
   (split-desktop-window-terminal)
+  (other-window 2)
   (multi-term)
-  (other-window 1)
   (multi-term)
-  (other-window 1)
   (multi-term)
-  (other-window 1)
+  (multi-term-next)
   (window-configuration-to-register ?t)
+  ;; Create regular 2-window configuration (with mini-terminal).
   (split-desktop-window-regular-2)
   (other-window 3)
   (switch-to-buffer "\*terminal<1>\*")
   (other-window 2)
   (window-configuration-to-register ?g)
-  ;; Create regular 3-window configuration.
+  ;; Create regular 3-window configuration (with mini-terminal).
   (split-desktop-window-regular-3)
   (other-window 4)
   (switch-to-buffer "\*terminal<1>\*")
