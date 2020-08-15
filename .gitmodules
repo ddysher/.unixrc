@@ -1,3 +1,6 @@
 [submodule "tools/z"]
 	path = tools/z
 	url = https://github.com/rupa/z.git
+[submodule "ohmyzsh"]
+	path = ohmyzsh
+	url = https://github.com/ohmyzsh/ohmyzsh

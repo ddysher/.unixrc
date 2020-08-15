@@ -7,16 +7,16 @@ CLOUD_ENV=${CLOUD_ENV:-"false"} # "true" or "false"
 ##-------------------------------------------------------------------------------
 ## Zsh configs
 ##-------------------------------------------------------------------------------
-# Change to your oh-my-zsh configuration.
-ZSH=$HOME/.unixrc/oh-my-zsh
+# Change to your ohmyzsh configuration.
+ZSH=$HOME/.unixrc/ohmyzsh
 
-# Set name of the theme to load. Look in ~/.oh-my-zsh/themes/
+# Set name of the theme to load. Look in ~/.ohmyzsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each time
-# that oh-my-zsh is loaded.
+# that ohmyzsh is loaded.
 ZSH_THEME="deyuan"
 
 # Figure out the SHORT hostname.
-# This is copied from oh-my-zsh.sh to move the location of the current completion
+# This is copied from ohmyzsh.sh to move the location of the current completion
 # dump file under ~/.cache/zsh, otherwise there will be a lot of .zcompdump files
 # under home directory.
 if [[ "$OSTYPE" = darwin* ]]; then
