@@ -101,6 +101,30 @@ touch ~/.z
 
 ## Misc
 
+### Update Git Submodule
+
+To update git submodules, enter the submodule directory and pull the new changes, e.g.
+
+```
+cd tools/z
+git pull
+cd -
+```
+
+Then commit the changes and push to origin:
+
+```
+git commit -m "update git submodule z"
+git push
+```
+
+In aother environment, we can pull the commit and update the submodule via:
+
+```
+git pull
+git submodule update
+```
+
 ### Keyboard delay/rate in X11
 
 Keyboard delay/rate can be set in desktop environment's 'System Settings' option;
