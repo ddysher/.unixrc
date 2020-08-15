@@ -35,13 +35,14 @@
   (window-configuration-to-register ?r))
 
 (defun split-desktop-window-regular-1 ()
-  "regular-1 is just one big window"
+  "regular-1 splits to two windows"
   (interactive)
   (delete-other-windows)
+  (split-window-right)
   (switch-to-buffer "\*scratch\*"))
 
 (defun split-desktop-window-regular-2 ()
-  "regular-2 splits main workspace to two windows."
+  "regular-2 splits main workspace to two windows with mini-terminal."
   (interactive)
   (delete-other-windows)
   (switch-to-buffer "\*scratch\*")
@@ -61,7 +62,7 @@
   (other-window 1))
 
 (defun split-desktop-window-regular-3 ()
-  "regular-3 splits main workspace to three windows."
+  "regular-3 splits main workspace to three windows with mini-terminal"
   (interactive)
   (delete-other-windows)
   (switch-to-buffer "\*scratch\*")
