@@ -107,6 +107,7 @@ To update git submodules, enter the submodule directory and pull the new changes
 
 ```
 cd tools/z
+git checkout master
 git pull
 cd -
 ```
