@@ -4,7 +4,7 @@
 (require 'package)
 
 ;; Package archives source
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 ;; 'melpa' is sufficient for the most cases, so comment out the following sources.
 ;;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 ;;(add-to-list 'package-archives  ("gnu" . "http://elpa.gnu.org/packages/"))
