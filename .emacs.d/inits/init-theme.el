@@ -27,9 +27,8 @@
 ;; (cond (*linux*  (set-default-font "Source Code Pro")))
 (cond (*linux*  (set-default-font "-*-Hack-normal-normal-normal-*-11-*-*-*-m-0-iso10646-1")))
 
-(cond (*darwin* (set-frame-font "Monaco-10")))
+(cond (*darwin* (set-frame-font "Monaco-11")))
 ;; Machine specifc fonts
-(cond (*macair* (set-frame-font "Monaco-11")))
-(cond (*macpro* (set-frame-font "Monaco-11")))
+;; (cond (*macair* (set-frame-font "Monaco-10")))
 
 (provide 'init-theme)
