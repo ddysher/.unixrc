@@ -24,6 +24,7 @@ Then install required symlinks:
 ```bash
 ln -sf ~/.unixrc/.emacs.d ~/.emacs.d
 ln -sf ~/.unixrc/.zshrc ~/.zshrc
+ln -sf ~/.unixrc/.config/ohmyzsh/deyuan.zsh-theme ~/.unixrc/ohmyzsh/custom/themes/deyuan.zsh-theme
 ```
 
 Optional symlinks:
