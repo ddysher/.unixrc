@@ -6,8 +6,8 @@
 ;; Package archives source
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 ;; 'melpa' is sufficient for the most cases, so comment out the following sources.
-;;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-;;(add-to-list 'package-archives  ("gnu" . "http://elpa.gnu.org/packages/"))
+;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives  '("gnu" . "http://elpa.gnu.org/packages/"))
 
 ;; On-demand installation of packages. Install given PACKAGE, optionally
 ;; requiring MIN-VERSION. If NO-REFRESH is non-nil, the available package
