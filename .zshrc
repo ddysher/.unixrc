@@ -46,10 +46,21 @@ plugins=(git python golang vagrant docker kubectl jump)
 ## Special configs that must run at first
 ##------------------------------------------------------------------------------
 if [[ `uname` == "Darwin" ]]; then
-  # Homebrew requires "/usr/local/bin" and "/usr/local/sbin", and both
-  # directories should appear before "/usr/bin".
-  export PATH=/usr/local/sbin:$PATH
-  export PATH=/usr/local/bin:$PATH
+  if [[ `arch` == "i386" ]]; then
+    # Homebrew requires "/usr/local/bin" and "/usr/local/sbin", and both
+    # directories should appear before "/usr/bin".
+    export PATH=/usr/local/sbin:$PATH
+    export PATH=/usr/local/bin:$PATH
+  fi
+
+  if [[ `arch` == "arm64" ]]; then
+    export HOMEBREW_PREFIX="/opt/homebrew";
+    export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+    export HOMEBREW_REPOSITORY="/opt/homebrew";
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+    export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
+    export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+  fi
 fi
 
 ##------------------------------------------------------------------------------
