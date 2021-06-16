@@ -20,7 +20,7 @@
                 (window-numbering-assign window 9))
             (if (equal counter winlen)
                 (window-numbering-assign window 0))
-            (incf counter))))))
+            (cl-incf counter))))))
 
 (window-numbering-mode t)
 (setq window-numbering-auto-assign-0-to-minibuffer nil)

@@ -133,7 +133,7 @@ split window, then put cursor at top left."
       (when (and (buffer-file-name)
                  (file-exists-p (buffer-file-name))
                  (not (buffer-modified-p)))
-        (incf count)
+        (cl-incf count)
         (revert-buffer t t t) )))
   (message "Reverted %d non-modified open files." count))
 

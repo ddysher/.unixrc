@@ -32,20 +32,20 @@
 ;; Requirements:
 ;;   - file '.zshrc' exists
 ;;   - password-less ssh
-(defun tramp-mangosteen-org ()
+(defun tramp-mangosteen-zshrc ()
   (interactive)
   (find-file "/sshx:deyuan@192.168.3.34:/home/deyuan/.zshrc"))
 
-(defun tramp-sugarcane-org ()
+(defun tramp-sugarcane-zshrc ()
   (interactive)
   (find-file "/sshx:deyuan@192.168.10.216:/home/deyuan/.zshrc"))
 
-(defun tramp-cherries-org ()
+(defun tramp-cherries-zshrc ()
   (interactive)
   (find-file "/sshx:deyuan@192.168.50.179:/home/deyuan/.zshrc"))
 
-(defun tramp-ssh-gpu ()
+(defun tramp-dance-zshrc ()
   (interactive)
-  (find-file "/sshx:root@10.20.100.1|sshx:deyuan@10.130.1.2#1579:/home/deyuan/.zshrc"))
+  (find-file "/sshx:dengdeyuan.dengdy@10.227.77.8:/home/dengdeyuan.dengdy/.zshrc"))
 
 (provide 'init-tramp)

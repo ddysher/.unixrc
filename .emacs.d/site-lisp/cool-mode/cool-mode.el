@@ -335,7 +335,7 @@ Don't call this function without save-excursion.
                  (goto-char (1- (car (cool-mode-in-string)))))
                 ;; if not in comments and contrakw
                 ;;   count++
-                ((string-equal mkw contrakw) (incf mcount))
+                ((string-equal mkw contrakw) (cl-incf mcount))
                 ;; if not in comments and matchkw and count = 0
                 ;;   return this position
                 ((and (string-equal mkw matchkw) (eq mcount 0))
