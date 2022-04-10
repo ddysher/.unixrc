@@ -29,4 +29,4 @@
 
 (add-hook 'org-agenda-mode-hook 'org-agenda--mode-custom-hook)
 
-(provide 'init-org-mode)
+(provide 'init-org)

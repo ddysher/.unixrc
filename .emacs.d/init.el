@@ -18,19 +18,21 @@
 (defvar *emacs24* (= emacs-major-version 24))
 (defvar *emacs25* (= emacs-major-version 25))
 (defvar *emacs26* (= emacs-major-version 26))
+(defvar *emacs27* (= emacs-major-version 27))
 ;; System name (hostname)
-(defvar *home-desktop* (string= system-name "watermelon"))
+(defvar *home-desktop* (string= system-name "mangosteen"))
 (defvar *goog-desktop* (string= system-name "deyuan.pit.corp.google.com"))
-(defvar *macpro*
+(defvar *macpro-13*
   (or (string= system-name "Deyuans-MacBook-Pro.local")
       (string= system-name "Deyuans-MacBook-M1")
       (string= system-name "MacBook-Pro.local")))
-(defvar *macpro*
+(defvar *macpro-16*
   (or (string= system-name "Deyuans-MacBook-Pro-16")
       (string= system-name "MacBook-Pro-16")))
 (defvar *macair*
   (or (string= system-name "Deyuans-MacBook-Air.local")
       (string= system-name "MacBook-Air.local")))
+
 
 ;;------------------------------------------------------------------------------
 ;; Bootstrap configs need to be executed before loading specific configs
@@ -50,10 +52,10 @@
 (require 'init-w3m)
 (require 'init-ido)
 (require 'init-erc)
+(require 'init-org)
 (require 'init-smex)
 (require 'init-tramp)
 (require 'init-company)
-(require 'init-org-mode)
 (require 'init-livedown)
 (require 'init-yasnippet)
 (require 'init-magit-mode)
@@ -94,17 +96,14 @@
 ;; Simple mode that does not need configurations.
 (require 'init-simple-misc-mode)
 
-;; Conditional require
+;; Conditional require: initialize google environment.
 (when *goog-desktop*
   (require 'init-google)
   (require 'google))
 
-;; Only install pyim in linux: we can use sougou in Mac easily.
+;; Conditional require: only install pyim in linux (use sougou in darwin).
 (when *linux*
   (require 'init-pyim))
-
-;; Fix terminal character issue.
-(setenv "LANG" "en_US.UTF-8")
 
 ;;------------------------------------------------------------------------------
 ;; Automatic generated

@@ -49,6 +49,8 @@
 (if (and (fboundp 'server-running-p)
          (not (server-running-p)))
     (server-start))
+;; Fix terminal character issue.
+(setenv "LANG" "en_US.UTF-8")
 ;; associate config mode to ".zsh-theme, .defs, BUILD, etc."
 (add-to-list 'auto-mode-alist '("\\.zsh-theme$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.defs$" . conf-mode))
