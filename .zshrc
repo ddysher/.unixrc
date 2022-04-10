@@ -135,6 +135,9 @@ elif [[ `hostname` == "deyuan-macbookpro.roam.corp.google.com" ]]; then
 elif [[ `hostname` == "watermelon" ]]; then
   # Do not using annoying background for 'ls'
   # eval `dircolors ~/.dir_colors`
+elif [[ `hostname` == "Deyuans-MacBook-M1" ]]; then
+  export HOMEBREW_TEMP=/opt/homebrew/TEMP
+  export GOROOT=/opt/homebrew/opt/go/libexec
 fi
 
 ##------------------------------------------------------------------------------
