@@ -1,9 +1,52 @@
 ;;------------------------------------------------------------------------------
 ;; Provide go mode, managed by MELPA.
 ;;------------------------------------------------------------------------------
+;; Install go-mode with golang tools and other emacs packages.
+;; Tools:
+;;   go install golang.org/x/tools/cmd/goimports@latest
+;;   go install golang.org/x/tools/gopls@latest
+;; Packages:
+;;   M-x package-install go-mode
+;;   M-x package-install lsp-mode
+;;   M-x package-install company
+;;------------------------------------------------------------------------------
+;; How it works
+;; Most of features in Go dev environment are provided by lsp-mode, including
+;; code navigation, code completion (with company), etc.
+;;------------------------------------------------------------------------------
+;; Usage:
+;;   M-.        ; jump to the definition of symbol
+;;   M-,        ; jump back
+;;   M-x gofmt  ; format current go buffer (will be called when saving file)
+;;   C-c C-a    ; add a package to import
+;;   C-c C-f ?  ; quite a few commands have C-c C-f prefix, e.g. 'a' for jumping
+;;              ; to function argument, 'r' for jumping to function return value
+;;------------------------------------------------------------------------------
+(require-package 'go-mode)
+
+(require 'go-mode)
+
+;; This method will be registered as a go mode hook, runs every time
+;; a go file is opened.
+(defun go-mode-custom-hook ()
+  (setq gofmt-command "goimports")   ; use goimports instead of go-fmt
+  (local-set-key (kbd "M-,") 'pop-tag-mark) ; same as M-*, but locally
+  (local-set-key (kbd "M-.") 'lsp-find-definition))
+
+(add-hook 'go-mode-hook 'go-mode-custom-hook)
+(add-hook 'before-save-hook 'gofmt-before-save)
+
+(provide 'init-go-mode)
+
+
+;; ------------------- Historical Configuration --------------------------------
+;; -----------------------------------------------------------------------------
+;; Installation & Usage V1 (Deprecated, use gopls & lsp-mode instead)
+;;------------------------------------------------------------------------------
 ;; Installation
 ;; Several methods in go-mode requires go related binaries to be properly set,
-;; e.g. gocode, godoc, godef, etc; and are accessible from emacs. Tools installed:
+;; e.g. gocode, godoc, godef, etc; and are accessible from emacs.
+;; Tools installed:
 ;;   go get -u github.com/nsf/gocode
 ;;   go get -u github.com/tools/godep
 ;;   go get -u github.com/rogpeppe/godef
@@ -43,7 +86,7 @@
 ;;
 ;; Code Jump is done through the tool "godef", which finds symbol information in
 ;; Go source. The tool is included in "go-mode". go-mode invokes the godef binary
-;; directly in emacs (no separate server as in go-autocomplete.
+;; directly in emacs (no separate server as in go-autocomplete).
 ;;
 ;;------------------------------------------------------------------------------
 ;; Code Analysis
@@ -63,27 +106,3 @@
 ;;   C-c C-f ?  ; quite a few commands have C-c C-f prefix, e.g. 'a' for jumping
 ;;              ; to function argument, 'r' for jumping to function return value
 ;;------------------------------------------------------------------------------
-(require-package 'go-mode)
-(require-package 'go-autocomplete)
-(require-package 'go-eldoc)
-(require-package 'go-guru)
-
-(require 'go-mode)
-(require 'go-autocomplete)
-
-;; This method will be registered as a python mode hook, runs
-;; every time go file is opened.
-(defun go-mode-custom-hook ()
-  (setq gofmt-command "goimports")   ; use goimports instead of go-fmt
-  (local-set-key (kbd "M-,") 'pop-tag-mark) ; same as M-*, but locally
-  (local-set-key (kbd "M-.") 'godef-jump)
-  (local-set-key (kbd "C-c .") 'godef-jump-other-window))
-
-(add-hook 'go-mode-hook 'go-mode-custom-hook)
-(add-hook 'go-mode-hook 'go-eldoc-setup)
-(add-hook 'before-save-hook 'gofmt-before-save)
-
-;; Set GO111MODULE to "off" to speed up godef.
-(setenv "GO111MODULE" "off")
-
-(provide 'init-go-mode)

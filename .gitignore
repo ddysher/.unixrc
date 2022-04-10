@@ -17,3 +17,6 @@
 
 # Ignore srecode-map due to conflicts in different OSes and it's not used for now.
 .emacs.d/srecode-map.el
+
+# Ignore lsp-mode session.
+.emacs.d/.lsp-session-v1
