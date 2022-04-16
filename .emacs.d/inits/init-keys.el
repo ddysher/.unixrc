@@ -5,8 +5,8 @@
 (global-set-key [f1] 'find-file)        ; M-x open file (C-x-f)
 (global-set-key [f2] 'save-buffer)      ; M-x save file (C-x-s)
 (global-set-key [f3] 'other-window)     ; M-x other-window (C-x o)
-(global-set-key [f4] 'multi-term-dedicated)
-(global-set-key [f5] 'multi-term)
+(global-set-key [f4] 'multi-vterm-dedicated-open)
+(global-set-key [f5] 'multi-vterm)
 (global-set-key [f6] 'replace-regexp)
 (global-set-key [f7] 'ag-project)
 (global-set-key [f8] 'register-to-point) ; Jump to win conf (C-x r j)
@@ -28,7 +28,7 @@
 (global-set-key (kbd "C-c s") 'search-buffer)
 ;; search all buffers for matching pattern.
 (global-set-key (kbd "C-c C-s") 'search-all-buffers)
-;; search all buffers for matching pattern.
+;; start a personal workspace.
 (global-set-key (kbd "C-c C-e") 'start-workspace)
 ;; list all buffers in new a window.
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
