@@ -29,7 +29,7 @@
 ;; search all buffers for matching pattern.
 (global-set-key (kbd "C-c C-s") 'search-all-buffers)
 ;; start a personal workspace.
-(global-set-key (kbd "C-c C-e") 'start-workspace)
+(global-set-key (kbd "C-c C-w") 'start-workspace)
 ;; list all buffers in new a window.
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
 (global-set-key (kbd "C-c C-b") 'buffer-menu)
