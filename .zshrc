@@ -172,6 +172,11 @@ if [[ `uname` != "Darwin" ]]; then
 fi
 export PATH=$GOPATH/bin:$PATH
 
+# Java environment for Mac with brew.
+# sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+# echo 'export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"' >> ~/.zshrc
+# export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
+
 # Ruby environment.
 if [ -d $HOME/.rbenv ]; then
   export PATH=$PATH:$HOME/.rbenv/bin
@@ -194,3 +199,5 @@ fi
 
 # Add misc useful scripts to PATH.
 export PATH=$PATH:$HOME/code/tools/scripts
+
+# source /Users/deyuandeng/.docker/init-zsh.sh || true # Added by Docker Desktop
