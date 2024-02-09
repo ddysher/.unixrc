@@ -34,15 +34,15 @@
 ;;   - password-less ssh
 (defun tramp-mangosteen-zshrc ()
   (interactive)
-  (find-file "/sshx:deyuan@192.168.3.34:/home/deyuan/.zshrc"))
+  (find-file "/sshx:deyuan@mangosteen:/home/deyuan/.zshrc"))
 
 (defun tramp-sugarcane-zshrc ()
   (interactive)
-  (find-file "/sshx:deyuan@192.168.10.216:/home/deyuan/.zshrc"))
+  (find-file "/sshx:deyuan@sugarcane:/home/deyuan/.zshrc"))
 
 (defun tramp-cherries-zshrc ()
   (interactive)
-  (find-file "/sshx:deyuan@192.168.50.179:/home/deyuan/.zshrc"))
+  (find-file "/sshx:deyuan@cherries:/home/deyuan/.zshrc"))
 
 (defun tramp-dance-zshrc ()
   (interactive)
