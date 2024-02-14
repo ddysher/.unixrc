@@ -18,12 +18,10 @@
   (define-key vterm-mode-map [f4] #'multi-vterm-dedicated-open)
   (define-key vterm-mode-map [f5] #'multi-vterm)
   (define-key vterm-mode-map [f8] #'register-to-point)
-  (define-key vterm-mode-map (kbd "C-q")  #'vterm-copy-mode)
-	(define-key vterm-mode-map (kbd "M-[")  #'multi-vterm-prev)
   (define-key vterm-mode-map (kbd "C-o")  #'switch-to-buffer)
   (define-key vterm-mode-map (kbd "C-q")  #'vterm-copy-mode)
-	(define-key vterm-mode-map (kbd "M-[")  #'multi-vterm-prev)
-	(define-key vterm-mode-map (kbd "M-]")  #'multi-vterm-next))
+  (define-key vterm-mode-map (kbd "M-[")  #'multi-vterm-prev)
+  (define-key vterm-mode-map (kbd "M-]")  #'multi-vterm-next))
 
 (add-hook 'vterm-mode-hook 'vterm-mode-custom-hook)
 

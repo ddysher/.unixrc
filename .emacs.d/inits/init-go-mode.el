@@ -2,16 +2,19 @@
 ;; Provide go mode, managed by MELPA.
 ;;------------------------------------------------------------------------------
 ;; Install go-mode with golang tools and other emacs packages.
+;;
 ;; Tools:
 ;;   go install golang.org/x/tools/cmd/goimports@latest
 ;;   go install golang.org/x/tools/gopls@latest
+;;
 ;; Packages:
 ;;   M-x package-install go-mode
 ;;   M-x package-install lsp-mode
 ;;   M-x package-install company
 ;;------------------------------------------------------------------------------
 ;; How it works
-;; Most of features in Go dev environment are provided by lsp-mode, including
+;;
+;; Most of the features in Go dev environment are provided by lsp-mode, including
 ;; code navigation, code completion (with company), etc.
 ;;------------------------------------------------------------------------------
 ;; Usage:
@@ -31,7 +34,8 @@
 (defun go-mode-custom-hook ()
   (setq gofmt-command "goimports")   ; use goimports instead of go-fmt
   (local-set-key (kbd "M-,") 'pop-tag-mark) ; same as M-*, but locally
-  (local-set-key (kbd "M-.") 'lsp-find-definition))
+  (local-set-key (kbd "M-.") 'lsp-find-definition)
+  (local-set-key (kbd "M-/") 'lsp-find-references))
 
 (add-hook 'go-mode-hook 'go-mode-custom-hook)
 (add-hook 'before-save-hook 'gofmt-before-save)

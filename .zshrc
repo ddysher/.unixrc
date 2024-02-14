@@ -145,6 +145,7 @@ elif [[ `hostname` == "Deyuans-MacBook-M1" ]]; then
 elif [[ `hostname` == "Deyuans-MacBook-Pro-16" ]]; then
   export HOMEBREW_TEMP=/opt/homebrew/TEMP
   export GOROOT=/opt/homebrew/opt/go/libexec
+  # source /Users/deyuandeng/.docker/init-zsh.sh || true # Added by Docker Desktop
 fi
 
 ##------------------------------------------------------------------------------
@@ -177,6 +178,11 @@ if [[ `uname` != "Darwin" ]]; then
   export PATH=/usr/local/go/bin:$PATH
 fi
 export PATH=$GOPATH/bin:$PATH
+
+# Java environment for Mac with brew.
+# sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+# echo 'export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"' >> ~/.zshrc
+# export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 
 # Ruby environment.
 if [ -d $HOME/.rbenv ]; then
@@ -247,4 +253,3 @@ function rmvenv() {
 complete -C lsvenv venv mkvenv rmvent
 
 ## End of Python setup.
-##----------------------------------------------------------
