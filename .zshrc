@@ -42,6 +42,7 @@ setopt NO_BEEP
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git python golang vagrant docker kubectl jump)
 
+
 ##------------------------------------------------------------------------------
 ## Special configs that must run at first
 ##------------------------------------------------------------------------------
@@ -87,6 +88,9 @@ alias docker-pid='function _dpid() { docker inspect --format "{{ .State.Pid }}" 
 source $ZSH/oh-my-zsh.sh          # Re-exec shell script
 source $HOME/.unixrc/tools/z/z.sh # Enable z.sh
 bindkey -e                        # Bind keys
+
+# Add misc useful scripts to PATH.
+export PATH=$PATH:$HOME/code/tools/scripts
 
 ##-------------------------------------------------------------------------------
 ## Configs for Linux and Mac
@@ -144,7 +148,9 @@ elif [[ `hostname` == "Deyuans-MacBook-Pro-16" ]]; then
 fi
 
 ##------------------------------------------------------------------------------
-## Development environment configs
+##
+## Followings are development related configuration across all hosts.
+##
 ##------------------------------------------------------------------------------
 # Kubernetes environment.
 if [ -d $HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin ]; then
@@ -178,19 +184,67 @@ if [ -d $HOME/.rbenv ]; then
   eval "$(rbenv init -)"
 fi
 
-# Python environment.
+##----------------------------------------------------------
+## Setup Python environment.
+## - Use pyenv to manage multiple Python versions.
+## - Use pipx to install global Python cli and applications.
+## - Use python3 venv to manage virtual environments.
+
+# Add pyenv executable to PATH and enable shims, then load pyenv into the shell.
 if [ -d $HOME/.pyenv ]; then
-  # Add pyenv executable to PATH and
-  # enable shims by adding the following
-  # to ~/.profile and ~/.zprofile:
   export PYENV_ROOT="$HOME/.pyenv"
   export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init --path)"
-
-  # Load pyenv into the shell by adding
-  # the following to ~/.zshrc:
   eval "$(pyenv init -)"
 fi
 
-# Add misc useful scripts to PATH.
-export PATH=$PATH:$HOME/code/tools/scripts
+# Setups when pipx is installed:
+# - Remove ipython alias set via zsh python plugin, which conflicts with pipx installed ipython.
+# - Add .local/bin to PATH, which is the directory where pipx installs isolated apps.
+if [[ -x $(command -v pipx) ]]; then
+  unalias ipython
+  export PATH=$PATH:$HOME/.local/bin
+fi
+
+# Using python3 venv module to manage virtual environment.
+export VENV_HOME="$HOME/.venv"
+[[ -d $VENV_HOME ]] || mkdir $VENV_HOME
+
+function lsvenv() {
+  ls -1 $VENV_HOME
+}
+
+function venv() {
+  if [ $# -eq 0 ]
+  then
+    echo "Please provide venv name"
+  else
+    source "$VENV_HOME/$1/bin/activate"
+  fi
+}
+
+function mkvenv() {
+  if [ $# -eq 0 ]
+  then
+    echo "Please provide venv name"
+  else
+    echo "Creating venv under $VENV_HOME/$1"
+    python3 -m venv $VENV_HOME/$1
+    echo "Activating $1"
+    venv $1
+  fi
+}
+
+function rmvenv() {
+  if [ $# -eq 0 ]
+  then
+    echo "Please provide venv name"
+  else
+    rm -rf $VENV_HOME/$1
+  fi
+}
+
+complete -C lsvenv venv mkvenv rmvent
+
+## End of Python setup.
+##----------------------------------------------------------
