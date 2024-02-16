@@ -42,7 +42,6 @@ setopt NO_BEEP
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git python golang vagrant docker kubectl jump)
 
-
 ##------------------------------------------------------------------------------
 ## Special configs that must run at first
 ##------------------------------------------------------------------------------
@@ -153,48 +152,38 @@ fi
 ## Followings are development related configuration across all hosts.
 ##
 ##------------------------------------------------------------------------------
-# Kubernetes environment.
-if [ -d $HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin ]; then
-  export PATH=$PATH:$HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin
-  # This is effectively how kubectl plugin works; but since kubectl locates at
-  # 'weird' location, don't use it directly.
+
+##----------------------------------------------------------
+## Setup Go and Cloud Native environment.
+## - Export global PATH environmennt, etc
+##
+## Additional one-time setup
+## $ go env -w GO111MODULE=on
+## $ go env -w GOPROXY=https://goproxy.cn,direct
+
+export GOPATH=$HOME/code/workspace
+export CDPATH=$CDPATH:$GOPATH/src
+export PATH=$PATH:$GOPATH/bin
+
+if [[ -x $(command -v kubectl) ]]; then
   source <(kubectl completion zsh)
 fi
 
-# Cloud environment.
-if [[ "${CLOUD_ENV}" == "true" ]]; then
-  [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
-  [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
-  [[ -f "$HOME/code/source/azure-cli/az.completion" ]] && source "/home/deyuan/code/source/azure-cli/az.completion"
+# Use locally built Kubernetes binaries if exists.
+if [ -d $GOPATH/src/k8s.io/kubernetes/_output/local/go/bin ]; then
+  export PATH=$GOPATH/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
 fi
 
-# Go environment.
-export GOPATH=$HOME/code/workspace
-export CDPATH=$CDPATH:$GOPATH/src
-if [[ `uname` != "Darwin" ]]; then
-  # For non-Mac, set PATH for golang bin path. In mac, go is installed using
-  # homebrew, which manages binaries under /usr/local/bin, so it's unnecessary
-  # to set PATH here.
-  export PATH=/usr/local/go/bin:$PATH
-fi
-export PATH=$GOPATH/bin:$PATH
-
-# Java environment for Mac with brew.
-# sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
-# echo 'export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"' >> ~/.zshrc
-# export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
-
-# Ruby environment.
-if [ -d $HOME/.rbenv ]; then
-  export PATH=$PATH:$HOME/.rbenv/bin
-  eval "$(rbenv init -)"
-fi
+## End of Go and Cloud Native setup.
+##----------------------------------------------------------
 
 ##----------------------------------------------------------
-## Setup Python environment.
+## Setup Python and ML environment.
 ## - Use pyenv to manage multiple Python versions.
 ## - Use pipx to install global Python cli and applications.
 ## - Use python3 venv to manage virtual environments.
+## - Set Hugging Face mirror to CN domain.
+##
 ## Additional one-time setup:
 ## $ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
@@ -259,3 +248,28 @@ complete -C lsvenv rmvenv
 export HF_ENDPOINT=https://hf-mirror.com
 
 ## End of Python setup.
+##----------------------------------------------------------
+
+##----------------------------------------------------------
+## Setup Java, Ruby, Cloud, etc.
+
+# Java environment for Mac with brew.
+# sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+# echo 'export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"' >> ~/.zshrc
+# export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
+
+# Ruby environment.
+if [ -d $HOME/.rbenv ]; then
+  export PATH=$PATH:$HOME/.rbenv/bin
+  eval "$(rbenv init -)"
+fi
+
+# Cloud environment.
+if [[ "${CLOUD_ENV}" == "true" ]]; then
+  [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
+  [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
+  [[ -f "$HOME/code/source/azure-cli/az.completion" ]] && source "$HOME/code/source/azure-cli/az.completion"
+fi
+
+## End of misc setup.
+##----------------------------------------------------------
