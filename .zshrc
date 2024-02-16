@@ -195,6 +195,8 @@ fi
 ## - Use pyenv to manage multiple Python versions.
 ## - Use pipx to install global Python cli and applications.
 ## - Use python3 venv to manage virtual environments.
+## Additional one-time setup:
+## $ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 # Add pyenv executable to PATH and enable shims, then load pyenv into the shell.
 if [ -d $HOME/.pyenv ]; then
@@ -250,6 +252,10 @@ function rmvenv() {
   fi
 }
 
-complete -C lsvenv venv mkvenv rmvent
+complete -C lsvenv venv
+complete -C lsvenv rmvenv
+
+# Set huggingface mirror.
+export HF_ENDPOINT=https://hf-mirror.com
 
 ## End of Python setup.
