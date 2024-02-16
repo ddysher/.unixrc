@@ -14,13 +14,11 @@
 (defvar *darwin*  (eq system-type 'darwin))
 (defvar *linux*   (or (eq system-type 'gnu/linux) (eq system-type 'linux)))
 ;; Emacs major version
-(defvar *emacs23* (= emacs-major-version 23))
-(defvar *emacs24* (= emacs-major-version 24))
-(defvar *emacs25* (= emacs-major-version 25))
-(defvar *emacs26* (= emacs-major-version 26))
-(defvar *emacs27* (= emacs-major-version 27))
+(defvar *emacs28* (= emacs-major-version 27))
+(defvar *emacs29* (= emacs-major-version 29))
 ;; System name (hostname)
 (defvar *home-desktop* (string= system-name "mangosteen"))
+(defvar *home-desktop-gpu* (string= system-name "neuralforge"))
 (defvar *goog-desktop* (string= system-name "deyuan.pit.corp.google.com"))
 (defvar *macpro-13*
   (or (string= system-name "Deyuans-MacBook-Pro.local")
