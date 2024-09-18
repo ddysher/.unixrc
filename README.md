@@ -52,6 +52,7 @@ ln -sf ~/.unixrc/.config/.npmrc ~/.npmrc
 There are certain packages required by emacs configs:
 
 - [w3m](http://w3m.sourceforge.net/) [required]: used as browser in emacs, install via distro's package manager.
+- make, cmake, libtool [required]: used to build vterm in emacs, install via distro's package manager.
 - [live markdown](https://github.com/shime/livedown) [optional]: used to view markdown file in browser while editing.
 - [doctoc](https://github.com/thlorenz/doctoc) [optional]: used to generate markdown table of content.
 
@@ -66,29 +67,9 @@ sudo npm install -g livedown
 sudo npm install -g doctoc
 ```
 
-### Golang
+### iTerm2
 
-Manually install Golang (for Ubuntu, Debian):
-
-```
-GO_VERSION=1.15
-wget https://golang.org/dl/go{$GO_VERSION}-amd64.tar.gz
-
-sudo rm -rf /usr/local/go
-sudo tar -C /usr/local -xvf https://golang.org/dl/go{$GO_VERSION}-amd64.tar.gz
-sudo ln -sf /usr/local/go/bin/go /usr/bin/go
-```
-
-A bunch of golang tools need to be installed to make both go and emacs work properly:
-
-```sh
-# GOPATH is set at ".zshrc".
-go get github.com/nsf/gocode
-go get github.com/tools/godep
-go get github.com/rogpeppe/godef
-go get golang.org/x/tools/cmd/guru
-go get golang.org/x/tools/cmd/goimports
-```
+Install iTerm2 and add related profiles in "~/.unixrc/.config/iterm2", then change the keyboard binding of "option" and "command".
 
 ### Z
 
