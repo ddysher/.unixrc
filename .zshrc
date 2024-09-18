@@ -88,6 +88,9 @@ source $ZSH/oh-my-zsh.sh          # Re-exec shell script
 source $HOME/.unixrc/tools/z/z.sh # Enable z.sh
 bindkey -e                        # Bind keys
 
+# Add misc useful scripts to PATH.
+export PATH=$PATH:$HOME/code/tools/scripts
+
 ##-------------------------------------------------------------------------------
 ## Configs for Linux and Mac
 ##   chrome:  open file in new tab (chrome should already be opened)
@@ -141,36 +144,114 @@ elif [[ `hostname` == "Deyuans-MacBook-M1" ]]; then
 elif [[ `hostname` == "Deyuans-MacBook-Pro-16" ]]; then
   export HOMEBREW_TEMP=/opt/homebrew/TEMP
   export GOROOT=/opt/homebrew/opt/go/libexec
+  # source /Users/deyuandeng/.docker/init-zsh.sh || true # Added by Docker Desktop
 fi
 
 ##------------------------------------------------------------------------------
-## Development environment configs
+##
+## Followings are development related configuration across all hosts.
+##
 ##------------------------------------------------------------------------------
-# Kubernetes environment.
-if [ -d $HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin ]; then
-  export PATH=$PATH:$HOME/code/workspace/src/k8s.io/kubernetes/_output/local/go/bin
-  # This is effectively how kubectl plugin works; but since kubectl locates at
-  # 'weird' location, don't use it directly.
+
+##----------------------------------------------------------
+## Setup Go and Cloud Native environment.
+## - Export global PATH environmennt, etc
+##
+## Additional one-time setup
+## $ go env -w GO111MODULE=on
+## $ go env -w GOPROXY=https://goproxy.cn,direct
+
+export GOPATH=$HOME/code/workspace
+export CDPATH=$CDPATH:$GOPATH/src
+export PATH=$PATH:$GOPATH/bin
+
+if [[ -x $(command -v kubectl) ]]; then
   source <(kubectl completion zsh)
 fi
 
-# Cloud environment.
-if [[ "${CLOUD_ENV}" == "true" ]]; then
-  [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
-  [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
-  [[ -f "$HOME/code/source/azure-cli/az.completion" ]] && source "/home/deyuan/code/source/azure-cli/az.completion"
+# Use locally built Kubernetes binaries if exists.
+if [ -d $GOPATH/src/k8s.io/kubernetes/_output/local/go/bin ]; then
+  export PATH=$GOPATH/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
 fi
 
-# Go environment.
-export GOPATH=$HOME/code/workspace
-export CDPATH=$CDPATH:$GOPATH/src
-if [[ `uname` != "Darwin" ]]; then
-  # For non-Mac, set PATH for golang bin path. In mac, go is installed using
-  # homebrew, which manages binaries under /usr/local/bin, so it's unnecessary
-  # to set PATH here.
-  export PATH=/usr/local/go/bin:$PATH
+## End of Go and Cloud Native setup.
+##----------------------------------------------------------
+
+##----------------------------------------------------------
+## Setup Python and ML environment.
+## - Use pyenv to manage multiple Python versions.
+## - Use pipx to install global Python cli and applications.
+## - Use python3 venv to manage virtual environments.
+## - Set Hugging Face mirror to CN domain.
+##
+## Additional one-time setup:
+## $ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
+# Add pyenv executable to PATH and enable shims, then load pyenv into the shell.
+if [ -d $HOME/.pyenv ]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
 fi
-export PATH=$GOPATH/bin:$PATH
+
+# Setups when pipx is installed:
+# - Remove ipython alias set via zsh python plugin, which conflicts with pipx installed ipython.
+# - Add .local/bin to PATH, which is the directory where pipx installs isolated apps.
+if [[ -x $(command -v pipx) ]]; then
+  unalias ipython
+  export PATH=$PATH:$HOME/.local/bin
+fi
+
+# Using python3 venv module to manage virtual environment.
+export VENV_HOME="$HOME/.venv"
+[[ -d $VENV_HOME ]] || mkdir $VENV_HOME
+
+function lsvenv() {
+  ls -1 $VENV_HOME
+}
+
+function venv() {
+  if [ $# -eq 0 ]
+  then
+    echo "Please provide venv name"
+  else
+    source "$VENV_HOME/$1/bin/activate"
+  fi
+}
+
+function mkvenv() {
+  if [ $# -eq 0 ]
+  then
+    echo "Please provide venv name"
+  else
+    echo "Creating venv under $VENV_HOME/$1"
+    python3 -m venv $VENV_HOME/$1
+    echo "Activating $1"
+    venv $1
+  fi
+}
+
+function rmvenv() {
+  if [ $# -eq 0 ]
+  then
+    echo "Please provide venv name"
+  else
+    rm -rf $VENV_HOME/$1
+  fi
+}
+
+complete -C lsvenv venv
+complete -C lsvenv rmvenv
+
+# Set huggingface mirror.
+export HF_ENDPOINT=https://hf-mirror.com
+
+## End of Python setup.
+##----------------------------------------------------------
+
+##----------------------------------------------------------
+## Setup Java, Ruby, Cloud, etc.
 
 # Java environment for Mac with brew.
 # sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
@@ -183,21 +264,12 @@ if [ -d $HOME/.rbenv ]; then
   eval "$(rbenv init -)"
 fi
 
-# Python environment.
-if [ -d $HOME/.pyenv ]; then
-  # Add pyenv executable to PATH and
-  # enable shims by adding the following
-  # to ~/.profile and ~/.zprofile:
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init --path)"
-
-  # Load pyenv into the shell by adding
-  # the following to ~/.zshrc:
-  eval "$(pyenv init -)"
+# Cloud environment.
+if [[ "${CLOUD_ENV}" == "true" ]]; then
+  [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
+  [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
+  [[ -f "$HOME/code/source/azure-cli/az.completion" ]] && source "$HOME/code/source/azure-cli/az.completion"
 fi
 
-# Add misc useful scripts to PATH.
-export PATH=$PATH:$HOME/code/tools/scripts
-
-# source /Users/deyuandeng/.docker/init-zsh.sh || true # Added by Docker Desktop
+## End of misc setup.
+##----------------------------------------------------------

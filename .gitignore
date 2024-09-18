@@ -1,6 +1,9 @@
 # Emacs plugin jedi creates the directory.
 .emacs.d/.python-environments
 
+# Native-compiled *.eln files for *.el configuration files.
+.emacs.d/eln-cache/
+
 # Ignore chinese-pyim, including:
 #   pyim-personal.txt - personal dict keeps changing, noisy.
 #   pyim-bigdict.pyim - the file is ~20M, pull separately.

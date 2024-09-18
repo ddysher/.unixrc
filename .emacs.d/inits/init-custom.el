@@ -11,9 +11,6 @@
       (tool-bar-mode -1)               ; disable tool bar
       (scroll-bar-mode -1)))           ; disable vertical scroll bar
 
-(if (and window-system *emacs25*)
-    (horizontal-scroll-bar-mode -1))   ; disable horizontal scroll bar
-
 ;;
 ;; Global settings
 ;;
