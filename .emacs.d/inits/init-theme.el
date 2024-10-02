@@ -24,9 +24,9 @@
 (load-material)
 
 ;; Load fonts, options are:
+(cond (*linux*  (set-frame-font "Hack-10")))
 ;; (cond (*linux*  (set-frame-font "Source Code Pro")))
-;; (cond (*linux*  (set-frame-font "-*-Hack-normal-normal-normal-*-11-*-*-*-m-0-iso10646-1")))
-(cond (*linux*  (set-frame-font "Hack-11")))
+;; (cond (*linux*  (set-frame-font "DejaVu Sans Mono-10")))
 
 (cond (*darwin* (set-frame-font "Monaco-11")))
 
