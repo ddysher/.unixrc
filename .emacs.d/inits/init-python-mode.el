@@ -75,7 +75,7 @@
 (add-hook 'python-mode-hook 'python-mode-custom-hook)
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
-(when *darwin*
+(when (executable-find "pyenv")
   (pyenv-mode))
 
 (defvar jedi:goto-stack '())
