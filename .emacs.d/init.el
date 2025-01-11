@@ -14,7 +14,7 @@
 (defvar *darwin*  (eq system-type 'darwin))
 (defvar *linux*   (or (eq system-type 'gnu/linux) (eq system-type 'linux)))
 ;; Emacs major version
-(defvar *emacs28* (= emacs-major-version 27))
+(defvar *emacs28* (= emacs-major-version 28))
 (defvar *emacs29* (= emacs-major-version 29))
 ;; System name (hostname)
 (defvar *home-desktop* (string= system-name "mangosteen"))

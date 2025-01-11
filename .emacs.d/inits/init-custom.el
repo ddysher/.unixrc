@@ -56,6 +56,9 @@
 (add-to-list 'auto-mode-alist '("\\BUILD$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
+;; Avoid blank line in fullscreen mode.
+(setq frame-resize-pixelwise t)
+
 ;;
 ;; Prog mode settings
 ;;
