@@ -141,7 +141,7 @@ elif [[ `hostname` == "watermelon" ]]; then
 elif [[ `hostname` == "Deyuans-MacBook-M1" ]]; then
   export HOMEBREW_TEMP=/opt/homebrew/TEMP
   export GOROOT=/opt/homebrew/opt/go/libexec
-elif [[ `hostname` == "Deyuans-MacBook-Pro-16" ]]; then
+elif [[ `hostname` == "Deyuans-MacBook-M3" ]]; then
   export HOMEBREW_TEMP=/opt/homebrew/TEMP
   export GOROOT=/opt/homebrew/opt/go/libexec
   # source /Users/deyuandeng/.docker/init-zsh.sh || true # Added by Docker Desktop
