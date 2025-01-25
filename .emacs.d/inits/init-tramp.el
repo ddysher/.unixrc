@@ -44,8 +44,16 @@
   (interactive)
   (find-file "/sshx:deyuan@cherries:/home/deyuan/.zshrc"))
 
-(defun tramp-dance-zshrc ()
+(defun tramp-neuralforge-zshrc ()
   (interactive)
-  (find-file "/sshx:dengdeyuan.dengdy@10.227.77.8:/home/dengdeyuan.dengdy/.zshrc"))
+  (find-file "/sshx:deyuan@neuralforge:/home/deyuan/.zshrc"))
+
+(defun tramp-devbox-cpu-zshrc ()
+  (interactive)
+  (find-file "/sshx:dengdeyuan.dengdy@10.37.10.127:/home/dengdeyuan.dengdy/.zshrc"))
+
+(defun tramp-devbox-gpu-l4-zshrc ()
+  (interactive)
+  (find-file "/sshx:dengdeyuan.dengdy@10.37.96.193:/home/dengdeyuan.dengdy/.zshrc"))
 
 (provide 'init-tramp)
