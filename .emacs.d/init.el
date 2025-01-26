@@ -74,6 +74,7 @@
 (require 'init-lua-mode)
 (require 'init-js2-mode)
 (require 'init-web-mode)
+(require 'init-cuda-mode)
 (require 'init-rust-mode)
 (require 'init-java-mode)
 (require 'init-scala-mode)
@@ -119,7 +120,7 @@
  '(livedown:open t)
  '(livedown:port 1337)
  '(package-selected-packages
-   '(treemacs multi-vterm vterm wsd-mode company lsp-mode pyenv-mode pyim go-projectile projectile ag ein sbt-mode scala-mode protobuf-mode cmake-font-lock cmake-mode neotree matlab-mode wc-mode material-theme edit-server flycheck nginx-mode apache-mode hackernews dockerfile-mode thrift yaml-mode markdown-mode php-mode jade-mode coffee-mode zenburn-theme jedi python-environment epc rust-mode web-mode tern-auto-complete tern js2-mode lua-mode go-mode ggtags fill-column-indicator window-numbering multi-term magit yasnippet helm smex w3m exec-path-from-shell))
+   '(acton-mode cuda-mode treemacs multi-vterm vterm wsd-mode company lsp-mode pyenv-mode pyim go-projectile projectile ag ein sbt-mode scala-mode protobuf-mode cmake-font-lock cmake-mode neotree matlab-mode wc-mode material-theme edit-server flycheck nginx-mode apache-mode hackernews dockerfile-mode thrift yaml-mode markdown-mode php-mode jade-mode coffee-mode zenburn-theme jedi python-environment epc rust-mode web-mode tern-auto-complete tern js2-mode lua-mode go-mode ggtags fill-column-indicator window-numbering multi-term magit yasnippet helm smex w3m exec-path-from-shell))
  '(safe-local-variable-values '((c-indent-level . 4)))
  '(send-mail-function 'mailclient-send-it)
  '(wsd-style "roundgreen"))
