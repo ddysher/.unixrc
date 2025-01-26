@@ -88,9 +88,6 @@ source $ZSH/oh-my-zsh.sh          # Re-exec shell script
 source $HOME/.unixrc/tools/z/z.sh # Enable z.sh
 bindkey -e                        # Bind keys
 
-# Add misc useful scripts to PATH.
-export PATH=$PATH:$HOME/code/tools/scripts
-
 ##-------------------------------------------------------------------------------
 ## Configs for Linux and Mac
 ##   chrome:  open file in new tab (chrome should already be opened)
@@ -174,8 +171,15 @@ if [ -d $GOPATH/src/k8s.io/kubernetes/_output/local/go/bin ]; then
   export PATH=$GOPATH/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
 fi
 
-## End of Go and Cloud Native setup.
+
 ##----------------------------------------------------------
+## Setup CUDA environment.
+## - Export global PATH environment, etc
+
+if [ -d /usr/local/cuda/bin ]; then
+  export PATH=/usr/local/cuda/bin:$PATH
+fi
+
 
 ##----------------------------------------------------------
 ## Setup Python and ML environment.
@@ -247,8 +251,6 @@ complete -C lsvenv rmvenv
 # Set huggingface mirror.
 export HF_ENDPOINT=https://hf-mirror.com
 
-## End of Python setup.
-##----------------------------------------------------------
 
 ##----------------------------------------------------------
 ## Setup Java, Ruby, Cloud, etc.
@@ -270,6 +272,3 @@ if [[ "${CLOUD_ENV}" == "true" ]]; then
   [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
   [[ -f "$HOME/code/source/azure-cli/az.completion" ]] && source "$HOME/code/source/azure-cli/az.completion"
 fi
-
-## End of misc setup.
-##----------------------------------------------------------
