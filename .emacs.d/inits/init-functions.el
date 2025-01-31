@@ -9,27 +9,34 @@
   (interactive)
   (add-hook 'window-numbering-before-hook
             'window-numbering-mode-custom-hook)
-  ;; Create simple window configuration.
-  (split-desktop-window-2)
-  (window-configuration-to-register ?s)
   ;; Create terminal window configuration.
   (split-desktop-window-term)
-  (multi-vterm)
-  (multi-vterm)
-  (multi-vterm)
-  (window-configuration-to-register ?t)
-  ;; Create development window configuration (with mini-terminal).
-  (split-desktop-window-dev)
-  (window-configuration-to-register ?d))
+  (window-configuration-to-register ?1)
+  (dotimes (_ 2) (multi-vterm))         ; create 2 terminals
+  ;; Create 2-window development configuration.
+  (split-desktop-window-dev2)
+  (window-configuration-to-register ?2)
+  ;; Create 3-window development configuration.
+  (split-desktop-window-dev3)
+  (window-configuration-to-register ?3))
 
-(defun split-desktop-window-2 ()
-  "Split workspace into two windows."
+(defun split-desktop-window-dev2 ()
+  "Split workspace to three windows with mini-terminal at bottom."
   (interactive)
   (delete-other-windows)
+  (switch-to-buffer "\*scratch\*")
+  ;; Split window: 3 windows at top and 2 windows at bottom.
+  (split-window-below)
   (split-window-right)
-  (switch-to-buffer "\*scratch\*"))
+  (other-window 2)
+  (split-window-right)
+  ;; Adjust window size: balance and enlarge top windows.
+  (balance-windows)
+  (shrink-window (/ (* (window-body-height) 7) 10)) ; shrink the bottom windows to 3/10 of its current size
+  ;; Switch buffers (now the cursor is at the 4th window).
+  (other-window 2))
 
-(defun split-desktop-window-dev ()
+(defun split-desktop-window-dev3 ()
   "Split workspace to three windows with mini-terminal at bottom."
   (interactive)
   (delete-other-windows)
@@ -44,10 +51,7 @@
   (balance-windows)
   (shrink-window (/ (* (window-body-height) 7) 10)) ; shrink the bottom windows to 3/10 of its current size
   ;; Switch buffers (now the cursor is at the 4th window).
-  (switch-to-buffer "\*vterminal<1>\*")
-  (other-window 1)
-  (switch-to-buffer "\*vterminal<2>\*")
-  (other-window 1))
+  (other-window 2))
 
 (defun split-desktop-window-term ()
   "Split workspace for larger terminal workflow."
@@ -62,8 +66,7 @@
   (split-window-below)
   (other-window 1)
   (shrink-window (/ (* (window-body-height) 3) 10))
-  (other-window 1)
-  (switch-to-buffer "\*vterminal<1>\*"))
+  (other-window 1))
 
 (defvar current-window-conf-register nil)
 

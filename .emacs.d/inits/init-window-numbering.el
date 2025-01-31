@@ -6,7 +6,8 @@
 
 (defun window-numbering-mode-custom-hook (windows)
   "Change window number as needed."
-  (if (equal current-window-conf-register ?d)
+  (if (or (equal current-window-conf-register ?2)
+          (equal current-window-conf-register ?3))
       (let ((counter 1)
             (winlen (length windows)))
         (dolist (window windows) ; assign the last two windows to 9 and 0.
