@@ -10,87 +10,60 @@
   (add-hook 'window-numbering-before-hook
             'window-numbering-mode-custom-hook)
   ;; Create simple window configuration.
-  (split-desktop-window-regular-1)
-  (other-window 1)
+  (split-desktop-window-2)
   (window-configuration-to-register ?s)
   ;; Create terminal window configuration.
-  (split-desktop-window-terminal)
-  (other-window 2)
+  (split-desktop-window-term)
   (multi-vterm)
   (multi-vterm)
   (multi-vterm)
-  (multi-vterm-next)
   (window-configuration-to-register ?t)
-  ;; Create regular 2-window configuration (with mini-terminal).
-  (split-desktop-window-regular-2)
-  (other-window 3)
-  (switch-to-buffer "\*vterminal<1>\*")
-  (other-window 2)
-  (window-configuration-to-register ?g)
-  ;; Create regular 3-window configuration (with mini-terminal).
-  (split-desktop-window-regular-3)
-  (other-window 4)
-  (switch-to-buffer "\*vterminal<1>\*")
-  (other-window 3)
-  (window-configuration-to-register ?r))
+  ;; Create development window configuration (with mini-terminal).
+  (split-desktop-window-dev)
+  (window-configuration-to-register ?d))
 
-(defun split-desktop-window-regular-1 ()
-  "regular-1 splits to two windows"
+(defun split-desktop-window-2 ()
+  "Split workspace into two windows."
   (interactive)
   (delete-other-windows)
   (split-window-right)
   (switch-to-buffer "\*scratch\*"))
 
-(defun split-desktop-window-regular-2 ()
-  "regular-2 splits main workspace to two windows with mini-terminal."
+(defun split-desktop-window-dev ()
+  "Split workspace to three windows with mini-terminal at bottom."
   (interactive)
   (delete-other-windows)
   (switch-to-buffer "\*scratch\*")
-  ;; Splite window
-  (split-window-below)
-  (split-window-right)
-  (other-window 2)
-  (split-window-right)
-  (split-window-right)
-  ;; Adjust window size
-  (balance-windows)
-  ;; Up to this point, lower windows takes up 50% space.
-  (shrink-window (/ (* (window-body-height) 7) 10)) ; shrink bottom windows to 3/10 of its current size
-  (shrink-window-horizontally (/ (* (window-width) 5) 10)) ; shrink bottom left window to half of its current size
-  (other-window 2)
-  (shrink-window-horizontally (/ (* (window-width) 5) 10)) ; shrink bottom right window to half of its current size
-  (other-window 1))
-
-(defun split-desktop-window-regular-3 ()
-  "regular-3 splits main workspace to three windows with mini-terminal"
-  (interactive)
-  (delete-other-windows)
-  (switch-to-buffer "\*scratch\*")
-  ;; Splite window
+  ;; Split window: 3 windows at top and 2 windows at bottom.
   (split-window-below)
   (split-window-right)
   (split-window-right)
   (other-window 3)
   (split-window-right)
-  (split-window-right)
-  ;; Adjust window size
+  ;; Adjust window size: balance and enlarge top windows.
   (balance-windows)
-  ;; Up to this point, lower windows takes up 50% space.
-  (shrink-window (/ (* (window-body-height) 7) 10)) ; shrink bottom windows to 3/10 of its current size
-  (shrink-window-horizontally (/ (* (window-width) 5) 10)) ; shrink bottom left window to half of its current size
-  (other-window 2)
-  (shrink-window-horizontally (/ (* (window-width) 5) 10)) ; shrink bottom right window to half of its current size
+  (shrink-window (/ (* (window-body-height) 7) 10)) ; shrink the bottom windows to 3/10 of its current size
+  ;; Switch buffers (now the cursor is at the 4th window).
+  (switch-to-buffer "\*vterminal<1>\*")
+  (other-window 1)
+  (switch-to-buffer "\*vterminal<2>\*")
   (other-window 1))
 
-(defun split-desktop-window-terminal ()
-  "Split desktop window for terminal workflow. Clear window first,
-split window, then put cursor at top left."
+(defun split-desktop-window-term ()
+  "Split workspace for larger terminal workflow."
   (interactive)
   (delete-other-windows)
   (switch-to-buffer "\*scratch\*")
+  ;; create a separate window for larger text area and shink it.
   (split-window-right)
+  (other-window 1)
+  (shrink-window-horizontally (/ (* (window-width) 3) 10))
+  ;; create a separate window for smaller text area and shink it.
   (split-window-below)
-  (shrink-window-horizontally (/ (* (window-width) 3) 10))) ; shrink left window to 7/10 of its current size
+  (other-window 1)
+  (shrink-window (/ (* (window-body-height) 3) 10))
+  (other-window 1)
+  (switch-to-buffer "\*vterminal<1>\*"))
 
 (defvar current-window-conf-register nil)
 
