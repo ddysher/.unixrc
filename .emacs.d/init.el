@@ -52,6 +52,7 @@
 (require 'init-erc)
 (require 'init-org)
 (require 'init-smex)
+(require 'init-gptel)
 (require 'init-tramp)
 (require 'init-company)
 (require 'init-livedown)
@@ -74,7 +75,6 @@
 (require 'init-lua-mode)
 (require 'init-js2-mode)
 (require 'init-web-mode)
-(require 'init-cuda-mode)
 (require 'init-rust-mode)
 (require 'init-java-mode)
 (require 'init-scala-mode)
@@ -86,6 +86,7 @@
 ;; (require 'flex-mode)
 ;; (require 'cool-mode)
 ;; (require 'bison-mode))
+;; (require 'init-cuda-mode) ; identifier / keyword rendering issue with cuda mode
 
 ;; My custom mode, functions, etc.
 (require 'init-keys)
