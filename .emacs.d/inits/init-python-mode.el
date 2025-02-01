@@ -25,9 +25,8 @@
 ;;
 ;; How Jedi.el works (http://tkf.github.io/emacs-jedi/latest/#how-it-works):
 ;; Jedi.el calls Python methods in jedi through EPC protocol. Emacs side
-;; implementation of EPC is epc.el and Python side is python-epc. There is a
-;; process running (EPC server side), e.g.
-;;   ~/.emacs.d/.python-environments/default/bin/python ~/.emacs.d/.python-environments/default/bin/jediepcserver
+;; implementation of EPC is epc.el, and Python side is python-epc. A python
+;; process will be running at host.
 ;;
 ;;------------------------------------------------------------------------------
 ;; Debugging
@@ -74,11 +73,17 @@
 (add-to-list 'auto-mode-alist '("\\.wsgi$" . python-mode))
 (add-hook 'python-mode-hook 'python-mode-custom-hook)
 (add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
+
 (when (executable-find "pyenv")
   (pyenv-mode))
 
 (defvar jedi:goto-stack '())
+(setq jedi:complete-on-dot t)
+(setq jedi:environment-root ; use the correct python version for code navigation
+      (string-trim (shell-command-to-string "pyenv prefix")))
+;; restart servers
+(jedi:stop-all-servers)
+(jedi:install-server)
 
 (defun jedi:jump-to-definition ()
   (interactive)
