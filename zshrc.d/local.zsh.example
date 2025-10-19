@@ -1,0 +1,20 @@
+##------------------------------------------------------------------------------
+## Local Configuration (Not tracked in Git)
+##
+## Copy this file to local.zsh and customize for your local environment.
+## This file should contain machine-specific settings that shouldn't be
+## shared across different machines or committed to version control.
+##------------------------------------------------------------------------------
+
+# Example local customizations:
+# export CUSTOM_VAR="value"
+# alias myalias="command"
+# 
+# # Local development paths
+# export PATH="$PATH:/path/to/local/tools"
+#
+# # Local API keys or tokens (use with caution)
+# export API_KEY="your-secret-key"
+#
+# # Machine-specific overrides
+# export EDITOR="code"  # Override default editor
