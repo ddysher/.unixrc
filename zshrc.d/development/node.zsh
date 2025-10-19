@@ -2,7 +2,7 @@
 ## Node.js Development Environment
 ##------------------------------------------------------------------------------
 
-# Fast Node Manager (fnm) setup
+# Fast Node Manager (fnm) setup, used to manage multiple nodejs versions.
 FNM_PATH="/opt/homebrew/opt/fnm/bin"
 if [ -d "$FNM_PATH" ]; then
   eval "$(fnm env)"

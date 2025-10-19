@@ -6,10 +6,14 @@
 ## $ go env -w GOPROXY=https://goproxy.cn,direct
 ##------------------------------------------------------------------------------
 
+# Development workspace
+export GOPATH="$HOME/code/workspace"
+export CDPATH="$CDPATH:$GOPATH/src"
+
 # Go workspace and PATH
 export PATH="$PATH:$GOPATH/bin"
 
-# Use locally built Kubernetes binaries if they exist
-if [ -d "$GOPATH/src/k8s.io/kubernetes/_output/local/go/bin" ]; then
-  export PATH="$GOPATH/src/k8s.io/kubernetes/_output/local/go/bin:$PATH"
+# Go root (default for Intel Macs)
+if [[ "$(uname)" == "Darwin" ]]; then
+  export GOROOT="${GOROOT:-/usr/local/opt/go/libexec}"
 fi

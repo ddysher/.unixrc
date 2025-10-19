@@ -1,5 +1,7 @@
 ##------------------------------------------------------------------------------
-## Configuration for deyuan-macbookpro.roam.corp.google.com
+## CUDA Development Environment.
 ##------------------------------------------------------------------------------
 
-# Add any Google roam-specific configurations here
+if [ -d /usr/local/cuda/bin ]; then
+  export PATH="/usr/local/cuda/bin:$PATH"
+fi

@@ -15,3 +15,6 @@ alias pc="proxychains4"
 alias ppj="python -mjson.tool"  # Beautify JSON output
 alias sgrep="grep -rnI -C3 --color=always"  # Colorful recursive grep
 alias j="jump"
+
+# Create directory and cd into it
+alias mkcd='function _mkcd() { mkdir -p "$@" && cd "$@"; }; _mkcd'

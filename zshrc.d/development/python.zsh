@@ -1,15 +1,19 @@
 ##------------------------------------------------------------------------------
 ## Python Development Environment
 ##
-## - Use pyenv to manage multiple Python versions
-## - Use pipx to install global Python CLI tools and applications
-## - Use python3 venv to manage virtual environments
-##
 ## Additional one-time setup:
 ## $ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 ##------------------------------------------------------------------------------
 
-# Pyenv setup
+# uv setup
+[[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env" # added by uv
+
+# use uv managed python globally.
+alias python="uv run python"
+alias pip="uv pip"
+
+
+# pyenv setup, used to manage multiple python versions (retiring).
 if [ -d "$HOME/.pyenv" ]; then
   export PYENV_ROOT="$HOME/.pyenv"
   export PATH="$PYENV_ROOT/bin:$PATH"
@@ -17,14 +21,16 @@ if [ -d "$HOME/.pyenv" ]; then
   eval "$(pyenv init -)"
 fi
 
-# Pipx setup
+
+# pipx setup, used to install global python cli tools and applications
 if [[ -x $(command -v pipx) ]]; then
   # Remove ipython alias set via zsh python plugin to avoid conflicts
   unalias ipython 2>/dev/null || true
   export PATH="$PATH:$HOME/.local/bin"
 fi
 
-# Python virtual environment home
+
+# python virtual environment home.
 export VENV_HOME="$HOME/.venv"
 [[ -d $VENV_HOME ]] || mkdir -p $VENV_HOME
 
@@ -63,7 +69,3 @@ function rmvenv() {
 # Completions for venv functions
 complete -C lsvenv venv
 complete -C lsvenv rmvenv
-
-# UV aliases (modern Python package manager)
-alias python="uv run python"
-alias pip="uv pip"

@@ -1,9 +1,6 @@
 ##------------------------------------------------------------------------------
-## Custom Functions
+## Docker Aliases.
 ##------------------------------------------------------------------------------
-
-# Create directory and cd into it
-alias mkcd='function _mkcd() { mkdir -p "$@" && cd "$@"; }; _mkcd'
 
 # Docker utility functions
 alias docker-ip='function _dip() { docker inspect --format "{{ .NetworkSettings.IPAddress }}" "$1"; }; _dip'
