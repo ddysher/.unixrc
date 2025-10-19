@@ -22,9 +22,9 @@ git submodule update
 Then install required symlinks:
 
 ```bash
-ln -sf ~/.unixrc/.emacs.d ~/.emacs.d
-ln -sf ~/.unixrc/.zshrc ~/.zshrc
-ln -sf ~/.unixrc/.config/ohmyzsh/deyuan.zsh-theme ~/.unixrc/ohmyzsh/custom/themes/deyuan.zsh-theme
+ln -sf ~/.unixrc/emacs.d ~/.emacs.d
+ln -sf ~/.unixrc/zshrc ~/.zshrc
+ln -sf ~/.unixrc/config/ohmyzsh/deyuan.zsh-theme ~/.unixrc/ohmyzsh/custom/themes/deyuan.zsh-theme
 ```
 
 Optional symlinks:
@@ -32,17 +32,17 @@ Optional symlinks:
 ```bash
 mkdir -p ~/.config
 
-ln -sf ~/.unixrc/.config/terminator ~/.config/terminator
-ln -sf ~/.unixrc/.config/gtk-3.0 ~/.config/gtk-3.0
-ln -sf ~/.unixrc/.config/.fonts.conf ~/.fonts.conf
+ln -sf ~/.unixrc/config/terminator ~/.config/terminator
+ln -sf ~/.unixrc/config/gtk-3.0 ~/.config/gtk-3.0
+ln -sf ~/.unixrc/config/fonts.conf ~/.fonts.conf
 
 # 'Xmodmap' change Caps to Ctrl in X11.
-ln -sf ~/.unixrc/.config/.Xmodmap ~/.Xmodmap
+ln -sf ~/.unixrc/config/Xmodmap ~/.Xmodmap
 
 # 'xprofile' set environment variables required by fcitx.
-ln -sf ~/.unixrc/.config/.xprofile ~/.xprofile
+ln -sf ~/.unixrc/config/xprofile ~/.xprofile
 
-ln -sf ~/.unixrc/.config/.npmrc ~/.npmrc
+ln -sf ~/.unixrc/config/npmrc ~/.npmrc
 ```
 
 ## Install packages
@@ -69,7 +69,7 @@ sudo npm install -g doctoc
 
 ### iTerm2
 
-Install iTerm2 and add related profiles in "~/.unixrc/.config/iterm2", then change the keyboard binding of "option" and "command".
+Install iTerm2 and add related profiles in "~/.unixrc/config/iterm2", then change the keyboard binding of "option" and "command".
 
 ### Z
 
