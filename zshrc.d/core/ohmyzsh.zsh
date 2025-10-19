@@ -3,7 +3,7 @@
 ##------------------------------------------------------------------------------
 
 # Oh My Zsh installation path
-export ZSH="$HOME/.unixrc/ohmyzsh"
+export ZSH="$HOME/.unixrc/tools/ohmyzsh"
 
 # Theme
 export ZSH_THEME="deyuan"
