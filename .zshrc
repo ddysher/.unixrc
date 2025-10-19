@@ -266,9 +266,20 @@ if [ -d $HOME/.rbenv ]; then
   eval "$(rbenv init -)"
 fi
 
+# NodeJS environment
+FNM_PATH="/opt/homebrew/opt/fnm/bin"
+if [ -d "$FNM_PATH" ]; then
+  eval "`fnm env`"
+fi
+
 # Cloud environment.
 if [[ "${CLOUD_ENV}" == "true" ]]; then
   [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/path.zsh.inc"
   [[ -f "$HOME/code/source/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/source/google-cloud-sdk/completion.zsh.inc"
   [[ -f "$HOME/code/source/azure-cli/az.completion" ]] && source "$HOME/code/source/azure-cli/az.completion"
 fi
+
+. "$HOME/.local/bin/env"
+
+alias python="uv run python"
+alias pip="uv pip"
