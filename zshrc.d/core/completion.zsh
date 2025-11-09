@@ -2,6 +2,9 @@
 ## ZSH Completion Configuration
 ##------------------------------------------------------------------------------
 
+autoload -Uz compinit
+compinit
+
 # Figure out the SHORT hostname for completion dump file
 if [[ "$OSTYPE" = darwin* ]]; then
   SHORT_HOST=$(scutil --get ComputerName 2>/dev/null) || SHORT_HOST=${HOST/.*/}

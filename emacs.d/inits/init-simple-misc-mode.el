@@ -35,6 +35,8 @@
 (require-package 'neotree)
 (require 'neotree)
 
+(require 'auto-complete)
+
 ;; Apply apache-mode to entire apache2 directory (including sub-directories).
 (require-package 'apache-mode)
 (require 'apache-mode)
