@@ -1,25 +1,25 @@
 # Emacs plugin jedi creates the directory.
-.emacs.d/.python-environments
+emacs.d/.python-environments
 
 # Native-compiled *.eln files for *.el configuration files.
-.emacs.d/eln-cache/
+emacs.d/eln-cache/
 
 # Ignore chinese-pyim, including:
 #   pyim-personal.txt - personal dict keeps changing, noisy.
 #   pyim-bigdict.pyim - the file is ~20M, pull separately.
-.emacs.d/pyim
+emacs.d/pyim
 
 # Ignore transient directory, e.g transient/history.el
-.emacs.d/transient/
+emacs.d/transient/
 
 # Ignore url directory, e.g. url/cookies
-.emacs.d/url/
+emacs.d/url/
 
 # Ignore bookmarks on folder GUI since it is path dependent.
-.config/gtk-3.0/bookmarks
+config/gtk-3.0/bookmarks
 
 # Ignore srecode-map due to conflicts in different OSes and it's not used for now.
-.emacs.d/srecode-map.el
+emacs.d/srecode-map.el
 
 # Ignore lsp-mode session.
-.emacs.d/.lsp-session-v1
+emacs.d/.lsp-session-v1
