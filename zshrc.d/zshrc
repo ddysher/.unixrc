@@ -71,7 +71,6 @@ _source_if_exists "$ZSHRC_CONFIG_DIR/development/cloud.zsh"
 # Additional tools and completions
 _source_if_exists "$HOME/.unixrc/tools/z/z.sh"  # Enable z.sh
 
-
 # Local customizations (not tracked in git)
 _source_if_exists "$ZSHRC_CONFIG_DIR/local.zsh"
 
