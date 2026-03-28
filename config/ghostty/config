@@ -3,4 +3,5 @@ shell-integration-features = no-cursor
 
 macos-option-as-alt = true
 
-font-size = 11
+font-family = Monolisa
+font-size = 12
