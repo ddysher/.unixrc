@@ -1,118 +1,146 @@
-# Linux configs
+# Unixrc
 
-My unix rc and emacs config files.
+Personal Unix shell, editor, and terminal configuration.
 
-## Download
+This repo is used on both macOS and Linux. The Zsh entrypoint auto-loads
+platform-specific settings from [`zshrc.d/platform/macos.zsh`](/Users/deyuan/.unixrc/zshrc.d/platform/macos.zsh)
+or [`zshrc.d/platform/linux.zsh`](/Users/deyuan/.unixrc/zshrc.d/platform/linux.zsh).
 
-Clone the repository:
+Ghostty is the current terminal target. iTerm2 config is still kept in the repo
+as a fallback during migration.
+
+## Clone
 
 ```sh
-git clone https://github.com/ddysher/.unixrc.git
+git clone --recurse-submodules https://github.com/ddysher/.unixrc.git ~/.unixrc
 # or
-git clone git@github.com:ddysher/.unixrc.git
+git clone --recurse-submodules git@github.com:ddysher/.unixrc.git ~/.unixrc
 ```
 
-Initialize submodules:
+If the repo was cloned without submodules:
 
 ```sh
-git submodule init
-git submodule update
+cd ~/.unixrc
+git submodule update --init --recursive
 ```
 
-Then install required symlinks:
+## Base Setup
 
-```bash
-ln -sf ~/.unixrc/emacs.d ~/.emacs.d
-ln -sf ~/.unixrc/zshrc ~/.zshrc
-ln -sf ~/.unixrc/config/ohmyzsh/deyuan.zsh-theme ~/.unixrc/ohmyzsh/custom/themes/deyuan.zsh-theme
+Create the core symlinks:
+
+```sh
+ln -sfn ~/.unixrc/emacs.d ~/.emacs.d
+ln -sfn ~/.unixrc/zshrc.d/zshrc ~/.zshrc
+ln -sfn ~/.unixrc/zshrc.d/ohmyzsh/deyuan.zsh-theme \
+  ~/.unixrc/tools/ohmyzsh/custom/themes/deyuan.zsh-theme
 ```
 
-Optional symlinks:
+Optional local overrides:
 
-```bash
-mkdir -p ~/.config
-
-ln -sf ~/.unixrc/config/terminator ~/.config/terminator
-ln -sf ~/.unixrc/config/gtk-3.0 ~/.config/gtk-3.0
-ln -sf ~/.unixrc/config/fonts.conf ~/.fonts.conf
-
-# 'Xmodmap' change Caps to Ctrl in X11.
-ln -sf ~/.unixrc/config/Xmodmap ~/.Xmodmap
-
-# 'xprofile' set environment variables required by fcitx.
-ln -sf ~/.unixrc/config/xprofile ~/.xprofile
-
-ln -sf ~/.unixrc/config/npmrc ~/.npmrc
+```sh
+cp ~/.unixrc/zshrc.d/local.zsh.example ~/.unixrc/zshrc.d/local.zsh
 ```
 
-## Install packages
-
-### Emacs
-
-There are certain packages required by emacs configs:
-
-- [w3m](http://w3m.sourceforge.net/) [required]: used as browser in emacs, install via distro's package manager.
-- make, cmake, libtool [required]: used to build vterm in emacs, install via distro's package manager.
-- [live markdown](https://github.com/shime/livedown) [optional]: used to view markdown file in browser while editing.
-- [doctoc](https://github.com/thlorenz/doctoc) [optional]: used to generate markdown table of content.
-
-List of commands:
-
-```
-sudo apt-get install w3m
-# sudo pacman -S w3m
-# brew install w3m
-
-sudo npm install -g livedown
-sudo npm install -g doctoc
-```
-
-### iTerm2
-
-Install iTerm2 and add related profiles in "~/.unixrc/config/iterm2", then change the keyboard binding of "option" and "command".
-
-### Z
-
-[z](https://github.com/rupa/z) is a productivity tool to navigate most used directories.
-
-Create a file `~/.z` which saves z's indexes.
+Optional but recommended for `z.sh`:
 
 ```sh
 touch ~/.z
 ```
 
-## Misc
+Set Zsh as the default shell if needed:
 
-### Update Git Submodule
-
-To update git submodules, enter the submodule directory and pull the new changes, e.g.
-
-```
-cd tools/z
-git checkout master
-git pull
-cd -
-```
-
-Then commit the changes and push to origin:
-
-```
-git commit -m "update git submodule z"
-git push
-```
-
-In aother environment, we can pull the commit and update the submodule via:
-
-```
-git pull
-git submodule update
-```
-
-### Keyboard delay/rate in X11
-
-Keyboard delay/rate can be set in desktop environment's 'System Settings' option;
-or in command line:
 ```sh
-xset q
-xset r rate 200 33
+chsh -s "$(command -v zsh)"
+```
+
+## Platform Setup
+
+### macOS
+
+The macOS config assumes Homebrew under `/opt/homebrew`.
+
+Install commonly used dependencies:
+
+```sh
+brew install zsh w3m cmake libtool fnm
+```
+
+### Linux
+
+Install the common packages required by this repo's shell and Emacs setup using
+your distro package manager. Typical packages include:
+
+- `zsh`
+- `w3m`
+- `cmake`
+- `automake`
+- `libtool`
+
+Linux-only desktop/X11 symlinks:
+
+```sh
+mkdir -p ~/.config
+
+ln -sfn ~/.unixrc/config/terminator ~/.config/terminator
+ln -sfn ~/.unixrc/config/gtk-3.0 ~/.config/gtk-3.0
+ln -sfn ~/.unixrc/config/fonts.conf ~/.fonts.conf
+ln -sfn ~/.unixrc/config/Xmodmap ~/.Xmodmap
+ln -sfn ~/.unixrc/config/xprofile ~/.xprofile
+```
+
+Notes:
+
+- [`config/Xmodmap`](/Users/deyuan/.unixrc/config/Xmodmap) changes Caps Lock to Ctrl in X11.
+- [`config/xprofile`](/Users/deyuan/.unixrc/config/xprofile) contains X11 session environment setup.
+
+## Terminal Setup
+
+### Ghostty
+
+Ghostty is the preferred terminal now.
+
+Create the config symlink:
+
+```sh
+mkdir -p ~/.config/ghostty
+ln -sfn ~/.unixrc/config/ghostty/config ~/.config/ghostty/config
+```
+
+Current Ghostty config lives in [`config/ghostty/config`](/Users/deyuan/.unixrc/config/ghostty/config).
+
+### iTerm2
+
+iTerm2 is still supported as a migration fallback on macOS. Related files are in
+[`config/iterm2`](/Users/deyuan/.unixrc/config/iterm2).
+
+## Other Optional Config
+
+```sh
+ln -sfn ~/.unixrc/config/npm/.npmrc ~/.npmrc
+```
+
+Fish config is also stored in [`config/fish`](/Users/deyuan/.unixrc/config/fish),
+but Zsh is the primary shell in this repo.
+
+## Emacs Notes
+
+Some Emacs features expect external tools:
+
+- `w3m` for in-Emacs browsing
+- `make`, `cmake`, and `libtool` for building native packages such as `vterm`
+- `livedown` optionally for Markdown preview
+- `doctoc` optionally for Markdown table of contents generation
+
+Optional npm packages:
+
+```sh
+npm install -g livedown doctoc
+```
+
+## Submodules
+
+To update bundled submodules:
+
+```sh
+git submodule update --init --recursive --remote
 ```

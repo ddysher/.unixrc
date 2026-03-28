@@ -71,3 +71,17 @@ _source_if_exists "$ZSHRC_CONFIG_DIR/local.zsh"
 
 # Clean up helper function
 unfunction _source_if_exists
+
+# fnm
+FNM_PATH="/opt/homebrew/opt/fnm/bin"
+if [ -d "$FNM_PATH" ]; then
+  eval "$(fnm env --shell zsh)"
+fi
+
+# fnm
+FNM_PATH="/opt/homebrew/opt/fnm/bin"
+if [ -d "$FNM_PATH" ]; then
+  eval "$(fnm env --shell zsh)"
+fi
+
+ABC="1"
