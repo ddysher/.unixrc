@@ -2,13 +2,6 @@
 
 Personal Unix shell, editor, and terminal configuration.
 
-This repo is used on both macOS and Linux. The Zsh entrypoint auto-loads
-platform-specific settings from [`zshrc.d/platform/macos.zsh`](/Users/deyuan/.unixrc/zshrc.d/platform/macos.zsh)
-or [`zshrc.d/platform/linux.zsh`](/Users/deyuan/.unixrc/zshrc.d/platform/linux.zsh).
-
-Ghostty is the current terminal target. iTerm2 config is still kept in the repo
-as a fallback during migration.
-
 ## Clone
 
 ```sh
@@ -62,7 +55,7 @@ The macOS config assumes Homebrew under `/opt/homebrew`.
 Install commonly used dependencies:
 
 ```sh
-brew install zsh w3m cmake libtool fnm
+brew install w3m cmake libtool
 ```
 
 ### Linux
@@ -70,7 +63,6 @@ brew install zsh w3m cmake libtool fnm
 Install the common packages required by this repo's shell and Emacs setup using
 your distro package manager. Typical packages include:
 
-- `zsh`
 - `w3m`
 - `cmake`
 - `automake`
@@ -90,39 +82,10 @@ ln -sfn ~/.unixrc/config/xprofile ~/.xprofile
 
 Notes:
 
-- [`config/Xmodmap`](/Users/deyuan/.unixrc/config/Xmodmap) changes Caps Lock to Ctrl in X11.
-- [`config/xprofile`](/Users/deyuan/.unixrc/config/xprofile) contains X11 session environment setup.
+- [`config/Xmodmap`](config/Xmodmap) changes Caps Lock to Ctrl in X11.
+- [`config/xprofile`](config/xprofile) contains X11 session environment setup.
 
-## Terminal Setup
-
-### Ghostty
-
-Ghostty is the preferred terminal now.
-
-Create the config symlink:
-
-```sh
-mkdir -p ~/.config/ghostty
-ln -sfn ~/.unixrc/config/ghostty/config ~/.config/ghostty/config
-```
-
-Current Ghostty config lives in [`config/ghostty/config`](/Users/deyuan/.unixrc/config/ghostty/config).
-
-### iTerm2
-
-iTerm2 is still supported as a migration fallback on macOS. Related files are in
-[`config/iterm2`](/Users/deyuan/.unixrc/config/iterm2).
-
-## Other Optional Config
-
-```sh
-ln -sfn ~/.unixrc/config/npm/.npmrc ~/.npmrc
-```
-
-Fish config is also stored in [`config/fish`](/Users/deyuan/.unixrc/config/fish),
-but Zsh is the primary shell in this repo.
-
-## Emacs Notes
+## Emacs Setup
 
 Some Emacs features expect external tools:
 
@@ -137,6 +100,34 @@ Optional npm packages:
 npm install -g livedown doctoc
 ```
 
+## Terminal Setup
+
+### Ghostty
+
+Ghostty is the preferred terminal now.
+
+Create the config symlink:
+
+```sh
+ln -sfn ~/.unixrc/config/ghostty ~/.config/ghostty
+```
+
+Current Ghostty config lives in [`config/ghostty`](config/ghostty).
+
+### iTerm2
+
+iTerm2 is still supported as a migration fallback on macOS. Related files are in [`config/iterm2`](config/iterm2).
+
+## Development Setup
+
+### Node.js
+
+```sh
+ln -sfn ~/.unixrc/config/npm/.npmrc ~/.npmrc
+```
+
+- fnm is used to manage node versions, installed / upgraded via official curl script.
+
 ## Submodules
 
 To update bundled submodules:
@@ -144,3 +135,8 @@ To update bundled submodules:
 ```sh
 git submodule update --init --recursive --remote
 ```
+
+## Others
+
+Fish config is also stored in [`config/fish`](config/fish),
+but Zsh is the primary shell in this repo.
