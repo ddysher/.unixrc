@@ -3,9 +3,17 @@
 ##------------------------------------------------------------------------------
 
 # Fast Node Manager (fnm) setup, used to manage multiple nodejs versions.
-FNM_PATH="/opt/homebrew/opt/fnm/bin"
-if [ -d "$FNM_PATH" ]; then
+case "$(uname)" in
+  Darwin) FNM_BIN="/opt/homebrew/opt/fnm/bin/fnm" ;;
+  Linux)  FNM_BIN="$HOME/.local/share/fnm/fnm" ;;
+  *)      FNM_BIN="" ;;
+esac
+
+if command -v fnm >/dev/null 2>&1; then
   eval "$(fnm env)"
+elif [ -x "$FNM_BIN" ]; then
+  export PATH="${FNM_BIN%/*}${PATH+:$PATH}"
+  eval "$("$FNM_BIN" env)"
 fi
 
 # Chinese npm registry alias
