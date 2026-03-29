@@ -5,8 +5,8 @@
 # Oh My Zsh installation path
 export ZSH="$HOME/.unixrc/tools/ohmyzsh"
 
-# Theme
-export ZSH_THEME="deyuan"
+# Prompt theme is provided by Starship.
+export ZSH_THEME=""
 
 # Disable weekly auto-update checks
 export DISABLE_AUTO_UPDATE="true"
