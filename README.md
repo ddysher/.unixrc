@@ -10,7 +10,7 @@ git clone --recurse-submodules https://github.com/ddysher/.unixrc.git ~/.unixrc
 git clone --recurse-submodules git@github.com:ddysher/.unixrc.git ~/.unixrc
 ```
 
-If the repo was cloned without submodules:
+If the repo was cloned without submodules, initialize the bundled `z.sh` dependency:
 
 ```sh
 cd ~/.unixrc
@@ -24,8 +24,6 @@ Create the core symlinks:
 ```sh
 ln -sfn ~/.unixrc/emacs.d ~/.emacs.d
 ln -sfn ~/.unixrc/zshrc.d/zshrc ~/.zshrc
-ln -sfn ~/.unixrc/zshrc.d/ohmyzsh/deyuan.zsh-theme \
-  ~/.unixrc/tools/ohmyzsh/custom/themes/deyuan.zsh-theme
 ```
 
 Optional local overrides:
@@ -38,6 +36,14 @@ Optional but recommended for `z.sh`:
 
 ```sh
 touch ~/.z
+```
+
+Install `zinit` directly into the user data directory:
+
+```sh
+mkdir -p ~/.local/share/zinit
+git clone --depth=1 https://github.com/zdharma-continuum/zinit.git \
+  ~/.local/share/zinit/zinit.git
 ```
 
 Set Zsh as the default shell if needed:
@@ -126,7 +132,7 @@ iTerm2 is still supported as a migration fallback on macOS. Related files are in
 ln -sfn ~/.unixrc/config/npm/.npmrc ~/.npmrc
 ```
 
-- fnm is used to manage node versions, installed / upgraded via official curl script.
+- `fnm` is used to manage node versions, installed or upgraded via the official curl script.
 
 ## Submodules
 
@@ -135,6 +141,14 @@ To update bundled submodules:
 ```sh
 git submodule update --init --recursive --remote
 ```
+
+Bundled shell dependency:
+
+- `tools/z` for directory jumping via `z.sh`
+
+External shell dependency:
+
+- `zinit` installed at `~/.local/share/zinit/zinit.git`
 
 ## Others
 

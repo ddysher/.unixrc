@@ -29,9 +29,9 @@ _source_if_exists() {
 # ZSH settings, must load first
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/options.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/completion.zsh"
-_source_if_exists "$ZSHRC_CONFIG_DIR/core/ohmyzsh.zsh"
+_source_if_exists "$ZSHRC_CONFIG_DIR/core/zinit.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/starship.zsh"
-_source_if_exists "$ZSHRC_CONFIG_DIR/core/keybindings.zsh" # must load after oh-my-zsh
+_source_if_exists "$ZSHRC_CONFIG_DIR/core/keybindings.zsh"
 
 
 ##------------------------------------------------------------------------------
@@ -77,3 +77,8 @@ _source_if_exists "$ZSHRC_CONFIG_DIR/local.zsh"
 
 # Clean up helper function
 unfunction _source_if_exists
+
+# Compile zshrc
+if [[ ! -f ~/.zshrc.zwc || ~/.zshrc -nt ~/.zshrc.zwc ]]; then
+  zcompile ~/.zshrc
+fi
