@@ -5,6 +5,7 @@ shell-integration-features = no-cursor
 # Input behavior
 # Use Option as Alt for terminal-style key combos on macOS.
 macos-option-as-alt = true
+macos-icon = xray
 
 # Cursor
 # Keep the cursor steady instead of blinking.
