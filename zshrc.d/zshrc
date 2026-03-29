@@ -28,6 +28,7 @@ _source_if_exists() {
 
 # ZSH settings, must load first
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/options.zsh"
+_source_if_exists "$ZSHRC_CONFIG_DIR/core/path.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/completion.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/zinit.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/zoxide.zsh"

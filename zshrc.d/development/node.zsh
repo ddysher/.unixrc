@@ -12,7 +12,7 @@ esac
 if command -v fnm >/dev/null 2>&1; then
   eval "$(fnm env)"
 elif [ -x "$FNM_BIN" ]; then
-  export PATH="${FNM_BIN%/*}${PATH+:$PATH}"
+  path=("${FNM_BIN%/*}" $path)
   eval "$("$FNM_BIN" env)"
 fi
 
