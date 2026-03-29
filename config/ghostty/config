@@ -17,10 +17,10 @@ theme = Monokai Pro Machine
 
 # Fonts
 # Primary terminal font and size.
-#font-family = Monolisa
+# font-family = Monolisa
 font-family = Monaco
 font-size = 11
-adjust-cell-width = 5%
+adjust-cell-width = 15%
 
 # Split navigation
 # Vim-style movement between terminal splits.
