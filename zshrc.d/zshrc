@@ -30,6 +30,7 @@ _source_if_exists() {
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/options.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/completion.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/zinit.zsh"
+_source_if_exists "$ZSHRC_CONFIG_DIR/core/zoxide.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/starship.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/keybindings.zsh"
 
@@ -68,9 +69,6 @@ _source_if_exists "$ZSHRC_CONFIG_DIR/development/node.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/development/ruby.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/development/java.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/development/cloud.zsh"
-
-# Additional tools and completions
-_source_if_exists "$HOME/.unixrc/tools/z/z.sh"  # Enable z.sh
 
 # Local customizations (not tracked in git)
 _source_if_exists "$ZSHRC_CONFIG_DIR/local.zsh"

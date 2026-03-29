@@ -5,16 +5,9 @@ Personal Unix shell, editor, and terminal configuration.
 ## Clone
 
 ```sh
-git clone --recurse-submodules https://github.com/ddysher/.unixrc.git ~/.unixrc
+git clone https://github.com/ddysher/.unixrc.git ~/.unixrc
 # or
-git clone --recurse-submodules git@github.com:ddysher/.unixrc.git ~/.unixrc
-```
-
-If the repo was cloned without submodules, initialize the bundled `z.sh` dependency:
-
-```sh
-cd ~/.unixrc
-git submodule update --init --recursive
+git clone git@github.com:ddysher/.unixrc.git ~/.unixrc
 ```
 
 ## Base Setup
@@ -32,18 +25,18 @@ Optional local overrides:
 cp ~/.unixrc/zshrc.d/local.zsh.example ~/.unixrc/zshrc.d/local.zsh
 ```
 
-Optional but recommended for `z.sh`:
-
-```sh
-touch ~/.z
-```
-
 Install `zinit` directly into the user data directory:
 
 ```sh
 mkdir -p ~/.local/share/zinit
 git clone --depth=1 https://github.com/zdharma-continuum/zinit.git \
   ~/.local/share/zinit/zinit.git
+```
+
+Install `zoxide` on macOS:
+
+```sh
+brew install zoxide
 ```
 
 Set Zsh as the default shell if needed:
@@ -134,21 +127,12 @@ ln -sfn ~/.unixrc/config/npm/.npmrc ~/.npmrc
 
 - `fnm` is used to manage node versions, installed or upgraded via the official curl script.
 
-## Submodules
+## Shell Dependencies
 
-To update bundled submodules:
-
-```sh
-git submodule update --init --recursive --remote
-```
-
-Bundled shell dependency:
-
-- `tools/z` for directory jumping via `z.sh`
-
-External shell dependency:
+External shell dependencies:
 
 - `zinit` installed at `~/.local/share/zinit/zinit.git`
+- `zoxide` installed via Homebrew on macOS
 
 ## Others
 
