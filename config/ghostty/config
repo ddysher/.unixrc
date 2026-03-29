@@ -1,7 +1,27 @@
-cursor-style-blink = false
+# Shell integration
+# Keep terminal and shell cursor behavior from fighting each other.
 shell-integration-features = no-cursor
 
+# Input behavior
+# Use Option as Alt for terminal-style key combos on macOS.
 macos-option-as-alt = true
 
+# Cursor
+# Keep the cursor steady instead of blinking.
+cursor-style-blink = false
+
+# Fonts
+# Primary terminal font and size.
 font-family = Monolisa
 font-size = 12
+
+# Theme
+# Default color theme.
+theme = Catppuccin Macchiato
+
+# Split navigation
+# Vim-style movement between terminal splits.
+keybind = cmd+h=goto_split:left
+keybind = cmd+j=goto_split:down
+keybind = cmd+k=goto_split:up
+keybind = cmd+l=goto_split:right
