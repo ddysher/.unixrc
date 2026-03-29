@@ -116,12 +116,25 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "98cc377af705c0f2133bb6d340bf0becd08944a588804ee655809da5d8140de6" "5dc0ae2d193460de979a463b907b4b2c6d2c9c4657b2e9e66b8898d2592e3de5" default))
+   '("a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a"
+     "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3"
+     "98cc377af705c0f2133bb6d340bf0becd08944a588804ee655809da5d8140de6"
+     "5dc0ae2d193460de979a463b907b4b2c6d2c9c4657b2e9e66b8898d2592e3de5"
+     default))
  '(livedown:autostart nil)
  '(livedown:open t)
  '(livedown:port 1337)
  '(package-selected-packages
-   '(gptel treemacs multi-vterm vterm wsd-mode company lsp-mode pyenv-mode pyim go-projectile projectile ag ein sbt-mode scala-mode protobuf-mode cmake-font-lock cmake-mode neotree matlab-mode wc-mode material-theme edit-server flycheck nginx-mode apache-mode hackernews dockerfile-mode thrift yaml-mode markdown-mode php-mode jade-mode coffee-mode zenburn-theme jedi python-environment epc rust-mode web-mode tern-auto-complete tern js2-mode lua-mode go-mode ggtags fill-column-indicator window-numbering multi-term magit yasnippet helm smex w3m exec-path-from-shell))
+   '(ag apache-mode cmake-font-lock cmake-mode coffee-mode company
+        dockerfile-mode eat edit-server ein epc exec-path-from-shell
+        fill-column-indicator flycheck ggtags go-mode go-projectile
+        gptel hackernews helm jade-mode jedi js2-mode lsp-mode
+        lua-mode magit markdown-mode material-theme matlab-mode
+        multi-term multi-vterm neotree nginx-mode php-mode projectile
+        protobuf-mode pyenv-mode pyim python-environment rust-mode
+        sbt-mode scala-mode smex tern tern-auto-complete thrift
+        treemacs vterm w3m wc-mode web-mode window-numbering wsd-mode
+        yaml-mode yasnippet zenburn-theme))
  '(safe-local-variable-values '((c-indent-level . 4)))
  '(send-mail-function 'mailclient-send-it)
  '(wsd-style "roundgreen"))
