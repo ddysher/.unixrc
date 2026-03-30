@@ -1,29 +1,20 @@
 ##------------------------------------------------------------------------------
-## Core PATH and directory search setup
+## Core PATH setup
 ##------------------------------------------------------------------------------
 
-typeset -gU path PATH cdpath CDPATH manpath MANPATH
+# Ensure no duplicates in PATH
+typeset -gU PATH
 
-path=(
-  "$HOME/.local/bin"
-  $path
-)
+# User local bin
+export PATH="$HOME/.local/bin:$PATH"
 
-case "$(uname)" in
-  Darwin)
-    export HOMEBREW_TEMP="${HOMEBREW_TEMP:-/opt/homebrew/TEMP}"
-    export HOMEBREW_PREFIX="/opt/homebrew"
-    export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
-    export HOMEBREW_REPOSITORY="/opt/homebrew"
-    path=(
-      "$HOMEBREW_PREFIX/bin"
-      "$HOMEBREW_PREFIX/sbin"
-      $path
-    )
-    manpath=(
-      "$HOMEBREW_PREFIX/share/man"
-      $manpath
-    )
-    export INFOPATH="$HOMEBREW_PREFIX/share/info${INFOPATH+:$INFOPATH}"
-    ;;
-esac
+# Homebrew (macOS)
+if [[ "$(uname)" == "Darwin" ]]; then
+  export HOMEBREW_TEMP="${HOMEBREW_TEMP:-/opt/homebrew/TEMP}"
+  export HOMEBREW_PREFIX="/opt/homebrew"
+  export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+  export HOMEBREW_REPOSITORY="/opt/homebrew"
+  export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
+  export MANPATH="$HOMEBREW_PREFIX/share/man:$MANPATH"
+  export INFOPATH="$HOMEBREW_PREFIX/share/info${INFOPATH+:$INFOPATH}"
+fi

@@ -23,3 +23,6 @@ emacs.d/srecode-map.el
 
 # Ignore lsp-mode session.
 emacs.d/.lsp-session-v1
+
+# Local zsh overrides (host-specific, not tracked).
+zshrc.d/local.zsh

@@ -9,10 +9,10 @@ case "$(uname)" in
   *)      FNM_BIN="" ;;
 esac
 
-if command -v fnm >/dev/null 2>&1; then
+if command -v fnm &>/dev/null; then
   eval "$(fnm env)"
-elif [ -x "$FNM_BIN" ]; then
-  path=("${FNM_BIN%/*}" $path)
+elif [[ -x "$FNM_BIN" ]]; then
+  export PATH="${FNM_BIN%/*}:$PATH"
   eval "$("$FNM_BIN" env)"
 fi
 
