@@ -42,9 +42,9 @@
 ;; Load configs for features and modes
 ;;------------------------------------------------------------------------------
 ;; General mode with configurations.
-(require 'init-w3m)
+;; (require 'init-w3m)
 (require 'init-ido)
-(require 'init-erc)
+;; (require 'init-erc)
 (require 'init-org)
 (require 'init-smex)
 (require 'init-gptel)
