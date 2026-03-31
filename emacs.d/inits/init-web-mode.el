@@ -27,17 +27,11 @@
   (setq web-mode-engines-alist
         '(("blade"  . "\\.blade\\.")))
 
-  (defadvice web-mode-highlight-part (around tweak-jsx activate)
-    (if (equal web-mode-content-type "jsx")
+  (define-advice web-mode-highlight-part (:around (orig-fn &rest args) tweak-jsx)
+    (if (member web-mode-content-type '("jsx" "js"))
         (let ((web-mode-enable-part-face nil))
-          ad-do-it)
-      ad-do-it))
-
-  (defadvice web-mode-highlight-part (around tweak-jsx activate)
-    (if (equal web-mode-content-type "js")
-        (let ((web-mode-enable-part-face nil))
-          ad-do-it)
-      ad-do-it))
+          (apply orig-fn args))
+      (apply orig-fn args)))
 
   (setq web-mode-enable-auto-pairing t)
   (setq web-mode-enable-css-colorization t)
