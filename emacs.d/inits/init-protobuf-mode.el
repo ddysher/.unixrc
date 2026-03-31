@@ -2,7 +2,7 @@
 ;; Provide protobuf-mode, a major for editing .proto file, managed by elpa.
 ;;------------------------------------------------------------------------------
 (require-package 'protobuf-mode)
-(require 'protobuf-mode)
+;; protobuf-mode is autoloaded for .proto files by its package.
 
 (defun protobuf-mode-custom-hook ()
   (setq c-basic-offset universal-indent-size))

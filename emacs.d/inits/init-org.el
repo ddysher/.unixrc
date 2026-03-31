@@ -14,19 +14,21 @@
 ;;   C-c '      Edit source code.
 ;;------------------------------------------------------------------------------
 (require-package 'org)
-(require 'org)
 
+;; Key bindings work immediately (org-store-link and org-agenda are autoloaded).
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
-(setq org-return-follows-link t)
-(setq org-log-done t)
-(setq org-agenda-files '("~/org/general.org"))
-(setq org-src-tab-acts-natively t)
-(setq org-src-fontify-natively t) ; enable native source code hightlight
 
-(defun org-agenda--mode-custom-hook ()
-  (text-scale-decrease 1))         ; use smaller size for agenda mode.
+;; Defer org configuration until it loads.
+(with-eval-after-load 'org
+  (setq org-return-follows-link t)
+  (setq org-log-done t)
+  (setq org-agenda-files '("~/org/general.org"))
+  (setq org-src-tab-acts-natively t)
+  (setq org-src-fontify-natively t)
 
-(add-hook 'org-agenda-mode-hook 'org-agenda--mode-custom-hook)
+  (defun org-agenda--mode-custom-hook ()
+    (text-scale-decrease 1))
+  (add-hook 'org-agenda-mode-hook 'org-agenda--mode-custom-hook))
 
 (provide 'init-org)

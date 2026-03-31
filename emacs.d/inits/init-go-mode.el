@@ -27,18 +27,16 @@
 ;;------------------------------------------------------------------------------
 (require-package 'go-mode)
 
-(require 'go-mode)
+;; Defer go-mode config until a .go file is opened.
+(with-eval-after-load 'go-mode
+  (defun go-mode-custom-hook ()
+    (setq gofmt-command "goimports")
+    (local-set-key (kbd "M-,") 'pop-tag-mark)
+    (local-set-key (kbd "M-.") 'lsp-find-definition)
+    (local-set-key (kbd "M-/") 'lsp-find-references))
 
-;; This method will be registered as a go mode hook, runs every time
-;; a go file is opened.
-(defun go-mode-custom-hook ()
-  (setq gofmt-command "goimports")   ; use goimports instead of go-fmt
-  (local-set-key (kbd "M-,") 'pop-tag-mark) ; same as M-*, but locally
-  (local-set-key (kbd "M-.") 'lsp-find-definition)
-  (local-set-key (kbd "M-/") 'lsp-find-references))
-
-(add-hook 'go-mode-hook 'go-mode-custom-hook)
-(add-hook 'before-save-hook 'gofmt-before-save)
+  (add-hook 'go-mode-hook 'go-mode-custom-hook)
+  (add-hook 'before-save-hook 'gofmt-before-save))
 
 (provide 'init-go-mode)
 

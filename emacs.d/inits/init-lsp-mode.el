@@ -2,7 +2,8 @@
 ;; Provide lsp mode, managed by MELPA.
 ;;------------------------------------------------------------------------------
 (require-package 'lsp-mode)
-(require 'lsp-mode)
+
+;; Defer lsp-mode until a supported mode triggers it via hook.
 (add-hook 'go-mode-hook #'lsp)
 
 (with-eval-after-load 'lsp-mode

@@ -11,6 +11,7 @@
 ;; - ggtags is emacs frontend to GNU Global source code tagging system.
 ;;------------------------------------------------------------------------------
 (require-package 'ggtags)
+;; cc-mode is built-in; ggtags is autoloaded. Config runs via hooks.
 
 (defun cc-mode-custom-hook ()
   (ggtags-mode 1)

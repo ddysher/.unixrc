@@ -2,8 +2,8 @@
 ;; Provide lua mode, lua-mode is elpa managed package
 ;;------------------------------------------------------------------------------
 (require-package 'lua-mode)
-(require 'lua-mode)
 
+;; Defer config until a .lua file is opened.
 (defun lua-mode-custom-hook ()
   (setq lua-indent-level universal-indent-size))
 

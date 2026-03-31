@@ -14,8 +14,6 @@
 ;;------------------------------------------------------------------------------
 (require-package 'scala-mode)
 (require-package 'sbt-mode)
-
-(require 'scala-mode)
-(require 'sbt-mode)
+;; Both are autoloaded by their packages for .scala / .sbt files.
 
 (provide 'init-scala-mode)

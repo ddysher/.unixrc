@@ -2,14 +2,11 @@
 ;; Provide some general customization
 ;;------------------------------------------------------------------------------
 ;; Enable/ Disable some minor mode
-(menu-bar-mode -99)                ; disable menu (useful in terminal)
+;; menu-bar, tool-bar, scroll-bar are disabled in early-init.el for faster startup.
+(menu-bar-mode -99)                ; also disable in terminal frames
 (column-number-mode)               ; show column number
 (global-auto-revert-mode t)        ; enable auto revert (e.g. git)
 (setq auto-revert-check-vc-info t) ; check version control
-(if window-system
-    (progn
-      (tool-bar-mode -1)               ; disable tool bar
-      (scroll-bar-mode -1)))           ; disable vertical scroll bar
 
 ;;
 ;; Global settings
@@ -70,9 +67,9 @@
   (setq truncate-lines t)
   ;; highline current line
   (hl-line-mode 1)
-  ;; enable yasnippet minor mode and add yasnippet to autocomplete source
-  (yas-minor-mode)
-  (add-to-list 'ac-sources 'ac-source-yasnippet))
+  ;; enable yasnippet minor mode (loads yasnippet on first prog buffer)
+  (require 'yasnippet)
+  (yas-minor-mode))
 
 (add-hook 'prog-mode-hook 'prog-mode-custom-hook)
 

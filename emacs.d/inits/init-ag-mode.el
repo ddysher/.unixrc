@@ -4,9 +4,10 @@
 ;; It's useful to drop in a '.agignore' file to globally ignore search path.
 ;;------------------------------------------------------------------------------
 (require-package 'ag)
-(require 'ag)
+;; ag is autoloaded; configure after it loads.
 
-(setq ag-reuse-window 't)
-(setq ag-reuse-buffers 't)
+(with-eval-after-load 'ag
+  (setq ag-reuse-window 't)
+  (setq ag-reuse-buffers 't))
 
 (provide 'init-ag-mode)

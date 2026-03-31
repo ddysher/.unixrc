@@ -5,10 +5,8 @@
 ;;------------------------------------------------------------------------------
 (require-package 'w3m)
 
-
-(when (executable-find "w3m")
-  (require 'w3m)
-
+;; Defer w3m until first use (M-x w3m).
+(with-eval-after-load 'w3m
   (defun w3m-mode-custom-hook ()
     (local-set-key [up] 'previous-line)
     (local-set-key [down] 'next-line)

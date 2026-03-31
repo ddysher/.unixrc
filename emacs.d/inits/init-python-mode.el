@@ -57,8 +57,6 @@
 (require-package 'python-environment)
 (require-package 'jedi)
 (require-package 'pyenv-mode)
-(require 'jedi)
-(require 'gud)
 
 ;; This method will be registered as a python mode hook, runs
 ;; every time python file is opened.
@@ -74,19 +72,22 @@
 (add-hook 'python-mode-hook 'python-mode-custom-hook)
 (add-hook 'python-mode-hook 'jedi:setup)
 
-(when (executable-find "pyenv")
-  (pyenv-mode))
+(with-eval-after-load 'jedi-core
+  (defvar jedi:goto-stack '())
+  (setq jedi:complete-on-dot t)
+  ;; Set environment root only if pyenv is available.
+  (when (executable-find "pyenv")
+    (setq jedi:environment-root
+          (string-trim (shell-command-to-string "pyenv prefix")))))
 
-(defvar jedi:goto-stack '())
-(setq jedi:complete-on-dot t)
-(setq jedi:environment-root ; use the correct python version for code navigation
-      (string-trim (shell-command-to-string "pyenv prefix")))
-;; restart servers
-(jedi:stop-all-servers)
-(jedi:install-server)
+;; Enable pyenv-mode only if pyenv is available (deferred to after-init
+;; since pyenv-mode is light — just tracks the version).
+(when (executable-find "pyenv")
+  (add-hook 'after-init-hook 'pyenv-mode))
 
 (defun jedi:jump-to-definition ()
   (interactive)
+  (require 'jedi)
   (add-to-list 'jedi:goto-stack
                (list (buffer-name) (point)))
   (jedi:goto-definition))

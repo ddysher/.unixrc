@@ -4,15 +4,10 @@
 ;; commands. And to all the other commands, too. It's elpa managed mode.
 ;;------------------------------------------------------------------------------
 (require-package 'smex)
-(require 'smex)
 
-;; Can be omitted. This might cause a (minimal) delay when Smex is
-;; auto-initialized on its first run.
-(smex-initialize)
-
+;; Defer smex initialization until first M-x (auto-initializes on first use).
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-;; This is your old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 (provide 'init-smex)

@@ -2,7 +2,7 @@
 ;; Provide markdown mode, installed via MELPA.
 ;;------------------------------------------------------------------------------
 (require-package 'markdown-mode)
-(require 'markdown-mode)
+;; markdown-mode is autoloaded for .md files by its package.
 
 ;; Generate TOD inplace.
 (defun markdown-doctoc ()

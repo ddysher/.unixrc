@@ -5,15 +5,14 @@
 (require-package 'exec-path-from-shell)
 (require 'exec-path-from-shell)
 
-;; For both Mac and Linux, load shell path if starting from window.
+;; Copy all needed env vars in a single shell invocation to avoid
+;; spawning multiple subprocesses (each one costs ~0.3-0.5s).
 (when (memq window-system '(mac ns x))
+  (setq exec-path-from-shell-variables
+        (append exec-path-from-shell-variables
+                (if *darwin*
+                    '("GOPATH" "GOROOT")
+                  '("GOPATH"))))
   (exec-path-from-shell-initialize))
-
-;; 'GOPATH' should always be set in .zshrc.
-(exec-path-from-shell-copy-env "GOPATH")
-
-;; On Mac, go is managed by homebrew, 'GOROOT' is required for godef.
-(when *darwin*
-  (exec-path-from-shell-copy-env "GOROOT"))
 
 (provide 'init-exec-path-from-shell)

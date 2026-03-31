@@ -10,19 +10,14 @@
 ;;   C-x C-f [F1] -> /deyuan.me:~/Documents/file  RET
 ;;   C-x C-f [F1] -> /ssh:root@deyuan.me:~/Documents/file  RET
 ;;------------------------------------------------------------------------------
-(require 'tramp)
+;; Defer tramp until first remote file access (autoloaded in Emacs 30).
+(with-eval-after-load 'tramp
+  (setq tramp-default-method "ssh")
 
-(setq tramp-default-method "ssh")
-
-;; Define a function to advice around 'tramp-sh-handle-vc-registered'. The
-;; function doesn't call orign-func, which means 'tramp-sh-handle-vc-registered'
-;; is disabled. 'tramp-sh-handle-vc-registered-around' is defined in tramp.el
-;; to manage files opened under version control system (e.g. if the file in
-;; remote host is controlled via git, then the buffer will show Git-master).
-;; The process is slow and log is spammy, and using vc in tramp is not common,
-;; so disable it.
-(defun tramp-sh-handle-vc-registered-around (orig-fun &rest args))
-(advice-add 'tramp-sh-handle-vc-registered :around #'tramp-sh-handle-vc-registered-around)
+  ;; Disable vc over tramp — it's slow and spammy, and using vc in tramp
+  ;; is not common.
+  (defun tramp-sh-handle-vc-registered-around (orig-fun &rest args))
+  (advice-add 'tramp-sh-handle-vc-registered :around #'tramp-sh-handle-vc-registered-around))
 
 ;; Quickly open up a file in remote environment.
 ;;

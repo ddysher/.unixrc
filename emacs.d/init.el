@@ -14,23 +14,18 @@
 (defvar *darwin*  (eq system-type 'darwin))
 (defvar *linux*   (or (eq system-type 'gnu/linux) (eq system-type 'linux)))
 ;; Emacs major version
-(defvar *emacs28* (= emacs-major-version 28))
-(defvar *emacs29* (= emacs-major-version 29))
+(defvar *emacs29* (>= emacs-major-version 29))
+(defvar *emacs30* (>= emacs-major-version 30))
 ;; System name (hostname)
-(defvar *home-desktop* (string= system-name "mangosteen"))
-(defvar *home-desktop-gpu* (string= system-name "neuralforge"))
+(defvar *home-desktop* (string= system-name "neuralforge"))
 (defvar *goog-desktop* (string= system-name "deyuan.pit.corp.google.com"))
-(defvar *macpro-13*
+(defvar *macpro-m3*
   (or (string= system-name "Deyuans-MacBook-Pro.local")
-      (string= system-name "Deyuans-MacBook-M1")
+      (string= system-name "Deyuans-MacBook-M3")
       (string= system-name "MacBook-Pro.local")))
-(defvar *macpro-16*
-  (or (string= system-name "Deyuans-MacBook-Pro-16")
-      (string= system-name "MacBook-Pro-16")))
-(defvar *macair*
+(defvar *macair-m4*
   (or (string= system-name "Deyuans-MacBook-Air.local")
       (string= system-name "MacBook-Air.local")))
-
 
 ;;------------------------------------------------------------------------------
 ;; Bootstrap configs need to be executed before loading specific configs
