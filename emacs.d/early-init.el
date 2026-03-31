@@ -11,6 +11,10 @@
 ;; We call (package-initialize) explicitly in init-elpa.el.
 (setq package-enable-at-startup nil)
 
+;; Use package-quickstart to load a single cached autoloads file instead
+;; of scanning every elpa package directory at startup.
+(setq package-quickstart t)
+
 ;; Disable UI elements early to avoid momentary display.
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)

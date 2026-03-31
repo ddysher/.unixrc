@@ -4,6 +4,9 @@ ido.last
 tramp
 smex-items
 
+package-quickstart.el
+package-quickstart.elc
+
 # directories to ignore
 auto-save-list
 elpa

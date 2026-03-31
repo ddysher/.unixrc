@@ -25,4 +25,10 @@
 
 (package-initialize)
 
+;; Auto-refresh quickstart cache after installing or deleting packages.
+(advice-add 'package-install :after
+            (lambda (&rest _) (package-quickstart-refresh)))
+(advice-add 'package-delete :after
+            (lambda (&rest _) (package-quickstart-refresh)))
+
 (provide 'init-elpa)
