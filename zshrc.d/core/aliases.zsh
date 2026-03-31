@@ -9,7 +9,7 @@ alias rm="rm -i"
 
 # Enhanced ls
 alias ll="ls -lh"
-alias lg="ls -lh --group-directories-first"
+alias lg="ls -lh"
 
 # Utility aliases
 alias ppj="python -mjson.tool"  # Beautify JSON output
