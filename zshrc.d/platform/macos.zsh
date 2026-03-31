@@ -2,11 +2,13 @@
 ## macOS-specific Configuration
 ##------------------------------------------------------------------------------
 
-# Application aliases
+# Browser aliases
 alias chrome="open -a Google\ Chrome"
+
+# Emacs aliases
+alias e="TERM=xterm-256color /Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+alias ec="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
 alias emacs="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
-alias emacsnw="TERM=xterm-256color /Applications/Emacs.app/Contents/MacOS/Emacs -nw"
-alias emacsserver="/Applications/Emacs.app/Contents/MacOS/Emacs"
 
 # Editor configuration
 export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
