@@ -5,6 +5,7 @@
 # Application aliases
 alias chrome="google-chrome"
 alias e="TERM=xterm-256color /usr/local/bin/emacs -nw"
+alias eq="TERM=xterm-256color /usr/local/bin/emacs -nw -Q"
 alias ec="/usr/local/bin/emacsclient -n"
 alias emacs="/usr/local/bin/emacsclient -n"
 

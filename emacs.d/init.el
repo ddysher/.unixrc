@@ -42,9 +42,8 @@
 ;; Load configs for features and modes
 ;;------------------------------------------------------------------------------
 ;; General mode with configurations.
-;; (require 'init-w3m)
+
 (require 'init-ido)
-;; (require 'init-erc)
 (require 'init-org)
 (require 'init-smex)
 (require 'init-gptel)
@@ -57,6 +56,8 @@
 (require 'init-window-numbering)
 (require 'init-fill-column-indicator)
 ;; Disabled general modes, for tracking.
+;; (require 'init-w3m)
+;; (require 'init-erc)
 ;; (require 'init-helm)
 ;; (require 'init-multi-term)
 ;; (require 'init-smartparens-mode)
