@@ -14,7 +14,12 @@ fi
 export ZSH_COMPDUMP="$HOME/.cache/zsh/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 
 autoload -Uz compinit
-compinit -d "$ZSH_COMPDUMP"
+# Only run compaudit (security check) if the dump is older than 24 hours.
+if [[ -n "$ZSH_COMPDUMP"(#qN.mh+24) ]]; then
+  compinit -d "$ZSH_COMPDUMP"
+else
+  compinit -C -d "$ZSH_COMPDUMP"
+fi
 
 # Completion settings
 export COMPLETION_WAITING_DOTS="true"
