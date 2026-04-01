@@ -15,5 +15,11 @@ export LSCOLORS="ExGxFxDaCxDaDaHbHdExEx"
 # GNU ls / zsh completion colors (bold blue dirs)
 export LS_COLORS="di=1;34:ln=1;36:so=1;35:pi=0;33:ex=0;32:bd=0;33:cd=0;33:su=1;37:sg=1;30:tw=1;34:ow=1;34"
 
-# Default editor (overridden by platform-specific configs)
-export EDITOR="vim"
+# Default editor
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
+elif [[ "$OSTYPE" == "linux"* ]]; then
+  export EDITOR="emacsclient"
+else
+  export EDITOR="vim"
+fi

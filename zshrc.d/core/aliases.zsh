@@ -29,3 +29,18 @@ alias gl="git pull"
 # Docker
 alias docker-ip='function _dip() { docker inspect --format "{{ .NetworkSettings.IPAddress }}" "$1"; }; _dip'
 alias docker-pid='function _dpid() { docker inspect --format "{{ .State.Pid }}" "$1"; }; _dpid'
+
+# Platform-specific aliases
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  alias chrome="open -a Google\ Chrome"
+  alias e="TERM=xterm-256color /Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+  alias eq="TERM=xterm-256color /Applications/Emacs.app/Contents/MacOS/Emacs -nw -Q"
+  alias ec="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
+  alias emacs="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n"
+elif [[ "$OSTYPE" == "linux"* ]]; then
+  alias chrome="google-chrome"
+  alias e="TERM=xterm-256color /usr/local/bin/emacs -nw"
+  alias eq="TERM=xterm-256color /usr/local/bin/emacs -nw -Q"
+  alias ec="/usr/local/bin/emacsclient -n"
+  alias emacs="/usr/local/bin/emacsclient -n"
+fi
