@@ -70,17 +70,17 @@
 
 (defvar current-window-conf-register nil)
 
-(defadvice window-configuration-to-register
-    (after window-configuration-to-register-current-reg activate)
-  "Restore previous window configuration."
-  (setq current-window-conf-register register))
+(advice-add 'window-configuration-to-register :after
+            (lambda (register &rest _)
+              (setq current-window-conf-register register))
+            '((name . window-configuration-to-register-current-reg)))
 
-(defadvice jump-to-register
-    (before jump-to-register-store-window-conf activate)
-  "Store current window configuration before jumping to another register."
-  (if current-window-conf-register
-      (window-configuration-to-register current-window-conf-register))
-  (setq current-window-conf-register register))
+(advice-add 'jump-to-register :before
+            (lambda (register &rest _)
+              (if current-window-conf-register
+                  (window-configuration-to-register current-window-conf-register))
+              (setq current-window-conf-register register))
+            '((name . jump-to-register-store-window-conf)))
 
 
 ;;

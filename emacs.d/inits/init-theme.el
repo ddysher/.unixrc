@@ -16,7 +16,11 @@
                       :box '(:line-width 1 :style released-button)))
 
 (defun load-material ()
-  (load-theme `material t))
+  (load-theme 'material t)
+  ;; Fix nil face attributes that should be 'unspecified (material-theme bug).
+  (set-face-attribute 'link nil :foreground 'unspecified)
+  (set-face-attribute 'header-line nil :background 'unspecified)
+  (set-face-attribute 'mode-line-buffer-id nil :background 'unspecified))
 
 ;; Load commonly used themes, options are listed below:
 ;;   (load-zenburn)
