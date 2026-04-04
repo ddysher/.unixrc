@@ -10,23 +10,15 @@
 ;;   C-x C-f [F1] -> /deyuan.me:~/Documents/file  RET
 ;;   C-x C-f [F1] -> /ssh:root@deyuan.me:~/Documents/file  RET
 ;;------------------------------------------------------------------------------
-;; Defer tramp until first remote file access (autoloaded in Emacs 30).
-(with-eval-after-load 'tramp
+(use-package tramp
+  :ensure nil
+  :defer t
+  :config
   (setq tramp-default-method "ssh")
-
-  ;; Disable vc over tramp — it's slow and spammy, and using vc in tramp
-  ;; is not common.
   (defun tramp-sh-handle-vc-registered-around (orig-fun &rest args))
   (advice-add 'tramp-sh-handle-vc-registered :around #'tramp-sh-handle-vc-registered-around))
 
 ;; Quickly open up a file in remote environment.
-;;
-;; Example Usage:
-;;   M-x tramp-mangosteen
-;;
-;; Requirements:
-;;   - file '.zshrc' exists
-;;   - password-less ssh
 (defun tramp-mangosteen-zshrc ()
   (interactive)
   (find-file "/sshx:deyuan@mangosteen:/home/deyuan/.zshrc"))

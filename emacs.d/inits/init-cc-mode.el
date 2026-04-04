@@ -10,8 +10,7 @@
 ;;   GNU GLOBAL is a source code tagging system.
 ;; - ggtags is emacs frontend to GNU Global source code tagging system.
 ;;------------------------------------------------------------------------------
-(require-package 'ggtags)
-;; cc-mode is built-in; ggtags is autoloaded. Config runs via hooks.
+(use-package ggtags :defer t)
 
 (defun cc-mode-custom-hook ()
   (ggtags-mode 1)
@@ -20,7 +19,7 @@
   (setq c-basic-offset universal-indent-size)
   (setq c-default-style "bsd")
   (setq comment-start "//" comment-end "")
-  (local-set-key "\C-m" 'newline-and-indent)) ; indent next line properly
+  (local-set-key "\C-m" 'newline-and-indent))
 
 (add-hook 'c-mode-hook 'cc-mode-custom-hook)
 (add-hook 'c++-mode-hook 'cc-mode-custom-hook)

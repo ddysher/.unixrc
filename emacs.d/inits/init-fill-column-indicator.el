@@ -1,6 +1,6 @@
 ;;------------------------------------------------------------------------------
 ;; Provide fill column indicator mode, which draw a line for 80 chars.
-;; Use 'M-x fci-mode' to enable/disable this minor mode.
+;; Use 'M-x display-fill-column-indicator-mode' to enable/disable.
 ;;------------------------------------------------------------------------------
 ;; Emacs 30 has built-in display-fill-column-indicator-mode, no package needed.
 (setq-default display-fill-column-indicator-column 80)

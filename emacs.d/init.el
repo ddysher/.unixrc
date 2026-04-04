@@ -2,13 +2,6 @@
 ;; Bool values for init files to decide which functions are available
 ;;------------------------------------------------------------------------------
 ;; System type
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-;; (package-initialize)
-
 (defvar *windows* (eq system-type 'windows-nt))
 (defvar *cygwin*  (eq system-type 'cygwin))
 (defvar *darwin*  (eq system-type 'darwin))
@@ -18,14 +11,12 @@
 (defvar *emacs30* (>= emacs-major-version 30))
 ;; System name (hostname)
 (defvar *home-desktop* (string= system-name "neuralforge"))
-(defvar *goog-desktop* (string= system-name "deyuan.pit.corp.google.com"))
 (defvar *macpro-m3*
-  (or (string= system-name "Deyuans-MacBook-Pro.local")
-      (string= system-name "Deyuans-MacBook-M3")
-      (string= system-name "MacBook-Pro.local")))
+  (or (string= system-name "Deyuans-MacBook-M3.local")
+      (string= system-name "Deyuans-MacBook-M3")))
 (defvar *macair-m4*
   (or (string= system-name "Deyuans-MacBook-Air.local")
-      (string= system-name "MacBook-Air.local")))
+      (string= system-name "Deyuans-MacBook-Air")))
 
 ;;------------------------------------------------------------------------------
 ;; Bootstrap configs need to be executed before loading specific configs
@@ -42,7 +33,6 @@
 ;; Load configs for features and modes
 ;;------------------------------------------------------------------------------
 ;; General mode with configurations.
-
 (require 'init-ido)
 (require 'init-org)
 (require 'init-smex)
@@ -55,12 +45,6 @@
 (require 'init-multi-vterm)
 (require 'init-window-numbering)
 (require 'init-fill-column-indicator)
-;; Disabled general modes, for tracking.
-;; (require 'init-w3m)
-;; (require 'init-erc)
-;; (require 'init-helm)
-;; (require 'init-multi-term)
-;; (require 'init-smartparens-mode)
 
 ;; Initialize language related modes that requires configurations.
 (require 'init-lsp-mode)
@@ -77,11 +61,6 @@
 (require 'init-python-mode)
 (require 'init-protobuf-mode)
 (require 'init-markdown-mode)
-;; Disabled language modes, for tracking.
-;; (require 'init-geben-mode)
-;; (require 'flex-mode)
-;; (require 'cool-mode)
-;; (require 'bison-mode))
 ;; (require 'init-cuda-mode) ; identifier / keyword rendering issue with cuda mode
 
 ;; My custom mode, functions, etc.
@@ -89,14 +68,7 @@
 (require 'init-theme)
 (require 'init-custom)
 (require 'init-functions)
-
-;; Simple mode that does not need configurations.
-(require 'init-simple-misc-mode)
-
-;; Conditional require: initialize google environment.
-(when *goog-desktop*
-  (require 'init-google)
-  (require 'google))
+(require 'init-more-modes) ; Modes with minimal configurations.
 
 ;; Conditional require: only install pyim in linux (use sougou in darwin).
 (when *linux*

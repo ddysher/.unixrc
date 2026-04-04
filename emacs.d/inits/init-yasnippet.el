@@ -16,16 +16,12 @@
 ;;   M-x yas-reload-all: Reload all yasnippet, useful when new snippet is added
 ;;     in current emacs session.
 ;;------------------------------------------------------------------------------
-(require-package 'yasnippet)
-
-;; Set yasnippet load directories before loading.
-(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-
-;; Defer yasnippet loading. Snippets are loaded on first yas-minor-mode activation.
-;; yas-minor-mode is enabled via prog-mode-hook in init-custom.el.
-(with-eval-after-load 'yasnippet
+(use-package yasnippet
+  :defer t
+  :init
+  (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+  :config
   (setq yas-prompt-functions '(yas-ido-prompt yas-completing-prompt))
-  ;; Expand yasnippet using C-q, which was bound to quoted-insert by default.
   (define-key yas-minor-mode-map (kbd "<tab>") nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
   (define-key yas-minor-mode-map (kbd "C-q") 'yas-expand))

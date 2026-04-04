@@ -1,10 +1,11 @@
 ;;------------------------------------------------------------------------------
 ;; Provide markdown mode, installed via MELPA.
 ;;------------------------------------------------------------------------------
-(require-package 'markdown-mode)
-;; markdown-mode is autoloaded for .md files by its package.
+(use-package markdown-mode
+  :defer t
+  :hook (markdown-mode . markdown-custom-hook))
 
-;; Generate TOD inplace.
+;; Generate TOC inplace.
 (defun markdown-doctoc ()
   (interactive)
   (save-buffer)
@@ -33,7 +34,5 @@
   ;; Change 'C-M-m' key binding to open livedow preview. By default, it is
   ;;  bound to 'markdown-insert-list-item'.
   (local-set-key (kbd "C-M-m") 'markdown-live-preview))
-
-(add-hook 'markdown-mode-hook 'markdown-custom-hook)
 
 (provide 'init-markdown-mode)

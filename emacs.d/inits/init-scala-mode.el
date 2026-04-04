@@ -12,8 +12,7 @@
 ;; run "sbt ensimeConfig" in project root, and "M-x ensime" to connect to the
 ;; external java process.
 ;;------------------------------------------------------------------------------
-(require-package 'scala-mode)
-(require-package 'sbt-mode)
-;; Both are autoloaded by their packages for .scala / .sbt files.
+(use-package scala-mode :defer t)
+(use-package sbt-mode :defer t)
 
 (provide 'init-scala-mode)

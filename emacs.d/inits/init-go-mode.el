@@ -25,16 +25,14 @@
 ;;   C-c C-f ?  ; quite a few commands have C-c C-f prefix, e.g. 'a' for jumping
 ;;              ; to function argument, 'r' for jumping to function return value
 ;;------------------------------------------------------------------------------
-(require-package 'go-mode)
-
-;; Defer go-mode config until a .go file is opened.
-(with-eval-after-load 'go-mode
+(use-package go-mode
+  :defer t
+  :config
   (defun go-mode-custom-hook ()
     (setq gofmt-command "goimports")
     (local-set-key (kbd "M-,") 'pop-tag-mark)
     (local-set-key (kbd "M-.") 'lsp-find-definition)
     (local-set-key (kbd "M-/") 'lsp-find-references))
-
   (add-hook 'go-mode-hook 'go-mode-custom-hook)
   (add-hook 'before-save-hook 'gofmt-before-save))
 

@@ -1,6 +1,5 @@
 ;;------------------------------------------------------------------------------
 ;; Provide org mode, built-in with emacs, but use package from MELPA.
-;; NOTE (require-package 'org) doesn't work correctly, need to install manually.
 ;;
 ;; Common commands:
 ;;   M-Left     Promote one level for current heading.
@@ -13,14 +12,10 @@
 ;;   C-c C-x C-a   Archive heading.
 ;;   C-c '      Edit source code.
 ;;------------------------------------------------------------------------------
-(require-package 'org)
-
-;; Key bindings work immediately (org-store-link and org-agenda are autoloaded).
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-
-;; Defer org configuration until it loads.
-(with-eval-after-load 'org
+(use-package org
+  :bind (("C-c l" . org-store-link)
+         ("C-c a" . org-agenda))
+  :config
   (setq org-return-follows-link t)
   (setq org-log-done t)
   (setq org-agenda-files '("~/org/general.org"))

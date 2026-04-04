@@ -1,10 +1,9 @@
 ;;------------------------------------------------------------------------------
 ;; Provide gptel mode, managed by melpa.
 ;;------------------------------------------------------------------------------
-(require-package 'gptel)
-
-;; Defer gptel until first use (M-x gptel).
-(with-eval-after-load 'gptel
+(use-package gptel
+  :defer t
+  :config
   (setq gptel-model 'deepseek-chat
         gptel-backend
         (gptel-make-openai "DeepSeek"

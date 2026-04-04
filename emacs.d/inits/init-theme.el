@@ -1,8 +1,8 @@
 ;;------------------------------------------------------------------------------
 ;; Load theme and font
 ;;------------------------------------------------------------------------------
-(require-package 'zenburn-theme)
-(require-package 'material-theme)
+(use-package zenburn-theme :defer t)
+(use-package material-theme :defer t)
 
 (defun load-zenburn ()
   (load-theme 'zenburn t)

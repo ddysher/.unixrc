@@ -1,7 +1,6 @@
 ;;------------------------------------------------------------------------------
 ;; Provide rust mode, managed by melpa.
 ;;------------------------------------------------------------------------------
-(require-package 'rust-mode)
-;; rust-mode is autoloaded by its package for .rs files.
+(use-package rust-mode :defer t)
 
 (provide 'init-rust-mode)

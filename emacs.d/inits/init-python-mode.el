@@ -52,11 +52,24 @@
 ;;
 ;; If a file is already opened with another python version, try revert-buffer.
 ;;------------------------------------------------------------------------------
-(require-package 'epc)
-(require-package 'deferred)
-(require-package 'python-environment)
-(require-package 'jedi)
-(require-package 'pyenv-mode)
+(use-package epc :defer t)
+(use-package deferred :defer t)
+(use-package python-environment :defer t)
+
+(use-package jedi
+  :defer t
+  :hook (python-mode . jedi:setup)
+  :config
+  (defvar jedi:goto-stack '())
+  (setq jedi:complete-on-dot t)
+  (when (executable-find "pyenv")
+    (setq jedi:environment-root
+          (string-trim (shell-command-to-string "pyenv prefix")))))
+
+(use-package pyenv-mode
+  :defer t
+  :if (executable-find "pyenv")
+  :hook (after-init . pyenv-mode))
 
 ;; This method will be registered as a python mode hook, runs
 ;; every time python file is opened.
@@ -70,20 +83,6 @@
 
 (add-to-list 'auto-mode-alist '("\\.wsgi$" . python-mode))
 (add-hook 'python-mode-hook 'python-mode-custom-hook)
-(add-hook 'python-mode-hook 'jedi:setup)
-
-(with-eval-after-load 'jedi-core
-  (defvar jedi:goto-stack '())
-  (setq jedi:complete-on-dot t)
-  ;; Set environment root only if pyenv is available.
-  (when (executable-find "pyenv")
-    (setq jedi:environment-root
-          (string-trim (shell-command-to-string "pyenv prefix")))))
-
-;; Enable pyenv-mode only if pyenv is available (deferred to after-init
-;; since pyenv-mode is light — just tracks the version).
-(when (executable-find "pyenv")
-  (add-hook 'after-init-hook 'pyenv-mode))
 
 (defun jedi:jump-to-definition ()
   (interactive)

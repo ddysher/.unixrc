@@ -1,16 +1,11 @@
 ;;------------------------------------------------------------------------------
 ;; Provide multi-vterm mode, enhanced vterm-mode in emacs
 ;;------------------------------------------------------------------------------
-(require-package 'vterm)
-(require-package 'multi-vterm)
-
-;; Disable blinking cursor.
-(blink-cursor-mode -1)
-
-;; Defer vterm/multi-vterm loading until first terminal is opened (F4/F5).
-(with-eval-after-load 'vterm
-  (require 'multi-vterm) ; ensure multi-vterm-prev/next are available
-
+(use-package vterm
+  :defer t
+  :init
+  (blink-cursor-mode -1)
+  :config
   (defun vterm-mode-custom-hook ()
     (define-key vterm-mode-map [f1] #'find-file)
     (define-key vterm-mode-map [f3] #'other-window)
@@ -21,7 +16,10 @@
     (define-key vterm-mode-map (kbd "C-q")  #'vterm-copy-mode)
     (define-key vterm-mode-map (kbd "M-[")  #'multi-vterm-prev)
     (define-key vterm-mode-map (kbd "M-]")  #'multi-vterm-next))
-
   (add-hook 'vterm-mode-hook 'vterm-mode-custom-hook))
+
+(use-package multi-vterm
+  :after vterm
+  :commands (multi-vterm multi-vterm-dedicated-open multi-vterm-prev multi-vterm-next))
 
 (provide 'init-multi-vterm)

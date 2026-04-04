@@ -1,27 +1,11 @@
 ;;------------------------------------------------------------------------------
-;; Initialize elpa package management system
+;; Initialize elpa package management system and use-package
 ;;------------------------------------------------------------------------------
 (require 'package)
 
 ;; Package archives source
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-;; 'melpa' is sufficient for the most cases, so comment out the following sources.
-;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives  '("gnu" . "http://elpa.gnu.org/packages/"))
-
-;; On-demand installation of packages. Install given PACKAGE, optionally
-;; requiring MIN-VERSION. If NO-REFRESH is non-nil, the available package
-;; lists will not be re-downloaded in order to locate PACKAGE.
-(defun require-package (package &optional min-version no-refresh)
-  (if (package-installed-p package min-version)
-      t
-    (if (or (assoc package package-archive-contents) no-refresh)
-        (progn
-          (package-refresh-contents)    ; refresh anyway
-          (package-install package))
-      (progn
-        (package-refresh-contents)
-        (require-package package min-version t)))))
 
 (package-initialize)
 
@@ -30,5 +14,21 @@
             (lambda (&rest _) (package-quickstart-refresh)))
 (advice-add 'package-delete :after
             (lambda (&rest _) (package-quickstart-refresh)))
+
+;; use-package is built-in since Emacs 29.
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+;; Keep require-package for backward compatibility with unconverted files.
+(defun require-package (package &optional min-version no-refresh)
+  (if (package-installed-p package min-version)
+      t
+    (if (or (assoc package package-archive-contents) no-refresh)
+        (progn
+          (package-refresh-contents)
+          (package-install package))
+      (progn
+        (package-refresh-contents)
+        (require-package package min-version t)))))
 
 (provide 'init-elpa)
