@@ -49,7 +49,7 @@ _source_if_exists "$ZSHRC_CONFIG_DIR/languages/ruby.zsh"
 ##------------------------------------------------------------------------------
 
 _source_if_exists "$ZSHRC_CONFIG_DIR/tools/cuda.zsh"
-_source_if_exists "$ZSHRC_CONFIG_DIR/tools/cloud.zsh"
+_source_if_exists "$ZSHRC_CONFIG_DIR/tools/access.zsh"
 
 
 ##------------------------------------------------------------------------------
