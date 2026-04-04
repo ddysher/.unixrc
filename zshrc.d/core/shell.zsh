@@ -5,6 +5,9 @@
 # Disable beeping
 setopt NO_BEEP
 
+# Allow typing a directory path to cd into it (needed for global aliases like "...")
+setopt AUTO_CD
+
 # Use emacs key bindings
 bindkey -e
 

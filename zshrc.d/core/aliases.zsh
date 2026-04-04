@@ -11,6 +11,13 @@ alias rm="rm -i"
 alias ll="ls -lh"
 alias lg="ls -lh"
 
+# Directory navigation (global aliases so they work as arguments too, e.g., "mv abc ...")
+# AUTO_CD in shell.zsh makes bare ".."/".." act as cd
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
+alias -g ......='../../../../..'
+
 # Utility aliases
 alias ppj="python -mjson.tool"  # Beautify JSON output
 alias sgrep="grep -rnI -C3 --color=always"  # Colorful recursive grep
