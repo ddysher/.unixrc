@@ -2,27 +2,78 @@
 
 Personal Unix shell, editor, and terminal configuration.
 
-## Clone
+## Bootstrap
 
 ```sh
 git clone https://github.com/ddysher/.unixrc.git ~/.unixrc
 # or
 git clone git@github.com:ddysher/.unixrc.git ~/.unixrc
+
+# for creating symlinks
+mkdir -p ~/.config
 ```
 
-## Base Setup
+### macOS
 
-Create the core symlinks:
+The macOS config assumes Homebrew under `/opt/homebrew`.
+
+Install the core packages used below:
 
 ```sh
-ln -sfn ~/.unixrc/emacs.d ~/.emacs.d
+brew install zoxide starship cmake libtool
+```
+
+Set Zsh as the default shell if needed:
+
+```sh
+chsh -s "$(command -v zsh)"
+```
+
+### Linux
+
+Install the packages used below using your distro package manager, e.g.
+
+```sh
+sudo apt-get install cmake automake libtool
+```
+
+Create Linux-only desktop/X11 symlinks:
+
+```sh
+mkdir -p ~/.config
+
+ln -sfn ~/.unixrc/config/linux/gtk-3.0 ~/.config/gtk-3.0
+ln -sfn ~/.unixrc/config/linux/fonts.conf ~/.fonts.conf
+ln -sfn ~/.unixrc/config/linux/Xmodmap ~/.Xmodmap
+ln -sfn ~/.unixrc/config/linux/xprofile ~/.xprofile
+ln -sfn ~/.unixrc/config/linux/autokey ~/.config/autokey
+```
+
+Notes:
+
+- [`config/linux/Xmodmap`](config/linux/Xmodmap) changes Caps Lock to Ctrl in X11.
+- [`config/linux/xprofile`](config/linux/xprofile) contains X11 session environment setup.
+- [`config/linux/autokey`](config/linux/autokey) stores Linux AutoKey bindings.
+
+## Terminal Setup
+
+### Ghostty
+
+Ghostty is the active terminal config in this repo.
+
+```sh
+mkdir -p ~/.config
+ln -sfn ~/.unixrc/config/ghostty ~/.config/ghostty
+```
+
+The config lives in [`config/ghostty`](config/ghostty).
+
+### Shell
+
+The shell setup is centered on [`zshrc.d/zshrc`](zshrc.d/zshrc) and enables tools when they are available locally.
+
+```sh
 ln -sfn ~/.unixrc/zshrc.d/zshrc ~/.zshrc
-```
-
-Optional local overrides:
-
-```sh
-cp ~/.unixrc/zshrc.d/local.zsh.example ~/.unixrc/zshrc.d/local.zsh
 ```
 
 Install `zinit` directly into the user data directory:
@@ -33,62 +84,28 @@ git clone --depth=1 https://github.com/zdharma-continuum/zinit.git \
   ~/.local/share/zinit/zinit.git
 ```
 
-Install `zoxide` on macOS:
+Zsh tools used by this repo:
 
-```sh
-brew install zoxide
-```
+- `zsh` as the primary shell, loaded from [`zshrc.d/zshrc`](zshrc.d/zshrc)
+- `zinit` as the Zsh plugin manager
+- `zsh-autosuggestions` and `zsh-syntax-highlighting` via Zinit
+- `zoxide` for directory jumping
+- `starship` for the shell prompt
+- `kubectl` completion, cached by the Zsh completion module when `kubectl` is installed
+- optional local overrides via [`zshrc.d/local.zsh.example`](zshrc.d/local.zsh.example)
 
-Set Zsh as the default shell if needed:
-
-```sh
-chsh -s "$(command -v zsh)"
-```
-
-## Platform Setup
-
-### macOS
-
-The macOS config assumes Homebrew under `/opt/homebrew`.
-
-Install commonly used dependencies:
-
-```sh
-brew install w3m cmake libtool
-```
-
-### Linux
-
-Install the common packages required by this repo's shell and Emacs setup using
-your distro package manager. Typical packages include:
-
-- `w3m`
-- `cmake`
-- `automake`
-- `libtool`
-
-Linux-only desktop/X11 symlinks:
-
-```sh
-mkdir -p ~/.config
-
-ln -sfn ~/.unixrc/config/terminator ~/.config/terminator
-ln -sfn ~/.unixrc/config/gtk-3.0 ~/.config/gtk-3.0
-ln -sfn ~/.unixrc/config/fonts.conf ~/.fonts.conf
-ln -sfn ~/.unixrc/config/Xmodmap ~/.Xmodmap
-ln -sfn ~/.unixrc/config/xprofile ~/.xprofile
-```
-
-Notes:
-
-- [`config/Xmodmap`](config/Xmodmap) changes Caps Lock to Ctrl in X11.
-- [`config/xprofile`](config/xprofile) contains X11 session environment setup.
+Archived terminal and shell configs live under [`config/archive`](config/archive).
 
 ## Emacs Setup
 
-Some Emacs features expect external tools:
+The Emacs config lives in [`emacs.d`](emacs.d) and is loaded via the `~/.emacs.d` symlink.
 
-- `w3m` for in-Emacs browsing
+```sh
+ln -sfn ~/.unixrc/emacs.d ~/.emacs.d
+```
+
+Some Emacs features expect extra tools:
+
 - `make`, `cmake`, and `libtool` for building native packages such as `vterm`
 - `livedown` optionally for Markdown preview
 - `doctoc` optionally for Markdown table of contents generation
@@ -99,24 +116,6 @@ Optional npm packages:
 npm install -g livedown doctoc
 ```
 
-## Terminal Setup
-
-### Ghostty
-
-Ghostty is the preferred terminal now.
-
-Create the config symlink:
-
-```sh
-ln -sfn ~/.unixrc/config/ghostty ~/.config/ghostty
-```
-
-Current Ghostty config lives in [`config/ghostty`](config/ghostty).
-
-### iTerm2
-
-iTerm2 is still supported as a migration fallback on macOS. Related files are in [`config/iterm2`](config/iterm2).
-
 ## Development Setup
 
 ### Node.js
@@ -125,16 +124,21 @@ iTerm2 is still supported as a migration fallback on macOS. Related files are in
 ln -sfn ~/.unixrc/config/npm/.npmrc ~/.npmrc
 ```
 
-- `fnm` is used to manage node versions, installed or upgraded via the official curl script.
+- `fnm` is used to manage Node.js versions.
+- [`config/npm/.npmrc`](config/npm/.npmrc) points npm at `https://registry.npmmirror.com`.
 
-## Shell Dependencies
+### Python
 
-External shell dependencies:
+```sh
+mkdir -p ~/.config/pip
+ln -sfn ~/.unixrc/config/pip/pip.conf ~/.config/pip/pip.conf
+```
 
-- `zinit` installed at `~/.local/share/zinit/zinit.git`
-- `zoxide` installed via Homebrew on macOS
+- `uv` is the Python toolchain expected by the shell config.
+- [`config/pip/pip.conf`](config/pip/pip.conf) points pip at the Tsinghua PyPI mirror.
 
-## Others
+### Other Development Tools
 
-Fish config is also stored in [`config/fish`](config/fish),
-but Zsh is the primary shell in this repo.
+- `rbenv` is initialized when present locally.
+- Go environment defaults live in [`zshrc.d/languages/go.zsh`](zshrc.d/languages/go.zsh).
+- Google Cloud SDK, Azure CLI, and CUDA hooks live under [`zshrc.d/tools`](zshrc.d/tools).
