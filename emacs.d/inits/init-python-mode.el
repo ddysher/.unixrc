@@ -57,7 +57,6 @@
 (use-package python-environment :defer t)
 
 (use-package jedi
-  :defer t
   :hook (python-mode . jedi:setup)
   :config
   (defvar jedi:goto-stack '())
@@ -67,7 +66,6 @@
           (string-trim (shell-command-to-string "pyenv prefix")))))
 
 (use-package pyenv-mode
-  :defer t
   :if (executable-find "pyenv")
   :hook (after-init . pyenv-mode))
 

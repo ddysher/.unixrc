@@ -2,7 +2,7 @@
 ;; Provide gptel mode, managed by melpa.
 ;;------------------------------------------------------------------------------
 (use-package gptel
-  :defer t
+  :commands (gptel gptel-send gptel-menu)
   :config
   (setq gptel-model 'deepseek-chat
         gptel-backend

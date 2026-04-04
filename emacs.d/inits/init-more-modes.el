@@ -5,12 +5,10 @@
 ;;------------------------------------------------------------------------------
 (use-package wsd-mode :defer t)
 (use-package ein :defer t)
-(use-package ag :defer t)
 (use-package coffee-mode :defer t)
 (use-package jade-mode :defer t)
 (use-package php-mode :defer t)
 (use-package yaml-mode
-  :defer t
   :hook (yaml-mode . (lambda () (run-hooks 'prog-mode-hook))))
 (use-package thrift :defer t)
 (use-package dockerfile-mode :defer t)
@@ -27,9 +25,8 @@
 
 ;; Start emacs server, to accept opening files from client, e.g. command line.
 (use-package edit-server
-  :hook (after-init . (lambda ()
-                        (require 'edit-server)
-                        (edit-server-start))))
+  :commands edit-server-start
+  :hook (after-init . edit-server-start))
 
 ;; Winner Mode for window undo/redo.
 (winner-mode 1)

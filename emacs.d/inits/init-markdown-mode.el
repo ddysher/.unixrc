@@ -2,7 +2,6 @@
 ;; Provide markdown mode, installed via MELPA.
 ;;------------------------------------------------------------------------------
 (use-package markdown-mode
-  :defer t
   :hook (markdown-mode . markdown-custom-hook))
 
 ;; Generate TOC inplace.
