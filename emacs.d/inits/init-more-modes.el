@@ -40,4 +40,4 @@
   (interactive)
   (ansi-color-apply-on-region (point-min) (point-max)))
 
-(provide 'init-more-mode)
+(provide 'init-more-modes)
