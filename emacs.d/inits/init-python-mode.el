@@ -13,11 +13,11 @@
 ;; Virtual environment detection (pet + uv):
 ;;   emacs-pet walks up from the file to find a .venv directory, then configures
 ;;   python-shell-interpreter and eglot/pyright automatically.
-;;   ~/.venv acts as a global fallback — pet finds it naturally for any file
-;;   not inside a project with its own .venv.
+;;   ~/.venv acts as a global default — pet finds it naturally for any file not
+;;   inside a project with its own .venv.
 ;;
 ;;   To create a project venv:  uv venv && uv sync
-;;   Global fallback venv:      uv venv ~/.venv --python 3.13
+;;   Global default venv:       uv venv ~/.venv --python 3.xx
 ;;
 ;; Dependencies:
 ;;   uv - Python package manager: https://docs.astral.sh/uv/
@@ -42,6 +42,7 @@
 ;; explicitly listed here to prefer it over the default pylsp.
 (use-package eglot
   :ensure nil
+  :defer t
   :config
   (add-to-list 'eglot-server-programs
                '((python-mode python-ts-mode) . ("pyright-langserver" "--stdio"))))
@@ -49,6 +50,8 @@
 ;; pet: automatically detect and activate virtualenvs for Python buffers.
 ;; pet walks up from the file to find .venv; ~/.venv serves as the global
 ;; fallback so pet always resolves a venv without any custom logic here.
+;; :config + add-hook defers loading (pet loads on first python-ts-mode buffer)
+;; while ensuring pet-eglot-setup (not autoloaded) is available when the hook runs.
 (use-package pet
   :ensure t
   :config
