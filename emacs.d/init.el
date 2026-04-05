@@ -54,10 +54,10 @@
 (require 'init-more-devtools)
 
 ;; My custom mode, functions, etc.
+(require 'init-functions)
 (require 'init-keys)
 (require 'init-theme)
 (require 'init-custom)
-(require 'init-functions)
 
 ;; Conditional require per host.
 (when *linux*
