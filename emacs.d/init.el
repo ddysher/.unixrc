@@ -11,12 +11,9 @@
 (defvar *emacs30* (>= emacs-major-version 30))
 ;; System name (hostname)
 (defvar *home-desktop* (string= system-name "neuralforge"))
-(defvar *macpro-m3*
-  (or (string= system-name "Deyuans-MacBook-M3.local")
-      (string= system-name "Deyuans-MacBook-M3")))
-(defvar *macair-m4*
-  (or (string= system-name "Deyuans-MacBook-Air.local")
-      (string= system-name "Deyuans-MacBook-Air")))
+(defvar *macpro-m3* (string= system-name "Deyuans-MacBook-M3"))
+(defvar *macair-m4* (string= system-name "Deyuans-MacBook-Air"))
+
 
 ;;------------------------------------------------------------------------------
 ;; Bootstrap configs need to be executed before loading specific configs
@@ -24,8 +21,8 @@
 ;; This will add "~/.emacs.d/inits" to emacs load path.
 (add-to-list 'load-path (expand-file-name "inits" user-emacs-directory))
 (require 'init-preload-all-configs)     ; must be called first
+(require 'init-elpa-packages)           ; init elpa packages management
 (require 'init-site-packages)           ; init third party packages
-(require 'init-elpa)                    ; init elpa managed packages
 (require 'init-exec-path-from-shell)    ; init emacs for Mac GUI
 
 
@@ -44,7 +41,6 @@
 (require 'init-magit-mode)
 (require 'init-multi-vterm)
 (require 'init-window-numbering)
-(require 'init-fill-column-indicator)
 
 ;; Initialize language related modes that requires configurations.
 (require 'init-ag-mode)
@@ -60,7 +56,6 @@
 (require 'init-python-mode)
 (require 'init-protobuf-mode)
 (require 'init-markdown-mode)
-;; (require 'init-cuda-mode) ; identifier / keyword rendering issue with cuda mode
 
 ;; My custom mode, functions, etc.
 (require 'init-keys)
@@ -72,6 +67,7 @@
 ;; Conditional require: only install pyim in linux (use sougou in darwin).
 (when *linux*
   (require 'init-pyim))
+
 
 ;;------------------------------------------------------------------------------
 ;; Automatic generated
@@ -88,20 +84,13 @@
      "98cc377af705c0f2133bb6d340bf0becd08944a588804ee655809da5d8140de6"
      "5dc0ae2d193460de979a463b907b4b2c6d2c9c4657b2e9e66b8898d2592e3de5"
      default))
- '(livedown:autostart nil)
- '(livedown:open t)
- '(livedown:port 1337)
  '(package-selected-packages
-   '(ag apache-mode cmake-font-lock cmake-mode coffee-mode company
-        dockerfile-mode eat edit-server ein exec-path-from-shell
-        fill-column-indicator flycheck ggtags go-mode go-projectile
-        gptel hackernews helm jade-mode js2-mode
-        lua-mode magit markdown-mode material-theme matlab-mode
-        multi-term multi-vterm neotree nginx-mode pet php-mode projectile
-        protobuf-mode pyim rust-mode
-        sbt-mode scala-mode smex tern tern-auto-complete thrift
-        treemacs vterm w3m wc-mode web-mode window-numbering wsd-mode
-        yaml-mode yasnippet zenburn-theme))
+   '(ag apache-mode coffee-mode company dockerfile-mode edit-server ein
+        exec-path-from-shell flycheck ggtags go-mode gptel hackernews
+        jade-mode js2-mode lua-mode magit markdown-mode material-theme
+        matlab-mode multi-vterm neotree nginx-mode pet php-mode protobuf-mode
+        pyim rust-mode sbt-mode scala-mode smex tern thrift vterm web-mode
+        window-numbering wsd-mode yaml-mode yasnippet zenburn-theme))
  '(safe-local-variable-values '((c-indent-level . 4)))
  '(send-mail-function 'mailclient-send-it)
  '(wsd-style "roundgreen"))

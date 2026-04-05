@@ -2,6 +2,6 @@
 ## Terminal access config.
 ##------------------------------------------------------------------------------
 
-if [[ "$(hostname)" == "Deyuans-MacBook-Air.local" ]]; then
+if [[ "$(hostname)" == "Deyuans-MacBook-Air" ]]; then
   export http_proxy="http://127.0.0.1:7890" https_proxy="http://127.0.0.1:7890"
 fi

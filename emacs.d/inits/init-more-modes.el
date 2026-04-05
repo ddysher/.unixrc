@@ -23,6 +23,9 @@
 ;; Disable flycheck by default (annoying for some buffer, enable as needed).
 (use-package flycheck :defer t)
 
+;; Emacs has a built-in fill column indicator mode; keep only the default width.
+(setq-default display-fill-column-indicator-column 80)
+
 ;; Start emacs server, to accept opening files from client, e.g. command line.
 (use-package edit-server
   :commands edit-server-start

@@ -31,4 +31,4 @@
         (package-refresh-contents)
         (require-package package min-version t)))))
 
-(provide 'init-elpa)
+(provide 'init-elpa-packages)
