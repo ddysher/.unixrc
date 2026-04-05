@@ -97,8 +97,8 @@
         fill-column-indicator flycheck ggtags go-mode go-projectile
         gptel hackernews helm jade-mode js2-mode
         lua-mode magit markdown-mode material-theme matlab-mode
-        multi-term multi-vterm neotree nginx-mode php-mode projectile
-        protobuf-mode pyenv-mode pyim rust-mode
+        multi-term multi-vterm neotree nginx-mode pet php-mode projectile
+        protobuf-mode pyim rust-mode
         sbt-mode scala-mode smex tern tern-auto-complete thrift
         treemacs vterm w3m wc-mode web-mode window-numbering wsd-mode
         yaml-mode yasnippet zenburn-theme))
