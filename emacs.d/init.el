@@ -42,29 +42,24 @@
 (require 'init-multi-vterm)
 (require 'init-window-numbering)
 
-;; Initialize language related modes that requires configurations.
-(require 'init-ag-mode)
+;; Initialize language related modes that require configurations.
 (require 'init-cc-mode)
-(require 'init-sh-mode)
 (require 'init-go-mode)
-(require 'init-lua-mode)
 (require 'init-js2-mode)
 (require 'init-web-mode)
 (require 'init-rust-mode)
 (require 'init-java-mode)
-(require 'init-scala-mode)
 (require 'init-python-mode)
-(require 'init-protobuf-mode)
 (require 'init-markdown-mode)
+(require 'init-more-devtools)
 
 ;; My custom mode, functions, etc.
 (require 'init-keys)
 (require 'init-theme)
 (require 'init-custom)
 (require 'init-functions)
-(require 'init-more-modes) ; Modes with minimal configurations.
 
-;; Conditional require: only install pyim in linux (use sougou in darwin).
+;; Conditional require per host.
 (when *linux*
   (require 'init-pyim))
 
@@ -85,12 +80,12 @@
      "5dc0ae2d193460de979a463b907b4b2c6d2c9c4657b2e9e66b8898d2592e3de5"
      default))
  '(package-selected-packages
-   '(ag apache-mode coffee-mode company dockerfile-mode edit-server ein
-        exec-path-from-shell flycheck ggtags go-mode gptel hackernews
-        jade-mode js2-mode lua-mode magit markdown-mode material-theme
-        matlab-mode multi-vterm neotree nginx-mode pet php-mode protobuf-mode
-        pyim rust-mode sbt-mode scala-mode smex tern thrift vterm web-mode
-        window-numbering wsd-mode yaml-mode yasnippet zenburn-theme))
+   '(ag apache-mode company dockerfile-mode exec-path-from-shell flycheck
+        ggtags go-mode gptel hackernews js2-mode lua-mode magit markdown-mode
+        material-theme matlab-mode multi-vterm neotree nginx-mode pet php-mode
+        protobuf-mode pyim rust-mode sbt-mode scala-mode smex tern thrift
+        vterm web-mode window-numbering wsd-mode yaml-mode yasnippet
+        zenburn-theme))
  '(safe-local-variable-values '((c-indent-level . 4)))
  '(send-mail-function 'mailclient-send-it)
  '(wsd-style "roundgreen"))

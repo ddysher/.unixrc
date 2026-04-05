@@ -71,6 +71,16 @@
   (require 'yasnippet)
   (yas-minor-mode))
 
+;; Emacs built-in display and window settings.
+(setq-default display-fill-column-indicator-column 80)
+(winner-mode 1)
+
+;; Display ANSI color codes in Emacs buffers.
+(require 'ansi-color)
+(defun display-ansi-colors ()
+  (interactive)
+  (ansi-color-apply-on-region (point-min) (point-max)))
+
 (add-hook 'prog-mode-hook 'prog-mode-custom-hook)
 
 
