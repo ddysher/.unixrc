@@ -1,25 +1,19 @@
 ;;------------------------------------------------------------------------------
-;; Provide go mode, managed by MELPA.
+;; Go mode configuration: Eglot + gopls
 ;;------------------------------------------------------------------------------
-;; Install go-mode with golang tools and other emacs packages.
+;; Uses eglot (built-in Emacs 29+) with gopls as the language server.
+;; Eglot integrates with xref for navigation and capf for completions (via
+;; company).
 ;;
-;; Tools:
+;; Dependencies:
 ;;   go install golang.org/x/tools/cmd/goimports@latest
 ;;   go install golang.org/x/tools/gopls@latest
 ;;
-;; Packages:
-;;   M-x package-install go-mode
-;;   M-x package-install lsp-mode
-;;   M-x package-install company
-;;------------------------------------------------------------------------------
-;; How it works
-;;
-;; Most of the features in Go dev environment are provided by lsp-mode, including
-;; code navigation, code completion (with company), etc.
 ;;------------------------------------------------------------------------------
 ;; Usage:
-;;   M-.        ; jump to the definition of symbol
-;;   M-,        ; jump back
+;;   M-.        ; jump to the definition of symbol (xref via eglot)
+;;   M-,        ; jump back (xref-go-back)
+;;   M-/        ; find references
 ;;   M-x gofmt  ; format current go buffer (will be called when saving file)
 ;;   C-c C-a    ; add a package to import
 ;;   C-c C-f ?  ; quite a few commands have C-c C-f prefix, e.g. 'a' for jumping
@@ -30,21 +24,26 @@
   :config
   (defun go-mode-custom-hook ()
     (setq gofmt-command "goimports")
-    (local-set-key (kbd "M-,") 'pop-tag-mark)
-    (local-set-key (kbd "M-.") 'lsp-find-definition)
-    (local-set-key (kbd "M-/") 'lsp-find-references))
+    (local-set-key (kbd "M-/") 'xref-find-references))
   (add-hook 'go-mode-hook 'go-mode-custom-hook)
+  (add-hook 'go-mode-hook #'eglot-ensure)
   (add-hook 'before-save-hook 'gofmt-before-save))
 
 (provide 'init-go-mode)
 
-
-;; ------------------- Historical Configuration --------------------------------
-;;
-;; -----------------------------------------------------------------------------
-;; Installation & Usage V1 (Deprecated, use gopls & lsp-mode instead)
 ;;------------------------------------------------------------------------------
-;; Installation
+;; Historical: V1 lsp-mode
+;;------------------------------------------------------------------------------
+;; Previously used lsp-mode with gopls. Replaced by eglot for simplicity.
+;; lsp-mode is still available (init-lsp-mode.el) if needed.
+;;
+;;   (local-set-key (kbd "M-.") 'lsp-find-definition)
+;;   (local-set-key (kbd "M-,") 'pop-tag-mark)
+;;   (local-set-key (kbd "M-/") 'lsp-find-references)
+;;
+;;------------------------------------------------------------------------------
+;; Historical: V0 gocode + godef + go-guru
+;;------------------------------------------------------------------------------
 ;; Several methods in go-mode requires go related binaries to be properly set,
 ;; e.g. gocode, godoc, godef, etc; and are accessible from emacs.
 ;; Tools installed:
@@ -60,7 +59,6 @@
 ;;   go-eldoc
 ;;   go-guru
 ;;
-;;------------------------------------------------------------------------------
 ;; Autocompletion
 ;;
 ;; Package "go-autocomplete" provides context sensitive auto completion for Go.
@@ -82,20 +80,17 @@
 ;;   gocode -s -sock unix -addr 127.0.0.1:37373
 ;; which accepts autocompletion request and send back response.
 ;;
-;;------------------------------------------------------------------------------
 ;; Code Jump
 ;;
 ;; Code Jump is done through the tool "godef", which finds symbol information in
 ;; Go source. The tool is included in "go-mode". go-mode invokes the godef binary
 ;; directly in emacs (no separate server as in go-autocomplete).
 ;;
-;;------------------------------------------------------------------------------
 ;; Code Analysis
 ;;
 ;; Package go-guru is and advanced tool for Go source code analysis. For large
 ;; project, go-guru can be a bit slow. For detail, see http://golang.org/s/using-guru
 ;;
-;;------------------------------------------------------------------------------
 ;; Usage:
 ;;   M-.        ; jump to the definition of symbol
 ;;   M-*        ; jump back

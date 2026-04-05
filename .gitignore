@@ -26,3 +26,6 @@ emacs.d/.lsp-session-v1
 
 # Local zsh overrides (host-specific, not tracked).
 zshrc.d/local.zsh
+
+# Tree-sitter grammars are compiled binaries, auto-downloaded by Emacs.
+emacs.d/tree-sitter/

@@ -16,8 +16,8 @@
   (setq ido-save-directory-list-file "~/.emacs.d/ido.last"
         ido-ignore-buffers
         '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
-          "^\*epc" "^\*compilation" "^\*TAGS" "^session\.*" "^\*scratch"
-          "^\*Help" "^\*tramp" "^\*Compile-Log" "^\*go-eldoc")
+          "^\*compilation" "^\*TAGS" "^session\.*" "^\*scratch"
+          "^\*Help" "^\*tramp" "^\*Compile-Log")
         ido-work-directory-list '("~/" "~/Desktop" "~/Documents")
         ido-enable-last-directory-history t
         ido-max-work-directory-list 30

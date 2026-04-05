@@ -47,7 +47,6 @@
 (require 'init-fill-column-indicator)
 
 ;; Initialize language related modes that requires configurations.
-(require 'init-lsp-mode)
 (require 'init-ag-mode)
 (require 'init-cc-mode)
 (require 'init-sh-mode)
@@ -94,12 +93,12 @@
  '(livedown:port 1337)
  '(package-selected-packages
    '(ag apache-mode cmake-font-lock cmake-mode coffee-mode company
-        dockerfile-mode eat edit-server ein epc exec-path-from-shell
+        dockerfile-mode eat edit-server ein exec-path-from-shell
         fill-column-indicator flycheck ggtags go-mode go-projectile
-        gptel hackernews helm jade-mode jedi js2-mode lsp-mode
+        gptel hackernews helm jade-mode js2-mode
         lua-mode magit markdown-mode material-theme matlab-mode
         multi-term multi-vterm neotree nginx-mode php-mode projectile
-        protobuf-mode pyenv-mode pyim python-environment rust-mode
+        protobuf-mode pyenv-mode pyim rust-mode
         sbt-mode scala-mode smex tern tern-auto-complete thrift
         treemacs vterm w3m wc-mode web-mode window-numbering wsd-mode
         yaml-mode yasnippet zenburn-theme))
