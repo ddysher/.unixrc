@@ -11,13 +11,13 @@
 ;;   M-, xref-go-back
 ;;
 ;; Virtual environment detection (pet + uv):
-;;   emacs-pet automatically detects project venvs (.venv, pyproject.toml, etc.)
-;;   and configures python-shell-interpreter, eglot/pyright, and flycheck.
-;;   For projects without a venv, a default venv at ~/.local/share/uv/default-venv
-;;   is used as a fallback (Python 3.13).
+;;   emacs-pet walks up from the file to find a .venv directory, then configures
+;;   python-shell-interpreter and eglot/pyright automatically.
+;;   ~/.venv acts as a global fallback — pet finds it naturally for any file
+;;   not inside a project with its own .venv.
 ;;
 ;;   To create a project venv:  uv venv && uv sync
-;;   Default venv packages:     uv pip install --python ~/.local/share/uv/default-venv/bin/python <pkg>
+;;   Global fallback venv:      uv venv ~/.venv --python 3.13
 ;;
 ;; Dependencies:
 ;;   uv - Python package manager: https://docs.astral.sh/uv/
@@ -35,41 +35,20 @@
 ;;
 ;;------------------------------------------------------------------------------
 
-;; Default venv for projects without their own .venv.
-(defvar uv-default-venv (expand-file-name "~/.local/share/uv/default-venv"))
-
 ;; Remap python-mode to python-ts-mode for tree-sitter powered highlighting.
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
 
 ;; Eglot is built-in (Emacs 29+). Pyright is auto-detected if installed;
 ;; explicitly listed here to prefer it over the default pylsp.
-;;
-;; eglot-workspace-configuration is set as a global function (not buffer-local,
-;; since eglot reads it from a temp buffer where buffer-local values are lost).
-;; When pyright requests workspace config, eglot sets default-directory to the
-;; file's directory, so pet-virtualenv-root resolves correctly per-project.
-;; If no project venv is found, we fall back to uv-default-venv.
 (use-package eglot
   :ensure nil
   :config
   (add-to-list 'eglot-server-programs
-               '((python-mode python-ts-mode) . ("pyright-langserver" "--stdio")))
-  (setq-default eglot-workspace-configuration
-                (lambda (_server)
-                  (when-let* ((venv (or (pet-virtualenv-root)
-                                        (and (file-directory-p uv-default-venv)
-                                             uv-default-venv)))
-                              (python (expand-file-name "bin/python" venv)))
-                    (list :python
-                          (list :pythonPath python
-                                :venvPath (file-name-directory
-                                           (directory-file-name venv))
-                                :venv (file-name-nondirectory
-                                       (directory-file-name venv))))))))
+               '((python-mode python-ts-mode) . ("pyright-langserver" "--stdio"))))
 
-;; pet: detect project virtualenvs for python-shell-interpreter / run-python.
-;; We do NOT use pet-eglot-setup — its advice overrides our fallback with nil
-;; values when no project venv exists. Eglot config is handled above instead.
+;; pet: automatically detect and activate virtualenvs for Python buffers.
+;; pet walks up from the file to find .venv; ~/.venv serves as the global
+;; fallback so pet always resolves a venv without any custom logic here.
 (use-package pet
   :ensure t
   :config
@@ -77,11 +56,7 @@
             (lambda ()
               (setq-local python-shell-interpreter (pet-executable-find "python")
                           python-shell-virtualenv-root (pet-virtualenv-root))
-              (when (and (not python-shell-virtualenv-root)
-                         (file-directory-p uv-default-venv))
-                (setq-local python-shell-virtualenv-root uv-default-venv
-                            python-shell-interpreter
-                            (expand-file-name "bin/python" uv-default-venv)))
+              (pet-eglot-setup)
               (eglot-ensure))))
 
 (defun python-mode-custom-hook ()
