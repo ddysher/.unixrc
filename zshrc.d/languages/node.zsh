@@ -16,8 +16,5 @@ elif [[ -x "$FNM_BIN" ]]; then
   eval "$("$FNM_BIN" env)"
 fi
 
-# Chinese npm registry alias
-alias cnpm="npm --registry=https://registry.npm.taobao.org \
---cache=$HOME/.npm/.cache/cnpm \
---disturl=https://npm.taobao.org/dist \
---userconfig=$HOME/.cnpmrc"
+# Set npm registry
+export NPM_CONFIG_REGISTRY=https://registry.npmmirror.com/

@@ -9,6 +9,7 @@
 ;; Navigation, bound by eglot via xref.
 ;;   M-. xref-find-definitions
 ;;   M-, xref-go-back
+;;   M-? xref-find-references
 ;;
 ;; Virtual environment detection (pet + uv):
 ;;   emacs-pet walks up from the file to find a .venv directory, then configures

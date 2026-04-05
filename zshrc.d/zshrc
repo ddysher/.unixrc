@@ -38,7 +38,7 @@ _source_if_exists "$ZSHRC_CONFIG_DIR/core/aliases.zsh"
 ## Languages
 ##------------------------------------------------------------------------------
 
-_source_if_exists "$ZSHRC_CONFIG_DIR/languages/go.zsh"
+_source_if_exists "$ZSHRC_CONFIG_DIR/languages/golang.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/languages/python.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/languages/node.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/languages/ruby.zsh"

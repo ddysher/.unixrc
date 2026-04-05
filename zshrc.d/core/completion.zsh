@@ -3,11 +3,10 @@
 ##------------------------------------------------------------------------------
 
 # Figure out the SHORT hostname for completion dump file
-if [[ "$OSTYPE" = darwin* ]]; then
-  SHORT_HOST=$(scutil --get ComputerName 2>/dev/null) || SHORT_HOST=${HOST/.*/}
-else
-  SHORT_HOST=${HOST/.*/}
-fi
+case "$(uname)" in
+  Darwin) SHORT_HOST=$(scutil --get ComputerName 2>/dev/null) || SHORT_HOST=${HOST/.*/} ;;
+  *)      SHORT_HOST=${HOST/.*/} ;;
+esac
 
 # Create cache directory and set completion dump location
 [[ ! -d "$HOME/.cache/zsh" ]] && mkdir -p "$HOME/.cache/zsh"

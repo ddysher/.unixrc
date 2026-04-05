@@ -4,10 +4,10 @@
 
 # Development workspace
 export GOPATH="$HOME/code/workspace"
-cdpath+=("$GOPATH/src")
+export CDPATH="${CDPATH:+$CDPATH:}$GOPATH/src"
 
 # Go workspace and PATH
-path+=("$GOPATH/bin")
+export PATH="${PATH:+$PATH:}$GOPATH/bin"
 
 # Go proxy
 # or call "$ go env -w GOPROXY=https://goproxy.cn,direct"
