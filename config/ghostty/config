@@ -6,6 +6,7 @@ shell-integration-features = no-cursor
 # Use Option as Alt for terminal-style key combos on macOS.
 macos-option-as-alt = true
 macos-icon = xray
+key-remap = cmd=alt
 
 # Cursor
 # Keep the cursor steady instead of blinking.
