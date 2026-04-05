@@ -1,87 +1,43 @@
 ;;------------------------------------------------------------------------------
-;; Provide some general customization
+;; General customization: UI, editor behavior, and environment.
 ;;------------------------------------------------------------------------------
-;; Enable/ Disable some minor mode
-;; menu-bar, tool-bar, scroll-bar are disabled in early-init.el for faster startup.
-(menu-bar-mode -99)                ; also disable in terminal frames
-(column-number-mode)               ; show column number
-(global-auto-revert-mode t)        ; enable auto revert (e.g. git)
-(setq auto-revert-check-vc-info t) ; check version control
 
-;;
-;; Global settings
-;;
-;; setq-default will set values for buffers that do not have their own
-;; local variables, so we should use it for buffer-local variable.  For
-;; non buffer-local variable, we can just use setq.
-;;
-;; set tab width globally, some other mode can change this locally.
-;; note the  "default-tab-with" variable is obsolete.
+;;; UI and display.
+;; menu-bar, tool-bar, scroll-bar are disabled in early-init.el for faster startup.
+(menu-bar-mode -99)               ; also disable in terminal frames
+(column-number-mode)              ; show column number in modeline
+(global-auto-revert-mode t)       ; auto-reload buffers changed on disk (e.g. git)
+(setq auto-revert-check-vc-info t)
+(setq frame-resize-pixelwise t)   ; avoid blank line in fullscreen mode
+(setq-default display-fill-column-indicator-column 80)
+(winner-mode 1)                   ; window layout undo/redo
+
+;;; Editor behavior.
+;; setq-default sets buffer-local defaults; setq for global variables.
 (setq-default tab-width universal-indent-size)
-;; use spaces where tab is needed
-(setq-default indent-tabs-mode nil)
-;; disable backup files (which end with ~); prefer version control tool instead
-(setq make-backup-files nil)
-;; disable autosave files (surrounded by #); they will be deleted after save
-(setq auto-save-default nil)
-;; only highlight line in active buffer
-(setq hl-line-sticky-flag nil)
-;; disable splash screen, enter *scratch* directly
-(setq inhibit-splash-screen t)
-;; disable the tooltips in modeline (better to use M-x tooltip-mode RET)
-(setq show-help-function nil)
-;; open in new buffer instead of new frame when open files in Window (Finder)
-(setq ns-pop-up-frames nil)
-;; do not need to confirm nonexistent file
+(setq-default indent-tabs-mode nil)        ; use spaces instead of tabs
+(setq make-backup-files nil)               ; no backup~ files; use version control
+(setq auto-save-default nil)               ; no #autosave# files
+(setq hl-line-sticky-flag nil)             ; only highlight line in active buffer
+(setq inhibit-splash-screen t)             ; go straight to *scratch*
+(setq show-help-function nil)              ; disable modeline tooltips
+(setq ns-pop-up-frames nil)                ; reuse existing frame when opening files
 (setq confirm-nonexistent-file-or-buffer nil)
-;; disable bell when hit c-g
-(setq ring-bell-function 'ignore)
-;; answer `y` & `n` for `yes` & `no
+(setq ring-bell-function 'ignore)          ; no bell on C-g
 (defalias 'yes-or-no-p 'y-or-n-p)
-;; start server, used by emacsclient. `emacs` is alias to `emacsclient`
+
+;;; System and environment.
+(setenv "LANG" "en_US.UTF-8")
 (require 'server)
 (if (and (fboundp 'server-running-p)
          (not (server-running-p)))
     (server-start))
-;; Fix terminal character issue.
-(setenv "LANG" "en_US.UTF-8")
-;; associate config mode to ".zsh-theme, .defs, BUILD, etc."
-(add-to-list 'auto-mode-alist '("\\.zsh-theme$" . conf-mode))
-(add-to-list 'auto-mode-alist '("\\.defs$" . conf-mode))
-(add-to-list 'auto-mode-alist '("\\.gitignore$" . conf-mode))
-(add-to-list 'auto-mode-alist '("\\.gitmodules$" . conf-mode))
-(add-to-list 'auto-mode-alist '("\\BUILD$" . conf-mode))
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
-;; Avoid blank line in fullscreen mode.
-(setq frame-resize-pixelwise t)
-
-;;
-;; Prog mode settings
-;;
-(defun prog-mode-custom-hook ()
-  "Hook for settings related to general programming modes."
-  ;; show trailing whitespaces
-  (setq show-trailing-whitespace t)
-  ;; turn off wrapping for long lines
-  (setq truncate-lines t)
-  ;; highline current line
-  (hl-line-mode 1)
-  ;; enable yasnippet minor mode (loads yasnippet on first prog buffer)
-  (require 'yasnippet)
-  (yas-minor-mode))
-
-;; Emacs built-in display and window settings.
-(setq-default display-fill-column-indicator-column 80)
-(winner-mode 1)
-
-;; Display ANSI color codes in Emacs buffers.
+;;; Utilities.
+;; Display ANSI color codes in Emacs buffers (useful for log files).
 (require 'ansi-color)
 (defun display-ansi-colors ()
   (interactive)
   (ansi-color-apply-on-region (point-min) (point-max)))
-
-(add-hook 'prog-mode-hook 'prog-mode-custom-hook)
-
 
 (provide 'init-custom)
