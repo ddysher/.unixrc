@@ -116,6 +116,40 @@ Optional npm packages:
 npm install -g livedown doctoc
 ```
 
+#### Python (Emacs)
+
+Python support uses `eglot` + `pyright` for LSP and `emacs-pet` for automatic venv detection.
+
+Install pyright:
+
+```sh
+npm install -g pyright
+```
+
+Install the Python tree-sitter grammar once inside Emacs:
+
+```
+M-x treesit-install-language-grammar -> python
+```
+
+`emacs-pet` is installed automatically via `package-selected-packages` on first launch.
+
+**How venv detection works:** pet walks up from the opened file looking for a `.venv`
+directory. A `~/.venv` at the home directory serves as the global default — pet finds
+it naturally for any file not inside a project that has its own `.venv`.
+
+Create the global default venv (once, after installing `uv`):
+
+```sh
+uv venv ~/.venv --python 3.13
+```
+
+For a project venv:
+
+```sh
+uv venv && uv sync   # run inside the project root
+```
+
 ## Development Setup
 
 ### Node.js
@@ -136,6 +170,26 @@ ln -sfn ~/.unixrc/config/pip/pip.conf ~/.config/pip/pip.conf
 
 - `uv` is the Python toolchain expected by the shell config.
 - [`config/pip/pip.conf`](config/pip/pip.conf) points pip at the Tsinghua PyPI mirror.
+
+Install `uv`:
+
+```sh
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Install a Python version and create the global default venv:
+
+```sh
+uv python install 3.13
+uv venv ~/.venv --python 3.13
+```
+
+Shell aliases defined in [`zshrc.d/languages/python.zsh`](zshrc.d/languages/python.zsh):
+
+| Alias   | Description                                      |
+|---------|--------------------------------------------------|
+| `dvenv` | Activate `~/.venv` in the current shell          |
+| `uvdi`  | Install a package into `~/.venv` (`uv pip install --python ~/.venv/bin/python`) |
 
 ### Other Development Tools
 
