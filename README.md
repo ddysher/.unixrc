@@ -134,9 +134,9 @@ M-x treesit-install-language-grammar -> python
 
 `emacs-pet` is installed automatically via `package-selected-packages` on first launch.
 
-**How venv detection works:** pet walks up from the opened file looking for a `.venv`
-directory. A `~/.venv` at the home directory serves as the global default — pet finds
-it naturally for any file not inside a project that has its own `.venv`.
+**How venv detection works:** `emacs-pet` walks up from the opened file looking for a
+`.venv` directory. A `~/.venv` at the home directory serves as the global default —
+pet finds it naturally for any file not inside a project that has its own `.venv`.
 
 Create the global default venv (once, after installing `uv`):
 
@@ -188,7 +188,7 @@ Shell aliases defined in [`zshrc.d/languages/python.zsh`](zshrc.d/languages/pyth
 
 | Alias   | Description                                      |
 |---------|--------------------------------------------------|
-| `dvenv` | Activate `~/.venv` in the current shell          |
+| `uvdv`  | Activate `~/.venv` in the current shell          |
 | `uvdi`  | Install a package into `~/.venv` (`uv pip install --python ~/.venv/bin/python`) |
 
 ### Other Development Tools
