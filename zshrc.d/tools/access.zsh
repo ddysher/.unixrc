@@ -2,7 +2,6 @@
 ## Terminal access config.
 ##------------------------------------------------------------------------------
 
-# Homebrew (macOS)
-if [[ "$(uname)" == "Darwin" ]]; then
+if [[ "$(hostname)" == "Deyuans-MacBook-Air.local" ]]; then
   export http_proxy="http://127.0.0.1:7890" https_proxy="http://127.0.0.1:7890"
 fi

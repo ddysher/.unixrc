@@ -11,6 +11,11 @@ setopt AUTO_CD
 # Use emacs key bindings
 bindkey -e
 
+# Treat only alphanumeric chars and _ as word characters for M-Backspace / M-f / M-b.
+# Removes /, ., -, =, &, ;, |, (, ), <, > from the default so path segments and
+# shell operators act as word boundaries.
+WORDCHARS='*?_[]~!#$%^{}'
+
 # Enable colored ls output
 export CLICOLOR=1
 # Bold blue directories, default files (macOS BSD ls format)
