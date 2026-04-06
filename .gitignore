@@ -40,4 +40,4 @@ zshrc.d/local.zsh
 # Desktop / OS
 # ==============================================================================
 # GTK bookmarks are path-dependent.
-config/gtk-3.0/bookmarks
+config/linux/gtk-3.0/bookmarks
