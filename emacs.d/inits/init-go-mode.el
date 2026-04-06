@@ -3,7 +3,7 @@
 ;;------------------------------------------------------------------------------
 ;; Uses eglot (built-in Emacs 29+) with gopls as the language server.
 ;; Eglot integrates with xref for navigation and capf for completions (via
-;; company).
+;; corfu).
 ;;
 ;; Dependencies:
 ;;   go install golang.org/x/tools/cmd/goimports@latest

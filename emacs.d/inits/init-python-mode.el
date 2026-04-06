@@ -4,7 +4,7 @@
 ;; Uses eglot (built-in Emacs 29+) with pyright as the language server, and
 ;; python-ts-mode (tree-sitter) for superior syntax highlighting/indentation.
 ;; Eglot integrates with standard Emacs infrastructure: xref for navigation,
-;; flymake for diagnostics, eldoc for docs, capf for completions (via company).
+;; flymake for diagnostics, eldoc for docs, capf for completions (via corfu).
 ;;
 ;; Navigation, bound by eglot via xref.
 ;;   M-. xref-find-definitions
@@ -39,12 +39,9 @@
 ;; Remap python-mode to python-ts-mode for tree-sitter powered highlighting.
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
 
-;; Eglot is built-in (Emacs 29+). Pyright is auto-detected if installed;
-;; explicitly listed here to prefer it over the default pylsp.
-(use-package eglot
-  :ensure nil
-  :defer t
-  :config
+;; Register Pyright as the language server for Python modes.
+;; Eglot base config lives in init-completion.el.
+(with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
                '((python-mode python-ts-mode) . ("pyright-langserver" "--stdio"))))
 
