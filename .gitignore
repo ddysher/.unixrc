@@ -1,31 +1,43 @@
-# Emacs plugin jedi creates the directory.
+# ==============================================================================
+# Emacs: runtime and session files
+# ==============================================================================
+emacs.d/history
+emacs.d/recentf
+emacs.d/tramp
+emacs.d/.lsp-session-v1
 emacs.d/.python-environments
-
-# Native-compiled *.eln files for *.el configuration files.
-emacs.d/eln-cache/
-
-# Ignore chinese-pyim, including:
-#   pyim-personal.txt - personal dict keeps changing, noisy.
-#   pyim-bigdict.pyim - the file is ~20M, pull separately.
-emacs.d/pyim
-
-# Ignore transient directory, e.g transient/history.el
-emacs.d/transient/
-
-# Ignore url directory, e.g. url/cookies
-emacs.d/url/
-
-# Ignore bookmarks on folder GUI since it is path dependent.
-config/gtk-3.0/bookmarks
-
-# Ignore srecode-map due to conflicts in different OSes and it's not used for now.
 emacs.d/srecode-map.el
 
-# Ignore lsp-mode session.
-emacs.d/.lsp-session-v1
+# ==============================================================================
+# Emacs: package management
+# ==============================================================================
+emacs.d/elpa
+emacs.d/package-quickstart.el
+emacs.d/package-quickstart.elc
 
-# Local zsh overrides (host-specific, not tracked).
+# ==============================================================================
+# Emacs: auto-generated directories
+# ==============================================================================
+emacs.d/auto-save-list
+emacs.d/eln-cache/
+emacs.d/transient/
+emacs.d/tree-sitter/
+emacs.d/url/
+
+# ==============================================================================
+# Emacs: plugin-specific data
+# ==============================================================================
+# pyim: personal dict changes frequently; bigdict is ~20M, pulled separately.
+emacs.d/pyim
+
+# ==============================================================================
+# Shell
+# ==============================================================================
+# Host-specific zsh overrides, not tracked.
 zshrc.d/local.zsh
 
-# Tree-sitter grammars are compiled binaries, auto-downloaded by Emacs.
-emacs.d/tree-sitter/
+# ==============================================================================
+# Desktop / OS
+# ==============================================================================
+# GTK bookmarks are path-dependent.
+config/gtk-3.0/bookmarks
