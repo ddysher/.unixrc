@@ -10,8 +10,7 @@
   (setq show-trailing-whitespace t)
   (setq truncate-lines t)
   (hl-line-mode 1)
-  (require 'yasnippet)
-  (yas-minor-mode))
+  (tempel-abbrev-mode))
 
 (add-hook 'prog-mode-hook 'prog-mode-custom-hook)
 
@@ -27,7 +26,7 @@
 (use-package dockerfile-mode :defer t)
 (use-package wsd-mode :defer t)
 
-;; Scripting and systems languages.
+;; Scripting languages.
 (defun sh-mode-custom-hook ()
   (setq sh-indentation universal-indent-size)
   (setq sh-basic-offset universal-indent-size))
@@ -35,11 +34,24 @@
 
 (use-package lua-mode
   :hook (lua-mode . (lambda () (setq lua-indent-level universal-indent-size))))
+
 (use-package php-mode :defer t)
+
 (use-package matlab-mode
   :mode ("\\.m\\'" . matlab-mode))
+
+;; System language.
+(defun java-mode-custom-hook ()
+  (setq c-basic-offset universal-indent-size)
+  (setq tab-width universal-indent-size)
+  (local-set-key "\C-m" 'newline-and-indent)) ; indent next line properly
+
+(add-hook 'java-mode-hook 'java-mode-custom-hook)
+
 (use-package scala-mode :defer t)
 (use-package sbt-mode :defer t)
+
+(use-package rust-mode :defer t)
 
 ;; Infrastructure config.
 (use-package apache-mode
@@ -69,4 +81,4 @@
 (use-package neotree :defer t)
 
 
-(provide 'init-more-devtools)
+(provide 'init-more-devconfigs)

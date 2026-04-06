@@ -52,25 +52,9 @@
   (setq web-mode-code-indent-offset 2)
 
   (setq web-mode-style-padding 2)
-  (setq web-mode-script-padding 2)
-
-  (add-hook 'web-mode-before-auto-complete-hooks
-            'web-mode-before-auto-complete-custom-hooks))
+  (setq web-mode-script-padding 2))
 
 (defun web-mode-custom-hook ()
-  (yas-minor-mode))
-
-(defun web-mode-before-auto-complete-custom-hooks ()
-  (let ((web-mode-cur-language
-         (web-mode-language-at-pos)))
-    (if (or (string= web-mode-cur-language "javascript") (string= web-mode-cur-language "jsx"))
-        (yas-activate-extra-mode 'js-mode)
-      (yas-deactivate-extra-mode 'js-mode))
-    (if (string= web-mode-cur-language "html")
-        (yas-activate-extra-mode 'html-mode)
-      (yas-deactivate-extra-mode 'html-mode))
-    (if (string= web-mode-cur-language "css")
-        (yas-activate-extra-mode 'css-mode)
-      (yas-deactivate-extra-mode 'css-mode))))
+  (tempel-abbrev-mode))
 
 (provide 'init-web-dev)

@@ -11,6 +11,7 @@
 ;; In-buffer completion:
 ;;   corfu      - popup completion UI for completion-at-point
 ;;   cape       - completion-at-point extensions (file, dabbrev, etc.)
+;;   tempel     - lightweight snippet system; templates in ~/.emacs.d/templates
 ;;
 ;; LSP / Eglot (base config; language servers registered in language files):
 ;;   eglot      - built-in LSP client (Emacs 29+), provides capf for corfu
@@ -82,6 +83,24 @@
   :init
   (add-to-list 'completion-at-point-functions #'cape-dabbrev t)
   (add-to-list 'completion-at-point-functions #'cape-file t))
+
+
+;;------------------------------------------------------------------------------
+;; Snippets (Tempel)
+;;------------------------------------------------------------------------------
+;; tempel-complete is a capf, so snippets appear inline in the Corfu popup.
+;; TAB / S-TAB navigate between placeholders after expanding.
+;; Templates are defined in ~/.emacs.d/templates.
+
+(use-package tempel
+  :custom
+  (tempel-path "~/.emacs.d/templates")
+  :init
+  (add-to-list 'completion-at-point-functions #'tempel-complete t)
+  :bind
+  (:map tempel-map
+   ("TAB"       . tempel-next)
+   ("<backtab>" . tempel-previous)))
 
 
 ;;------------------------------------------------------------------------------

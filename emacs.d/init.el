@@ -33,9 +33,8 @@
 (require 'init-org)
 (require 'init-gptel)
 (require 'init-tramp)
-(require 'init-completion)
 (require 'init-livedown)
-(require 'init-yasnippet)
+(require 'init-completion)
 (require 'init-magit-mode)
 (require 'init-multi-vterm)
 (require 'init-window-numbering)
@@ -44,11 +43,9 @@
 (require 'init-cc-mode)
 (require 'init-go-mode)
 (require 'init-web-dev)
-(require 'init-rust-mode)
-(require 'init-java-mode)
 (require 'init-python-mode)
 (require 'init-markdown-mode)
-(require 'init-more-devtools)
+(require 'init-more-devconfigs)
 
 ;; My custom mode, functions, etc.
 (require 'init-functions)
@@ -77,13 +74,13 @@
      "5dc0ae2d193460de979a463b907b4b2c6d2c9c4657b2e9e66b8898d2592e3de5"
      default))
  '(package-selected-packages
-   '(ag apache-mode company consult dockerfile-mode embark embark-consult
+   '(ag apache-mode cape consult corfu dockerfile-mode embark embark-consult
         exec-path-from-shell flycheck ggtags go-mode gptel hackernews
         js2-mode lua-mode magit marginalia markdown-mode material-theme
         matlab-mode multi-vterm neotree nginx-mode orderless pet php-mode
-        protobuf-mode pyim rust-mode sbt-mode scala-mode thrift vertico
-        vterm web-mode window-numbering wsd-mode yaml-mode yasnippet
-        zenburn-theme))
+        protobuf-mode pyim pyim-basedict rust-mode sbt-mode scala-mode
+        tempel thrift vertico vterm web-mode window-numbering wsd-mode
+        yaml-mode zenburn-theme))
  '(safe-local-variable-values '((c-indent-level . 4)))
  '(send-mail-function 'mailclient-send-it)
  '(wsd-style "roundgreen"))
