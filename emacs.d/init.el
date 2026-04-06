@@ -33,7 +33,6 @@
 (require 'init-org)
 (require 'init-gptel)
 (require 'init-tramp)
-(require 'init-livedown)
 (require 'init-completion)
 (require 'init-magit-mode)
 (require 'init-multi-vterm)
