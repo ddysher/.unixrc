@@ -1,32 +1,53 @@
+#
 # Shell integration
+#
 # Keep terminal and shell cursor behavior from fighting each other.
 shell-integration-features = no-cursor
 
+#
 # Input behavior
 # Use Option as Alt for terminal-style key combos on macOS.
+# This ensures the physical Option key behaves like a standard Meta/Alt key in the terminal.
 macos-option-as-alt = true
-macos-icon = xray
-key-remap = cmd=alt
 
-# Cursor
+# Remap cmd and alt
+# The first remap intercepts the physical Command key and translates it to Alt internally.
+key-remap = cmd=alt
+key-remap = alt=cmd
+
+# Unbind macOS shortcuts:
+# macOS globally intercepts certain Command shortcuts (like Cmd+W) before they reach the terminal.
+# Unbinding them here forces macOS to pass the raw keypress down to Ghostty.
+keybind = cmd+w=unbind
+keybind = cmd+d=unbind
+keybind = cmd+n=unbind
+
+# Rebind: pressing cmd with certain punctuation keys
+# macOS prevents Shift+> from generating the `>` character when Command is held.
+# We force Ghostty to manually send the correct Meta+> and Meta+< escape sequences to Emacs.
+keybind = alt+shift+.=text:\x1b>
+keybind = alt+shift+,=text:\x1b<
+
+# Vim-style movement between terminal splits.
+keybind = alt+h=goto_split:left
+keybind = alt+j=goto_split:down
+keybind = alt+k=goto_split:up
+keybind = alt+l=goto_split:right
+
+#
+## UI configuration
+#
 # Keep the cursor steady instead of blinking.
 cursor-style-blink = false
 
-# Theme
-# Default color theme.
+# Default color theme and app icon.
 #theme = Catppuccin Mocha
 theme = Monokai Pro Machine
+macos-icon = xray
 
-# Fonts
 # Primary terminal font and size.
-# font-family = Monolisa
 font-family = Monaco
 font-size = 11
-adjust-cell-width = 10%
 
-# Split navigation
-# Vim-style movement between terminal splits.
-keybind = cmd+h=goto_split:left
-keybind = cmd+j=goto_split:down
-keybind = cmd+k=goto_split:up
-keybind = cmd+l=goto_split:right
+# Adds more space between characters
+adjust-cell-width = 10%
