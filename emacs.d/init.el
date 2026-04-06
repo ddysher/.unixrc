@@ -32,7 +32,6 @@
 ;; General mode with configurations.
 (require 'init-ido)
 (require 'init-org)
-(require 'init-smex)
 (require 'init-gptel)
 (require 'init-tramp)
 (require 'init-company)
@@ -45,8 +44,7 @@
 ;; Initialize language related modes that require configurations.
 (require 'init-cc-mode)
 (require 'init-go-mode)
-(require 'init-js2-mode)
-(require 'init-web-mode)
+(require 'init-web-dev)
 (require 'init-rust-mode)
 (require 'init-java-mode)
 (require 'init-python-mode)

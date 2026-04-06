@@ -1,13 +1,13 @@
 ;;------------------------------------------------------------------------------
-;; Provide ido, which makes completing buffers and finding files much easier.
-;; Note ido creates "ido.last" file under "~/.emacs.d" directory.
-;;   http://www.emacswiki.org/cgi-bin/wiki/InteractivelyDoThings
+;; ido: interactive completion for buffers and files.
+;; smex: M-x enhancement built on top of ido; shows recently/frequently used commands.
 ;;
-;;------------------------------------------------------------------------------
-;; Usage:
-;;   C-j create file even if there is completion for the name. e.g. create file
-;;       init.el when there is init-abc.el. Also used to open directory.
-;;   C-l refresh directory content.
+;; Usage (ido):
+;;   C-j  create file even if there is a completion match (also opens directories)
+;;   C-l  refresh directory content
+;; Usage (smex):
+;;   M-x    invoke smex (recently/frequently used commands first)
+;;   M-X    smex filtered to major-mode commands only
 ;;------------------------------------------------------------------------------
 (use-package ido
   :ensure nil
@@ -34,5 +34,10 @@
   (add-to-list 'ido-ignore-files ".csync_journal.db")
   (add-to-list 'ido-ignore-files ".csync_journal.db-shm")
   (add-to-list 'ido-ignore-files ".csync_journal.db-wal"))
+
+(use-package smex
+  :bind (("M-x" . smex)
+         ("M-X" . smex-major-mode-commands)
+         ("C-c C-c M-x" . execute-extended-command)))
 
 (provide 'init-ido)
