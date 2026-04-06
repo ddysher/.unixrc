@@ -21,10 +21,13 @@ key-remap = alt=cmd
 keybind = cmd+w=unbind
 keybind = cmd+d=unbind
 keybind = cmd+n=unbind
+keybind = cmd+,=unbind
 
 # Rebind: pressing cmd with certain punctuation keys
-# macOS prevents Shift+> from generating the `>` character when Command is held.
-# We force Ghostty to manually send the correct Meta+> and Meta+< escape sequences to Emacs.
+# macOS intercepts Command+punctuation before it reaches the terminal.
+# We force Ghostty to manually send the correct Meta escape sequences.
+keybind = alt+.=text:\x1b.
+keybind = alt+,=text:\x1b,
 keybind = alt+shift+.=text:\x1b>
 keybind = alt+shift+,=text:\x1b<
 
