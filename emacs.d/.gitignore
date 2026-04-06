@@ -1,5 +1,6 @@
 # files to igore
 ac-comphist.dat
+history
 ido.last
 tramp
 smex-items
