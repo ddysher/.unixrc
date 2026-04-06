@@ -30,10 +30,10 @@
 ;; Load configs for features and modes
 ;;------------------------------------------------------------------------------
 ;; General mode with configurations.
-(require 'init-ido)
 (require 'init-org)
 (require 'init-gptel)
 (require 'init-tramp)
+(require 'init-vertico)
 (require 'init-company)
 (require 'init-livedown)
 (require 'init-yasnippet)
@@ -78,12 +78,13 @@
      "5dc0ae2d193460de979a463b907b4b2c6d2c9c4657b2e9e66b8898d2592e3de5"
      default))
  '(package-selected-packages
-   '(ag apache-mode company dockerfile-mode exec-path-from-shell flycheck
-        ggtags go-mode gptel hackernews js2-mode lua-mode magit
-        markdown-mode material-theme matlab-mode multi-vterm neotree
-        nginx-mode pet php-mode protobuf-mode pyim rust-mode sbt-mode
-        scala-mode smex thrift vterm web-mode window-numbering
-        wsd-mode yaml-mode yasnippet zenburn-theme))
+   '(ag apache-mode company consult dockerfile-mode embark embark-consult
+        exec-path-from-shell flycheck ggtags go-mode gptel hackernews
+        js2-mode lua-mode magit marginalia markdown-mode material-theme
+        matlab-mode multi-vterm neotree nginx-mode orderless pet php-mode
+        protobuf-mode pyim rust-mode sbt-mode scala-mode thrift vertico
+        vterm web-mode window-numbering wsd-mode yaml-mode yasnippet
+        zenburn-theme))
  '(safe-local-variable-values '((c-indent-level . 4)))
  '(send-mail-function 'mailclient-send-it)
  '(wsd-style "roundgreen"))

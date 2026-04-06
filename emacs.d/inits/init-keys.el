@@ -29,9 +29,11 @@
 (global-set-key (kbd "C-.") 'next-buffer)
 (global-set-key (kbd "C-/") 'next-buffer)
 
-;;; Buffer management.
-;; Switch buffer in the minibuffer.
-(global-set-key (kbd "C-o") 'switch-to-buffer)
+;;; Buffer management (consult).
+;; Switch buffer, show recent files and bookmarks.
+(global-set-key (kbd "C-o") 'consult-buffer)
+;; Open a recent file.
+(global-set-key (kbd "C-x C-r") 'consult-recent-file)
 ;; List all buffers in a new window.
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
 (global-set-key (kbd "C-c C-b") 'buffer-menu)
@@ -39,6 +41,16 @@
 (global-set-key (kbd "C-c s") 'search-buffer)
 ;; Search all buffers for matching pattern.
 (global-set-key (kbd "C-c C-s") 'search-all-buffers)
+
+;;; Search (consult).
+(global-set-key (kbd "M-s g") 'consult-grep)
+(global-set-key (kbd "M-s G") 'consult-git-grep)
+(global-set-key (kbd "M-s l") 'consult-line)
+(global-set-key (kbd "M-s r") 'consult-ripgrep)
+
+;;; Embark: contextual actions on candidates.
+(global-set-key (kbd "C-.") 'embark-act)
+(global-set-key (kbd "C-;") 'embark-dwim)
 
 ;;; Window management.
 ;; Winner mode: undo/redo window layout changes.

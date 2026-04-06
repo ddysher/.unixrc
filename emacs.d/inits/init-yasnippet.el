@@ -21,7 +21,7 @@
   :init
   (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
   :config
-  (setq yas-prompt-functions '(yas-ido-prompt yas-completing-prompt))
+  (setq yas-prompt-functions '(yas-completing-prompt))
   (define-key yas-minor-mode-map (kbd "<tab>") nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
   (define-key yas-minor-mode-map (kbd "C-q") 'yas-expand))
