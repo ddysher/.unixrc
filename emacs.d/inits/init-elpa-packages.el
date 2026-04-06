@@ -7,6 +7,8 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives  '("gnu" . "http://elpa.gnu.org/packages/"))
 
+(package-initialize)
+
 ;; Auto-refresh quickstart cache after installing or deleting packages.
 (advice-add 'package-install :after
             (lambda (&rest _) (package-quickstart-refresh)))
