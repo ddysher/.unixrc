@@ -82,7 +82,7 @@
         ggtags go-mode gptel hackernews js2-mode lua-mode magit
         markdown-mode material-theme matlab-mode multi-vterm neotree
         nginx-mode pet php-mode protobuf-mode pyim rust-mode sbt-mode
-        scala-mode smex tern thrift vterm web-mode window-numbering
+        scala-mode smex thrift vterm web-mode window-numbering
         wsd-mode yaml-mode yasnippet zenburn-theme))
  '(safe-local-variable-values '((c-indent-level . 4)))
  '(send-mail-function 'mailclient-send-it)

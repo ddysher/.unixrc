@@ -2,7 +2,6 @@
 ;; Web development modes: js2-mode and web-mode.
 ;;
 ;; js2-mode: JavaScript major mode with syntax checking; handles .js and .jsx.
-;;   Code analysis via tern (https://github.com/ternjs/tern).
 ;; web-mode: major mode for HTML templates, CSS, and other web file types.
 ;;------------------------------------------------------------------------------
 
