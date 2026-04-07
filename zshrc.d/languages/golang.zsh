@@ -2,12 +2,10 @@
 ## Go Development Environment
 ##------------------------------------------------------------------------------
 
-# Development workspace
-export GOPATH="$HOME/code/workspace"
-export CDPATH="${CDPATH:+$CDPATH:}$GOPATH/src"
-
-# Go workspace and PATH
-export PATH="${PATH:+$PATH:}$GOPATH/bin"
+# Go caches and tool binaries
+export GOPATH="$HOME/.cache/go"
+export GOMODCACHE="$HOME/.cache/go/mod"
+export GOBIN="$HOME/.local/bin"
 
 # Go proxy
 # or call "$ go env -w GOPROXY=https://goproxy.cn,direct"

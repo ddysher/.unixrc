@@ -7,9 +7,7 @@
   :config
   (setq exec-path-from-shell-variables
         (append exec-path-from-shell-variables
-                (if *darwin*
-                    '("GOPATH" "GOROOT")
-                  '("GOPATH"))))
+                '("GOPATH" "GOMODCACHE" "GOBIN")))
   (exec-path-from-shell-initialize))
 
 (provide 'init-exec-path-from-shell)
