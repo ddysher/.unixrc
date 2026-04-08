@@ -1,105 +1,17 @@
-;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*- 
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("kube.api.appsv1"
- (filename . "~/code/workspace/k8s.io/api/apps/v1/types.go")
- (front-context-string . "/*\nCopyright 201")
- (rear-context-string)
- (position . 1))
-("cadvisor/fs.go"
- (filename . "~/code/workspace/github.com/google/cadvisor/fs/fs.go")
- (front-context-string . "func NewFsInfo(c")
- (rear-context-string . "tring]string\n}\n\n")
- (position . 2128))
-("cadvisor/manager.go"
- (filename . "~/code/workspace/github.com/google/cadvisor/manager/manager.go")
- (front-context-string . "func New(memoryC")
- (rear-context-string . " a new manager.\n")
- (position . 5898))
-("cadvisor/cadvisor.go"
- (filename . "~/code/workspace/github.com/google/cadvisor/cadvisor.go")
- (front-context-string . "func main() {\n	d")
- (rear-context-string . "CPU usage.\")\n}\n\n")
- (position . 3857))
-("kube.api.corev1"
- (filename . "~/code/workspace/k8s.io/api/core/v1/types.go")
- (front-context-string . "/*\nCopyright 201")
- (rear-context-string)
- (position . 1))
-("kube.pkg.volume.go"
- (filename . "~/code/workspace/k8s.io/kubernetes/pkg/volume/volume.go")
- (front-context-string . "/*\nCopyright 201")
- (rear-context-string)
- (position . 1))
-("kube.pkg.kubelet.go"
- (filename . "~/code/workspace/k8s.io/kubernetes/pkg/kubelet/kubelet.go")
- (front-context-string . "func NewMainKube")
- (rear-context-string . "ld happen here.\n")
- (position . 11971))
-("kubernetes"
- (filename . "~/code/workspace/k8s.io/kubernetes/README.md")
- (front-context-string . "/*\nCopyright 201")
- (rear-context-string)
- (position . 1))
-("tool"
- (filename . "~/code/tool/README.md")
- (front-context-string . "## Experiment wi")
- (rear-context-string)
- (position . 1))
-("code"
- (filename . "~/code/general.org")
- (front-context-string . "#+STARTUP: showa")
- (rear-context-string)
- (position . 1))
-("elisp"
- (filename . "~/code/language/elisp/list.el")
- (front-context-string . ";; A list is kep")
- (rear-context-string)
- (position . 1))
-("python"
- (filename . "~/code/language/python/string.py")
- (front-context-string . "# Experiment wit")
- (rear-context-string)
- (position . 1))
-("golang"
- (filename . "~/code/language/go/example/hello.go")
- (front-context-string . "// Go 'hello wor")
- (rear-context-string)
- (position . 1))
-("shell"
- (filename . "~/code/language/shell/variables.sh")
- (front-context-string . "#!/bin/bash\n\n\n# ")
- (rear-context-string)
- (position . 1))
-("install"
- (filename . "~/.unixrc/scripts/install_ubuntu.sh")
- (front-context-string . "#!/bin/bash\nset ")
- (rear-context-string)
- (position . 1))
-("modules_codegit"
- (filename . "~/code/.gitmodules")
- (front-context-string . "[submodule \"proj")
- (rear-context-string)
- (position . 1))
-("ignore_codegit"
- (filename . "~/code/.gitignore")
- (front-context-string . "# Structure of c")
- (rear-context-string)
- (position . 1))
-("zsh-config"
- (filename . "~/.unixrc/.zshrc")
+(("zsh_config"
+ (filename . "~/.unixrc/zshrc.d/zshrc")
  (front-context-string . "##--------------")
  (rear-context-string)
- (position . 1))
+ (position . 1)
+ (last-modified 27097 46745 452125 0))
 ("emacs_config"
- (filename . "~/.emacs.d/init.el")
+ (filename . "~/.unixrc/emacs.d/init.el")
  (front-context-string . ";;;;;;;;;;;;;;;;")
  (rear-context-string)
- (position . 1))
-("org"
- (filename . "~/code/general.org")
- (front-context-string . "#+STARTUP: showa")
- (rear-context-string)
- (position . 1))
+ (position . 1)
+ (last-modified 27093 6208 226852 0))
 )
