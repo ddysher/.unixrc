@@ -49,8 +49,8 @@ theme = Monokai Pro Machine
 macos-icon = xray
 
 # Primary terminal font and size.
-font-family = Monaco
-font-size = 11
+font-family = SauceCodePro Nerd Font
+font-size = 12
 
 # Adds more space between characters
 adjust-cell-width = 10%
