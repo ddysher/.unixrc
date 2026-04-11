@@ -55,3 +55,9 @@ font-size = 12
 
 # Adds more space between characters (not used for Source Code Pro)
 #adjust-cell-width = 10%
+
+#
+# Updates
+#
+auto-update = off
+auto-update-channel = stable
