@@ -1,40 +1,16 @@
 ;;------------------------------------------------------------------------------
-;; Load theme and font
+;; Theme and font defaults
 ;;------------------------------------------------------------------------------
-(use-package zenburn-theme :defer t)
-(use-package material-theme :defer t)
+(use-package doom-themes
+  :ensure t
+  :init
+  (load-theme 'doom-one t))
 
-(defun load-zenburn ()
-  (load-theme 'zenburn t)
-  ;; Make active buffer more highlighted, used with zenburn. Color code borrowed
-  ;; from zenburn-theme.el, so this need to be work with zenburn.
-  (set-face-attribute 'mode-line nil
-                      :foreground "gray80" :background "IndianRed4"
-                      :box '(:line-width 1 :style released-button))
-  (set-face-attribute 'mode-line-inactive nil
-                      :foreground "#5F7F5F" :background "#383838"
-                      :box '(:line-width 1 :style released-button)))
-
-(defun load-material ()
-  (load-theme 'material t)
-  ;; Fix nil face attributes that should be 'unspecified (material-theme bug).
-  (set-face-attribute 'link nil :foreground 'unspecified)
-  (set-face-attribute 'header-line nil :background 'unspecified)
-  (set-face-attribute 'mode-line-buffer-id nil :background 'unspecified))
-
-;; Load commonly used themes, options are listed below:
-;;   (load-zenburn)
-;;   (load-material)
-(load-material)
-
-;; Load fonts, options are:
+;; macOS uses a Nerd Font so terminal and Emacs render the same icon glyphs.
+;; When using a non-Nerd Font, add a PUA fallback such as:
+;;   (set-fontset-font t '(#xE000 . #xF8FF) "Symbols Nerd Font Mono")
+;; Linux keeps the existing compact Hack setup.
+(cond (*darwin* (set-frame-font "SauceCodePro Nerd Font-12")))
 (cond (*linux*  (set-frame-font "Hack-9.5")))
-;; (cond (*linux*  (set-frame-font "Source Code Pro")))
-;; (cond (*linux*  (set-frame-font "DejaVu Sans Mono-10")))
-
-(cond (*darwin* (set-frame-font "Monaco-11")))
-
-;; Machine specifc fonts
-;; (cond (*macair* (set-frame-font "Monaco-10")))
 
 (provide 'init-theme)
