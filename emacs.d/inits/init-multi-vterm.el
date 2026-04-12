@@ -1,5 +1,6 @@
 ;;------------------------------------------------------------------------------
-;; Provide multi-vterm mode, enhanced vterm-mode in emacs
+;; Multi-vterm: enhanced terminal emulation with workarounds for
+;; full-screen TUI apps (Claude Code, Codex) and minibuffer interactions.
 ;;------------------------------------------------------------------------------
 (use-package vterm
   :defer t
@@ -7,7 +8,7 @@
   (blink-cursor-mode -1)
   :config
   (defun vterm-mode-custom-hook ()
-    ;; Add keybindings in both vterm-mode and vterm-copy-mode.
+    ;; Keybindings for both vterm-mode and vterm-copy-mode.
     (define-key vterm-mode-map [f1] #'find-file)
     (define-key vterm-mode-map [f3] #'other-window)
     (define-key vterm-mode-map [f4] #'multi-vterm-dedicated-open)
@@ -19,49 +20,48 @@
     (define-key vterm-mode-map (kbd "M-]")  #'multi-vterm-next)
     (define-key vterm-copy-mode-map (kbd "C-q") #'vterm-copy-mode)
 
-    ;; Claude Code emits U+23FA (BLACK CIRCLE FOR RECORD) in its spinner.
-    ;; No Nerd Font covers it, so Emacs falls back to STIX Two Math whose
-    ;; taller metrics make vterm rows jump. Substitute it to ◉ via the
-    ;; buffer-local display table.
+    ;; Substitute Misc Technical symbols that lack monospace glyphs in
+    ;; Nerd Fonts.  Display table runs before font selection, so these
+    ;; override the Unifont fontset fallback for these specific chars.
+    ;; The glyphs here are used in Claude Code.
     (when buffer-display-table
-      (aset buffer-display-table ?⏺ (vector ?◉)))
+      (aset buffer-display-table ?⏺ (vector ?●))   ; U+23FA → U+25CF
+      (aset buffer-display-table ?⏵ (vector ?▶))   ; U+23F5 → U+25B6
+      (aset buffer-display-table ?⏸ (vector ?‖)))  ; U+23F8 → U+2016
 
-    ;; Claude Code's banner pads with U+00A0 (NO-BREAK SPACE). Emacs's
-    ;; built-in "nobreak-space" face highlights every NBSP, which shows up
-    ;; as a cyan bar under the banner. Disable it locally.
+    ;; Suppress the cyan highlight Emacs draws on every U+00A0 (NBSP)
+    ;; that Claude Code uses for banner padding.
     (setq-local nobreak-char-display nil))
   (add-hook 'vterm-mode-hook 'vterm-mode-custom-hook)
 
-  ;; Claude Code hides the terminal cursor via DECTCEM (\e[?25l) while
-  ;; rendering its Ink UI. vterm-module.c honors that by setting the
-  ;; buffer-local "cursor-type" to nil (see term_movecursor's
-  ;; cursor_visible == false branch). "vterm-copy-mode" then inherits that
-  ;; invisible cursor, so point moves but nothing is drawn. Force a visible
-  ;; cursor on copy-mode entry; when copy-mode exits, the next frame from
-  ;; vterm will re-sync "cursor-type" to whatever the running app wants.
+  ;; Strip fake newlines on entering copy mode so that
+  ;; `toggle-truncate-lines' operates on real long lines instead of
+  ;; the short segments vterm breaks them into for rendering.
+  (setq vterm-copy-mode-remove-fake-newlines t)
+
+  ;; Full-screen TUIs hide the cursor via DECTCEM (\e[?25l), which
+  ;; vterm honors by setting buffer-local `cursor-type' to nil.
+  ;; Copy mode inherits that invisible cursor.  Force a visible box
+  ;; cursor on entry; exiting copy mode lets vterm re-sync it.
   (add-hook 'vterm-copy-mode-hook
             (lambda ()
               (when vterm-copy-mode
                 (setq-local cursor-type 'box))))
 
-  ;; Claude Code's thinking-mode spinner cycles through Dingbats decorative
-  ;; asterisks. By default, Emacs falls back to proportional fonts like Arial
-  ;; Unicode MS, whose taller ascent+descent make the vterm row jump as the
-  ;; spinner cycles. Menlo ships with the whole Dingbats block with monospace-
-  ;; compatible metrics, so pin Menlo as the Dingbats font. Using a
-  ;; "font-spec" and *replacing* (no 'prepend) makes this stick on macOS —
-  ;; 'prepend with a bare string gets bypassed by the CoreText fallback.
+  ;; Pin monospace fallback fonts for Unicode blocks that TUI apps use
+  ;; but Nerd Fonts lack — without this, Emacs falls back to
+  ;; proportional fonts (STIX Two Math, Arial Unicode) whose taller
+  ;; metrics cause vterm row jumps.  Using `font-spec' and replacing
+  ;; (not prepending) prevents the CoreText fallback from overriding.
   (when *darwin*
-    (set-fontset-font t '(#x2700 . #x27BF) (font-spec :family "Menlo")))
+    (set-fontset-font t '(#x2300 . #x23FF) (font-spec :family "Unifont")) ; Misc Technical
+    (set-fontset-font t '(#x2700 . #x27BF) (font-spec :family "Menlo"))) ; Dingbats
 
-  ;; Codex (and other chalk-based TUIs) uses SGR 2 (faint/dim) for tips, but
-  ;; libvterm's SGR handler in pen.c has no `case 2:' — it drops the attribute
-  ;; silently, so faint text renders identically to normal text. Advise
-  ;; "vterm--filter" to rewrite SGR 2 into SGR 90 (bright black / gray) on
-  ;; the raw byte stream before it reaches the C module. Also rewrite SGR 22
-  ;; (normal intensity, which ANSI overloads to mean "bold off AND faint off")
-  ;; to additionally reset fg to default (SGR 39), so faint-off properly
-  ;; restores the original foreground color.
+  ;; libvterm lacks SGR 2 (faint/dim) support — it silently drops the
+  ;; attribute.  Rewrite SGR 2 → SGR 90 (bright black) and SGR 22 →
+  ;; SGR 22;39 (reset intensity + reset fg) on the raw byte stream
+  ;; before it reaches the C module so faint text is visually distinct.
+  ;; Codex uses faint/dim extensively.
   (defun +vterm-rewrite-faint (args)
     (let ((proc  (nth 0 args))
           (input (nth 1 args)))
@@ -73,16 +73,54 @@
         args)))
   (advice-add 'vterm--filter :filter-args #'+vterm-rewrite-faint)
 
-  ;; Full-screen TUIs (Claude Code's Ink UI) re-render on every SIGWINCH.
-  ;; When the minibuffer activates, Emacs shrinks the vterm window by one
-  ;; line, triggering a resize → re-render → visible jump.  Suppress the
-  ;; resize while the minibuffer is active; when it closes the window
-  ;; returns to its original height and the terminal size is already correct.
+  ;; --- Minibuffer anti-jump -------------------------------------------------
+  ;; Two complementary fixes prevent vterm content from shifting when the
+  ;; minibuffer activates or grows (e.g. Vertico candidates):
+  ;;
+  ;; 1. Suppress SIGWINCH: block `vterm--window-adjust-process-window-size'
+  ;;    while the minibuffer is active so full-screen TUIs don't re-render
+  ;;    for the temporarily smaller window.
   (defun +vterm-suppress-minibuffer-resize (orig-fn process windows)
     (unless (minibuffer-window-active-p (minibuffer-window))
       (funcall orig-fn process windows)))
   (advice-add 'vterm--window-adjust-process-window-size
-              :around #'+vterm-suppress-minibuffer-resize))
+              :around #'+vterm-suppress-minibuffer-resize)
+
+  ;; 2. Pin scroll position: save and restore window-start/point for
+  ;;    every vterm window so Emacs doesn't scroll to keep point visible
+  ;;    when the window shrinks behind the minibuffer.
+  (defun +vterm-save-window-starts ()
+    (walk-windows
+     (lambda (w)
+       (when (with-current-buffer (window-buffer w)
+               (derived-mode-p 'vterm-mode))
+         (set-window-parameter w '+vterm-saved-start (window-start w))
+         (set-window-parameter w '+vterm-saved-point (window-point w))))))
+
+  (defun +vterm-pin-window-starts (_)
+    (when (minibuffer-window-active-p (minibuffer-window))
+      (walk-windows
+       (lambda (w)
+         (let ((saved-start (window-parameter w '+vterm-saved-start)))
+           (when (and saved-start
+                      (with-current-buffer (window-buffer w)
+                        (derived-mode-p 'vterm-mode)))
+             (set-window-start w saved-start)
+             (set-window-point w saved-start)))))))
+
+  (defun +vterm-clear-saved-starts ()
+    (walk-windows
+     (lambda (w)
+       (when (window-parameter w '+vterm-saved-start)
+         (let ((pt (window-parameter w '+vterm-saved-point)))
+           (when pt (set-window-point w pt)))
+         (set-window-parameter w '+vterm-saved-start nil)
+         (set-window-parameter w '+vterm-saved-point nil)))
+     nil t))
+
+  (add-hook 'minibuffer-setup-hook    #'+vterm-save-window-starts)
+  (add-hook 'minibuffer-exit-hook     #'+vterm-clear-saved-starts)
+  (add-hook 'pre-redisplay-functions  #'+vterm-pin-window-starts))
 
 (use-package multi-vterm
   :after vterm
