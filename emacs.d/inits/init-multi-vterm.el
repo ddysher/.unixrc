@@ -49,6 +49,25 @@
   (when *darwin*
     (set-fontset-font t '(#x2700 . #x27BF) (font-spec :family "Menlo")))
 
+  ;; Codex (and other chalk-based TUIs) uses SGR 2 (faint/dim) for tips, but
+  ;; libvterm's SGR handler in pen.c has no `case 2:' — it drops the attribute
+  ;; silently, so faint text renders identically to normal text. Advise
+  ;; "vterm--filter" to rewrite SGR 2 into SGR 90 (bright black / gray) on
+  ;; the raw byte stream before it reaches the C module. Also rewrite SGR 22
+  ;; (normal intensity, which ANSI overloads to mean "bold off AND faint off")
+  ;; to additionally reset fg to default (SGR 39), so faint-off properly
+  ;; restores the original foreground color.
+  (defun +vterm-rewrite-faint (args)
+    (let ((proc  (nth 0 args))
+          (input (nth 1 args)))
+      (if (and input (stringp input))
+          (let ((s input))
+            (setq s (replace-regexp-in-string "\033\\[2m"  "\033[90m"   s nil t))
+            (setq s (replace-regexp-in-string "\033\\[22m" "\033[22;39m" s nil t))
+            (list proc s))
+        args)))
+  (advice-add 'vterm--filter :filter-args #'+vterm-rewrite-faint)
+
   (add-hook 'vterm-mode-hook 'vterm-mode-custom-hook))
 
 (use-package multi-vterm
