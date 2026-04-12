@@ -27,6 +27,18 @@
     ;; as a cyan bar under the banner. Disable it locally.
     (setq-local nobreak-char-display nil))
 
+  ;; Claude Code hides the terminal cursor via DECTCEM (\e[?25l) while
+  ;; rendering its Ink UI. vterm-module.c honors that by setting the
+  ;; buffer-local `cursor-type' to nil (see term_movecursor's
+  ;; cursor_visible == false branch). `vterm-copy-mode' then inherits that
+  ;; invisible cursor, so point moves but nothing is drawn. Force a visible
+  ;; cursor on copy-mode entry; when copy-mode exits, the next frame from
+  ;; vterm will re-sync `cursor-type' to whatever the running app wants.
+  (add-hook 'vterm-copy-mode-hook
+            (lambda ()
+              (when vterm-copy-mode
+                (setq-local cursor-type 'box))))
+
   ;; Claude Code's thinking-mode spinner cycles through Dingbats decorative
   ;; asterisks. By default, Emacs falls back to proportional fonts like Arial
   ;; Unicode MS, whose taller ascent+descent make the vterm row jump as the
