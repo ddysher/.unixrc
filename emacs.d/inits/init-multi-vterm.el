@@ -18,6 +18,10 @@
     (define-key vterm-mode-map (kbd "C-q")  #'vterm-copy-mode)
     (define-key vterm-mode-map (kbd "M-[")  #'multi-vterm-prev)
     (define-key vterm-mode-map (kbd "M-]")  #'multi-vterm-next)
+    (define-key vterm-mode-map (kbd "S-<return>")
+      (lambda () ; Shift+Return → insert newline instead of raw return (for TUI).
+        (interactive)
+        (vterm-send-string "\n")))
     (define-key vterm-copy-mode-map (kbd "C-q") #'vterm-copy-mode)
 
     ;; Substitute specific Misc Technical symbols used in Claude Code.
@@ -26,7 +30,8 @@
     (when buffer-display-table
       (aset buffer-display-table ?⏺ (vector ?●))   ; U+23FA → U+25CF
       (aset buffer-display-table ?⏵ (vector ?▶))   ; U+23F5 → U+25B6
-      (aset buffer-display-table ?⏸ (vector ?‖)))  ; U+23F8 → U+2016
+      (aset buffer-display-table ?⏸ (vector ?‖))   ; U+23F8 → U+2016
+      (aset buffer-display-table ?◐ (vector ?◎)))   ; U+25D0 → U+25CE
 
     ;; --- TUI anti-nobreak-char ----------------------------------------------
     ;; Suppress the cyan highlight Emacs draws on every U+00A0 (NBSP)
@@ -44,7 +49,8 @@
   ;; > brew install --cask font-gnu-unifont
   (when *darwin*
     (set-fontset-font t '(#x2300 . #x23FF) (font-spec :family "Unifont")) ; Misc Technical
-    (set-fontset-font t '(#x2700 . #x27BF) (font-spec :family "Menlo"))) ; Dingbats
+    (set-fontset-font t '(#x25A0 . #x25FF) (font-spec :family "Menlo"))   ; Geometric Shapes
+    (set-fontset-font t '(#x2700 . #x27BF) (font-spec :family "Menlo")))  ; Dingbats
 
   ;; --- TUI anti-cursor-hidden -----------------------------------------------
   ;; Full-screen TUIs hide the cursor via DECTCEM (\e[?25l), which
