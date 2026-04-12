@@ -7,8 +7,6 @@
 (defun start-workspace ()
   "Start custom workspace, i.e. window configuration."
   (interactive)
-  (add-hook 'window-numbering-before-hook
-            'window-numbering-mode-custom-hook)
   ;; Create terminal window configuration.
   (split-desktop-window-term)
   (window-configuration-to-register ?1)
