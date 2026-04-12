@@ -45,12 +45,13 @@ cursor-style-blink = false
 
 # Default color theme and app icon.
 #theme = Catppuccin Mocha
-theme = Monokai Pro Machine
+#theme = Monokai Pro Machine
+theme = Doom One
 macos-icon = xray
 
 # Primary terminal font and size.
 font-family = SauceCodePro Nerd Font
 font-size = 12
 
-# Adds more space between characters
-adjust-cell-width = 10%
+# Adds more space between characters (not used for Source Code Pro)
+#adjust-cell-width = 10%
