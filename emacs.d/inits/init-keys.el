@@ -49,8 +49,8 @@
 (global-set-key (kbd "M-s r") 'consult-ripgrep)
 
 ;;; Embark: contextual actions on candidates.
-(global-set-key (kbd "C-.") 'embark-act)
-(global-set-key (kbd "C-;") 'embark-dwim)
+;; (global-set-key (kbd "C-.") 'embark-act)
+;; (global-set-key (kbd "C-;") 'embark-dwim)
 
 ;;; Window management.
 ;; Winner mode: undo/redo window layout changes.

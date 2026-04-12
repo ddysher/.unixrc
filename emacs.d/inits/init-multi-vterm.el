@@ -20,27 +20,35 @@
     (define-key vterm-mode-map (kbd "M-]")  #'multi-vterm-next)
     (define-key vterm-copy-mode-map (kbd "C-q") #'vterm-copy-mode)
 
-    ;; Substitute Misc Technical symbols that lack monospace glyphs in
-    ;; Nerd Fonts.  Display table runs before font selection, so these
-    ;; override the Unifont fontset fallback for these specific chars.
-    ;; The glyphs here are used in Claude Code.
+    ;; Substitute specific Misc Technical symbols used in Claude Code.
+    ;; Display table runs before font selection, so these override the
+    ;; Unifont fontset fallback for these specific chars.
     (when buffer-display-table
       (aset buffer-display-table ?⏺ (vector ?●))   ; U+23FA → U+25CF
       (aset buffer-display-table ?⏵ (vector ?▶))   ; U+23F5 → U+25B6
       (aset buffer-display-table ?⏸ (vector ?‖)))  ; U+23F8 → U+2016
 
+    ;; --- TUI anti-nobreak-char ----------------------------------------------
     ;; Suppress the cyan highlight Emacs draws on every U+00A0 (NBSP)
     ;; that Claude Code uses for banner padding.
     (setq-local nobreak-char-display nil))
+
   (add-hook 'vterm-mode-hook 'vterm-mode-custom-hook)
 
-  ;; Strip fake newlines on entering copy mode so that
-  ;; `toggle-truncate-lines' operates on real long lines instead of
-  ;; the short segments vterm breaks them into for rendering.
-  (setq vterm-copy-mode-remove-fake-newlines t)
+  ;; --- TUI unicode fallback -------------------------------------------------
+  ;; Pin monospace fallback fonts for Unicode blocks that TUI apps use
+  ;; but Nerd Fonts lack — without this, Emacs falls back to proportional
+  ;; fonts (STIX Two Math, Arial Unicode) whose taller metrics cause vterm
+  ;; row jumps.  Using "font-spec" and replacing (not prepending) prevents
+  ;; the CoreText fallback from overriding.
+  ;; > brew install --cask font-gnu-unifont
+  (when *darwin*
+    (set-fontset-font t '(#x2300 . #x23FF) (font-spec :family "Unifont")) ; Misc Technical
+    (set-fontset-font t '(#x2700 . #x27BF) (font-spec :family "Menlo"))) ; Dingbats
 
+  ;; --- TUI anti-cursor-hidden -----------------------------------------------
   ;; Full-screen TUIs hide the cursor via DECTCEM (\e[?25l), which
-  ;; vterm honors by setting buffer-local `cursor-type' to nil.
+  ;; vterm honors by setting buffer-local "cursor-type" to nil.
   ;; Copy mode inherits that invisible cursor.  Force a visible box
   ;; cursor on entry; exiting copy mode lets vterm re-sync it.
   (add-hook 'vterm-copy-mode-hook
@@ -48,15 +56,7 @@
               (when vterm-copy-mode
                 (setq-local cursor-type 'box))))
 
-  ;; Pin monospace fallback fonts for Unicode blocks that TUI apps use
-  ;; but Nerd Fonts lack — without this, Emacs falls back to
-  ;; proportional fonts (STIX Two Math, Arial Unicode) whose taller
-  ;; metrics cause vterm row jumps.  Using `font-spec' and replacing
-  ;; (not prepending) prevents the CoreText fallback from overriding.
-  (when *darwin*
-    (set-fontset-font t '(#x2300 . #x23FF) (font-spec :family "Unifont")) ; Misc Technical
-    (set-fontset-font t '(#x2700 . #x27BF) (font-spec :family "Menlo"))) ; Dingbats
-
+  ;; --- TUI display faint/dim ------------------------------------------------
   ;; libvterm lacks SGR 2 (faint/dim) support — it silently drops the
   ;; attribute.  Rewrite SGR 2 → SGR 90 (bright black) and SGR 22 →
   ;; SGR 22;39 (reset intensity + reset fg) on the raw byte stream
@@ -73,11 +73,36 @@
         args)))
   (advice-add 'vterm--filter :filter-args #'+vterm-rewrite-faint)
 
+  ;; --- TUI repaint anti-flash -----------------------------------------------
+  ;; Full-screen TUI apps (Claude Code, Codex) periodically repaint the
+  ;; screen for minor UI changes (e.g. hiding a status hint).  The C
+  ;; module's adjust_topline calls "recenter" after every redraw, which
+  ;; can shift window-start and force Emacs into a full window redisplay
+  ;; instead of an incremental line update — visible as a brief flash.
+  ;; Pin window-start across redraws when the buffer line count is
+  ;; unchanged (pure screen repaint, no new scrollback).
+  ;;
+  ;; (defun +vterm-stable-redraw (orig-fn buffer)
+  ;;   (if (not (buffer-live-p buffer))
+  ;;       (funcall orig-fn buffer)
+  ;;     (let* ((old-nlines (with-current-buffer buffer
+  ;;                          (count-lines (point-min) (point-max))))
+  ;;            (saved (mapcar (lambda (w) (cons w (window-start w)))
+  ;;                           (get-buffer-window-list buffer nil t))))
+  ;;       (funcall orig-fn buffer)
+  ;;       (when (and (buffer-live-p buffer)
+  ;;                  (= old-nlines (with-current-buffer buffer
+  ;;                                  (count-lines (point-min) (point-max)))))
+  ;;         (dolist (entry saved)
+  ;;           (when (window-live-p (car entry))
+  ;;             (set-window-start (car entry) (cdr entry) t)))))))
+  ;; (advice-add 'vterm--delayed-redraw :around #'+vterm-stable-redraw)
+
   ;; --- Minibuffer anti-jump -------------------------------------------------
   ;; Two complementary fixes prevent vterm content from shifting when the
   ;; minibuffer activates or grows (e.g. Vertico candidates):
   ;;
-  ;; 1. Suppress SIGWINCH: block `vterm--window-adjust-process-window-size'
+  ;; 1. Suppress SIGWINCH: block "vterm--window-adjust-process-window-size"
   ;;    while the minibuffer is active so full-screen TUIs don't re-render
   ;;    for the temporarily smaller window.
   (defun +vterm-suppress-minibuffer-resize (orig-fn process windows)
@@ -122,8 +147,10 @@
   (add-hook 'minibuffer-exit-hook     #'+vterm-clear-saved-starts)
   (add-hook 'pre-redisplay-functions  #'+vterm-pin-window-starts))
 
+
 (use-package multi-vterm
   :after vterm
   :commands (multi-vterm multi-vterm-dedicated-open multi-vterm-prev multi-vterm-next))
+
 
 (provide 'init-multi-vterm)

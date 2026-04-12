@@ -24,7 +24,6 @@
 ;;------------------------------------------------------------------------------
 ;; Minibuffer completion (Vertico stack)
 ;;------------------------------------------------------------------------------
-
 (use-package vertico
   :init
   (vertico-mode)
@@ -65,7 +64,6 @@
 ;;------------------------------------------------------------------------------
 ;; In-buffer completion (Corfu + Cape)
 ;;------------------------------------------------------------------------------
-
 (use-package corfu
   :custom
   (corfu-auto t)                  ; show popup automatically
@@ -91,7 +89,6 @@
 ;; tempel-complete is a capf, so snippets appear inline in the Corfu popup.
 ;; TAB / S-TAB navigate between placeholders after expanding.
 ;; Templates are defined in ~/.emacs.d/templates.
-
 (use-package tempel
   :custom
   (tempel-path "~/.emacs.d/templates")
@@ -109,7 +106,6 @@
 ;; Base configuration only. Language-specific server programs are registered
 ;; in the respective language files using with-eval-after-load.
 ;; Eglot provides completion-at-point → corfu consumes it for LSP completions.
-
 (use-package eglot
   :ensure nil
   :defer t)
