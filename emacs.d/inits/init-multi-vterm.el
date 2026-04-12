@@ -24,9 +24,10 @@
         (vterm-send-string "\n")))
     (define-key vterm-copy-mode-map (kbd "C-q") #'vterm-copy-mode)
 
-    ;; Substitute specific Misc Technical symbols used in Claude Code.
-    ;; Display table runs before font selection, so these override the
-    ;; Unifont fontset fallback for these specific chars.
+    ;; Substitute specific Misc Technical, Geometric Shapes, etc symbols
+    ;; used in TUI like Claude Code. Display table runs before font selection,
+    ;; so these override the fontset fallback like Unifont and Menlo for these
+    ;; specific chars.
     (when buffer-display-table
       (aset buffer-display-table ?⏺ (vector ?●))   ; U+23FA → U+25CF
       (aset buffer-display-table ?⏵ (vector ?▶))   ; U+23F5 → U+25B6
