@@ -7,6 +7,7 @@
   (blink-cursor-mode -1)
   :config
   (defun vterm-mode-custom-hook ()
+    ;; Add keybindings in both vterm-mode and vterm-copy-mode.
     (define-key vterm-mode-map [f1] #'find-file)
     (define-key vterm-mode-map [f3] #'other-window)
     (define-key vterm-mode-map [f4] #'multi-vterm-dedicated-open)
@@ -16,24 +17,28 @@
     (define-key vterm-mode-map (kbd "C-q")  #'vterm-copy-mode)
     (define-key vterm-mode-map (kbd "M-[")  #'multi-vterm-prev)
     (define-key vterm-mode-map (kbd "M-]")  #'multi-vterm-next)
+    (define-key vterm-copy-mode-map (kbd "C-q") #'vterm-copy-mode)
+
     ;; Claude Code emits U+23FA (BLACK CIRCLE FOR RECORD) in its spinner.
     ;; No Nerd Font covers it, so Emacs falls back to STIX Two Math whose
     ;; taller metrics make vterm rows jump. Substitute it to ◉ via the
     ;; buffer-local display table.
     (when buffer-display-table
       (aset buffer-display-table ?⏺ (vector ?◉)))
+
     ;; Claude Code's banner pads with U+00A0 (NO-BREAK SPACE). Emacs's
-    ;; built-in `nobreak-space' face highlights every NBSP, which shows up
+    ;; built-in "nobreak-space" face highlights every NBSP, which shows up
     ;; as a cyan bar under the banner. Disable it locally.
     (setq-local nobreak-char-display nil))
+  (add-hook 'vterm-mode-hook 'vterm-mode-custom-hook)
 
   ;; Claude Code hides the terminal cursor via DECTCEM (\e[?25l) while
   ;; rendering its Ink UI. vterm-module.c honors that by setting the
-  ;; buffer-local `cursor-type' to nil (see term_movecursor's
-  ;; cursor_visible == false branch). `vterm-copy-mode' then inherits that
+  ;; buffer-local "cursor-type" to nil (see term_movecursor's
+  ;; cursor_visible == false branch). "vterm-copy-mode" then inherits that
   ;; invisible cursor, so point moves but nothing is drawn. Force a visible
   ;; cursor on copy-mode entry; when copy-mode exits, the next frame from
-  ;; vterm will re-sync `cursor-type' to whatever the running app wants.
+  ;; vterm will re-sync "cursor-type" to whatever the running app wants.
   (add-hook 'vterm-copy-mode-hook
             (lambda ()
               (when vterm-copy-mode
@@ -44,7 +49,7 @@
   ;; Unicode MS, whose taller ascent+descent make the vterm row jump as the
   ;; spinner cycles. Menlo ships with the whole Dingbats block with monospace-
   ;; compatible metrics, so pin Menlo as the Dingbats font. Using a
-  ;; 'font-spec' and *replacing* (no 'prepend) makes this stick on macOS —
+  ;; "font-spec" and *replacing* (no 'prepend) makes this stick on macOS —
   ;; 'prepend with a bare string gets bypassed by the CoreText fallback.
   (when *darwin*
     (set-fontset-font t '(#x2700 . #x27BF) (font-spec :family "Menlo")))
@@ -68,7 +73,16 @@
         args)))
   (advice-add 'vterm--filter :filter-args #'+vterm-rewrite-faint)
 
-  (add-hook 'vterm-mode-hook 'vterm-mode-custom-hook))
+  ;; Full-screen TUIs (Claude Code's Ink UI) re-render on every SIGWINCH.
+  ;; When the minibuffer activates, Emacs shrinks the vterm window by one
+  ;; line, triggering a resize → re-render → visible jump.  Suppress the
+  ;; resize while the minibuffer is active; when it closes the window
+  ;; returns to its original height and the terminal size is already correct.
+  (defun +vterm-suppress-minibuffer-resize (orig-fn process windows)
+    (unless (minibuffer-window-active-p (minibuffer-window))
+      (funcall orig-fn process windows)))
+  (advice-add 'vterm--window-adjust-process-window-size
+              :around #'+vterm-suppress-minibuffer-resize))
 
 (use-package multi-vterm
   :after vterm
