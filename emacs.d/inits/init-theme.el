@@ -13,6 +13,11 @@
 (cond (*darwin* (set-frame-font "SauceCodePro Nerd Font-12")))
 (cond (*linux*  (set-frame-font "Hack-9.5")))
 
+;; Chinese fonts: Noto Sans CJK SC on all systems.
+;; > brew install --cask font-noto-sans-cjk-sc
+(set-fontset-font t 'han "Noto Sans CJK SC")
+(set-fontset-font t 'cjk-misc "Noto Sans CJK SC")
+
 ;; In terminal mode, use a thin Unicode line for window splits.
 ;; Themes often set a background on vertical-border, making it look like a thick bar.
 (unless (display-graphic-p)
