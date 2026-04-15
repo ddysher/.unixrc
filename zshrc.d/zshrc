@@ -6,9 +6,9 @@
 ## It loads modular configuration files from the config directory.
 ##
 ## Structure:
-##   core/         - Shell options, PATH, completion, plugins, prompt, aliases
+##   core/         - Shell options, PATH, completion, plugins, aliases
 ##   languages/    - Language runtime setups (Go, Python, Node, Ruby)
-##   tools/        - Infrastructure tools (CUDA, cloud CLIs)
+##   tools/        - Optional external CLI tool integrations (zoxide, etc.)
 ##   local.zsh     - Local/host-specific overrides (not tracked in git)
 ##------------------------------------------------------------------------------
 
@@ -29,8 +29,6 @@ _source_if_exists "$ZSHRC_CONFIG_DIR/core/shell.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/path.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/completion.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/plugins.zsh"
-_source_if_exists "$ZSHRC_CONFIG_DIR/core/zoxide.zsh"
-_source_if_exists "$ZSHRC_CONFIG_DIR/core/prompt.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/aliases.zsh"
 
 
@@ -48,8 +46,9 @@ _source_if_exists "$ZSHRC_CONFIG_DIR/languages/ruby.zsh"
 ## Tools
 ##------------------------------------------------------------------------------
 
-_source_if_exists "$ZSHRC_CONFIG_DIR/tools/cuda.zsh"
-_source_if_exists "$ZSHRC_CONFIG_DIR/tools/access.zsh"
+_source_if_exists "$ZSHRC_CONFIG_DIR/tools/starship.zsh"
+_source_if_exists "$ZSHRC_CONFIG_DIR/tools/zoxide.zsh"
+_source_if_exists "$ZSHRC_CONFIG_DIR/tools/kubectl.zsh"
 
 
 ##------------------------------------------------------------------------------
