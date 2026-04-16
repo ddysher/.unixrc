@@ -9,4 +9,4 @@ export GOBIN="$HOME/.local/bin"
 
 # Go proxy
 # or call "$ go env -w GOPROXY=https://goproxy.cn,direct"
-export GOPROXY=https://goproxy.io,direct
+export GOPROXY="https://goproxy.io,direct"
