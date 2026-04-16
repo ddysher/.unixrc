@@ -20,9 +20,6 @@ else
   compinit -C -d "$ZSH_COMPDUMP"
 fi
 
-# Completion settings
-export COMPLETION_WAITING_DOTS="true"
-
 # Enable menu selection for tab cycling
 zstyle ':completion:*' menu select
 # Use LS_COLORS for file completion coloring, underline selected item (ma=4)
