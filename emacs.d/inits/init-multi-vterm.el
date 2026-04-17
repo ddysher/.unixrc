@@ -22,7 +22,25 @@
       (lambda () ; Shift+Return → insert newline instead of raw return (for TUI).
         (interactive)
         (vterm-send-string "\n")))
-    (define-key vterm-copy-mode-map (kbd "C-q") #'vterm-copy-mode)
+    ;; Exiting copy mode snaps point back to the process mark, collapsing
+    ;; any active region — so a later M-w would only grab the cursor line.
+    ;; Save the region to the kill-ring before leaving copy mode.
+    ;;
+    ;; Also rebind RET (shadowing the stock "vterm-copy-mode-done"), because
+    ;; the stock version checks "use-region-p" — which requires the mark to
+    ;; be *active*, not just set.  M-w (kill-ring-save) deactivates the mark
+    ;; as part of its normal behavior, so the habit "M-w to copy, RET to
+    ;; exit" silently falls back to a current-line copy: M-w's deactivation
+    ;; makes RET think no region exists.  This version just copies an active
+    ;; region (if any) and exits, never second-guessing with a line fallback.
+    (defun +vterm-copy-save-and-exit ()
+      (interactive)
+      (when (region-active-p)
+        (kill-ring-save (region-beginning) (region-end)))
+      (vterm-copy-mode -1))
+    (define-key vterm-copy-mode-map (kbd "C-q") #'+vterm-copy-save-and-exit)
+    (define-key vterm-copy-mode-map (kbd "RET") #'+vterm-copy-save-and-exit)
+    (define-key vterm-copy-mode-map [return]    #'+vterm-copy-save-and-exit)
 
     ;; Substitute specific Misc Technical, Geometric Shapes, etc symbols
     ;; used in TUI like Claude Code. Display table runs before font selection,
