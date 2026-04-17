@@ -29,6 +29,10 @@ alias gcmsg="git commit -m"
 alias gp="git push"
 alias gl="git pull"
 
+# Coding agents aliases
+alias c="claude"
+alias x="codex"
+
 # Create directory and cd into it
 mkcd() { mkdir -p "$@" && cd "$@"; }
 
