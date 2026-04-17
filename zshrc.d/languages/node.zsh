@@ -17,4 +17,4 @@ elif [[ -x "$FNM_BIN" ]]; then
 fi
 
 # Set npm registry
-export NPM_CONFIG_REGISTRY=https://registry.npmmirror.com/
+export NPM_CONFIG_REGISTRY="https://registry.npmmirror.com/"
