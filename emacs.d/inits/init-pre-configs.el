@@ -18,4 +18,8 @@
 ;;; Default indent size, used across configurations
 (defvar universal-indent-size 4)
 
+;;; Custom file
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file 'noerror)
+
 (provide 'init-pre-configs)

@@ -32,6 +32,8 @@
          (not (server-running-p)))
     (server-start))
 
+(put 'erase-buffer 'disabled nil)
+
 ;;; Utilities.
 ;; Display ANSI color codes in Emacs buffers (useful for log files).
 (require 'ansi-color)
