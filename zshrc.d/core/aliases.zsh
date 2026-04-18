@@ -38,7 +38,7 @@ alias gl="git pull"
 
 # Coding agents aliases
 alias c="claude"
-alias x="codex"
+alias o="codex"
 
 # Create directory and cd into it
 mkcd() { mkdir -p "$@" && cd "$@"; }
