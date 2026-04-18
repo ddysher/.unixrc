@@ -84,7 +84,8 @@
   (add-hook 'vterm-copy-mode-hook
             (lambda ()
               (when vterm-copy-mode
-                (setq-local cursor-type 'box))))
+                (setq-local cursor-type 'box))
+              (force-mode-line-update)))
 
   ;; --- TUI display faint/dim ------------------------------------------------
   ;; libvterm lacks SGR 2 (faint/dim) support — it silently drops the

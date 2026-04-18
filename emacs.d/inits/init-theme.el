@@ -6,6 +6,12 @@
   :init
   (load-theme 'doom-one t))
 
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode)
+  :custom
+  (doom-modeline-minor-modes t))
+
 ;; macOS uses a Nerd Font so terminal and Emacs render the same icon glyphs.
 ;; When using a non-Nerd Font, add a PUA fallback such as:
 ;;   (set-fontset-font t '(#xE000 . #xF8FF) "Symbols Nerd Font Mono")
@@ -17,13 +23,5 @@
 ;; > brew install --cask font-noto-sans-cjk-sc
 (set-fontset-font t 'han "Noto Sans CJK SC")
 (set-fontset-font t 'cjk-misc "Noto Sans CJK SC")
-
-;; In terminal mode, use a thin Unicode line for window splits.
-;; Themes often set a background on vertical-border, making it look like a thick bar.
-(unless (display-graphic-p)
-  (set-face-attribute 'vertical-border nil :background 'unspecified :foreground "#435558")
-  (unless standard-display-table
-    (setq standard-display-table (make-display-table)))
-  (set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?│)))
 
 (provide 'init-theme)
