@@ -25,4 +25,4 @@
   (define-key winum-keymap (kbd "M-8") #'winum-select-window-8)
   (define-key winum-keymap (kbd "M-9") #'winum-select-window-9))
 
-(provide 'init-winum-mode)
+(provide 'init-winum)

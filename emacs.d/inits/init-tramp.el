@@ -19,18 +19,6 @@
   (advice-add 'tramp-sh-handle-vc-registered :around #'tramp-sh-handle-vc-registered-around))
 
 ;; Quickly open up a file in remote environment.
-(defun tramp-mangosteen-zshrc ()
-  (interactive)
-  (find-file "/sshx:deyuan@mangosteen:/home/deyuan/.zshrc"))
-
-(defun tramp-sugarcane-zshrc ()
-  (interactive)
-  (find-file "/sshx:deyuan@sugarcane:/home/deyuan/.zshrc"))
-
-(defun tramp-cherries-zshrc ()
-  (interactive)
-  (find-file "/sshx:deyuan@cherries:/home/deyuan/.zshrc"))
-
 (defun tramp-neuralforge-zshrc ()
   (interactive)
   (find-file "/sshx:deyuan@neuralforge:/home/deyuan/.zshrc"))

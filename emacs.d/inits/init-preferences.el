@@ -41,4 +41,4 @@
   (interactive)
   (ansi-color-apply-on-region (point-min) (point-max)))
 
-(provide 'init-custom)
+(provide 'init-preferences)

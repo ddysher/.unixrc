@@ -1,5 +1,5 @@
 ;;------------------------------------------------------------------------------
-;; Multi-vterm: enhanced terminal emulation with workarounds for
+;; vterm-mode: enhanced terminal emulation with workarounds for
 ;; full-screen TUI apps (Claude Code, Codex) and minibuffer interactions.
 ;;------------------------------------------------------------------------------
 (use-package vterm
@@ -185,4 +185,4 @@
   :commands (multi-vterm multi-vterm-dedicated-open multi-vterm-prev multi-vterm-next))
 
 
-(provide 'init-multi-vterm)
+(provide 'init-vterm)

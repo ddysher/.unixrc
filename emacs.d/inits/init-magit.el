@@ -18,4 +18,4 @@
                       nil
                     '(display-buffer-same-window))))))
 
-(provide 'init-magit-mode)
+(provide 'init-magit)

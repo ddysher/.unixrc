@@ -8,18 +8,19 @@
 
 
 ;;------------------------------------------------------------------------------
-;; Load configs for features and modes
-;;------------------------------------------------------------------------------
 ;; General mode with configurations.
+;;------------------------------------------------------------------------------
 (require 'init-org)
 (require 'init-gptel)
 (require 'init-tramp)
+(require 'init-magit)
+(require 'init-winum)
+(require 'init-vterm)
 (require 'init-completion)
-(require 'init-magit-mode)
-(require 'init-winum-mode)
-(require 'init-multi-vterm)
 
-;; Initialize language related modes that require configurations.
+;;------------------------------------------------------------------------------
+;; Promgramming language and related modes.
+;;------------------------------------------------------------------------------
 (require 'init-cc-mode)
 (require 'init-go-mode)
 (require 'init-web-dev)
@@ -27,12 +28,13 @@
 (require 'init-markdown-mode)
 (require 'init-more-devconfigs)
 
-;; My custom mode, functions, etc.
+;;------------------------------------------------------------------------------
+;; Custom modes, functions, etc. configurations.
+;;------------------------------------------------------------------------------
 (require 'init-functions)
 (require 'init-keys)
 (require 'init-theme)
-(require 'init-custom)
+(require 'init-preferences)
 
-;; Conditional require per host.
-(when *linux*
+(when *linux* ;; Conditional require per host.
   (require 'init-pyim))
