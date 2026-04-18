@@ -18,8 +18,9 @@
       (expand-file-name "auto-managed/package-quickstart.el" user-emacs-directory))
 
 ;; Redirect native-compiled .eln files out of the emacs.d root.
-(startup-redirect-eln-cache
- (expand-file-name "auto-managed/eln-cache" user-emacs-directory))
+(when (featurep 'native-compile)
+  (startup-redirect-eln-cache
+   (expand-file-name "auto-managed/eln-cache" user-emacs-directory)))
 
 ;; Disable UI elements early to avoid momentary display.
 (push '(menu-bar-lines . 0) default-frame-alist)

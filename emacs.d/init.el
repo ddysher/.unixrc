@@ -6,7 +6,6 @@
 (require 'init-elpa-packages)          ; init elpa packages management
 (require 'init-exec-path-from-shell)   ; init emacs for Mac GUI
 
-
 ;;------------------------------------------------------------------------------
 ;; General mode with configurations.
 ;;------------------------------------------------------------------------------

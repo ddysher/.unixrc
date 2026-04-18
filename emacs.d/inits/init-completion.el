@@ -20,7 +20,6 @@
 ;; In minibuffer, type SPC-separated tokens for orderless filtering.
 ;;------------------------------------------------------------------------------
 
-
 ;;------------------------------------------------------------------------------
 ;; Minibuffer completion (Vertico stack)
 ;;------------------------------------------------------------------------------
@@ -91,7 +90,7 @@
 ;; Templates are defined in ~/.emacs.d/user-data/templates.
 (use-package tempel
   :custom
-  (tempel-path "~/.emacs.d/user-data/templates")
+  (tempel-path (expand-file-name "templates" user-data-dir))
   :init
   (add-to-list 'completion-at-point-functions #'tempel-complete t)
   :bind
