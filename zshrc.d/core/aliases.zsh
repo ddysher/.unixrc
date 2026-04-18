@@ -7,8 +7,15 @@ alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -i"
 
-# Enhanced ls
-alias ll="ls -lh"
+# Prefer `eza` as a modern `ls` replacement when available.
+if command -v eza >/dev/null 2>&1; then
+  alias ls="eza --group-directories-first"
+  alias ll="eza --long --header --group-directories-first --git"
+  alias la="eza --long --all --header --group-directories-first --git"
+else
+  alias ll="ls -lh"
+  alias la="ls -lah"
+fi
 
 # Directory navigation (global aliases so they work as arguments too, e.g., "mv abc ...")
 # AUTO_CD in shell.zsh makes bare ".."/".." act as cd
