@@ -7,6 +7,7 @@ emacs.d/tramp
 emacs.d/.lsp-session-v1
 emacs.d/.python-environments
 emacs.d/srecode-map.el
+emacs.d/projects
 
 # ==============================================================================
 # Emacs: package management

@@ -2,11 +2,10 @@
 ;; Provide markdown mode, installed via MELPA.
 ;;------------------------------------------------------------------------------
 
-;; Livedown: live markdown preview in browser (installed manually in site-lisp).
-;;   https://github.com/shime/emacs-livedown
+;; Livedown: live markdown preview in browser.
 ;; Requires 'livedown' npm command: npm install -g livedown
 (use-package livedown
-  :ensure nil
+  :vc (:url "https://github.com/shime/emacs-livedown")
   :commands (livedown:preview livedown:kill)
   :custom
   (livedown:autostart nil)

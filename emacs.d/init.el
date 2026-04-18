@@ -1,29 +1,10 @@
 ;;------------------------------------------------------------------------------
-;; Bool values for init files to decide which functions are available
-;;------------------------------------------------------------------------------
-;; System type
-(defvar *windows* (eq system-type 'windows-nt))
-(defvar *cygwin*  (eq system-type 'cygwin))
-(defvar *darwin*  (eq system-type 'darwin))
-(defvar *linux*   (or (eq system-type 'gnu/linux) (eq system-type 'linux)))
-;; Emacs major version
-(defvar *emacs29* (>= emacs-major-version 29))
-(defvar *emacs30* (>= emacs-major-version 30))
-;; System name (hostname)
-(defvar *home-desktop* (string= system-name "neuralforge"))
-(defvar *macpro-m3* (string= system-name "Deyuans-MacBook-M3"))
-(defvar *macair-m4* (string= system-name "Deyuans-MacBook-Air"))
-
-
-;;------------------------------------------------------------------------------
 ;; Bootstrap configs need to be executed before loading specific configs
 ;;------------------------------------------------------------------------------
-;; This will add "~/.emacs.d/inits" to emacs load path.
 (add-to-list 'load-path (expand-file-name "inits" user-emacs-directory))
-(require 'init-preload-all-configs)     ; must be called first
-(require 'init-elpa-packages)           ; init elpa packages management
-(require 'init-site-packages)           ; init third party packages
-(require 'init-exec-path-from-shell)    ; init emacs for Mac GUI
+(require 'init-pre-configs)            ; must be called first
+(require 'init-elpa-packages)          ; init elpa packages management
+(require 'init-exec-path-from-shell)   ; init emacs for Mac GUI
 
 
 ;;------------------------------------------------------------------------------
@@ -84,6 +65,8 @@
         nginx-mode orderless pet php-mode protobuf-mode pyim
         pyim-basedict rust-mode sbt-mode scala-mode tempel thrift
         vertico vterm web-mode winum wsd-mode yaml-mode))
+ '(package-vc-selected-packages
+   '((livedown :url "https://github.com/shime/emacs-livedown")))
  '(safe-local-variable-values '((c-indent-level . 4)))
  '(send-mail-function 'mailclient-send-it)
  '(wsd-style "roundgreen"))
