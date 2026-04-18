@@ -18,7 +18,6 @@
 (setq-default indent-tabs-mode nil)        ; use spaces instead of tabs
 (setq make-backup-files nil)               ; no backup~ files; use version control
 (setq auto-save-default nil)               ; no #autosave# files
-(setq hl-line-sticky-flag nil)             ; only highlight line in active buffer
 (setq inhibit-splash-screen t)             ; go straight to *scratch*
 (setq show-help-function nil)              ; disable modeline tooltips
 (setq ns-pop-up-frames nil)                ; reuse existing frame when opening files

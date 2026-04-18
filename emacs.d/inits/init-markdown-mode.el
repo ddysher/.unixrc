@@ -14,6 +14,8 @@
   (livedown:port 1337))
 
 (use-package markdown-mode
+  :custom
+  (markdown-command "pandoc")
   :hook (markdown-mode . markdown-custom-hook))
 
 ;; Generate TOC inplace.

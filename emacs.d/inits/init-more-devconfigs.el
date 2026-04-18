@@ -9,7 +9,6 @@
 (defun prog-mode-custom-hook ()
   (setq show-trailing-whitespace t)
   (setq truncate-lines t)
-  (hl-line-mode 1)
   (tempel-abbrev-mode))
 
 (add-hook 'prog-mode-hook 'prog-mode-custom-hook)
