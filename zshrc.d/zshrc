@@ -6,9 +6,9 @@
 ## It loads modular configuration files from the config directory.
 ##
 ## Structure:
-##   core/         - Shell options, PATH, completion, plugins, aliases
+##   core/         - Shell options, PATH, completion, aliases
 ##   languages/    - Language runtime setups (Go, Python, Node)
-##   tools/        - Optional external CLI tool integrations (zoxide, etc.)
+##   tools/        - Optional external CLI tool integrations and plugins
 ##   local.zsh     - Local/host-specific overrides (not tracked in git)
 ##------------------------------------------------------------------------------
 
@@ -28,7 +28,6 @@ _source_if_exists() {
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/shell.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/path.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/completion.zsh"
-_source_if_exists "$ZSHRC_CONFIG_DIR/core/plugins.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/aliases.zsh"
 
 
@@ -48,6 +47,7 @@ _source_if_exists "$ZSHRC_CONFIG_DIR/languages/node.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/tools/starship.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/tools/zoxide.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/tools/kubectl.zsh"
+_source_if_exists "$ZSHRC_CONFIG_DIR/tools/zinit.zsh"
 
 
 ##------------------------------------------------------------------------------
