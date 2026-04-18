@@ -20,7 +20,14 @@ else
   compinit -C -d "$ZSH_COMPDUMP"
 fi
 
-# Enable menu selection for tab cycling
+# Common completion defaults: case-insensitive matching, grouped results,
+# and interactive menu selection when multiple candidates exist.
 zstyle ':completion:*' menu select
-# Use LS_COLORS for file completion coloring, underline selected item (ma=4)
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%F{yellow}%d%f'
+zstyle ':completion:*:warnings' format '%F{red}no matches found%f'
+zstyle ':completion:*' verbose yes
+
+# Use LS_COLORS for file completion coloring, underline the selected item.
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS} 'ma=4'
