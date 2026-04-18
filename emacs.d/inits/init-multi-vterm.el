@@ -16,8 +16,6 @@
     (define-key vterm-mode-map [f8] #'register-to-point)
     (define-key vterm-mode-map (kbd "C-o")  #'switch-to-buffer)
     (define-key vterm-mode-map (kbd "C-q")  #'vterm-copy-mode)
-    (define-key vterm-mode-map (kbd "M-[")  #'multi-vterm-prev)
-    (define-key vterm-mode-map (kbd "M-]")  #'multi-vterm-next)
     (define-key vterm-mode-map (kbd "S-<return>")
       (lambda () ; Shift+Return → insert newline instead of raw return (for TUI).
         (interactive)
@@ -56,6 +54,13 @@
     ;; Suppress the cyan highlight Emacs draws on every U+00A0 (NBSP)
     ;; that Claude Code uses for banner padding.
     (setq-local nobreak-char-display nil))
+
+  ;; Override vterm bindings so the global directional window movement keys
+  ;; still work inside vterm.
+  (define-key vterm-mode-map (kbd "M-H") #'windmove-left)
+  (define-key vterm-mode-map (kbd "M-J") #'windmove-down)
+  (define-key vterm-mode-map (kbd "M-K") #'windmove-up)
+  (define-key vterm-mode-map (kbd "M-L") #'windmove-right)
 
   (add-hook 'vterm-mode-hook 'vterm-mode-custom-hook)
 

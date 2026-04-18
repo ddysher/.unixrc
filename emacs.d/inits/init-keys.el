@@ -53,6 +53,11 @@
 ;; (global-set-key (kbd "C-;") 'embark-dwim)
 
 ;;; Window management.
+;; Move focus directionally between windows.
+(global-set-key (kbd "M-H") 'windmove-left)
+(global-set-key (kbd "M-J") 'windmove-down)
+(global-set-key (kbd "M-K") 'windmove-up)
+(global-set-key (kbd "M-L") 'windmove-right)
 ;; Winner mode: undo/redo window layout changes.
 (global-set-key (kbd "C-x 4 u") 'winner-undo)
 (global-set-key (kbd "C-x 4 r") 'winner-redo)
