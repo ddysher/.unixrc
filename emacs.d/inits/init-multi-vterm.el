@@ -7,39 +7,45 @@
   :init
   (blink-cursor-mode -1)
   :config
-  (defun vterm-mode-custom-hook ()
-    ;; Keybindings for both vterm-mode and vterm-copy-mode.
-    (define-key vterm-mode-map [f1] #'find-file)
-    (define-key vterm-mode-map [f3] #'other-window)
-    (define-key vterm-mode-map [f4] #'multi-vterm-dedicated-open)
-    (define-key vterm-mode-map [f5] #'multi-vterm)
-    (define-key vterm-mode-map [f8] #'register-to-point)
-    (define-key vterm-mode-map (kbd "C-o")  #'switch-to-buffer)
-    (define-key vterm-mode-map (kbd "C-q")  #'vterm-copy-mode)
-    (define-key vterm-mode-map (kbd "S-<return>")
-      (lambda () ; Shift+Return → insert newline instead of raw return (for TUI).
-        (interactive)
-        (vterm-send-string "\n")))
-    ;; Exiting copy mode snaps point back to the process mark, collapsing
-    ;; any active region — so a later M-w would only grab the cursor line.
-    ;; Save the region to the kill-ring before leaving copy mode.
-    ;;
-    ;; Also rebind RET (shadowing the stock "vterm-copy-mode-done"), because
-    ;; the stock version checks "use-region-p" — which requires the mark to
-    ;; be *active*, not just set.  M-w (kill-ring-save) deactivates the mark
-    ;; as part of its normal behavior, so the habit "M-w to copy, RET to
-    ;; exit" silently falls back to a current-line copy: M-w's deactivation
-    ;; makes RET think no region exists.  This version just copies an active
-    ;; region (if any) and exits, never second-guessing with a line fallback.
-    (defun +vterm-copy-save-and-exit ()
+  ;; Keymap bindings — set once on package load, not per-buffer.
+  (define-key vterm-mode-map [f1] #'find-file)
+  (define-key vterm-mode-map [f3] #'other-window)
+  (define-key vterm-mode-map [f4] #'multi-vterm-dedicated-open)
+  (define-key vterm-mode-map [f5] #'multi-vterm)
+  (define-key vterm-mode-map [f8] #'register-to-point)
+  (define-key vterm-mode-map (kbd "C-o")  #'switch-to-buffer)
+  (define-key vterm-mode-map (kbd "C-q")  #'vterm-copy-mode)
+  (define-key vterm-mode-map (kbd "S-<return>")
+    (lambda () ; Shift+Return → insert newline instead of raw return (for TUI).
       (interactive)
-      (when (region-active-p)
-        (kill-ring-save (region-beginning) (region-end)))
-      (vterm-copy-mode -1))
-    (define-key vterm-copy-mode-map (kbd "C-q") #'+vterm-copy-save-and-exit)
-    (define-key vterm-copy-mode-map (kbd "RET") #'+vterm-copy-save-and-exit)
-    (define-key vterm-copy-mode-map [return]    #'+vterm-copy-save-and-exit)
+      (vterm-send-string "\n")))
+  (define-key vterm-mode-map (kbd "M-H") #'windmove-left)
+  (define-key vterm-mode-map (kbd "M-J") #'windmove-down)
+  (define-key vterm-mode-map (kbd "M-K") #'windmove-up)
+  (define-key vterm-mode-map (kbd "M-L") #'windmove-right)
 
+  ;; Exiting copy mode snaps point back to the process mark, collapsing
+  ;; any active region — so a later M-w would only grab the cursor line.
+  ;; Save the region to the kill-ring before leaving copy mode.
+  ;;
+  ;; Also rebind RET (shadowing the stock "vterm-copy-mode-done"), because
+  ;; the stock version checks "use-region-p" — which requires the mark to
+  ;; be *active*, not just set.  M-w (kill-ring-save) deactivates the mark
+  ;; as part of its normal behavior, so the habit "M-w to copy, RET to
+  ;; exit" silently falls back to a current-line copy: M-w's deactivation
+  ;; makes RET think no region exists.  This version just copies an active
+  ;; region (if any) and exits, never second-guessing with a line fallback.
+  (defun +vterm-copy-save-and-exit ()
+    (interactive)
+    (when (region-active-p)
+      (kill-ring-save (region-beginning) (region-end)))
+    (vterm-copy-mode -1))
+  (define-key vterm-copy-mode-map (kbd "C-q") #'+vterm-copy-save-and-exit)
+  (define-key vterm-copy-mode-map (kbd "RET") #'+vterm-copy-save-and-exit)
+  (define-key vterm-copy-mode-map [return]    #'+vterm-copy-save-and-exit)
+
+  ;; Per-buffer hook — only buffer-local setup belongs here.
+  (defun vterm-mode-custom-hook ()
     ;; Substitute specific Misc Technical, Geometric Shapes, etc symbols
     ;; used in TUI like Claude Code. Display table runs before font selection,
     ;; so these override the fontset fallback like Unifont and Menlo for these
@@ -54,13 +60,6 @@
     ;; Suppress the cyan highlight Emacs draws on every U+00A0 (NBSP)
     ;; that Claude Code uses for banner padding.
     (setq-local nobreak-char-display nil))
-
-  ;; Override vterm bindings so the global directional window movement keys
-  ;; still work inside vterm.
-  (define-key vterm-mode-map (kbd "M-H") #'windmove-left)
-  (define-key vterm-mode-map (kbd "M-J") #'windmove-down)
-  (define-key vterm-mode-map (kbd "M-K") #'windmove-up)
-  (define-key vterm-mode-map (kbd "M-L") #'windmove-right)
 
   (add-hook 'vterm-mode-hook 'vterm-mode-custom-hook)
 
