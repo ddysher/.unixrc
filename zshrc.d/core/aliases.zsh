@@ -9,6 +9,8 @@ alias rm="rm -i"
 
 # Prefer `eza` as a modern `ls` replacement when available.
 if command -v eza >/dev/null 2>&1; then
+  # Strip size/date/permission colors; keep file-type colors (dir, exec, symlink).
+  export EZA_COLORS="da=0:sn=0:sb=0:uu=0:un=0:gu=0:gn=0:ur=0:uw=0:ux=0:ue=0:gr=0:gw=0:gx=0:tr=0:tw=0:tx=0"
   alias ls="eza --group-directories-first"
   alias ll="eza --long --header --group-directories-first --git"
   alias la="eza --long --all --header --group-directories-first --git"

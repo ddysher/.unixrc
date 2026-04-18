@@ -45,11 +45,12 @@ _source_if_exists "$ZSHRC_CONFIG_DIR/languages/node.zsh"
 ##------------------------------------------------------------------------------
 
 _source_if_exists "$ZSHRC_CONFIG_DIR/tools/starship.zsh"
-_source_if_exists "$ZSHRC_CONFIG_DIR/tools/fzf.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/tools/zoxide.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/tools/kubectl.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/tools/zinit.zsh"
 
+# Experiment.
+#_source_if_exists "$ZSHRC_CONFIG_DIR/tools/fzf.zsh"
 
 ##------------------------------------------------------------------------------
 ## Local customizations (not tracked in git)
