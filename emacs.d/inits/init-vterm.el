@@ -1,6 +1,6 @@
 ;;------------------------------------------------------------------------------
-;; vterm-mode: enhanced terminal emulation with workarounds for
-;; full-screen TUI apps (Claude Code, Codex) and minibuffer interactions.
+;; vterm-mode: enhanced terminal emulation with workarounds for full-screen
+;; TUI apps (Claude Code, Codex) and minibuffer interactions.
 ;;------------------------------------------------------------------------------
 (use-package vterm
   :defer t
@@ -78,32 +78,54 @@
     (set-fontset-font t '(#x2700 . #x27BF) (font-spec :family "Menlo")))  ; Dingbats
 
   ;; --- TUI anti-cursor-hidden -----------------------------------------------
-  ;; Full-screen TUIs hide the cursor via DECTCEM (\e[?25l), which
-  ;; vterm honors by setting buffer-local "cursor-type" to nil.
-  ;; Copy mode inherits that invisible cursor.  Force a visible box
-  ;; cursor on entry; exiting copy mode lets vterm re-sync it.
+  ;; Full-screen TUIs hide the cursor via DECTCEM (\e[?25l), which vterm
+  ;; honors by setting "cursor-type" to nil.  Copy mode inherits that
+  ;; invisible cursor, so force a box cursor on entry.  On exit, restore
+  ;; the prior value — vterm's "cursor_type_changed" flag is one-shot and
+  ;; libvterm won't re-emit the change, so without explicit restore the
+  ;; cursor would stay visible in terminal mode too.  That's the Cursor CLI
+  ;; bug: agent emits "\e[?25l" once at startup and never again; if copy
+  ;; mode ran even once, cursor-type stuck at box forever.
+  (defvar-local +vterm-pre-copy-cursor-type nil)
   (add-hook 'vterm-copy-mode-hook
             (lambda ()
-              (when vterm-copy-mode
-                (setq-local cursor-type 'box))
+              (if vterm-copy-mode
+                  (progn
+                    (setq +vterm-pre-copy-cursor-type cursor-type)
+                    (setq-local cursor-type 'box))
+                (setq-local cursor-type +vterm-pre-copy-cursor-type))
               (force-mode-line-update)))
 
-  ;; --- TUI display faint/dim ------------------------------------------------
-  ;; libvterm lacks SGR 2 (faint/dim) support — it silently drops the
-  ;; attribute.  Rewrite SGR 2 → SGR 90 (bright black) and SGR 22 →
-  ;; SGR 22;39 (reset intensity + reset fg) on the raw byte stream
-  ;; before it reaches the C module so faint text is visually distinct.
-  ;; Codex uses faint/dim extensively.
-  (defun +vterm-rewrite-faint (args)
+  ;; --- TUI display faint/dim + altscreen cursor hide ------------------------
+  ;; Two rewrites on the raw byte stream before it reaches the C module:
+  ;;
+  ;; 1. libvterm lacks SGR 2 (faint/dim) support — it silently drops the
+  ;;    attribute.  Rewrite SGR 2 → SGR 90 (bright black) and SGR 22 →
+  ;;    SGR 22;39 (reset intensity + reset fg) so faint text is visually
+  ;;    distinct.  Codex uses faint/dim extensively.
+  ;;
+  ;; 2. Some TUIs (Cursor CLI) enter the alternate screen buffer without
+  ;;    sending DECTCEM hide (\e[?25l), so vterm leaves "cursor-type"
+  ;;    at its default and emacs draws a stray cursor at point — typically
+  ;;    stuck at the bottom of the buffer since the TUI repaints absolutely.
+  ;;    Inject DECTCEM hide after every altscreen-enter (\e[?1049h,
+  ;;    \e[?47h) and DECTCEM show before every altscreen-exit (\e[?1049l,
+  ;;    \e[?47l).  Claude/Codex already send their own hide; the extra
+  ;;    sequence is a no-op for them.
+  (defun +vterm-filter-rewrite (args)
     (let ((proc  (nth 0 args))
           (input (nth 1 args)))
       (if (and input (stringp input))
           (let ((s input))
-            (setq s (replace-regexp-in-string "\033\\[2m"  "\033[90m"   s nil t))
+            (setq s (replace-regexp-in-string "\033\\[2m"  "\033[90m"    s nil t))
             (setq s (replace-regexp-in-string "\033\\[22m" "\033[22;39m" s nil t))
+            (setq s (replace-regexp-in-string "\033\\[\\?1049h" "\033[?1049h\033[?25l" s nil t))
+            (setq s (replace-regexp-in-string "\033\\[\\?47h"   "\033[?47h\033[?25l"   s nil t))
+            (setq s (replace-regexp-in-string "\033\\[\\?1049l" "\033[?25h\033[?1049l" s nil t))
+            (setq s (replace-regexp-in-string "\033\\[\\?47l"   "\033[?25h\033[?47l"   s nil t))
             (list proc s))
         args)))
-  (advice-add 'vterm--filter :filter-args #'+vterm-rewrite-faint)
+  (advice-add 'vterm--filter :filter-args #'+vterm-filter-rewrite)
 
   ;; --- TUI repaint anti-flash -----------------------------------------------
   ;; Full-screen TUI apps (Claude Code, Codex) periodically repaint the
