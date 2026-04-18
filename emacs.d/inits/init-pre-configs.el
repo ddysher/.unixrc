@@ -18,6 +18,21 @@
 ;;; Default indent size, used across configurations
 (defvar universal-indent-size 4)
 
+;;; Auto-managed directory for runtime-generated files
+(defvar auto-managed-dir (expand-file-name "auto-managed" user-emacs-directory))
+(make-directory auto-managed-dir t)
+
+(setq savehist-file               (expand-file-name "history"        auto-managed-dir)
+      project-list-file           (expand-file-name "projects"       auto-managed-dir)
+      recentf-save-file           (expand-file-name "recentf"        auto-managed-dir)
+      tramp-persistency-file-name (expand-file-name "tramp"          auto-managed-dir)
+      srecode-map-save-file       (expand-file-name "srecode-map.el" auto-managed-dir)
+      auto-save-list-file-prefix  (expand-file-name "auto-save-list/.saves-" auto-managed-dir)
+      url-configuration-directory (expand-file-name "url/"           auto-managed-dir)
+      transient-history-file      (expand-file-name "transient/history.el" auto-managed-dir)
+      transient-values-file       (expand-file-name "transient/values.el"  auto-managed-dir)
+      transient-levels-file       (expand-file-name "transient/levels.el"  auto-managed-dir))
+
 ;;; Custom file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)

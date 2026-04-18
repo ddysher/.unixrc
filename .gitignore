@@ -1,35 +1,17 @@
 # ==============================================================================
-# Emacs: runtime and session files
+# Emacs: auto-managed (runtime-generated, not version-controlled)
 # ==============================================================================
-emacs.d/history
-emacs.d/recentf
-emacs.d/tramp
+emacs.d/auto-managed/
 emacs.d/.lsp-session-v1
 emacs.d/.python-environments
-emacs.d/srecode-map.el
-emacs.d/projects
 
 # ==============================================================================
-# Emacs: package management
+# Emacs: packages and parsers (downloaded, not version-controlled)
 # ==============================================================================
-emacs.d/elpa
-emacs.d/package-quickstart.el
-emacs.d/package-quickstart.elc
-
-# ==============================================================================
-# Emacs: auto-generated directories
-# ==============================================================================
-emacs.d/auto-save-list
-emacs.d/eln-cache/
-emacs.d/transient/
+emacs.d/elpa/
 emacs.d/tree-sitter/
-emacs.d/url/
-
-# ==============================================================================
-# Emacs: plugin-specific data
-# ==============================================================================
 # pyim: personal dict changes frequently; bigdict is ~20M, pulled separately.
-emacs.d/pyim
+emacs.d/pyim/
 
 # ==============================================================================
 # Shell

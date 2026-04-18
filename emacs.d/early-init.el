@@ -14,6 +14,12 @@
 ;; Use package-quickstart to load a single cached autoloads file instead
 ;; of scanning every elpa package directory at startup.
 (setq package-quickstart t)
+(setq package-quickstart-file
+      (expand-file-name "auto-managed/package-quickstart.el" user-emacs-directory))
+
+;; Redirect native-compiled .eln files out of the emacs.d root.
+(startup-redirect-eln-cache
+ (expand-file-name "auto-managed/eln-cache" user-emacs-directory))
 
 ;; Disable UI elements early to avoid momentary display.
 (push '(menu-bar-lines . 0) default-frame-alist)
