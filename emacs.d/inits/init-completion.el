@@ -88,10 +88,10 @@
 ;;------------------------------------------------------------------------------
 ;; tempel-complete is a capf, so snippets appear inline in the Corfu popup.
 ;; TAB / S-TAB navigate between placeholders after expanding.
-;; Templates are defined in ~/.emacs.d/templates.
+;; Templates are defined in ~/.emacs.d/user-data/templates.
 (use-package tempel
   :custom
-  (tempel-path "~/.emacs.d/templates")
+  (tempel-path "~/.emacs.d/user-data/templates")
   :init
   (add-to-list 'completion-at-point-functions #'tempel-complete t)
   :bind

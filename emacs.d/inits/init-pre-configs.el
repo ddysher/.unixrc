@@ -22,6 +22,7 @@
 (defvar auto-managed-dir (expand-file-name "auto-managed" user-emacs-directory))
 (make-directory auto-managed-dir t)
 
+;; Set auto-managed directory
 (setq savehist-file               (expand-file-name "history"        auto-managed-dir)
       project-list-file           (expand-file-name "projects"       auto-managed-dir)
       recentf-save-file           (expand-file-name "recentf"        auto-managed-dir)
@@ -32,6 +33,10 @@
       transient-history-file      (expand-file-name "transient/history.el" auto-managed-dir)
       transient-values-file       (expand-file-name "transient/values.el"  auto-managed-dir)
       transient-levels-file       (expand-file-name "transient/levels.el"  auto-managed-dir))
+
+;;; User-data directory for hand-managed data files
+(defvar user-data-dir (expand-file-name "user-data" user-emacs-directory))
+(setq bookmark-default-file (expand-file-name "bookmarks" user-data-dir))
 
 ;;; Custom file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
