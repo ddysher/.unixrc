@@ -120,8 +120,8 @@ npm install -g livedown doctoc
 
 ### Node.js
 
-- `fnm` is used to manage Node.js versions.
-- [`zshrc.d/languages/node.zsh`](zshrc.d/languages/node.zsh) sets `NPM_CONFIG_REGISTRY` to `https://registry.npmmirror.com/`.
+- Homebrew manages the Node.js installation.
+- [`zshrc.d/languages/nodejs.zsh`](zshrc.d/languages/nodejs.zsh) prepends the Homebrew `node@24` bin directory and sets `NPM_CONFIG_REGISTRY` to `https://registry.npmmirror.com/`.
 
 ### Python
 
