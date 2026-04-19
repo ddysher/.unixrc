@@ -11,6 +11,12 @@
                          ("melpa"  . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 (package-initialize)
 
+;; Load custom-file now — after package.el is loaded and initialized, but
+;; before any use-package :ensure triggers package-install (which calls
+;; package--save-selected-packages and could otherwise overwrite custom.el
+;; with a nil list).
+(load custom-file 'noerror)
+
 ;; Auto-refresh quickstart cache after installing or deleting packages.
 (advice-add 'package-install :after
             (lambda (&rest _) (package-quickstart-refresh)))

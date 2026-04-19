@@ -38,8 +38,9 @@
 (defvar user-data-dir (expand-file-name "user-data" user-emacs-directory))
 (setq bookmark-default-file (expand-file-name "bookmarks" user-data-dir))
 
-;;; Custom file
+;;; Custom file path. Loaded later in init-elpa-packages, after
+;;; (package-initialize), so that `package-selected-packages' is a bound
+;;; defcustom by the time custom-set-variables applies its saved value.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file 'noerror)
 
 (provide 'init-pre-configs)
