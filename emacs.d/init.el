@@ -1,13 +1,33 @@
 ;;------------------------------------------------------------------------------
-;; Bootstrap configs need to be executed before loading specific configs
+;; ~/.unixrc/emacs.d/init.el - Main Emacs Configuration Entry Point
+;;
+;; Loads modular init files from emacs.d/inits/.
+;;
+;; Structure:
+;;   init-pre-configs            - Early setup: custom-file, OS/host flags
+;;   init-elpa-packages          - Package management (ELPA/use-package)
+;;   init-exec-path-from-shell   - Sync PATH from shell (Mac GUI fix)
+;;
+;;   General:      org, gptel, tramp, magit, winum, vterm, completion
+;;   Languages:    cc, go, web, python, markdown, misc dev configs
+;;   Customization: functions, keybindings, theme, editor preferences
+;;
+;; Host-specific:
+;;   init-pyim loaded only on Linux (Chinese input method)
 ;;------------------------------------------------------------------------------
-(add-to-list 'load-path (expand-file-name "inits" user-emacs-directory))
-(require 'init-pre-configs)            ; must be called first
-(require 'init-elpa-packages)          ; init elpa packages management
-(require 'init-exec-path-from-shell)   ; init emacs for Mac GUI
+
 
 ;;------------------------------------------------------------------------------
-;; General mode with configurations.
+;; Bootstrap - must run before everything else
+;;------------------------------------------------------------------------------
+(add-to-list 'load-path (expand-file-name "inits" user-emacs-directory))
+(require 'init-pre-configs)            ; OS/host flags, custom-file — must be first
+(require 'init-elpa-packages)          ; package.el + use-package setup
+(require 'init-exec-path-from-shell)   ; import shell PATH into Mac GUI Emacs
+
+
+;;------------------------------------------------------------------------------
+;; General modes
 ;;------------------------------------------------------------------------------
 (require 'init-org)
 (require 'init-gptel)
@@ -17,8 +37,9 @@
 (require 'init-vterm)
 (require 'init-completion)
 
+
 ;;------------------------------------------------------------------------------
-;; Promgramming language and related modes.
+;; Programming language modes
 ;;------------------------------------------------------------------------------
 (require 'init-cc-mode)
 (require 'init-go-mode)
@@ -27,13 +48,18 @@
 (require 'init-markdown-mode)
 (require 'init-more-devconfigs)
 
+
 ;;------------------------------------------------------------------------------
-;; Custom modes, functions, etc. configurations.
+;; Customization - keybindings, theme, preferences, helper functions
 ;;------------------------------------------------------------------------------
 (require 'init-functions)
 (require 'init-keys)
 (require 'init-theme)
 (require 'init-preferences)
 
-(when *linux* ;; Conditional require per host.
+
+;;------------------------------------------------------------------------------
+;; Host-specific
+;;------------------------------------------------------------------------------
+(when *linux*
   (require 'init-pyim))

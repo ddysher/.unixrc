@@ -1,24 +1,25 @@
 ;;------------------------------------------------------------------------------
 ;; Configs before loading any modules
 ;;------------------------------------------------------------------------------
-
-;;; System type
+;; System type
 (defvar *windows* (eq system-type 'windows-nt))
 (defvar *cygwin*  (eq system-type 'cygwin))
 (defvar *darwin*  (eq system-type 'darwin))
 (defvar *linux*   (or (eq system-type 'gnu/linux) (eq system-type 'linux)))
-;;; Emacs major version
+
+;; Emacs major version
 (defvar *emacs29* (>= emacs-major-version 29))
 (defvar *emacs30* (>= emacs-major-version 30))
-;;; System name (hostname)
+
+;; System name (hostname)
 (defvar *home-desktop* (string= system-name "neuralforge"))
 (defvar *macpro-m3* (string= system-name "Deyuans-MacBook-M3"))
 (defvar *macair-m4* (string= system-name "Deyuans-MacBook-Air"))
 
-;;; Default indent size, used across configurations
+;; Default indent size, used across configurations
 (defvar universal-indent-size 4)
 
-;;; Auto-managed directory for runtime-generated files
+;; Auto-managed directory for runtime-generated files
 (defvar auto-managed-dir (expand-file-name "auto-managed" user-emacs-directory))
 (make-directory auto-managed-dir t)
 
@@ -34,13 +35,13 @@
       transient-values-file       (expand-file-name "transient/values.el"  auto-managed-dir)
       transient-levels-file       (expand-file-name "transient/levels.el"  auto-managed-dir))
 
-;;; User-data directory for hand-managed data files
+;; User-data directory for hand-managed data files
 (defvar user-data-dir (expand-file-name "user-data" user-emacs-directory))
 (setq bookmark-default-file (expand-file-name "bookmarks" user-data-dir))
 
-;;; Custom file path. Loaded later in init-elpa-packages, after
-;;; (package-initialize), so that `package-selected-packages' is a bound
-;;; defcustom by the time custom-set-variables applies its saved value.
+;; Custom file path. Loaded later in init-elpa-packages, after
+;; (package-initialize), so that `package-selected-packages' is a bound
+;; defcustom by the time custom-set-variables applies its saved value.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 (provide 'init-pre-configs)

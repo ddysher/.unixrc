@@ -55,10 +55,10 @@ _source_if_exists "$ZSHRC_CONFIG_DIR/local.zsh"
 
 
 ##------------------------------------------------------------------------------
-## Clean up and comiplation
+## Clean up and Compilation
 ##------------------------------------------------------------------------------
 
-# Clean up helper function
+# Remove helper function
 unfunction _source_if_exists
 
 # Compile zshrc for faster loading

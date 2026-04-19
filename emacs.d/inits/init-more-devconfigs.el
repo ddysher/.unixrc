@@ -1,11 +1,26 @@
 ;;------------------------------------------------------------------------------
-;; Dev-related modes and tools that do not need extensive configuration.
+;; Lightweight dev modes and tools that need little or no configuration.
 ;; Packages are deferred — they load when their file types are opened
 ;; or their commands are invoked.
+;;
+;; Prog mode hook (shared across all programming modes):
+;;   show-trailing-whitespace, truncate-lines, tempel-abbrev-mode
+;;
+;; Data / markup:   yaml, thrift, protobuf, dockerfile, wsd
+;; Scripting:       sh, lua, php, matlab
+;; System:          java, scala/sbt, rust
+;; Infra config:    apache, nginx
+;; File types:      auto-mode-alist associations
+;; Dev tools:       flycheck, ag
+;; Utilities:       hackernews, neotree
 ;;------------------------------------------------------------------------------
 
-;;
-;;; Prog mode hook: settings shared across all programming modes.
+
+;;------------------------------------------------------------------------------
+;; Prog mode hook
+;;------------------------------------------------------------------------------
+;; Applied to all programming modes; yaml-mode runs it explicitly via :hook
+;; since it does not derive from prog-mode.
 (defun prog-mode-custom-hook ()
   (setq show-trailing-whitespace t)
   (setq truncate-lines t)
@@ -13,19 +28,22 @@
 
 (add-hook 'prog-mode-hook 'prog-mode-custom-hook)
 
-;;
-;;; Language modes.
 
-;; Data and markup formats.
+;;------------------------------------------------------------------------------
+;; Data and markup formats
+;;------------------------------------------------------------------------------
 (use-package yaml-mode
-  :hook (yaml-mode . (lambda () (run-hooks 'prog-mode-hook))))
+  :hook (yaml-mode . (lambda () (run-hooks 'prog-mode-hook))))  ; not a prog-mode child
 (use-package thrift :defer t)
 (use-package protobuf-mode
   :hook (protobuf-mode . (lambda () (setq c-basic-offset universal-indent-size))))
 (use-package dockerfile-mode :defer t)
 (use-package wsd-mode :defer t)
 
-;; Scripting languages.
+
+;;------------------------------------------------------------------------------
+;; Scripting languages
+;;------------------------------------------------------------------------------
 (defun sh-mode-custom-hook ()
   (setq sh-indentation universal-indent-size)
   (setq sh-basic-offset universal-indent-size))
@@ -39,11 +57,14 @@
 (use-package matlab-mode
   :mode ("\\.m\\'" . matlab-mode))
 
-;; System language.
+
+;;------------------------------------------------------------------------------
+;; System languages
+;;------------------------------------------------------------------------------
 (defun java-mode-custom-hook ()
   (setq c-basic-offset universal-indent-size)
   (setq tab-width universal-indent-size)
-  (local-set-key "\C-m" 'newline-and-indent)) ; indent next line properly
+  (local-set-key "\C-m" 'newline-and-indent)) ; RET indents the new line
 
 (add-hook 'java-mode-hook 'java-mode-custom-hook)
 
@@ -52,13 +73,19 @@
 
 (use-package rust-mode :defer t)
 
-;; Infrastructure config.
+
+;;------------------------------------------------------------------------------
+;; Infrastructure config
+;;------------------------------------------------------------------------------
 (use-package apache-mode
   :mode ("/etc/apache2/.*" . apache-mode))
 (use-package nginx-mode
   :mode ("/etc/nginx/.*" . nginx-mode))
 
-;; File type associations.
+
+;;------------------------------------------------------------------------------
+;; File type associations
+;;------------------------------------------------------------------------------
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.gitignore$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.gitmodules$" . conf-mode))
@@ -66,16 +93,22 @@
 (add-to-list 'auto-mode-alist '("\\.zsh-theme$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.defs$" . conf-mode))
 
-;;
-;;; Dev tools and utilities
+
+;;------------------------------------------------------------------------------
+;; Dev tools
+;;------------------------------------------------------------------------------
 (use-package flycheck :defer t)
+
 (use-package ag
   :defer t
   :config
-  (setq ag-reuse-window 't)
-  (setq ag-reuse-buffers 't))
+  (setq ag-reuse-window 't)    ; open results in same window
+  (setq ag-reuse-buffers 't))  ; reuse the *ag* buffer across searches
 
-;; Utilities.
+
+;;------------------------------------------------------------------------------
+;; Utilities
+;;------------------------------------------------------------------------------
 (use-package hackernews :defer t)
 (use-package neotree :defer t)
 

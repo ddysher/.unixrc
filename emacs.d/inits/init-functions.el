@@ -1,9 +1,10 @@
 ;;------------------------------------------------------------------------------
 ;; Provide some custom functions, these are mostly bound to key short-cut.
 ;;------------------------------------------------------------------------------
-;;
+
+;;------------------------------------------------------------------------------
 ;; Window management
-;;
+;;------------------------------------------------------------------------------
 (defun start-workspace ()
   "Start custom workspace, i.e. window configuration."
   (interactive)
@@ -81,9 +82,9 @@
             '((name . jump-to-register-store-window-conf)))
 
 
-;;
+;;------------------------------------------------------------------------------
 ;; Buffer management
-;;
+;;------------------------------------------------------------------------------
 (defun kill-other-buffers ()
   "Kill all buffers except current active one."
   (interactive)
@@ -148,9 +149,9 @@
   (message "Reset all buffers' size"))
 
 
-;;
+;;------------------------------------------------------------------------------
 ;; Misc.
-;;
+;;------------------------------------------------------------------------------
 ;; Scroll down line by line.
 (defun scroll-down-in-place (n)
   (interactive "p")

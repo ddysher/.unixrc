@@ -127,31 +127,6 @@
         args)))
   (advice-add 'vterm--filter :filter-args #'+vterm-filter-rewrite)
 
-  ;; --- TUI repaint anti-flash -----------------------------------------------
-  ;; Full-screen TUI apps (Claude Code, Codex) periodically repaint the
-  ;; screen for minor UI changes (e.g. hiding a status hint).  The C
-  ;; module's adjust_topline calls "recenter" after every redraw, which
-  ;; can shift window-start and force Emacs into a full window redisplay
-  ;; instead of an incremental line update — visible as a brief flash.
-  ;; Pin window-start across redraws when the buffer line count is
-  ;; unchanged (pure screen repaint, no new scrollback).
-  ;;
-  ;; (defun +vterm-stable-redraw (orig-fn buffer)
-  ;;   (if (not (buffer-live-p buffer))
-  ;;       (funcall orig-fn buffer)
-  ;;     (let* ((old-nlines (with-current-buffer buffer
-  ;;                          (count-lines (point-min) (point-max))))
-  ;;            (saved (mapcar (lambda (w) (cons w (window-start w)))
-  ;;                           (get-buffer-window-list buffer nil t))))
-  ;;       (funcall orig-fn buffer)
-  ;;       (when (and (buffer-live-p buffer)
-  ;;                  (= old-nlines (with-current-buffer buffer
-  ;;                                  (count-lines (point-min) (point-max)))))
-  ;;         (dolist (entry saved)
-  ;;           (when (window-live-p (car entry))
-  ;;             (set-window-start (car entry) (cdr entry) t)))))))
-  ;; (advice-add 'vterm--delayed-redraw :around #'+vterm-stable-redraw)
-
   ;; --- Minibuffer anti-jump -------------------------------------------------
   ;; Two complementary fixes prevent vterm content from shifting when the
   ;; minibuffer activates or grows (e.g. Vertico candidates):
@@ -200,6 +175,31 @@
   (add-hook 'minibuffer-setup-hook    #'+vterm-save-window-starts)
   (add-hook 'minibuffer-exit-hook     #'+vterm-clear-saved-starts)
   (add-hook 'pre-redisplay-functions  #'+vterm-pin-window-starts))
+
+  ;; --- TUI repaint anti-flash -----------------------------------------------
+  ;; Full-screen TUI apps (Claude Code, Codex) periodically repaint the
+  ;; screen for minor UI changes (e.g. hiding a status hint).  The C
+  ;; module's adjust_topline calls "recenter" after every redraw, which
+  ;; can shift window-start and force Emacs into a full window redisplay
+  ;; instead of an incremental line update — visible as a brief flash.
+  ;; Pin window-start across redraws when the buffer line count is
+  ;; unchanged (pure screen repaint, no new scrollback).
+  ;;
+  ;; (defun +vterm-stable-redraw (orig-fn buffer)
+  ;;   (if (not (buffer-live-p buffer))
+  ;;       (funcall orig-fn buffer)
+  ;;     (let* ((old-nlines (with-current-buffer buffer
+  ;;                          (count-lines (point-min) (point-max))))
+  ;;            (saved (mapcar (lambda (w) (cons w (window-start w)))
+  ;;                           (get-buffer-window-list buffer nil t))))
+  ;;       (funcall orig-fn buffer)
+  ;;       (when (and (buffer-live-p buffer)
+  ;;                  (= old-nlines (with-current-buffer buffer
+  ;;                                  (count-lines (point-min) (point-max)))))
+  ;;         (dolist (entry saved)
+  ;;           (when (window-live-p (car entry))
+  ;;             (set-window-start (car entry) (cdr entry) t)))))))
+  ;; (advice-add 'vterm--delayed-redraw :around #'+vterm-stable-redraw)
 
 
 (use-package multi-vterm
