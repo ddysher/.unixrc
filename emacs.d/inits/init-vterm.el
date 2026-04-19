@@ -48,34 +48,12 @@
 
   ;; Per-buffer hook — only buffer-local setup belongs here.
   (defun vterm-mode-custom-hook ()
-    ;; Substitute specific Misc Technical, Geometric Shapes, etc symbols
-    ;; used in TUI like Claude Code. Display table runs before font selection,
-    ;; so these override the fontset fallback like Unifont and Menlo for these
-    ;; specific chars.
-    (when buffer-display-table
-      (aset buffer-display-table ?⏺ (vector ?●))   ; U+23FA → U+25CF
-      (aset buffer-display-table ?⏵ (vector ?▶))   ; U+23F5 → U+25B6
-      (aset buffer-display-table ?⏸ (vector ?‖))   ; U+23F8 → U+2016
-      (aset buffer-display-table ?◐ (vector ?◎)))   ; U+25D0 → U+25CE
-
     ;; --- TUI anti-nobreak-char ----------------------------------------------
     ;; Suppress the cyan highlight Emacs draws on every U+00A0 (NBSP)
     ;; that Claude Code uses for banner padding.
     (setq-local nobreak-char-display nil))
 
   (add-hook 'vterm-mode-hook 'vterm-mode-custom-hook)
-
-  ;; --- TUI unicode fallback -------------------------------------------------
-  ;; Pin monospace fallback fonts for Unicode blocks that TUI apps use
-  ;; but Nerd Fonts lack — without this, Emacs falls back to proportional
-  ;; fonts (STIX Two Math, Arial Unicode) whose taller metrics cause vterm
-  ;; row jumps.  Using "font-spec" and replacing (not prepending) prevents
-  ;; the CoreText fallback from overriding.
-  ;; > brew install --cask font-gnu-unifont
-  (when *darwin*
-    (set-fontset-font t '(#x2300 . #x23FF) (font-spec :family "Unifont")) ; Misc Technical
-    (set-fontset-font t '(#x25A0 . #x25FF) (font-spec :family "Menlo"))   ; Geometric Shapes
-    (set-fontset-font t '(#x2700 . #x27BF) (font-spec :family "Menlo")))  ; Dingbats
 
   ;; --- TUI anti-cursor-hidden -----------------------------------------------
   ;; Full-screen TUIs hide the cursor via DECTCEM (\e[?25l), which vterm
@@ -176,35 +154,9 @@
   (add-hook 'minibuffer-exit-hook     #'+vterm-clear-saved-starts)
   (add-hook 'pre-redisplay-functions  #'+vterm-pin-window-starts))
 
-  ;; --- TUI repaint anti-flash -----------------------------------------------
-  ;; Full-screen TUI apps (Claude Code, Codex) periodically repaint the
-  ;; screen for minor UI changes (e.g. hiding a status hint).  The C
-  ;; module's adjust_topline calls "recenter" after every redraw, which
-  ;; can shift window-start and force Emacs into a full window redisplay
-  ;; instead of an incremental line update — visible as a brief flash.
-  ;; Pin window-start across redraws when the buffer line count is
-  ;; unchanged (pure screen repaint, no new scrollback).
-  ;;
-  ;; (defun +vterm-stable-redraw (orig-fn buffer)
-  ;;   (if (not (buffer-live-p buffer))
-  ;;       (funcall orig-fn buffer)
-  ;;     (let* ((old-nlines (with-current-buffer buffer
-  ;;                          (count-lines (point-min) (point-max))))
-  ;;            (saved (mapcar (lambda (w) (cons w (window-start w)))
-  ;;                           (get-buffer-window-list buffer nil t))))
-  ;;       (funcall orig-fn buffer)
-  ;;       (when (and (buffer-live-p buffer)
-  ;;                  (= old-nlines (with-current-buffer buffer
-  ;;                                  (count-lines (point-min) (point-max)))))
-  ;;         (dolist (entry saved)
-  ;;           (when (window-live-p (car entry))
-  ;;             (set-window-start (car entry) (cdr entry) t)))))))
-  ;; (advice-add 'vterm--delayed-redraw :around #'+vterm-stable-redraw)
-
 
 (use-package multi-vterm
   :after vterm
   :commands (multi-vterm multi-vterm-dedicated-open multi-vterm-prev multi-vterm-next))
-
 
 (provide 'init-vterm)
