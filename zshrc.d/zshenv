@@ -1,0 +1,50 @@
+#!/usr/bin/env zsh
+##------------------------------------------------------------------------------
+## ~/.zshenv - Environment variables for ALL zsh invocations
+##
+## Sourced before .zshrc for every zsh session (interactive and non-interactive).
+## Keep this file to env var exports only — no aliases, no evals, no completions.
+##
+## This is the single source of truth for PATH and language env vars, allowing
+## tools like Emacs (exec-path-from-shell) to use a fast non-interactive shell.
+##------------------------------------------------------------------------------
+
+typeset -gU path PATH
+
+# User local bin
+export PATH="$HOME/.local/bin:$PATH"
+
+# Homebrew (macOS)
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  export HOMEBREW_PREFIX="/opt/homebrew"
+elif [[ -x /usr/local/bin/brew ]]; then
+  export HOMEBREW_PREFIX="/usr/local"
+fi
+if [[ -n "$HOMEBREW_PREFIX" ]]; then
+  export HOMEBREW_CELLAR="$HOMEBREW_PREFIX/Cellar"
+  export HOMEBREW_REPOSITORY="$HOMEBREW_PREFIX"
+  export HOMEBREW_NO_ENV_HINTS=1
+  export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
+fi
+
+# Node.js (Homebrew-managed)
+export PATH="/opt/homebrew/opt/node@24/bin:$PATH"
+export NPM_CONFIG_REGISTRY="https://registry.npmmirror.com/"
+
+# Go
+export GOPATH="$HOME/.cache/go"
+export GOMODCACHE="$HOME/.cache/go/mod"
+export GOBIN="$HOME/.local/bin"
+export GOPROXY="https://goproxy.io,direct"
+
+# Default editor
+case "$(uname)" in
+  Darwin) export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient" ;;
+  Linux)  export EDITOR="emacsclient" ;;
+  *)      export EDITOR="vim" ;;
+esac
+
+# Python
+export UV_DEFAULT_INDEX="https://pypi.tuna.tsinghua.edu.cn/simple"
+export PIP_INDEX_URL="https://pypi.tuna.tsinghua.edu.cn/simple"
+export HF_ENDPOINT="https://hf-mirror.com"

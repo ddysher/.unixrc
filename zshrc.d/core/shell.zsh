@@ -32,9 +32,3 @@ HISTSIZE=50000
 SAVEHIST=50000
 setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE INC_APPEND_HISTORY
 
-# Default editor
-case "$(uname)" in
-  Darwin) export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient" ;;
-  Linux)  export EDITOR="emacsclient" ;;
-  *)      export EDITOR="vim" ;;
-esac

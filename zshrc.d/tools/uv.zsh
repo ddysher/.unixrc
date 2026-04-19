@@ -1,22 +1,12 @@
 ##------------------------------------------------------------------------------
-## Python Development Environment
+## uv - Python package manager (interactive shell only)
+##
+## Package index mirrors (UV_DEFAULT_INDEX, PIP_INDEX_URL, HF_ENDPOINT) live
+## in ~/.zshenv.
 ##------------------------------------------------------------------------------
 
 # Bootstrap uv (added by `uv self install`)
 [[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
-
-##------------------------------------------------------------------------------
-## Package Index (mirrors for faster access in China)
-##------------------------------------------------------------------------------
-
-# uv default index (replaces deprecated UV_INDEX_URL)
-export UV_DEFAULT_INDEX="https://pypi.tuna.tsinghua.edu.cn/simple"
-
-# pip fallback index (for tools that invoke pip directly)
-export PIP_INDEX_URL="https://pypi.tuna.tsinghua.edu.cn/simple"
-
-# Hugging Face model/dataset mirror
-export HF_ENDPOINT="https://hf-mirror.com"
 
 ##------------------------------------------------------------------------------
 ## Shared virtualenv (~/.venv)
