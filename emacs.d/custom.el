@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(ag apache-mode cape corfu dockerfile-mode doom-modeline doom-themes
-        eat embark-consult exec-path-from-shell flycheck ggtags
+        eat embark-consult exec-path-from-shell flycheck ggtags ghostel
         go-mode gptel hackernews js2-mode livedown lua-mode magit
         marginalia markdown-mode matlab-mode multi-vterm neotree
         nginx-mode orderless pet php-mode protobuf-mode rust-mode

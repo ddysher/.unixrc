@@ -159,4 +159,7 @@
   :after vterm
   :commands (multi-vterm multi-vterm-dedicated-open multi-vterm-prev multi-vterm-next))
 
+(use-package ghostel
+  :commands ghostel)
+
 (provide 'init-vterm)
