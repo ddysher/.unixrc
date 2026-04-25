@@ -1,14 +1,21 @@
 ;;------------------------------------------------------------------------------
 ;; Initialize elpa package management system and use-package
 ;;------------------------------------------------------------------------------
+
+;; The package "use-package" is built-in since Emacs 29.
 (require 'package)
-(require 'use-package)       ; use-package is built-in since Emacs 29.
-(setq use-package-always-ensure t)
+(require 'use-package)
 
 ;; Package archives source
 (setq package-archives '(("gnu"    . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("nongnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
                          ("melpa"  . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+
+;; Always install missing packages.
+(setq use-package-always-ensure t)
+
+;; Initializes the package management system, which loads the installed
+;; packages list and makes them available.
 (package-initialize)
 
 ;; Load custom-file now — after package.el is loaded and initialized, but

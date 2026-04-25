@@ -1,15 +1,10 @@
 ;;------------------------------------------------------------------------------
 ;; Configs before loading any modules
 ;;------------------------------------------------------------------------------
+
 ;; System type
-(defvar *windows* (eq system-type 'windows-nt))
-(defvar *cygwin*  (eq system-type 'cygwin))
 (defvar *darwin*  (eq system-type 'darwin))
 (defvar *linux*   (or (eq system-type 'gnu/linux) (eq system-type 'linux)))
-
-;; Emacs major version
-(defvar *emacs29* (>= emacs-major-version 29))
-(defvar *emacs30* (>= emacs-major-version 30))
 
 ;; System name (hostname)
 (defvar *home-desktop* (string= system-name "neuralforge"))
@@ -18,10 +13,6 @@
 
 ;; Default indent size, used across configurations
 (defvar universal-indent-size 4)
-
-;; Auto-managed directory for runtime-generated files
-(defvar auto-managed-dir (expand-file-name "auto-managed" user-emacs-directory))
-(make-directory auto-managed-dir t)
 
 ;; Set auto-managed directory
 (setq savehist-file               (expand-file-name "history"        auto-managed-dir)
@@ -35,8 +26,7 @@
       transient-values-file       (expand-file-name "transient/values.el"  auto-managed-dir)
       transient-levels-file       (expand-file-name "transient/levels.el"  auto-managed-dir))
 
-;; User-data directory for hand-managed data files
-(defvar user-data-dir (expand-file-name "user-data" user-emacs-directory))
+;; Set User-data directory. templates are set in tempel package.
 (setq bookmark-default-file (expand-file-name "bookmarks" user-data-dir))
 
 ;; Custom file path. Loaded later in init-elpa-packages, after
@@ -44,4 +34,4 @@
 ;; defcustom by the time custom-set-variables applies its saved value.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
-(provide 'init-pre-configs)
+(provide 'init-boot-configs)
