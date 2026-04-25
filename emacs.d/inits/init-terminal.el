@@ -1,7 +1,19 @@
 ;;------------------------------------------------------------------------------
-;; vterm-mode: enhanced terminal emulation with workarounds for full-screen
-;; TUI apps (Claude Code, Codex) and minibuffer interactions.
+;; terminal-mode: enhanced terminal emulation with workarounds for full-screen.
 ;;------------------------------------------------------------------------------
+(use-package ghostel
+  :defer t
+  :config
+  (define-key ghostel-mode-map [f1] #'find-file)
+  (define-key ghostel-mode-map [f3] #'other-window)
+  (define-key ghostel-mode-map (kbd "C-o")  #'switch-to-buffer)
+  (define-key ghostel-mode-map (kbd "C-q")  #'ghostel-copy-mode)
+  (define-key ghostel-copy-mode-map (kbd "C-q") #'ghostel-copy-mode)
+
+  (defun ghostel-mode-custom-hook ()
+    (setq-local nobreak-char-display nil))
+  (add-hook 'ghostel-mode-hook #'ghostel-mode-custom-hook))
+
 (use-package vterm
   :defer t
   :init
@@ -154,12 +166,8 @@
   (add-hook 'minibuffer-exit-hook     #'+vterm-clear-saved-starts)
   (add-hook 'pre-redisplay-functions  #'+vterm-pin-window-starts))
 
-
 (use-package multi-vterm
   :after vterm
   :commands (multi-vterm multi-vterm-dedicated-open multi-vterm-prev multi-vterm-next))
 
-(use-package ghostel
-  :commands ghostel)
-
-(provide 'init-vterm)
+(provide 'init-terminal)

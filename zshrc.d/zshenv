@@ -48,3 +48,6 @@ esac
 export UV_DEFAULT_INDEX="https://pypi.tuna.tsinghua.edu.cn/simple"
 export PIP_INDEX_URL="https://pypi.tuna.tsinghua.edu.cn/simple"
 export HF_ENDPOINT="https://hf-mirror.com"
+
+# Machine-specific env (proxies, local PATH, etc.) — exports only, no aliases.
+[[ -f "$HOME/.unixrc/zshrc.d/local.env.zsh" ]] && source "$HOME/.unixrc/zshrc.d/local.env.zsh"

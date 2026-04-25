@@ -34,16 +34,17 @@
 (require 'init-tramp)
 (require 'init-magit)
 (require 'init-winum)
-(require 'init-vterm)
+(require 'init-terminal)
 (require 'init-completion)
 
 
 ;;------------------------------------------------------------------------------
-;; Programming language modes
+;; Development modes
 ;;------------------------------------------------------------------------------
 (require 'init-cc-mode)
 (require 'init-go-mode)
 (require 'init-web-dev)
+(require 'init-agent-tool)
 (require 'init-python-mode)
 (require 'init-markdown-mode)
 (require 'init-more-devconfigs)
