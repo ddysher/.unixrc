@@ -43,6 +43,7 @@
 (use-package consult)
 
 (use-package embark
+  :defer t
   :custom
   (embark-indicators '(embark-minimal-indicator
                         embark-highlight-indicator
@@ -50,7 +51,6 @@
 
 (use-package embark-consult
   :after (embark consult)
-  :demand t
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; Persist minibuffer history across sessions (used by vertico/consult).
@@ -58,7 +58,6 @@
   :ensure nil
   :init
   (savehist-mode))
-
 
 ;;------------------------------------------------------------------------------
 ;; In-buffer completion (Corfu + Cape)
@@ -81,7 +80,6 @@
   (add-to-list 'completion-at-point-functions #'cape-dabbrev t)
   (add-to-list 'completion-at-point-functions #'cape-file t))
 
-
 ;;------------------------------------------------------------------------------
 ;; Snippets (Tempel)
 ;;------------------------------------------------------------------------------
@@ -97,7 +95,6 @@
   (:map tempel-map
    ("TAB"       . tempel-next)
    ("<backtab>" . tempel-previous)))
-
 
 ;;------------------------------------------------------------------------------
 ;; Eglot (LSP client, Emacs 29+)
