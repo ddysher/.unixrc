@@ -1,6 +1,7 @@
 ;;------------------------------------------------------------------------------
 ;; Provide gptel mode, managed by melpa.
 ;;------------------------------------------------------------------------------
+
 (use-package gptel
   :commands (gptel gptel-send gptel-menu)
   :config

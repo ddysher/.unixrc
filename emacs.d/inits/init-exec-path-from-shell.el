@@ -2,6 +2,7 @@
 ;; Provide exec path from shell, see:
 ;; https://github.com/purcell/exec-path-from-shell
 ;;------------------------------------------------------------------------------
+
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns x))
   :config

@@ -81,7 +81,6 @@
               (setq current-window-conf-register register))
             '((name . jump-to-register-store-window-conf)))
 
-
 ;;------------------------------------------------------------------------------
 ;; Buffer management
 ;;------------------------------------------------------------------------------
@@ -147,7 +146,6 @@
     (with-current-buffer buf
       (text-scale-increase 0)))
   (message "Reset all buffers' size"))
-
 
 ;;------------------------------------------------------------------------------
 ;; Misc.

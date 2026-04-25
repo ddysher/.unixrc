@@ -30,7 +30,6 @@
 ;;   C-s-arrows - resize windows
 ;;------------------------------------------------------------------------------
 
-
 ;;------------------------------------------------------------------------------
 ;; Function keys
 ;;------------------------------------------------------------------------------
@@ -45,7 +44,6 @@
 (global-set-key [f9]  'bookmark-jump)
 (global-set-key [f10] 'delete-trailing-whitespace)
 (global-set-key [f12] 'revert-buffer)
-
 
 ;;------------------------------------------------------------------------------
 ;; Navigation
@@ -66,7 +64,6 @@
 (global-set-key (kbd "C-.") 'next-buffer)
 (global-set-key (kbd "C-/") 'next-buffer)
 
-
 ;;------------------------------------------------------------------------------
 ;; Buffer management (consult)
 ;;------------------------------------------------------------------------------
@@ -79,7 +76,6 @@
 (global-set-key (kbd "C-c s")   'search-buffer)
 (global-set-key (kbd "C-c C-s") 'search-all-buffers)
 
-
 ;;------------------------------------------------------------------------------
 ;; Search (consult)
 ;;------------------------------------------------------------------------------
@@ -87,7 +83,6 @@
 (global-set-key (kbd "M-s G") 'consult-git-grep)
 (global-set-key (kbd "M-s l") 'consult-line)
 (global-set-key (kbd "M-s r") 'consult-ripgrep)
-
 
 ;;------------------------------------------------------------------------------
 ;; Window management
@@ -104,7 +99,6 @@
 
 (global-set-key (kbd "C-c C-w") 'start-workspace)
 
-
 ;;------------------------------------------------------------------------------
 ;; macOS key modifiers and window resizing
 ;;------------------------------------------------------------------------------
@@ -118,6 +112,5 @@
   (global-set-key (kbd "C-s-<right>") 'enlarge-window-horizontally)
   (global-set-key (kbd "C-s-<down>")  'shrink-window)
   (global-set-key (kbd "C-s-<up>")    'enlarge-window))
-
 
 (provide 'init-keys)

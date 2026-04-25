@@ -10,6 +10,7 @@
 ;;   GNU GLOBAL is a source code tagging system.
 ;; - ggtags is emacs frontend to GNU Global source code tagging system.
 ;;------------------------------------------------------------------------------
+
 (use-package ggtags :defer t)
 
 (defun cc-mode-custom-hook ()

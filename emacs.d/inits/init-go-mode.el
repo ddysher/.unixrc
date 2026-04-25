@@ -19,6 +19,7 @@
 ;;   C-c C-f ?  ; quite a few commands have C-c C-f prefix, e.g. 'a' for jumping
 ;;              ; to function argument, 'r' for jumping to function return value
 ;;------------------------------------------------------------------------------
+
 (use-package go-mode
   :defer t
   :config

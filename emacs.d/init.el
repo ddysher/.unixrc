@@ -1,8 +1,6 @@
 ;;------------------------------------------------------------------------------
 ;; ~/.unixrc/emacs.d/init.el - Main Emacs Configuration Entry Point
 ;;
-;; Loads modular init files from emacs.d/inits/.
-;;
 ;; Structure:
 ;;   Bootstrap:       load-path, boot variables, package.el/use-package, shell PATH
 ;;   Base/interface:  editor defaults, theme/modeline, completion, windows, terminal
@@ -16,9 +14,9 @@
 ;; Bootstrap - run before everything else
 ;;------------------------------------------------------------------------------
 (add-to-list 'load-path (expand-file-name "inits" user-emacs-directory))
-(require 'init-boot-configs)           ; OS/host flags, custom-file — must be first
-(require 'init-elpa-packages)          ; package.el + use-package setup
-(require 'init-exec-path-from-shell)   ; import shell PATH into Mac GUI Emacs
+(require 'init-boot-configs)
+(require 'init-elpa-packages)
+(require 'init-exec-path-from-shell)
 
 ;;------------------------------------------------------------------------------
 ;; Base Behavior & Interface

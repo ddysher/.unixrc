@@ -5,7 +5,7 @@
 ;; web-mode: major mode for HTML templates, CSS, and other web file types.
 ;;------------------------------------------------------------------------------
 
-;;; JavaScript and JSX (js2-mode).
+;; JavaScript and JSX (js2-mode).
 (use-package js2-mode
   :mode (("\\.js\\'"  . js2-mode)
          ("\\.jsx\\'" . js2-mode))
@@ -15,7 +15,7 @@
                        (setq js2-basic-offset universal-indent-size)
                        (setq js2-strict-inconsistent-return-warning nil)))))
 
-;;; Web templates and frontend files (web-mode).
+;; Web templates and frontend files (web-mode).
 (use-package web-mode
   :mode (("\\.phtml\\'"     . web-mode)
          ("\\.tpl\\.php\\'" . web-mode)

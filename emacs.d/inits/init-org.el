@@ -12,6 +12,7 @@
 ;;   C-c C-x C-a   Archive heading.
 ;;   C-c '      Edit source code.
 ;;------------------------------------------------------------------------------
+
 (use-package org
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda))

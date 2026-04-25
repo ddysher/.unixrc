@@ -1,5 +1,12 @@
 ;;------------------------------------------------------------------------------
 ;; terminal-mode: enhanced terminal emulation with workarounds for full-screen.
+;; The mode sets up ghostty and vterm.
+;; - ghostel is a emacs terminal based on libghostty
+;; - vterm is a emacs terminal based on libvterm
+;;------------------------------------------------------------------------------
+
+;;------------------------------------------------------------------------------
+;; ghostel, used primarily for TUI
 ;;------------------------------------------------------------------------------
 (use-package ghostel
   :defer t
@@ -14,6 +21,9 @@
     (setq-local nobreak-char-display nil))
   (add-hook 'ghostel-mode-hook #'ghostel-mode-custom-hook))
 
+;;------------------------------------------------------------------------------
+;; vterm, for daily terminal use.
+;;------------------------------------------------------------------------------
 (use-package vterm
   :defer t
   :init
