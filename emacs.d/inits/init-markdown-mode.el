@@ -2,16 +2,6 @@
 ;; Provide markdown mode, installed via MELPA.
 ;;------------------------------------------------------------------------------
 
-;; Livedown: live markdown preview in browser.
-;; Requires 'livedown' npm command: npm install -g livedown
-(use-package livedown
-  :vc (:url "https://github.com/shime/emacs-livedown")
-  :commands (livedown:preview livedown:kill)
-  :custom
-  (livedown:autostart nil)
-  (livedown:open t)
-  (livedown:port 1337))
-
 (defgroup markdown-glow nil
   "Preview Markdown with glow inside Emacs."
   :group 'markdown)
@@ -131,12 +121,6 @@
            (shell-quote-argument (buffer-file-name))))
   (revert-buffer t t)
   (message "markdown table of contents updated"))
-
-(defun markdown-live-preview ()
-  ;; Keep the old browser preview available on demand.
-  (interactive)
-  (livedown:kill)
-  (livedown:preview))
 
 (defun markdown-custom-hook()
   (run-hooks 'prog-mode-hook)
