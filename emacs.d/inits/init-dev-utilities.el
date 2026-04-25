@@ -1,5 +1,5 @@
 ;;------------------------------------------------------------------------------
-;; Development utilities and generic file associations.
+;; Development utilities.
 ;;------------------------------------------------------------------------------
 
 (use-package flycheck :defer t)
@@ -10,7 +10,6 @@
   (setq ag-reuse-window 't)    ; open results in same window
   (setq ag-reuse-buffers 't))  ; reuse the *ag* buffer across searches
 
-(use-package hackernews :defer t)
 (use-package neotree :defer t)
 
 (provide 'init-dev-utilities)

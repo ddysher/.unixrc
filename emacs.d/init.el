@@ -44,10 +44,10 @@
 ;;------------------------------------------------------------------------------
 (require 'init-cc-mode)
 (require 'init-go-mode)
-(require 'init-web-dev)
+(require 'init-web-mode)
 (require 'init-python-mode)
 (require 'init-markdown-mode)
-(require 'init-more-languages)
+(require 'init-language-modes) ; more programming language related configs.
 
 ;;------------------------------------------------------------------------------
 ;; Commands & Keybindings

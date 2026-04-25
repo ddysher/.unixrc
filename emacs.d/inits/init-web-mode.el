@@ -57,4 +57,4 @@
 (defun web-mode-custom-hook ()
   (tempel-abbrev-mode))
 
-(provide 'init-web-dev)
+(provide 'init-web-mode)

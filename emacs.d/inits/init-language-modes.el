@@ -84,4 +84,4 @@
 (use-package nginx-mode
   :mode ("/etc/nginx/.*" . nginx-mode))
 
-(provide 'init-more-languages)
+(provide 'init-language-modes)
