@@ -1,5 +1,5 @@
 ;;------------------------------------------------------------------------------
-;; Initialize elpa package management system and use-package
+;; Initialize elpa package management system and use-package.
 ;;------------------------------------------------------------------------------
 
 ;; The package "use-package" is built-in since Emacs 29.
@@ -15,7 +15,8 @@
 (setq use-package-always-ensure t)
 
 ;; Initializes the package management system, which loads the installed
-;; packages list and makes them available.
+;; packages list and makes them available. This must be called since we
+;; disabled package initialization in early-init.el.
 (package-initialize)
 
 ;; Load custom-file now — after package.el is loaded and initialized, but

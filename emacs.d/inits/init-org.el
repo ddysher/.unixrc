@@ -1,5 +1,5 @@
 ;;------------------------------------------------------------------------------
-;; Provide org mode, built-in with emacs, but use package from MELPA.
+;; Configure built-in Org mode.
 ;;
 ;; Common commands:
 ;;   M-Left     Promote one level for current heading.
@@ -19,7 +19,6 @@
   :config
   (setq org-return-follows-link t)
   (setq org-log-done t)
-  (setq org-agenda-files '("~/org/general.org"))
   (setq org-src-tab-acts-natively t)
   (setq org-src-fontify-natively t)
 

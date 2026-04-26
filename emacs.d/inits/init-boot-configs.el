@@ -1,5 +1,5 @@
 ;;------------------------------------------------------------------------------
-;; Configs before loading any modules
+;; Set variables and configs before loading any modules.
 ;;------------------------------------------------------------------------------
 
 ;; System type
@@ -14,7 +14,7 @@
 ;; Default indent size, used across configurations
 (defvar universal-indent-size 4)
 
-;; Set auto-managed directory
+;; Set auto-managed directory. auto-managed-dir is set in early-init.el
 (setq savehist-file               (expand-file-name "history"        auto-managed-dir)
       project-list-file           (expand-file-name "projects"       auto-managed-dir)
       recentf-save-file           (expand-file-name "recentf"        auto-managed-dir)

@@ -1,5 +1,5 @@
 ;;------------------------------------------------------------------------------
-;; ~/.unixrc/emacs.d/init.el - Main Emacs Configuration Entry Point
+;; Main Emacs Configuration Entry Point
 ;;
 ;; Structure:
 ;;   Bootstrap:       load-path, boot variables, package mgmt, shell env, etc.
@@ -46,7 +46,7 @@
 (require 'init-web-mode)
 (require 'init-python-mode)
 (require 'init-markdown-mode)
-(require 'init-language-modes) ; more programming language related configs.
+(require 'init-language-modes)
 
 ;;------------------------------------------------------------------------------
 ;; Commands & Keybindings

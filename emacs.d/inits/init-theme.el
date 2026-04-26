@@ -1,19 +1,17 @@
 ;;------------------------------------------------------------------------------
 ;; Theme and font defaults
-;; - Theme: primarily uses doomemacs theme.
-;; - Fonts: primary font, icon fallback setup.
+;; - Theme: primarily uses doomemacs themes.
+;; - Fonts: set up primary font, icon fallback setup, etc.
 ;;------------------------------------------------------------------------------
 
 ;;------------------------------------------------------------------------------
-;; Theme and Modeline configuration
+;; Theme and modeline configuration
 ;;------------------------------------------------------------------------------
 (use-package doom-themes
-  :ensure t
   :init
   (load-theme 'doom-one t))
 
 (use-package doom-modeline
-  :ensure t
   :hook (after-init . doom-modeline-mode)
   :custom
   (doom-modeline-minor-modes t)
@@ -50,8 +48,7 @@ re-propertize pass doesn't compound the height multiplier."
 ;; Font and symbols configuration
 ;;------------------------------------------------------------------------------
 (use-package nerd-icons
-  :ensure t ; default: "Symbols Nerd Font Mono", set via nerd-icons-font-family
-  :config
+  :config ; default: "Symbols Nerd Font Mono", set via nerd-icons-font-family
   (setq nerd-icons-font-family "SauceCodePro Nerd Font"))
 
 ;; macOS font stack. SauceCodePro is a Nerd Font so terminal and Emacs render
@@ -81,6 +78,7 @@ re-propertize pass doesn't compound the height multiplier."
   ;; 4. Final fallback for anything not caught above.
   (set-fontset-font t 'unicode (font-spec :family "Unifont") nil 'append))
 
+;; Linux font stack.
 (cond (*linux* (set-frame-font "Hack-9.5")))
 
 (provide 'init-theme)

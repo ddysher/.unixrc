@@ -1,13 +1,12 @@
 ;;------------------------------------------------------------------------------
 ;; agent-tool: spawn a coding agent (claude, codex, ...) in a ghostel buffer
 ;; rooted at the current project's directory.
-;;------------------------------------------------------------------------------
-;;; Commentary:
+;;
 ;; M-x agent-tool-start prompts for an agent and opens a fresh ghostel
 ;; session at the project root.  Each invocation spawns a new buffer, so
 ;; multiple sessions of the same agent can run side by side.
+;;------------------------------------------------------------------------------
 
-;;; Code:
 (require 'project)
 
 (defgroup agent-tool nil
@@ -69,4 +68,3 @@ Each call creates a new buffer so multiple sessions can coexist."
     buffer))
 
 (provide 'init-agent-tool)
-;;; init-agent-tool.el ends here

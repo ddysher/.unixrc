@@ -1,6 +1,5 @@
 ;;------------------------------------------------------------------------------
 ;; Provide winum mode, use M-1 ~ M-0 to switch windows
-;; Migrated from window-numbering (unmaintained since 2016) to winum.
 ;;------------------------------------------------------------------------------
 
 (use-package winum

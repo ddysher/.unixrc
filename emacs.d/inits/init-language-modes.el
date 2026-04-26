@@ -38,9 +38,11 @@
 ;; Data and markup formats
 ;;------------------------------------------------------------------------------
 (use-package yaml-mode
+  :defer t
   :hook (yaml-mode . (lambda () (run-hooks 'prog-mode-hook))))  ; not a prog-mode child
 (use-package thrift :defer t)
 (use-package protobuf-mode
+  :defer t
   :hook (protobuf-mode . (lambda () (setq c-basic-offset universal-indent-size))))
 (use-package dockerfile-mode :defer t)
 (use-package wsd-mode :defer t)
@@ -54,11 +56,13 @@
 (add-hook 'sh-mode-hook 'sh-mode-custom-hook)
 
 (use-package lua-mode
+  :defer t
   :hook (lua-mode . (lambda () (setq lua-indent-level universal-indent-size))))
 
 (use-package php-mode :defer t)
 
 (use-package matlab-mode
+  :defer t
   :mode ("\\.m\\'" . matlab-mode))
 
 ;;------------------------------------------------------------------------------
@@ -73,15 +77,16 @@
 
 (use-package scala-mode :defer t)
 (use-package sbt-mode :defer t)
-
 (use-package rust-mode :defer t)
 
 ;;------------------------------------------------------------------------------
 ;; Infrastructure config
 ;;------------------------------------------------------------------------------
 (use-package apache-mode
+  :defer t
   :mode ("/etc/apache2/.*" . apache-mode))
 (use-package nginx-mode
+  :defer t
   :mode ("/etc/nginx/.*" . nginx-mode))
 
 (provide 'init-language-modes)

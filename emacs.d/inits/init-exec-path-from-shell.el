@@ -1,6 +1,5 @@
 ;;------------------------------------------------------------------------------
-;; Provide exec path from shell, see:
-;; https://github.com/purcell/exec-path-from-shell
+;; Load environment variables from shell to Emacs.
 ;;------------------------------------------------------------------------------
 
 (use-package exec-path-from-shell
