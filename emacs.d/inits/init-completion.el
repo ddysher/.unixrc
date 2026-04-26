@@ -1,77 +1,50 @@
 ;;------------------------------------------------------------------------------
-;; Completion: minibuffer (Vertico stack) + in-buffer (Corfu + Cape)
+;; Completion stack flow:
+;;   sources      -> completion candidates
+;;   matching     -> filter candidates
+;;   presentation -> show candidates in minibuffer or buffer
+;;   actions      -> act on selected candidates
 ;;
-;; Minibuffer completion:
-;;   vertico    - vertical completion UI in the minibuffer
-;;   orderless  - space-separated fuzzy/regexp completion style (shared)
-;;   marginalia - rich annotations next to candidates (docstrings, types, etc.)
-;;   consult    - enhanced commands built on completing-read
-;;   embark     - contextual actions on any completion candidate
+;; Sources:
+;;   cape       - extra completion-at-point sources (file, dabbrev, etc.)
+;;   tempel     - snippets exposed through completion-at-point
+;;   consult    - commands that produce completing-read candidates
 ;;
-;; In-buffer completion:
-;;   corfu      - popup completion UI for completion-at-point
-;;   cape       - completion-at-point extensions (file, dabbrev, etc.)
-;;   tempel     - lightweight snippet system; templates in ~/.emacs.d/templates
+;; Matching:
+;;   orderless  - space-separated matching style for completion
 ;;
-;; LSP / Eglot (base config; language servers registered in language files):
-;;   eglot      - built-in LSP client (Emacs 29+), provides capf for corfu
+;; Presentation:
+;;   vertico    - minibuffer completion UI
+;;   corfu      - in-buffer completion-at-point UI
+;;   marginalia - minibuffer annotations
 ;;
-;; Keybindings are defined in init-keys.el.
+;; Actions:
+;;   embark     - contextual actions on completion candidates
+;;   embark-consult - consult preview support for Embark collect buffers
+;;
+;; Some keybindings are defined in init-global-keys.el.
 ;; In minibuffer, type SPC-separated tokens for orderless filtering.
 ;;------------------------------------------------------------------------------
 
 ;;------------------------------------------------------------------------------
-;; Minibuffer completion (Vertico stack)
+;; Matching
 ;;------------------------------------------------------------------------------
-(use-package vertico
-  :init
-  (vertico-mode)
-  :custom
-  (vertico-count 20))
-
-;; orderless is shared between minibuffer and corfu (in-buffer) completion.
+;; Orderless defines how typed patterns match completion candidates.
 (use-package orderless
   :custom
   (completion-styles '(orderless basic))
   ;; Use basic style for file paths so partial-path completion works.
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
-(use-package marginalia
-  :init
-  (marginalia-mode))
-
+;;------------------------------------------------------------------------------
+;; Sources - Minibuffer Candidates
+;;------------------------------------------------------------------------------
+;; Consult provides richer completing-read commands for buffers, search, etc.
 (use-package consult)
 
-(use-package embark
-  :defer t
-  :custom
-  (embark-indicators '(embark-minimal-indicator
-                        embark-highlight-indicator
-                        embark-isearch-highlight-indicator)))
-
-(use-package embark-consult
-  :after (embark consult)
-  :hook (embark-collect-mode . consult-preview-at-point-mode))
-
-;; Persist minibuffer history across sessions (used by vertico/consult).
-(use-package savehist
-  :ensure nil
-  :init
-  (savehist-mode))
-
 ;;------------------------------------------------------------------------------
-;; In-buffer completion (Corfu + Cape)
+;; Sources - Completion-At-Point Candidates
 ;;------------------------------------------------------------------------------
-(use-package corfu
-  :custom
-  (corfu-auto t)                  ; show popup automatically
-  (corfu-auto-delay 0.2)          ; delay before popup appears
-  (corfu-auto-prefix 2)           ; minimum prefix length to trigger completion
-  (corfu-cycle t)                 ; wrap around candidates
-  (corfu-quit-no-match 'separator); keep popup open even with no match (for orderless)
-  :init
-  (global-corfu-mode))
-
 ;; Cape provides extra completion-at-point sources.
 ;; These are appended after any mode-specific capfs (e.g. eglot), so LSP
 ;; completions take priority and cape provides fallback sources.
@@ -80,9 +53,6 @@
   (add-to-list 'completion-at-point-functions #'cape-dabbrev t)
   (add-to-list 'completion-at-point-functions #'cape-file t))
 
-;;------------------------------------------------------------------------------
-;; Snippets (Tempel)
-;;------------------------------------------------------------------------------
 ;; tempel-complete is a capf, so snippets appear inline in the Corfu popup.
 ;; TAB / S-TAB navigate between placeholders after expanding.
 ;; Templates are defined in ~/.emacs.d/user-data/templates.
@@ -97,13 +67,45 @@
    ("<backtab>" . tempel-previous)))
 
 ;;------------------------------------------------------------------------------
-;; Eglot (LSP client, Emacs 29+)
+;; Presentation
 ;;------------------------------------------------------------------------------
-;; Base configuration only. Language-specific server programs are registered
-;; in the respective language files using with-eval-after-load.
-;; Eglot provides completion-at-point → corfu consumes it for LSP completions.
-(use-package eglot
-  :ensure nil
-  :defer t)
+;; Vertico displays minibuffer completion candidates in a vertical list.
+(use-package vertico
+  :init
+  (vertico-mode)
+  :custom
+  (vertico-count 20))
+
+;; Marginalia adds minibuffer annotations such as keybindings, docs, and file metadata.
+(use-package marginalia
+  :init
+  (marginalia-mode))
+
+;; Corfu displays in-buffer completion-at-point candidates in a popup near point.
+(use-package corfu
+  :custom
+  (corfu-auto t)                  ; show popup automatically
+  (corfu-auto-delay 0.3)          ; delay before popup appears
+  (corfu-auto-prefix 3)           ; minimum prefix length to trigger completion
+  (corfu-cycle t)                 ; wrap around candidates
+  (corfu-quit-no-match 'separator); keep popup open even with no match (for orderless)
+  :init
+  (global-corfu-mode))
+
+;;------------------------------------------------------------------------------
+;; Candidate Actions
+;;------------------------------------------------------------------------------
+;; Embark runs context-sensitive actions on the current candidate or symbol.
+(use-package embark
+  :defer t
+  :custom
+  (embark-indicators '(embark-minimal-indicator
+                        embark-highlight-indicator
+                        embark-isearch-highlight-indicator)))
+
+;; Embark-Consult lets Embark collect buffers use Consult live preview.
+(use-package embark-consult
+  :after (embark consult)
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 (provide 'init-completion)
