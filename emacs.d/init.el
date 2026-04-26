@@ -2,12 +2,12 @@
 ;; ~/.unixrc/emacs.d/init.el - Main Emacs Configuration Entry Point
 ;;
 ;; Structure:
-;;   Bootstrap:       load-path, boot variables, package.el/use-package, shell PATH
-;;   Base/interface:  editor defaults, theme/modeline, completion, windows, terminal
-;;   Dev tools:       remote files, Git, Org, chat clients, coding-agent helpers
-;;   Languages:       language modes, LSP registrations, file-type hooks
-;;   Commands/keys:   personal commands first, then global keybindings
-;;   Host-specific:   configuration loaded conditionally per host/OS
+;;   Bootstrap:       load-path, boot variables, package mgmt, shell env, etc.
+;;   Base/Interface:  editor defaults, theme, completion, windows, terminal, etc.
+;;   Notes/Tools:     org, remote files, git, chat agents, coding agent, etc.
+;;   Languages:       language modes, lsp registrations, file-type hooks, etc.
+;;   Commands/Keys:   personal commands, global keybindings, etc.
+;;   Host-specific:   configuration loaded conditionally per host/os, etc.
 ;;------------------------------------------------------------------------------
 
 ;;------------------------------------------------------------------------------
@@ -21,15 +21,15 @@
 ;;------------------------------------------------------------------------------
 ;; Base Behavior & Interface
 ;;------------------------------------------------------------------------------
-(require 'init-preferences)
-(require 'init-server)
+(require 'init-defaults)
 (require 'init-theme)
 (require 'init-winum)
+(require 'init-dirvish)
 (require 'init-terminal)
 (require 'init-completion)
 
 ;;------------------------------------------------------------------------------
-;; Files & Development Tools
+;; Notes & Development Tools
 ;;------------------------------------------------------------------------------
 (require 'init-org)
 (require 'init-tramp)
@@ -37,7 +37,6 @@
 (require 'init-gptel)
 (require 'init-agent-tool)
 (require 'init-claudemacs)
-(require 'init-dev-utilities)
 
 ;;------------------------------------------------------------------------------
 ;; Programming Languages
@@ -53,7 +52,7 @@
 ;; Commands & Keybindings
 ;;------------------------------------------------------------------------------
 (require 'init-functions)
-(require 'init-keys)
+(require 'init-global-keys)
 
 ;;------------------------------------------------------------------------------
 ;; Host-specific
