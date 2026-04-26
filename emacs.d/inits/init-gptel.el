@@ -1,28 +1,41 @@
 ;;------------------------------------------------------------------------------
-;; Provide gptel mode, managed by melpa.
+;; gptel is a simple, extensible LLM client for Emacs.
 ;;------------------------------------------------------------------------------
+
+(require 'subr-x)
+
+(defun my/gptel-api-key (file)
+  "Read an API key from FILE."
+  (let ((api-key-file (expand-file-name file)))
+    (unless (file-exists-p api-key-file)
+      (error "API key file not found at %s" api-key-file))
+    (with-temp-buffer
+      (insert-file-contents api-key-file)
+      (string-trim (buffer-string)))))
 
 (use-package gptel
   :commands (gptel gptel-send gptel-menu)
   :config
+  (gptel-make-openai "OpenAI"
+    :host "api.openai.com"
+    :endpoint "/v1/chat/completions"
+    :stream t
+    :key (lambda () (my/gptel-api-key "~/.secrets/openai"))
+    :models '(gpt-5.5 gpt-5.4 gpt-5.4-mini gpt-5.4-nano))
+
   (gptel-make-openai "DeepSeek"
     :host "api.deepseek.com"
     :endpoint "/chat/completions"
     :stream t
-    :key (lambda ()
-           (let ((api-key-file (expand-file-name "~/.config/.deepseek.key")))
-             (unless (file-exists-p api-key-file)
-               (error "DeepSeek API key file not found at %s" api-key-file))
-             (with-temp-buffer
-               (insert-file-contents api-key-file)
-               (string-trim (buffer-string)))))
-    :models '(deepseek-chat))
+    :key (lambda () (my/gptel-api-key "~/.secrets/deepseek"))
+    :models '(deepseek-chat deepseek-reasoner))
 
-  (setq gptel-model 'gemma4:26b
-        gptel-backend
-        (gptel-make-ollama "Ollama"
-          :host "localhost:11434"
-          :stream t
-          :models '(gemma4:26b))))
+  (gptel-make-ollama "Ollama"
+    :host "localhost:11434"
+    :stream t
+    :models '(gemma4:26b))
+
+  (setq gptel-backend (gptel-get-backend "Ollama")
+        gptel-model 'gemma4:26b))
 
 (provide 'init-gptel)
