@@ -26,12 +26,12 @@
       transient-values-file       (expand-file-name "transient/values.el"  auto-managed-dir)
       transient-levels-file       (expand-file-name "transient/levels.el"  auto-managed-dir))
 
-;; Set User-data directory. templates are set in tempel package.
-(setq bookmark-default-file (expand-file-name "bookmarks" user-data-dir))
-
-;; Custom file path. Loaded later in init-elpa-packages, after
-;; (package-initialize), so that `package-selected-packages' is a bound
-;; defcustom by the time custom-set-variables applies its saved value.
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+;; Set User-data directory. user-data-dir is set in early-init.el
+;; - templates file path are set in tempel package.
+(setq bookmark-default-file (expand-file-name "bookmarks" user-data-dir)
+      ;; Custom file path. Loaded later in init-elpa-packages, after
+      ;; (package-initialize), so that 'package-selected-packages' is a bound
+      ;; defcustom by the time custom-set-variables applies its saved value.
+      custom-file           (expand-file-name "custom.el" user-data-dir))
 
 (provide 'init-boot-configs)
