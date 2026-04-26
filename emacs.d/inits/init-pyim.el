@@ -11,6 +11,7 @@
 ;;    wget http://tumashu.github.io/pyim-bigdict/pyim-bigdict.pyim -P ~/.emacs.d/pyim/dicts
 ;; 2. Only enabled on Linux, use "C-;" to toggle input method.
 ;;------------------------------------------------------------------------------
+
 (use-package pyim-basedict
   :demand t
   :config
@@ -19,7 +20,7 @@
 (use-package pyim
   :demand t
   :after pyim-basedict
-  :bind ("C-;" . toggle-input-method)
+  :bind ("C-'" . toggle-input-method)
   :config
   (setq default-input-method "pyim")
   (setq pyim-dicts

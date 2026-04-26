@@ -1,130 +1,17 @@
 ;;------------------------------------------------------------------------------
-;; Provide some custom functions, these are mostly bound to key short-cut.
+;; Custom interactive functions and utilities.
 ;;------------------------------------------------------------------------------
-
-;;------------------------------------------------------------------------------
-;; Window management
-;;------------------------------------------------------------------------------
-(defun start-workspace ()
-  "Start custom workspace, i.e. window configuration."
-  (interactive)
-  ;; Create terminal window configuration.
-  (split-desktop-window-term)
-  (window-configuration-to-register ?1)
-  (dotimes (_ 2) (multi-vterm))         ; create 2 terminals
-  ;; Create 2-window development configuration.
-  (split-desktop-window-dev2)
-  (window-configuration-to-register ?2)
-  ;; Create 3-window development configuration.
-  (split-desktop-window-dev3)
-  (window-configuration-to-register ?3))
-
-(defun split-desktop-window-dev2 ()
-  "Split workspace to three windows with mini-terminal at bottom."
-  (interactive)
-  (delete-other-windows)
-  (switch-to-buffer "\*scratch\*")
-  ;; Split window: 3 windows at top and 2 windows at bottom.
-  (split-window-below)
-  (split-window-right)
-  (other-window 2)
-  (split-window-right)
-  ;; Adjust window size: balance and enlarge top windows.
-  (balance-windows)
-  (shrink-window (/ (* (window-body-height) 7) 10)) ; shrink the bottom windows to 3/10 of its current size
-  ;; Switch buffers (now the cursor is at the 4th window).
-  (other-window 2))
-
-(defun split-desktop-window-dev3 ()
-  "Split workspace to three windows with mini-terminal at bottom."
-  (interactive)
-  (delete-other-windows)
-  (switch-to-buffer "\*scratch\*")
-  ;; Split window: 3 windows at top and 2 windows at bottom.
-  (split-window-below)
-  (split-window-right)
-  (split-window-right)
-  (other-window 3)
-  (split-window-right)
-  ;; Adjust window size: balance and enlarge top windows.
-  (balance-windows)
-  (shrink-window (/ (* (window-body-height) 7) 10)) ; shrink the bottom windows to 3/10 of its current size
-  ;; Switch buffers (now the cursor is at the 4th window).
-  (other-window 2))
-
-(defun split-desktop-window-term ()
-  "Split workspace for larger terminal workflow."
-  (interactive)
-  (delete-other-windows)
-  (switch-to-buffer "\*scratch\*")
-  ;; create a separate window for larger text area and shink it.
-  (split-window-right)
-  (other-window 1)
-  (shrink-window-horizontally (/ (* (window-width) 3) 10))
-  ;; create a separate window for smaller text area and shink it.
-  (split-window-below)
-  (other-window 1)
-  (shrink-window (/ (* (window-body-height) 3) 10))
-  (other-window 1))
-
-(defvar current-window-conf-register nil)
-
-(advice-add 'window-configuration-to-register :after
-            (lambda (register &rest _)
-              (setq current-window-conf-register register))
-            '((name . window-configuration-to-register-current-reg)))
-
-(advice-add 'jump-to-register :before
-            (lambda (register &rest _)
-              (if current-window-conf-register
-                  (window-configuration-to-register current-window-conf-register))
-              (setq current-window-conf-register register))
-            '((name . jump-to-register-store-window-conf)))
 
 ;;------------------------------------------------------------------------------
 ;; Buffer management
 ;;------------------------------------------------------------------------------
 (defun kill-other-buffers ()
-  "Kill all buffers except current active one."
+  "Kill all buffers except the current buffer."
   (interactive)
   (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 
-(defun kill-non-term-buffers ()
-  "Kill all buffers except terminals."
-  (interactive)
-  (let ((tokill '()))
-    (dolist (buffer (buffer-list))
-      (if (not (string-match "\*vterminal<?>\*" (buffer-name buffer)))
-          (setq tokill (nconc tokill (list buffer)))))
-    (mapc 'kill-buffer tokill)))
-
-(defun revert-all-buffers ()
-  "Revert all open non-modified buffers from their respective files."
-  (interactive)
-  (setq count 0)
-  (dolist (buf (buffer-list))
-    (with-current-buffer buf
-      (when (and (buffer-file-name)
-                 (file-exists-p (buffer-file-name))
-                 (not (buffer-modified-p)))
-        (cl-incf count)
-        (revert-buffer t t t) )))
-  (message "Reverted %d non-modified open files." count))
-
-(defun search-buffer (regexp &optional allbufs)
-  "Show all lines matching REGEXP in current buffer."
-  (interactive (occur-read-primary-args))
-  (occur regexp)
-  (switch-to-buffer-other-window "*Occur*"))
-
-(defun search-all-buffers (regexp &optional allbufs)
-  "Show all lines matching REGEXP in all buffers."
-  (interactive (occur-read-primary-args))
-  (multi-occur-in-matching-buffers ".*" regexp)
-  (switch-to-buffer-other-window "*Occur*"))
-
 (defun text-scale-increase-all-buffers ()
-  "Increate all buffers' size by one"
+  "Increase text scale in all buffers by one step."
   (interactive)
   (dolist (buf (buffer-list))
     (with-current-buffer buf
@@ -132,7 +19,7 @@
   (message "Increased all buffers' size"))
 
 (defun text-scale-decrease-all-buffers ()
-  "Increate all buffers' size by one"
+  "Decrease text scale in all buffers by one step."
   (interactive)
   (dolist (buf (buffer-list))
     (with-current-buffer buf
@@ -140,7 +27,7 @@
   (message "Decreased all buffers' size"))
 
 (defun text-scale-reset-all-buffers ()
-  "Increate all buffers' size by one"
+  "Reset text scale in all buffers."
   (interactive)
   (dolist (buf (buffer-list))
     (with-current-buffer buf
@@ -148,31 +35,43 @@
   (message "Reset all buffers' size"))
 
 ;;------------------------------------------------------------------------------
-;; Misc.
+;; Editing
 ;;------------------------------------------------------------------------------
-;; Scroll down line by line.
 (defun scroll-down-in-place (n)
+  "Scroll down N lines while moving point by N lines."
   (interactive "p")
   (previous-line n)
   (scroll-down n))
 
-;; Scroll up line by line.
 (defun scroll-up-in-place (n)
+  "Scroll up N lines while moving point by N lines."
   (interactive "p")
   (next-line n)
   (scroll-up n))
 
-(defun show-emacs-pid ()
+;;------------------------------------------------------------------------------
+;; Utilities
+;;------------------------------------------------------------------------------
+(require 'ansi-color)
+(defun display-ansi-colors ()
+  "Render ANSI color escape sequences in the current buffer.
+Useful for log files or pasted shell output containing escape sequences."
   (interactive)
-  (message "emacs pid: %s" (emacs-pid)))
+  (ansi-color-apply-on-region (point-min) (point-max)))
 
 (defun sudo-edit (&optional arg)
-  ;; Edit currently visited file as root, or open a new file as root if current
-  ;; buffer does not associate with a file.
+  "Edit current file as root.
+With prefix ARG, or when the current buffer is not visiting a file, prompt for a
+file to open as root."
   (interactive "P")
   (if (or arg (not buffer-file-name))
       (find-file (concat "/sudo:root@localhost:"
                          (read-file-name "Find file(as root): ")))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
+(defun show-emacs-pid ()
+  "Show the current Emacs process ID."
+  (interactive)
+  (message "emacs pid: %s" (emacs-pid)))
 
 (provide 'init-functions)
