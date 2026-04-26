@@ -11,18 +11,70 @@
 (use-package ghostel
   :defer t
   :config
+  (defvar +ghostel-buffer-list nil
+    "Ghostel buffers in creation order.")
+
+  (defun +ghostel-track-buffer ()
+    (unless (memq (current-buffer) +ghostel-buffer-list)
+      (setq +ghostel-buffer-list
+            (nconc +ghostel-buffer-list (list (current-buffer))))))
+
+  (defun +ghostel-forget-buffer ()
+    (setq +ghostel-buffer-list
+          (delq (current-buffer) +ghostel-buffer-list)))
+
+  (defun +ghostel-switch (direction &optional offset)
+    (setq +ghostel-buffer-list
+          (cl-remove-if-not
+           (lambda (buffer)
+             (and (buffer-live-p buffer)
+                  (with-current-buffer buffer
+                    (derived-mode-p 'ghostel-mode))))
+           +ghostel-buffer-list))
+    (let* ((buffers +ghostel-buffer-list)
+           (count (length buffers))
+           (index (cl-position (current-buffer) buffers))
+           (step (or offset 1)))
+      (cond
+       ((zerop count) (ghostel))
+       (index
+        (switch-to-buffer
+         (nth (mod (if (eq direction 'next)
+                       (+ index step)
+                     (- index step))
+                   count)
+              buffers)))
+       (t (switch-to-buffer (car buffers))))))
+
+  (defun +ghostel-next (&optional offset)
+    "Switch to the next Ghostel buffer."
+    (interactive "p")
+    (+ghostel-switch 'next offset))
+
+  (defun +ghostel-prev (&optional offset)
+    "Switch to the previous Ghostel buffer."
+    (interactive "p")
+    (+ghostel-switch 'prev offset))
+
   (define-key ghostel-mode-map [f1] #'find-file)
   (define-key ghostel-mode-map [f3] #'other-window)
+  (define-key ghostel-mode-map [f7] #'consult-ripgrep)
   (define-key ghostel-mode-map (kbd "C-o")  #'switch-to-buffer)
   (define-key ghostel-mode-map (kbd "C-q")  #'ghostel-copy-mode)
+  (define-key ghostel-mode-map (kbd "M-[")  #'+ghostel-prev)
+  (define-key ghostel-mode-map (kbd "M-]")  #'+ghostel-next)
   (define-key ghostel-copy-mode-map (kbd "C-q") #'ghostel-copy-mode)
+  (define-key ghostel-copy-mode-map (kbd "M-[") #'+ghostel-prev)
+  (define-key ghostel-copy-mode-map (kbd "M-]") #'+ghostel-next)
 
   (defun ghostel-mode-custom-hook ()
+    (+ghostel-track-buffer)
     (setq-local nobreak-char-display nil))
-  (add-hook 'ghostel-mode-hook #'ghostel-mode-custom-hook))
+  (add-hook 'ghostel-mode-hook #'ghostel-mode-custom-hook)
+  (add-hook 'kill-buffer-hook  #'+ghostel-forget-buffer))
 
 ;;------------------------------------------------------------------------------
-;; vterm, for daily terminal use.
+;; vterm, for regular terminal usage.
 ;;------------------------------------------------------------------------------
 (use-package vterm
   :defer t
@@ -176,6 +228,9 @@
   (add-hook 'minibuffer-exit-hook     #'+vterm-clear-saved-starts)
   (add-hook 'pre-redisplay-functions  #'+vterm-pin-window-starts))
 
+;;------------------------------------------------------------------------------
+;; multi-vterm, supports opening and switching multiple vterm quickly.
+;;------------------------------------------------------------------------------
 (use-package multi-vterm
   :after vterm
   :commands (multi-vterm multi-vterm-dedicated-open multi-vterm-prev multi-vterm-next))
