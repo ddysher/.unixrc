@@ -15,6 +15,9 @@
                        (setq js2-basic-offset universal-indent-size)
                        (setq js2-strict-inconsistent-return-warning nil)))))
 
+(defun web-mode-custom-hook ()
+  (tempel-abbrev-mode))
+
 ;; Web templates and frontend files (web-mode).
 (use-package web-mode
   :mode (("\\.phtml\\'"     . web-mode)
@@ -53,8 +56,5 @@
 
   (setq web-mode-style-padding 2)
   (setq web-mode-script-padding 2))
-
-(defun web-mode-custom-hook ()
-  (tempel-abbrev-mode))
 
 (provide 'init-web-mode)

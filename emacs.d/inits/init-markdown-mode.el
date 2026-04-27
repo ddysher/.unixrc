@@ -106,12 +106,6 @@
     (user-error "Source Markdown buffer is no longer available"))
   (markdown-glow--render markdown-glow-source-buffer (current-buffer)))
 
-(use-package markdown-mode
-  :hook (markdown-mode . markdown-custom-hook)
-  :bind (:map markdown-mode-map
-              ("C-c C-c p" . markdown-glow-preview)
-              ("C-c C-c g" . markdown-glow-preview)))
-
 ;; Generate TOC inplace.
 (defun markdown-doctoc ()
   (interactive)
@@ -125,14 +119,19 @@
 (defun markdown-custom-hook()
   (run-hooks 'prog-mode-hook)
   (local-set-key (kbd "C-c C-c d") 'markdown-doctoc)
-  (local-set-key (kbd "M-p") 'scroll-down-in-place)
-  (local-set-key (kbd "M-RET") 'markdown-insert-list-item)
-  (local-set-key (kbd "M-<return>") 'markdown-insert-list-item)
   ;; Change 'M-p' and 'M-n' to bindings that I used to. By default, they
-  ;; are bount to 'markdown-previous-link' and 'markdown-next-link'.
+  ;; are bound to 'markdown-previous-link' and 'markdown-next-link'.
   (local-set-key (kbd "M-p") 'scroll-down-in-place)
   (local-set-key (kbd "M-n") 'scroll-up-in-place)
+  (local-set-key (kbd "M-RET") 'markdown-insert-list-item)
+  (local-set-key (kbd "M-<return>") 'markdown-insert-list-item)
   ;; Use glow for native in-Emacs preview.
   (local-set-key (kbd "C-M-m") 'markdown-glow-preview))
+
+(use-package markdown-mode
+  :hook (markdown-mode . markdown-custom-hook)
+  :bind (:map markdown-mode-map
+              ("C-c C-c p" . markdown-glow-preview)
+              ("C-c C-c g" . markdown-glow-preview)))
 
 (provide 'init-markdown-mode)
