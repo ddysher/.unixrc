@@ -40,7 +40,8 @@
 ;; Sources - Minibuffer Candidates
 ;;------------------------------------------------------------------------------
 ;; Consult provides richer completing-read commands for buffers, search, etc.
-(use-package consult)
+(use-package consult
+  :defer t)
 
 ;;------------------------------------------------------------------------------
 ;; Sources - Completion-At-Point Candidates
@@ -50,8 +51,8 @@
 ;; completions take priority and cape provides fallback sources.
 (use-package cape
   :init
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev t)
-  (add-to-list 'completion-at-point-functions #'cape-file t))
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file))
 
 ;; tempel-complete is a capf, so snippets appear inline in the Corfu popup.
 ;; TAB / S-TAB navigate between placeholders after expanding.
@@ -60,7 +61,7 @@
   :custom
   (tempel-path (expand-file-name "templates" user-data-dir))
   :init
-  (add-to-list 'completion-at-point-functions #'tempel-complete t)
+  (add-hook 'completion-at-point-functions #'tempel-complete)
   :bind
   (:map tempel-map
    ("TAB"       . tempel-next)
