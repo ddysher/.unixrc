@@ -14,8 +14,11 @@
   :group 'tools)
 
 (defcustom agent-tool-commands
-  '((claude . "claude")
-    (codex  . "codex"))
+  '((codex . "codex")
+    (claude  . "claude")
+    (codex-w  . "codex-w")
+    (claude-w  . "claude-w")
+    (cursor-agent  . "cursor-agent"))
   "Alist of (NAME . PROGRAM) for available coding agents.
 NAME is a symbol shown in the prompt; PROGRAM is the executable to run."
   :type '(alist :key-type symbol :value-type string)
