@@ -3,6 +3,7 @@
 ;; The mode sets up ghostty and vterm.
 ;; - ghostel is a emacs terminal based on libghostty
 ;; - vterm is a emacs terminal based on libvterm
+;; - eat is a terminal emulator alternative to builtin term
 ;;------------------------------------------------------------------------------
 
 ;;------------------------------------------------------------------------------
@@ -57,8 +58,6 @@
     (+ghostel-switch 'prev offset))
 
   (define-key ghostel-mode-map [f1] #'find-file)
-  (define-key ghostel-mode-map [f3] #'other-window)
-  (define-key ghostel-mode-map [f7] #'consult-ripgrep)
   (define-key ghostel-mode-map (kbd "C-o")  #'switch-to-buffer)
   (define-key ghostel-mode-map (kbd "C-q")  #'ghostel-copy-mode)
   (define-key ghostel-mode-map (kbd "M-[")  #'+ghostel-prev)
@@ -83,10 +82,6 @@
   :config
   ;; Keymap bindings — set once on package load, not per-buffer.
   (define-key vterm-mode-map [f1] #'find-file)
-  (define-key vterm-mode-map [f3] #'other-window)
-  (define-key vterm-mode-map [f4] #'multi-vterm-dedicated-open)
-  (define-key vterm-mode-map [f5] #'multi-vterm)
-  (define-key vterm-mode-map [f8] #'register-to-point)
   (define-key vterm-mode-map (kbd "C-o")  #'switch-to-buffer)
   (define-key vterm-mode-map (kbd "C-q")  #'vterm-copy-mode)
   (define-key vterm-mode-map (kbd "M-[")  #'multi-vterm-prev)
@@ -227,6 +222,12 @@
   (add-hook 'minibuffer-setup-hook    #'+vterm-save-window-starts)
   (add-hook 'minibuffer-exit-hook     #'+vterm-clear-saved-starts)
   (add-hook 'pre-redisplay-functions  #'+vterm-pin-window-starts))
+
+;;------------------------------------------------------------------------------
+;; eat, packages dependencies, not for personal usage.
+;;------------------------------------------------------------------------------
+(use-package eat
+  :defer t)
 
 ;;------------------------------------------------------------------------------
 ;; multi-vterm, supports opening and switching multiple vterm quickly.
