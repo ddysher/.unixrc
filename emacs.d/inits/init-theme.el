@@ -8,7 +8,7 @@
 ;; Theme and modeline configuration
 ;;------------------------------------------------------------------------------
 (use-package doom-themes
-  :init
+  :config
   (load-theme 'doom-one t))
 
 (use-package doom-modeline
@@ -23,7 +23,7 @@
 ;; (via `doom-modeline-icon', buffer-file-icon, vcs, lsp, checker, …) passes
 ;; through it and gets re-propertized with an explicit `:family'. Force that
 ;; family to the symbols font. Icons produced elsewhere (dired, completions)
-;; never call this ffunction and keep the global `nerd-icons-font-family'.
+;; never call this function and keep the global `nerd-icons-font-family'.
 (defun my/doom-modeline-restyle-icon (icon)
   "Force modeline ICON to use Symbols Nerd Font Mono at 0.8× size.
 Idempotent via a `my/modeline-icon' text property so the inactive-window
@@ -59,16 +59,14 @@ re-propertize pass doesn't compound the height multiplier."
 ;;     font-symbols-only-nerd-font font-gnu-unifont
 (when *darwin*
   ;; Relative size overrides
-  (setq face-font-rescale-alist
-        '(("Noto Sans Mono CJK SC" . 0.9)
-          ("Unifont" . 0.6)))
+  (setq face-font-rescale-alist '(("Unifont" . 0.6)))
 
   ;; 1. Set the standard, unpatched Source Code Pro as primary font.
   (set-frame-font "SauceCodePro Nerd Font-12")
 
   ;; 2. Set Chinese font Noto Sans Mono CJK SC.
-  (set-fontset-font t 'han      "Noto Sans Mono CJK SC")
-  (set-fontset-font t 'cjk-misc "Noto Sans Mono CJK SC")
+  (set-fontset-font t 'han      "LXGW WenKai")
+  (set-fontset-font t 'cjk-misc "LXGW WenKai")
 
   ;; 3. Specific unicode region overrides for glyph.
   (set-fontset-font t '(#x25A0 . #x25FF) (font-spec :family "Menlo"))   ; Geometric Shapes
@@ -79,6 +77,6 @@ re-propertize pass doesn't compound the height multiplier."
   (set-fontset-font t 'unicode (font-spec :family "Unifont") nil 'append))
 
 ;; Linux font stack.
-(cond (*linux* (set-frame-font "Hack-9.5")))
+(when *linux* (set-frame-font "Hack-9.5"))
 
 (provide 'init-theme)
