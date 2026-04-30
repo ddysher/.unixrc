@@ -36,7 +36,7 @@
 (require 'init-magit)
 (require 'init-gptel)
 (require 'init-agent-tool)
-(require 'init-claudemacs)
+(require 'init-agent-packages)
 
 ;;------------------------------------------------------------------------------
 ;; Programming Languages
