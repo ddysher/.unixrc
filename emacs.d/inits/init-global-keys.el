@@ -81,6 +81,12 @@
 ;;------------------------------------------------------------------------------
 ;; macOS key modifiers
 ;;------------------------------------------------------------------------------
+;; Global tools
+;;------------------------------------------------------------------------------
+(global-set-key (kbd "C-c g")   'magit-status)
+(global-set-key (kbd "C-c C-g") 'magit-status)
+
+;;------------------------------------------------------------------------------
 (when *darwin*
   (setq mac-command-modifier 'meta)     ; Command → Meta
   (setq mac-control-modifier 'ctrl)     ; Keep Control as is
