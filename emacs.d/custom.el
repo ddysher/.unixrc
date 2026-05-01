@@ -13,11 +13,3 @@
                  sbt-mode scala-mode tabspaces tempel thrift vertico
                  web-mode winum wsd-mode yaml-mode))
  '(package-vc-selected-packages '((claudemacs :url "https://github.com/cpoile/claudemacs"))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(isearch ((t (:background "green" :foreground "#D0BF8F" :weight bold))))
- '(lazy-highlight ((t (:background "IndianRed4" :foreground "#D0BF8F" :weight bold))))
- '(popup-isearch-match ((t (:background "red" :foreground "#DCDCCC")))))

@@ -27,9 +27,6 @@
   (define-key winum-keymap (kbd "M-9") #'winum-select-window-9))
 
 (use-package tabspaces
-  :init
-  (let ((tabspaces-session-dir (expand-file-name "tabspaces/" auto-managed-dir)))
-    (make-directory (expand-file-name "projects/" tabspaces-session-dir) t))
   :hook (after-init . tabspaces-mode)
   :commands (tabspaces-switch-or-create-workspace
              tabspaces-open-or-create-project-and-workspace
@@ -44,10 +41,6 @@
   (tabspaces-exclude-buffers '("*Compile-Log*"))
   (tabspaces-initialize-project-with-todo nil)
   (tabspaces-session nil)
-  (tabspaces-session-file
-   (expand-file-name "tabspaces/tabsession.el" auto-managed-dir))
-  (tabspaces-session-project-session-store
-   (expand-file-name "tabspaces/projects/" auto-managed-dir))
   (tab-bar-show nil)                    ; do not show tabs at all
   (tab-bar-new-tab-choice "*scratch*")
   :config

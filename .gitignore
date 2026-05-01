@@ -1,22 +1,22 @@
 # ==============================================================================
-# Emacs: auto-managed (runtime-generated, not version-controlled)
+# Emacs
 # ==============================================================================
-emacs.d/auto-managed/
-emacs.d/.lsp-session-v1
-emacs.d/.python-environments
+# configuration
+emacs.d/etc/*
+!emacs.d/etc/tempel/
+!emacs.d/etc/tempel/templates.eld
 
-# ==============================================================================
-# Emacs: packages and parsers (downloaded, not version-controlled)
-# ==============================================================================
+# runtime data
+emacs.d/var/*
+!emacs.d/var/bookmark-default.el
+
+# packages
 emacs.d/elpa/
-emacs.d/tree-sitter/
-# pyim: personal dict changes frequently; bigdict is ~20M, pulled separately.
-emacs.d/pyim/
 
 # ==============================================================================
 # Shell
 # ==============================================================================
-# Host-specific zsh overrides, not tracked.
+# host-specific zsh overrides, not tracked.
 zshrc.d/local.zsh
 zshrc.d/local.env.zsh
 

@@ -19,16 +19,14 @@
 ;; disabled package initialization in early-init.el.
 (package-initialize)
 
+;; Load path theming as early as possible after package initialization.
+(use-package no-littering
+  :demand t)
+
 ;; Load custom-file now — after package.el is loaded and initialized, but
 ;; before any use-package :ensure triggers package-install (which calls
 ;; package--save-selected-packages and could otherwise overwrite custom.el
 ;; with a nil list).
 (load custom-file 'noerror)
-
-;; Auto-refresh quickstart cache after installing or deleting packages.
-(advice-add 'package-install :after
-            (lambda (&rest _) (package-quickstart-refresh)))
-(advice-add 'package-delete :after
-            (lambda (&rest _) (package-quickstart-refresh)))
 
 (provide 'init-elpa-packages)

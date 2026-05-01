@@ -8,7 +8,7 @@
 ;;
 ;; Notes:
 ;; 1. Dictionary 'pyim-bigdict' is ~20M so it is ignored; to install:
-;;    wget http://tumashu.github.io/pyim-bigdict/pyim-bigdict.pyim -P ~/.emacs.d/pyim/dicts
+;;    wget http://tumashu.github.io/pyim-bigdict/pyim-bigdict.pyim -P ~/.emacs.d/etc/pyim/dicts
 ;; 2. Only enabled on Linux, use "C-;" to toggle input method.
 ;;------------------------------------------------------------------------------
 
@@ -26,7 +26,7 @@
     (setq default-input-method "pyim")
     (setq pyim-dicts
           '((:name "pyim-bigdict"
-             :file "~/.emacs.d/pyim/dicts/pyim-bigdict.pyim"
+             :file "~/.emacs.d/etc/pyim/dicts/pyim-bigdict.pyim"
              :coding utf-8-unix
              :dict-type pinyin-dict)))))
 
