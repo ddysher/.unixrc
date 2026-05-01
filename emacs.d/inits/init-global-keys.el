@@ -31,9 +31,11 @@
 (global-set-key (kbd "C-,") 'previous-buffer)
 (global-set-key (kbd "C-.") 'next-buffer)
 
-;; Previous/next tab.
-(global-set-key (kbd "s-{") 'tab-previous)
-(global-set-key (kbd "s-}") 'tab-next)
+;; Built-in tab bar.
+(global-set-key (kbd "s-{") 'tab-bar-switch-to-prev-tab)
+(global-set-key (kbd "s-}") 'tab-bar-switch-to-next-tab)
+(global-set-key (kbd "s-t") 'tab-bar-new-tab)
+(global-set-key (kbd "s-w") 'tab-bar-close-tab)
 
 ;;------------------------------------------------------------------------------
 ;; Buffer management
@@ -68,18 +70,18 @@
 (global-set-key (kbd "C-x 4 u") 'winner-undo)
 (global-set-key (kbd "C-x 4 r") 'winner-redo)
 
+;; Resize the focused window with Control + Super + arrow keys.
+(global-set-key (kbd "C-s-<left>")  'shrink-window-horizontally)
+(global-set-key (kbd "C-s-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-s-<down>")  'shrink-window)
+(global-set-key (kbd "C-s-<up>")    'enlarge-window)
+
 ;;------------------------------------------------------------------------------
-;; macOS key modifiers and window resizing
+;; macOS key modifiers
 ;;------------------------------------------------------------------------------
 (when *darwin*
-  (setq mac-command-modifier      'meta)   ; Command → Meta
-  (setq mac-control-modifier      'ctrl)
-  (setq mac-option-modifier       'super)  ; left Option → Super
-  (setq mac-right-option-modifier 'hyper)  ; right Option → Hyper
-  ;; Resize the focused window with Super + arrow keys.
-  (global-set-key (kbd "C-s-<left>")  'shrink-window-horizontally)
-  (global-set-key (kbd "C-s-<right>") 'enlarge-window-horizontally)
-  (global-set-key (kbd "C-s-<down>")  'shrink-window)
-  (global-set-key (kbd "C-s-<up>")    'enlarge-window))
+  (setq mac-command-modifier 'meta)     ; Command → Meta
+  (setq mac-control-modifier 'ctrl)     ; Keep Control as is
+  (setq mac-option-modifier  'super))   ; Option → Super
 
 (provide 'init-global-keys)
