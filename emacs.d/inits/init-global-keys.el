@@ -43,7 +43,9 @@
 ;; Unified picker: open buffers, recent files, and bookmarks in one command.
 (global-set-key (kbd "C-o")     'consult-buffer)
 (global-set-key (kbd "C-x C-r") 'consult-recent-file)
-(global-set-key (kbd "C-x C-b") 'ibuffer)          ; remap to better ibuffer
+(global-set-key (kbd "C-x C-b") 'ibuffer)          ; remap buffer list to ibuffer
+(global-set-key (kbd "C-x d")   'dirvish-dwim)     ; remap dired to dirvish
+(global-set-key (kbd "C-c D")   'dirvish-side)
 
 ;;------------------------------------------------------------------------------
 ;; Search (consult) and Actions (embark)

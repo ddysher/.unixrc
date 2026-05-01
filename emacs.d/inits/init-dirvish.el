@@ -16,9 +16,7 @@
      ("d" "~/Downloads/" "Downloads")
      ("t" "/tmp/" "Temp")))
   :bind
-  (("C-x d" . dirvish-dwim)
-   ("C-c D" . dirvish-side)
-   :map dirvish-mode-map
+  (:map dirvish-mode-map
    ("?" . dirvish-dispatch)
    ("a" . dirvish-quick-access)
    ("h" . dirvish-history-jump)
