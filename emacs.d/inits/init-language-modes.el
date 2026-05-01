@@ -43,7 +43,7 @@
 (use-package thrift :defer t)
 (use-package protobuf-mode
   :defer t
-  :hook (protobuf-mode . (lambda () (setq c-basic-offset universal-indent-size))))
+  :hook (protobuf-mode . (lambda () (setq c-basic-offset default-indent-size))))
 (use-package dockerfile-mode :defer t)
 (use-package wsd-mode :defer t)
 
@@ -51,13 +51,13 @@
 ;; Scripting languages
 ;;------------------------------------------------------------------------------
 (defun sh-mode-custom-hook ()
-  (setq sh-indentation universal-indent-size)
-  (setq sh-basic-offset universal-indent-size))
+  (setq sh-indentation default-indent-size)
+  (setq sh-basic-offset default-indent-size))
 (add-hook 'sh-mode-hook 'sh-mode-custom-hook)
 
 (use-package lua-mode
   :defer t
-  :hook (lua-mode . (lambda () (setq lua-indent-level universal-indent-size))))
+  :hook (lua-mode . (lambda () (setq lua-indent-level default-indent-size))))
 
 (use-package php-mode :defer t)
 
@@ -69,8 +69,8 @@
 ;; System languages
 ;;------------------------------------------------------------------------------
 (defun java-mode-custom-hook ()
-  (setq c-basic-offset universal-indent-size)
-  (setq tab-width universal-indent-size)
+  (setq c-basic-offset default-indent-size)
+  (setq tab-width default-indent-size)
   (local-set-key "\C-m" 'newline-and-indent)) ; RET indents the new line
 
 (add-hook 'java-mode-hook 'java-mode-custom-hook)

@@ -12,6 +12,6 @@
 (defvar *macair-m4* (string= system-name "Deyuans-MacBook-Air"))
 
 ;; Default indent size, used across configurations
-(defvar universal-indent-size 4)
+(defvar default-indent-size 4)
 
 (provide 'init-config-vars)

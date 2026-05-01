@@ -63,7 +63,7 @@
 (defun python-mode-custom-hook ()
   (local-set-key "\C-m" 'newline-and-indent)
   (local-set-key (kbd "C-c d") 'eldoc-doc-buffer)
-  (setq python-indent-offset universal-indent-size))
+  (setq python-indent-offset default-indent-size))
 
 (add-to-list 'auto-mode-alist '("\\.wsgi$" . python-ts-mode))
 (add-hook 'python-ts-mode-hook 'python-mode-custom-hook)

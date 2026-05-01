@@ -17,7 +17,7 @@
 ;;------------------------------------------------------------------------------
 ;; Editor behavior
 ;;------------------------------------------------------------------------------
-(setq-default tab-width universal-indent-size)
+(setq-default tab-width default-indent-size)
 (setq-default indent-tabs-mode nil)     ; spaces only
 (setq make-backup-files nil)            ; no backup~ files; use version control
 (setq auto-save-default nil)            ; no #autosave# files

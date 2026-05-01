@@ -17,7 +17,7 @@
   (ggtags-mode 1)
   (local-set-key (kbd "M-.") 'ggtags-find-tag-dwim)
   (local-set-key (kbd "M-,") 'ggtags-prev-mark)
-  (setq c-basic-offset universal-indent-size)
+  (setq c-basic-offset default-indent-size)
   (setq c-default-style "bsd")
   (setq comment-start "//" comment-end "")
   (local-set-key "\C-m" 'newline-and-indent))
