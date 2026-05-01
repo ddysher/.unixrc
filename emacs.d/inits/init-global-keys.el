@@ -12,7 +12,7 @@
 (global-set-key [f4]  #'revert-buffer)
 (global-set-key [f5]  #'tabspaces-open-or-create-project-and-workspace)
 (global-set-key [f6]  #'tabspaces-save-session)
-(global-set-key [f7]  #'laura/tabspaces-kill-buffers-close-workspace-confirm)
+(global-set-key [f7]  #'laura/tabspaces-kill-workspace)
 (global-set-key [f8]  #'tab-list)
 (global-set-key [f9]  #'dirvish)
 (global-set-key [f10] #'consult-ripgrep)
@@ -26,8 +26,8 @@
 (global-set-key (kbd "ESC ESC") #'abort-recursive-edit)
 
 ;; Scroll without moving point; no default bindings for M-p/M-n globally.
-(global-set-key (kbd "M-p") #'scroll-down-in-place)
-(global-set-key (kbd "M-n") #'scroll-up-in-place)
+(global-set-key (kbd "M-p") #'laura/scroll-down-in-place)
+(global-set-key (kbd "M-n") #'laura/scroll-up-in-place)
 
 ;; Previous/next buffer.
 (global-set-key (kbd "C-,") #'previous-buffer)
@@ -44,10 +44,11 @@
 ;;------------------------------------------------------------------------------
 ;; Unified picker: open buffers, recent files, and bookmarks in one command.
 (global-set-key (kbd "C-o")     #'consult-buffer)
+(global-set-key (kbd "C-c D")   #'dirvish-side)
+
+(global-set-key (kbd "C-x d")   #'dirvish-dwim)     ; remap dired to dirvish
 (global-set-key (kbd "C-x C-r") #'consult-recent-file)
 (global-set-key (kbd "C-x C-b") #'ibuffer)          ; remap buffer list to ibuffer
-(global-set-key (kbd "C-x d")   #'dirvish-dwim)     ; remap dired to dirvish
-(global-set-key (kbd "C-c D")   #'dirvish-side)
 
 ;;------------------------------------------------------------------------------
 ;; Search (consult) and Actions (embark)
@@ -84,7 +85,6 @@
 ;; Global tools
 ;;------------------------------------------------------------------------------
 (global-set-key (kbd "C-c g")   #'magit-status)
-(global-set-key (kbd "C-c C-g") #'magit-status)
 
 ;;------------------------------------------------------------------------------
 ;; macOS key modifiers

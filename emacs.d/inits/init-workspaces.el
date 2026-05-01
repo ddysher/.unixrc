@@ -65,11 +65,11 @@
         :face     consult-buffer
         :history  buffer-name-history
         :state    ,#'consult--buffer-state
-        :items
-        ,(lambda ()
-           (consult--buffer-query :sort 'visibility
-                                  :as #'consult--buffer-pair
-                                  :predicate #'tabspaces--local-buffer-p)))
+        :items    ,(lambda ()
+                     (consult--buffer-query
+                      :sort 'visibility
+                      :as #'consult--buffer-pair
+                      :predicate #'tabspaces--local-buffer-p)))
       "Workspace-local buffer source for `consult-buffer'.")
 
     (defun laura/consult-source-put (source property value)

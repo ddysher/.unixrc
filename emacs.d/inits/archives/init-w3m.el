@@ -16,7 +16,7 @@
     (local-set-key [right] 'w3m-view-next-page)
     (local-set-key (kbd "H") 'w3m-view-previous-page)
     (local-set-key (kbd "L") 'w3m-view-next-page)
-    (local-set-key (kbd "M-n") 'scroll-up-in-place)
+    (local-set-key (kbd "M-n") #'laura/scroll-up-in-place)
     (local-set-key (kbd "C-c b") 'w3m-browse-url))
 
   (add-hook 'w3m-mode-hook 'w3m-mode-custom-hook)

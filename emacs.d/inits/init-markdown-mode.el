@@ -125,8 +125,8 @@
   (local-set-key (kbd "C-c C-c d") 'markdown-doctoc)
   ;; Change 'M-p' and 'M-n' to bindings that I used to. By default, they
   ;; are bound to 'markdown-previous-link' and 'markdown-next-link'.
-  (local-set-key (kbd "M-p") 'scroll-down-in-place)
-  (local-set-key (kbd "M-n") 'scroll-up-in-place)
+  (local-set-key (kbd "M-p") #'laura/scroll-down-in-place)
+  (local-set-key (kbd "M-n") #'laura/scroll-up-in-place)
   (local-set-key (kbd "M-RET") 'markdown-insert-list-item)
   (local-set-key (kbd "M-<return>") 'markdown-insert-list-item)
   ;; Use glow for native in-Emacs preview.
