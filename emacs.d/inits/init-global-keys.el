@@ -12,7 +12,7 @@
 (global-set-key [f4]  'revert-buffer)
 (global-set-key [f5]  'tabspaces-open-or-create-project-and-workspace)
 (global-set-key [f6]  'tabspaces-save-session)
-(global-set-key [f7]  'tabspaces-kill-buffers-close-workspace)
+(global-set-key [f7]  'laura/tabspaces-kill-buffers-close-workspace-confirm)
 (global-set-key [f8]  'tab-list)
 (global-set-key [f9]  'dirvish)
 (global-set-key [f12] 'multi-vterm)

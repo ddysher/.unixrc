@@ -34,6 +34,12 @@
       (text-scale-increase 0)))
   (message "Reset all buffers' size"))
 
+(defun laura/tabspaces-kill-buffers-close-workspace-confirm ()
+  "Ask for confirmation before killing the current workspace's buffers and closing it."
+  (interactive)
+  (when (yes-or-no-p "Kill all buffers in this workspace and close it? ")
+    (tabspaces-kill-buffers-close-workspace)))
+
 ;;------------------------------------------------------------------------------
 ;; Editing
 ;;------------------------------------------------------------------------------
