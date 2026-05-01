@@ -41,7 +41,11 @@
 ;;------------------------------------------------------------------------------
 ;; Consult provides richer completing-read commands for buffers, search, etc.
 (use-package consult
-  :defer t)
+  :defer t
+  :config
+  ;; Keep recent-file candidates visually consistent inside `consult-buffer'.
+  ;; By default Consult uses `consult-file', which stands out more than wanted.
+  (setf (plist-get consult-source-recent-file :face) 'consult-buffer))
 
 ;;------------------------------------------------------------------------------
 ;; Sources - Completion-At-Point Candidates
