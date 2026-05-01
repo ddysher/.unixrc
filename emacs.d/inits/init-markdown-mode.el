@@ -110,11 +110,15 @@
 (defun markdown-doctoc ()
   (interactive)
   (save-buffer)
-  (call-process-shell-command
-   (format "doctoc %s"
-           (shell-quote-argument (buffer-file-name))))
-  (revert-buffer t t)
-  (message "markdown table of contents updated"))
+  (let ((exit-code
+         (call-process-shell-command
+          (format "doctoc %s"
+                  (shell-quote-argument (buffer-file-name))))))
+    (if (zerop exit-code)
+        (progn
+          (revert-buffer t t)
+          (message "markdown table of contents updated"))
+      (user-error "doctoc failed with exit code %s" exit-code))))
 
 (defun markdown-custom-hook()
   (run-hooks 'prog-mode-hook)

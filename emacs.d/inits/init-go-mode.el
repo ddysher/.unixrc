@@ -25,10 +25,10 @@
   :config
   (defun go-mode-custom-hook ()
     (setq gofmt-command "goimports")
-    (local-set-key (kbd "M-/") 'xref-find-references))
-  (add-hook 'go-mode-hook 'go-mode-custom-hook)
-  (add-hook 'go-mode-hook #'eglot-ensure)
-  (add-hook 'before-save-hook 'gofmt-before-save))
+    (local-set-key (kbd "M-/") #'xref-find-references)
+    (add-hook 'before-save-hook #'gofmt-before-save nil t))
+  (add-hook 'go-mode-hook #'go-mode-custom-hook)
+  (add-hook 'go-mode-hook #'eglot-ensure))
 
 (provide 'init-go-mode)
 

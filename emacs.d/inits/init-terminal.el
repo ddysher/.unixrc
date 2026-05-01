@@ -6,6 +6,8 @@
 ;; - eat is a terminal emulator alternative to builtin term
 ;;------------------------------------------------------------------------------
 
+(require 'cl-lib)
+
 ;;------------------------------------------------------------------------------
 ;; ghostel, used primarily for TUI
 ;;------------------------------------------------------------------------------
@@ -77,9 +79,9 @@
 
   (defun ghostel-mode-custom-hook ()
     (+ghostel-track-buffer)
-    (setq-local nobreak-char-display nil))
-  (add-hook 'ghostel-mode-hook #'ghostel-mode-custom-hook)
-  (add-hook 'kill-buffer-hook  #'+ghostel-forget-buffer))
+    (setq-local nobreak-char-display nil)
+    (add-hook 'kill-buffer-hook #'+ghostel-forget-buffer nil t))
+  (add-hook 'ghostel-mode-hook #'ghostel-mode-custom-hook))
 
 ;;------------------------------------------------------------------------------
 ;; vterm, for regular terminal usage.
@@ -134,13 +136,37 @@
   (define-key vterm-copy-mode-map [return]    #'+vterm-copy-save-and-exit)
 
   ;; Per-buffer hook — only buffer-local setup belongs here.
+  (defvar +vterm-global-hooks-enabled nil
+    "Non-nil when the global vterm minibuffer hooks are installed.")
+
+  (defun +vterm-enable-global-hooks ()
+    (unless +vterm-global-hooks-enabled
+      (add-hook 'minibuffer-setup-hook   #'+vterm-save-window-starts)
+      (add-hook 'minibuffer-exit-hook    #'+vterm-clear-saved-starts)
+      (add-hook 'pre-redisplay-functions #'+vterm-pin-window-starts)
+      (setq +vterm-global-hooks-enabled t)))
+
+  (defun +vterm-disable-global-hooks-if-unused ()
+    (unless (cl-some (lambda (buffer)
+                       (and (not (eq buffer (current-buffer)))
+                            (buffer-live-p buffer)
+                            (with-current-buffer buffer
+                              (derived-mode-p 'vterm-mode))))
+                     (buffer-list))
+      (remove-hook 'minibuffer-setup-hook   #'+vterm-save-window-starts)
+      (remove-hook 'minibuffer-exit-hook    #'+vterm-clear-saved-starts)
+      (remove-hook 'pre-redisplay-functions #'+vterm-pin-window-starts)
+      (setq +vterm-global-hooks-enabled nil)))
+
   (defun vterm-mode-custom-hook ()
     ;; --- TUI anti-nobreak-char ----------------------------------------------
     ;; Suppress the cyan highlight Emacs draws on every U+00A0 (NBSP)
     ;; that Claude Code uses for banner padding.
-    (setq-local nobreak-char-display nil))
+    (setq-local nobreak-char-display nil)
+    (+vterm-enable-global-hooks)
+    (add-hook 'kill-buffer-hook #'+vterm-disable-global-hooks-if-unused nil t))
 
-  (add-hook 'vterm-mode-hook 'vterm-mode-custom-hook)
+  (add-hook 'vterm-mode-hook #'vterm-mode-custom-hook)
 
   ;; --- TUI anti-cursor-hidden -----------------------------------------------
   ;; Full-screen TUIs hide the cursor via DECTCEM (\e[?25l), which vterm
@@ -237,9 +263,9 @@
          (set-window-parameter w '+vterm-saved-point nil)))
      nil t))
 
-  (add-hook 'minibuffer-setup-hook    #'+vterm-save-window-starts)
-  (add-hook 'minibuffer-exit-hook     #'+vterm-clear-saved-starts)
-  (add-hook 'pre-redisplay-functions  #'+vterm-pin-window-starts))
+  ;; These hooks are installed lazily while vterm buffers exist,
+  ;; then removed again once the last vterm buffer is killed.
+  )
 
 ;;------------------------------------------------------------------------------
 ;; eat, packages dependencies, not for personal usage.
