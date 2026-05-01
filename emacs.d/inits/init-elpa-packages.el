@@ -20,8 +20,7 @@
 (package-initialize)
 
 ;; Load path theming as early as possible after package initialization.
-(use-package no-littering
-  :demand t)
+(use-package no-littering :demand t)
 
 ;; Keep custom-file explicit and repo-local so it can be checked in.
 ;; It is loaded later in init-elpa-packages, after package initialization.

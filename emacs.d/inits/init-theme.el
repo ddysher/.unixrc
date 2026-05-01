@@ -19,7 +19,7 @@
   (doom-modeline-buffer-encoding 'nondefault))
 
 ;; Render modeline icons with `Symbols Nerd Font Mono' (natural double-width
-;; glyphs, no overlap) while keeping SauceCodePro Nerd Font everywhere else.
+;; glyphs, no overlap) while keeping primary font everywhere else.
 ;; `doom-modeline-propertize-icon' is the chokepoint: every modeline icon
 ;; (via `doom-modeline-icon', buffer-file-icon, vcs, lsp, checker, …) passes
 ;; through it and gets re-propertized with an explicit `:family'. Force that
@@ -58,7 +58,7 @@ re-propertize pass doesn't compound the height multiplier."
 ;; vterm row jumps. Unifont covers everything else as the ultimate fallback.
 ;; > brew install --cask font-source-code-pro font-noto-sans-nano-cjk-sc
 ;;     font-symbols-only-nerd-font font-gnu-unifont
-(when *darwin*
+(when *darwin-p*
   ;; Relative size overrides
   (setq face-font-rescale-alist '(("Unifont" . 0.6)))
 
@@ -78,6 +78,6 @@ re-propertize pass doesn't compound the height multiplier."
   (set-fontset-font t 'unicode (font-spec :family "Unifont") nil 'append))
 
 ;; Linux font stack.
-(when *linux* (set-frame-font "Hack-9.5"))
+(when *linux-p* (set-frame-font "Hack-9.5"))
 
 (provide 'init-theme)

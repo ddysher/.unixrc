@@ -15,6 +15,8 @@
 (global-set-key [f7]  'laura/tabspaces-kill-buffers-close-workspace-confirm)
 (global-set-key [f8]  'tab-list)
 (global-set-key [f9]  'dirvish)
+(global-set-key [f10] 'consult-ripgrep)
+(global-set-key [f11] 'delete-trailing-whitespace)
 (global-set-key [f12] 'multi-vterm)
 
 ;;------------------------------------------------------------------------------
@@ -79,15 +81,15 @@
 (global-set-key (kbd "C-s-<up>")    'enlarge-window)
 
 ;;------------------------------------------------------------------------------
-;; macOS key modifiers
-;;------------------------------------------------------------------------------
 ;; Global tools
 ;;------------------------------------------------------------------------------
 (global-set-key (kbd "C-c g")   'magit-status)
 (global-set-key (kbd "C-c C-g") 'magit-status)
 
 ;;------------------------------------------------------------------------------
-(when *darwin*
+;; macOS key modifiers
+;;------------------------------------------------------------------------------
+(when *darwin-p*
   (setq mac-command-modifier 'meta)     ; Command → Meta
   (setq mac-control-modifier 'ctrl)     ; Keep Control as is
   (setq mac-option-modifier  'super))   ; Option → Super

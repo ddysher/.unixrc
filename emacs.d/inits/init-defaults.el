@@ -8,11 +8,12 @@
 ;;------------------------------------------------------------------------------
 ;; UI and display
 ;;------------------------------------------------------------------------------
-(setq auto-revert-check-vc-info t) ; refresh VC modeline state (branch, status) on revert
 (setq-default display-fill-column-indicator-column 80)
-(column-number-mode)             ; shows current column
-(global-auto-revert-mode t)      ; reload buffers changed on disk (e.g. after git checkout)
-(winner-mode 1)                  ; enables C-x 4 u/r for window layout undo/redo
+(setq auto-revert-check-vc-info t) ; refresh VC modeline state (branch, status) on revert
+(column-number-mode 1)             ; shows current column
+(global-auto-revert-mode 1) ; reload buffers changed on disk (e.g. after git checkout)
+(winner-mode 1)             ; enables C-x 4 u/r for window layout undo/redo
+(which-key-mode 1)          ; displays the key bindings
 
 ;;------------------------------------------------------------------------------
 ;; Editor behavior

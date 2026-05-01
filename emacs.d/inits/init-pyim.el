@@ -12,7 +12,7 @@
 ;; 2. Only enabled on Linux, use "C-;" to toggle input method.
 ;;------------------------------------------------------------------------------
 
-(when *linux*
+(when *linux-p*
   (use-package pyim-basedict
     :demand t
     :config

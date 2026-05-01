@@ -3,15 +3,15 @@
 ;;------------------------------------------------------------------------------
 
 ;; System type
-(defvar *darwin*  (eq system-type 'darwin))
-(defvar *linux*   (or (eq system-type 'gnu/linux) (eq system-type 'linux)))
+(defconst *darwin-p* (eq system-type 'darwin))
+(defconst *linux-p*  (memq system-type '(gnu/linux linux)))
 
 ;; System name (hostname)
-(defvar *home-desktop* (string= (system-name) "neuralforge"))
-(defvar *macpro-m3* (string= system-name "Deyuans-MacBook-M3"))
-(defvar *macair-m4* (string= system-name "Deyuans-MacBook-Air"))
+(defconst *home-desktop* (string= (system-name) "neuralforge"))
+(defconst *macpro-m3* (string= (system-name) "Deyuans-MacBook-M3"))
+(defconst *macair-m4* (string= (system-name) "Deyuans-MacBook-Air"))
 
 ;; Default indent size, used across configurations
-(defvar default-indent-size 4)
+(defconst default-indent-size 4)
 
 (provide 'init-config-vars)
