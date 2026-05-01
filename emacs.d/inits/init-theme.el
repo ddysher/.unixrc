@@ -15,7 +15,8 @@
   :hook (after-init . doom-modeline-mode)
   :custom
   (doom-modeline-minor-modes t)
-  (doom-modeline-unicode-number nil))
+  (doom-modeline-unicode-number nil)
+  (doom-modeline-buffer-encoding 'nondefault))
 
 ;; Render modeline icons with `Symbols Nerd Font Mono' (natural double-width
 ;; glyphs, no overlap) while keeping SauceCodePro Nerd Font everywhere else.
