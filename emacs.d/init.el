@@ -22,11 +22,10 @@
 ;;------------------------------------------------------------------------------
 (require 'init-defaults)
 (require 'init-theme)
-(require 'init-winum)
 (require 'init-dirvish)
 (require 'init-terminal)
 (require 'init-completion)
-(require 'init-tabspaces)
+(require 'init-workspaces)
 
 ;;------------------------------------------------------------------------------
 ;; Notes & Development Tools
