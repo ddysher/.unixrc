@@ -58,7 +58,10 @@
     (+ghostel-switch 'prev offset))
 
   (define-key ghostel-mode-map [f1] #'find-file)
-  (define-key ghostel-mode-map (kbd "C-o")  #'switch-to-buffer)
+  (define-key ghostel-mode-map [f3] #'kill-current-buffer)
+  (define-key ghostel-mode-map [f6] #'consult-ripgrep)
+  (define-key ghostel-mode-map [f9] #'dirvish)
+  (define-key ghostel-mode-map (kbd "C-o")  #'consult-buffer)
   (define-key ghostel-mode-map (kbd "C-q")  #'ghostel-copy-mode)
   (define-key ghostel-mode-map (kbd "M-[")  #'+ghostel-prev)
   (define-key ghostel-mode-map (kbd "M-]")  #'+ghostel-next)
@@ -82,7 +85,10 @@
   :config
   ;; Keymap bindings — set once on package load, not per-buffer.
   (define-key vterm-mode-map [f1] #'find-file)
-  (define-key vterm-mode-map (kbd "C-o")  #'switch-to-buffer)
+  (define-key vterm-mode-map [f3] #'kill-current-buffer)
+  (define-key vterm-mode-map [f6] #'consult-ripgrep)
+  (define-key vterm-mode-map [f9] #'dirvish)
+  (define-key vterm-mode-map (kbd "C-o")  #'consult-buffer)
   (define-key vterm-mode-map (kbd "C-q")  #'vterm-copy-mode)
   (define-key vterm-mode-map (kbd "M-[")  #'multi-vterm-prev)
   (define-key vterm-mode-map (kbd "M-]")  #'multi-vterm-next)

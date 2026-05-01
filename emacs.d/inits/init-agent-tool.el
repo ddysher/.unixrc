@@ -3,8 +3,8 @@
 ;; rooted at the current project's directory.
 ;;
 ;; M-x agent-tool-start prompts for an agent and opens a fresh ghostel
-;; session at the project root.  Each invocation spawns a new buffer, so
-;; multiple sessions of the same agent can run side by side.
+;; session at the project root.  Each invocation spawns a new buffer, then
+;; leaves buffer title updates to ghostel's OSC 2 handling.
 ;;------------------------------------------------------------------------------
 
 (require 'project)
@@ -38,15 +38,12 @@ then fall back to `default-directory'."
       (locate-dominating-file default-directory ".git")
       default-directory))
 
-(defun agent-tool--root-name (root)
-  "Return a short label for ROOT (its basename)."
-  (file-name-nondirectory (directory-file-name (expand-file-name root))))
-
 ;;;###autoload
 (defun agent-tool-start (agent)
   "Start AGENT in a ghostel terminal rooted at the current project.
 Interactively, prompt for the agent from `agent-tool-commands'.
-Each call creates a new buffer so multiple sessions can coexist."
+Each call creates a fresh ghostel buffer.  After startup, ghostel owns
+the buffer name and updates it from OSC 2 title events."
   (interactive
    (list
     (let* ((names (mapcar (lambda (c) (symbol-name (car c))) agent-tool-commands))
@@ -60,12 +57,8 @@ Each call creates a new buffer so multiple sessions can coexist."
   (let* ((program (or (cdr (assq agent agent-tool-commands))
                       (error "Unknown agent: %s" agent)))
          (root    (agent-tool--project-root))
-         (label   (agent-tool--root-name root))
-         ;; generate-new-buffer-name appends <2>, <3>, ... for collisions.
-         (bufname (generate-new-buffer-name
-                   (format "*agent:%s:%s*" agent label)))
          (default-directory (file-name-as-directory root))
-         (buffer (get-buffer-create bufname)))
+         (buffer (generate-new-buffer ghostel-buffer-name)))
     (ghostel-exec buffer program nil)
     (switch-to-buffer buffer)
     buffer))
