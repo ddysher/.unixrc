@@ -23,6 +23,10 @@
 (use-package no-littering
   :demand t)
 
+;; Keep custom-file explicit and repo-local so it can be checked in.
+;; It is loaded later in init-elpa-packages, after package initialization.
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+
 ;; Load custom-file now — after package.el is loaded and initialized, but
 ;; before any use-package :ensure triggers package-install (which calls
 ;; package--save-selected-packages and could otherwise overwrite custom.el

@@ -1,5 +1,5 @@
 ;;------------------------------------------------------------------------------
-;; Set variables and configs before loading any modules.
+;; Set shared config vars before loading the rest of the modules.
 ;;------------------------------------------------------------------------------
 
 ;; System type
@@ -14,8 +14,4 @@
 ;; Default indent size, used across configurations
 (defvar universal-indent-size 4)
 
-;; Keep custom-file explicit and repo-local so it can be checked in.
-;; It is loaded later in init-elpa-packages, after package initialization.
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-
-(provide 'init-boot-configs)
+(provide 'init-config-vars)
