@@ -12,21 +12,22 @@
 ;; 2. Only enabled on Linux, use "C-;" to toggle input method.
 ;;------------------------------------------------------------------------------
 
-(use-package pyim-basedict
-  :demand t
-  :config
-  (pyim-basedict-enable))
+(when *linux*
+  (use-package pyim-basedict
+    :demand t
+    :config
+    (pyim-basedict-enable))
 
-(use-package pyim
-  :demand t
-  :after pyim-basedict
-  :bind ("C-'" . toggle-input-method)
-  :config
-  (setq default-input-method "pyim")
-  (setq pyim-dicts
-        '((:name "pyim-bigdict"
-           :file "~/.emacs.d/pyim/dicts/pyim-bigdict.pyim"
-           :coding utf-8-unix
-           :dict-type pinyin-dict))))
+  (use-package pyim
+    :demand t
+    :after pyim-basedict
+    :bind ("C-'" . toggle-input-method)
+    :config
+    (setq default-input-method "pyim")
+    (setq pyim-dicts
+          '((:name "pyim-bigdict"
+             :file "~/.emacs.d/pyim/dicts/pyim-bigdict.pyim"
+             :coding utf-8-unix
+             :dict-type pinyin-dict)))))
 
 (provide 'init-pyim)

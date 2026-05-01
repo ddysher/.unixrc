@@ -7,7 +7,6 @@
 ;;   Notes/Tools:     org, remote files, git, chat agents, coding agent, etc.
 ;;   Languages:       language modes, lsp registrations, file-type hooks, etc.
 ;;   Commands/Keys:   personal commands, global keybindings, etc.
-;;   Host-specific:   configuration loaded conditionally per host/os, etc.
 ;;------------------------------------------------------------------------------
 
 ;;------------------------------------------------------------------------------
@@ -33,6 +32,7 @@
 ;; Notes & Development Tools
 ;;------------------------------------------------------------------------------
 (require 'init-org)
+(require 'init-pyim)
 (require 'init-tramp)
 (require 'init-magit)
 (require 'init-gptel)
@@ -54,9 +54,3 @@
 ;;------------------------------------------------------------------------------
 (require 'init-functions)
 (require 'init-global-keys)
-
-;;------------------------------------------------------------------------------
-;; Host-specific
-;;------------------------------------------------------------------------------
-(when *linux*
-  (require 'init-pyim))
