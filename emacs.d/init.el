@@ -27,6 +27,7 @@
 (require 'init-dirvish)
 (require 'init-terminal)
 (require 'init-completion)
+(require 'init-tabspaces)
 
 ;;------------------------------------------------------------------------------
 ;; Notes & Development Tools

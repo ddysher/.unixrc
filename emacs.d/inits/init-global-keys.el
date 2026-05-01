@@ -10,10 +10,10 @@
 (global-set-key [f2]  'save-buffer)
 (global-set-key [f3]  'kill-current-buffer)
 (global-set-key [f4]  'revert-buffer)
-(global-set-key [f5]  'consult-line-multi)
-(global-set-key [f6]  'consult-ripgrep)
-(global-set-key [f7]  'query-replace-regexp)
-(global-set-key [f8]  'delete-trailing-whitespace)
+(global-set-key [f5]  'tabspaces-open-or-create-project-and-workspace)
+(global-set-key [f6]  'tabspaces-save-session)
+(global-set-key [f7]  'tabspaces-kill-buffers-close-workspace)
+(global-set-key [f8]  'tab-list)
 (global-set-key [f9]  'dirvish)
 (global-set-key [f12] 'multi-vterm)
 
@@ -30,6 +30,10 @@
 ;; Previous/next buffer.
 (global-set-key (kbd "C-,") 'previous-buffer)
 (global-set-key (kbd "C-.") 'next-buffer)
+
+;; Previous/next tab.
+(global-set-key (kbd "s-{") 'tab-previous)
+(global-set-key (kbd "s-}") 'tab-next)
 
 ;;------------------------------------------------------------------------------
 ;; Buffer management
