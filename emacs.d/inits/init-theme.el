@@ -25,13 +25,13 @@
 ;; through it and gets re-propertized with an explicit `:family'. Force that
 ;; family to the symbols font. Icons produced elsewhere (dired, completions)
 ;; never call this function and keep the global `nerd-icons-font-family'.
-(defun my/doom-modeline-restyle-icon (icon)
+(defun laura/doom-modeline-restyle-icon (icon)
   "Force modeline ICON to use Symbols Nerd Font Mono at 0.8× size.
-Idempotent via a `my/modeline-icon' text property so the inactive-window
+Idempotent via a `laura/modeline-icon' text property so the inactive-window
 re-propertize pass doesn't compound the height multiplier."
   (if (or (not (stringp icon))
           (string-empty-p icon)
-          (get-text-property 0 'my/modeline-icon icon))
+          (get-text-property 0 'laura/modeline-icon icon))
       icon
     (let ((face (get-text-property 0 'face icon)))
       (propertize (substring-no-properties icon)
@@ -39,11 +39,11 @@ re-propertize pass doesn't compound the height multiplier."
                           :family "Symbols Nerd Font Mono"
                           :height 0.8)
                   'display '(raise 0.1)
-                  'my/modeline-icon t))))
+                  'laura/modeline-icon t))))
 
 (with-eval-after-load 'doom-modeline-core
   (advice-add 'doom-modeline-propertize-icon :filter-return
-              #'my/doom-modeline-restyle-icon))
+              #'laura/doom-modeline-restyle-icon))
 
 ;;------------------------------------------------------------------------------
 ;; Font and symbols configuration

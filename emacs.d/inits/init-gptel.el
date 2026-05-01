@@ -4,7 +4,7 @@
 
 (require 'subr-x)
 
-(defun my/gptel-api-key (file)
+(defun laura/gptel-api-key (file)
   "Read an API key from FILE."
   (let ((api-key-file (expand-file-name file)))
     (unless (file-exists-p api-key-file)
@@ -20,14 +20,14 @@
     :host "api.openai.com"
     :endpoint "/v1/chat/completions"
     :stream t
-    :key (lambda () (my/gptel-api-key "~/.secrets/openai"))
+    :key (lambda () (laura/gptel-api-key "~/.secrets/openai"))
     :models '(gpt-5.5 gpt-5.4 gpt-5.4-mini gpt-5.4-nano))
 
   (gptel-make-openai "DeepSeek"
     :host "api.deepseek.com"
     :endpoint "/chat/completions"
     :stream t
-    :key (lambda () (my/gptel-api-key "~/.secrets/deepseek"))
+    :key (lambda () (laura/gptel-api-key "~/.secrets/deepseek"))
     :models '(deepseek-chat deepseek-reasoner))
 
   (gptel-make-ollama "Ollama"
