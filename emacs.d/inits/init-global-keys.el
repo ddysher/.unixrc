@@ -33,11 +33,14 @@
 (global-set-key (kbd "C-,") #'previous-buffer)
 (global-set-key (kbd "C-.") #'next-buffer)
 
-;; Built-in tab bar.
-(global-set-key (kbd "s-{") #'tab-bar-switch-to-prev-tab)
-(global-set-key (kbd "s-}") #'tab-bar-switch-to-next-tab)
+;; Built-in tab bar mode navigation.
 (global-set-key (kbd "s-t") #'tab-bar-new-tab)
 (global-set-key (kbd "s-w") #'tab-bar-close-tab)
+
+(global-set-key (kbd "M-{") #'tab-bar-switch-to-prev-tab)
+(global-set-key (kbd "M-}") #'tab-bar-switch-to-next-tab)
+(global-set-key (kbd "M-_") #'backward-paragraph)
+(global-set-key (kbd "M-+") #'forward-paragraph)
 
 ;;------------------------------------------------------------------------------
 ;; Buffer management
