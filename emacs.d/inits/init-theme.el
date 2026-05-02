@@ -1,6 +1,6 @@
 ;;------------------------------------------------------------------------------
 ;; Theme and font defaults
-;; - Theme: primarily uses doomemacs themes.
+;; - Theme: primarily uses doomemacs themes, with dimmer.
 ;; - Fonts: set up primary font, icon fallback setup, etc.
 ;;------------------------------------------------------------------------------
 
@@ -14,7 +14,6 @@
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
   :custom
-  (doom-modeline-minor-modes t)
   (doom-modeline-unicode-number nil)
   (doom-modeline-buffer-encoding 'nondefault))
 
@@ -44,6 +43,37 @@ re-propertize pass doesn't compound the height multiplier."
 (with-eval-after-load 'doom-modeline-core
   (advice-add 'doom-modeline-propertize-icon :filter-return
               #'laura/doom-modeline-restyle-icon))
+
+;;------------------------------------------------------------------------------
+;; Use dimmer
+;;------------------------------------------------------------------------------
+(use-package dimmer
+  :ensure
+  :init
+    (defun advise-dimmer-config-change-handler ()
+      "Advise to only force process if no predicate is truthy."
+      (let ((ignore (cl-some (lambda (f) (and (fboundp f) (funcall f)))
+                             dimmer-prevent-dimming-predicates)))
+        (unless ignore
+          (when (fboundp 'dimmer-process-all)
+            (dimmer-process-all t)))))
+
+    (defun corfu-frame-p ()
+      "Check if the buffer is a corfu frame buffer."
+      (string-match-p "\\` \\*corfu" (buffer-name)))
+
+    (defun dimmer-configure-corfu ()
+      "Convenience settings for corfu users."
+      (add-to-list
+       'dimmer-prevent-dimming-predicates
+       #'corfu-frame-p))
+  :config
+    (advice-add
+     'dimmer-config-change-handler
+     :override 'advise-dimmer-config-change-handler)
+    (setq dimmer-fraction 0.4)
+    (dimmer-configure-corfu)
+    (dimmer-mode t))
 
 ;;------------------------------------------------------------------------------
 ;; Font and symbols configuration

@@ -78,9 +78,106 @@
   (define-key ghostel-copy-mode-map (kbd "M-[") #'+ghostel-prev)
   (define-key ghostel-copy-mode-map (kbd "M-]") #'+ghostel-next)
 
+  ;; Ghostel renders terminal cells with anonymous face plists like
+  ;; `(:weight bold)' and `(:foreground "#98be65")'.  `dimmer' only remaps
+  ;; named faces, so those plist-backed cells stay bright in unfocused ghostel
+  ;; windows.  Normalize plist faces into generated faces that inherit from
+  ;; `default' so dimmer can remap them like ordinary buffer text.
+  (defvar +ghostel-dimmer-face-cache (make-hash-table :test #'equal)
+    "Map anonymous Ghostel face plists to generated face symbols.")
+
+  (defvar +ghostel-dimmer-face-counter 0
+    "Monotonic suffix used for generated Ghostel dimmer face names.")
+
+  (defun +ghostel-plist-face-p (face)
+    "Return non-nil when FACE is an anonymous face plist."
+    (and (consp face) (keywordp (car face))))
+
+  (defun +ghostel-face-symbol-for-plist (face)
+    "Return a generated face symbol for anonymous Ghostel FACE plist."
+    (let ((key (copy-tree face)))
+      (or (gethash key +ghostel-dimmer-face-cache)
+          (let* ((sym (intern (format "+ghostel-dimmer-face-%d"
+                                      (cl-incf +ghostel-dimmer-face-counter))))
+                 (spec (copy-tree face)))
+            (unless (facep sym)
+              (make-empty-face sym))
+            (unless (plist-member spec :inherit)
+              (setq spec (plist-put spec :inherit 'default)))
+            (apply #'set-face-attribute sym nil spec)
+            (puthash key sym +ghostel-dimmer-face-cache)
+            sym))))
+
+  (defun +ghostel-normalize-face-property (face)
+    "Convert anonymous plist-backed FACE values into generated face symbols."
+    (cond
+     ((symbolp face) face)
+     ((+ghostel-plist-face-p face)
+      (+ghostel-face-symbol-for-plist face))
+     ((consp face)
+      (mapcar (lambda (elt)
+                (if (+ghostel-plist-face-p elt)
+                    (+ghostel-face-symbol-for-plist elt)
+                  elt))
+              face))
+     (t face)))
+
+  (defun +ghostel-normalize-buffer-faces ()
+    "Replace anonymous Ghostel face plists in the current buffer.
+Return non-nil when any `face' text properties were rewritten."
+    (let ((pos (point-min))
+          (changed nil)
+          (inhibit-read-only t))
+      (while (< pos (point-max))
+        (let* ((face (get-text-property pos 'face))
+               (next (or (next-single-property-change pos 'face nil (point-max))
+                         (point-max))))
+          (when face
+            (let ((new (+ghostel-normalize-face-property face)))
+              (unless (equal face new)
+                (put-text-property pos next 'face new)
+                (setq changed t))))
+          (setq pos (max (1+ pos) next))))
+      changed))
+
+  (defun +ghostel-refresh-dimmer ()
+    "Re-apply dimmer remaps in the current Ghostel buffer when needed."
+    (when (and (featurep 'dimmer)
+               (bound-and-true-p dimmer-mode)
+               (bound-and-true-p dimmer-buffer-face-remaps))
+      (dimmer-restore-buffer (current-buffer))
+      (dimmer-dim-buffer (current-buffer) dimmer-fraction)))
+
+  (defun +ghostel-normalize-faces-after-redraw (buffer &rest _)
+    "Teach dimmer about newly rendered Ghostel face plists after redraw.
+Operate on BUFFER explicitly because `ghostel--delayed-redraw' returns after
+leaving its internal `with-current-buffer', so `current-buffer' here is not
+reliable."
+    (when (buffer-live-p buffer)
+      (with-current-buffer buffer
+        (when (and (derived-mode-p 'ghostel-mode)
+                   (bound-and-true-p dimmer-mode)
+                   (+ghostel-normalize-buffer-faces))
+          (+ghostel-refresh-dimmer)))))
+
+  (defun +ghostel-normalize-all-buffers-for-dimmer ()
+    "Normalize live Ghostel buffers so dimmer can remap their text faces."
+    (when (bound-and-true-p dimmer-mode)
+      (dolist (buffer (buffer-list))
+        (when (buffer-live-p buffer)
+          (with-current-buffer buffer
+            (when (and (derived-mode-p 'ghostel-mode)
+                       (+ghostel-normalize-buffer-faces))
+              (+ghostel-refresh-dimmer)))))))
+
+  (advice-add 'ghostel--delayed-redraw :after #'+ghostel-normalize-faces-after-redraw)
+  (add-hook 'dimmer-mode-hook #'+ghostel-normalize-all-buffers-for-dimmer)
+
   (defun ghostel-mode-custom-hook ()
     (+ghostel-track-buffer)
     (setq-local nobreak-char-display nil)
+    (when (bound-and-true-p dimmer-mode)
+      (+ghostel-normalize-buffer-faces))
     (add-hook 'kill-buffer-hook #'+ghostel-forget-buffer nil t))
   (add-hook 'ghostel-mode-hook #'ghostel-mode-custom-hook))
 
