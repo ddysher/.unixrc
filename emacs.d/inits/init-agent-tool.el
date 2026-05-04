@@ -59,8 +59,8 @@ the buffer name and updates it from OSC 2 title events."
          (root    (agent-tool--project-root))
          (default-directory (file-name-as-directory root))
          (buffer (generate-new-buffer ghostel-buffer-name)))
-    (ghostel-exec buffer program nil)
     (switch-to-buffer buffer)
+    (ghostel-exec buffer program nil)
     buffer))
 
 (provide 'init-agent-tool)
