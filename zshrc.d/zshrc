@@ -22,7 +22,6 @@ _source_if_exists() {
   [[ -r "$1" ]] && source "$1"
 }
 
-
 ##------------------------------------------------------------------------------
 ## Core
 ##------------------------------------------------------------------------------
@@ -31,7 +30,6 @@ _source_if_exists "$ZSHRC_CONFIG_DIR/core/shell.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/path.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/completion.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/core/aliases.zsh"
-
 
 ##------------------------------------------------------------------------------
 ## Tools
@@ -42,17 +40,13 @@ _source_if_exists "$ZSHRC_CONFIG_DIR/tools/starship.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/tools/zoxide.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/tools/kubectl.zsh"
 _source_if_exists "$ZSHRC_CONFIG_DIR/tools/zinit.zsh"
-
-# Tool experiment.
-#_source_if_exists "$ZSHRC_CONFIG_DIR/tools/fzf.zsh"
-
+[ -s "/Users/bytedance/.bun/_bun" ] && source "/Users/bytedance/.bun/_bun"
 
 ##------------------------------------------------------------------------------
 ## Local customizations (not tracked in git)
 ##------------------------------------------------------------------------------
 
 _source_if_exists "$ZSHRC_CONFIG_DIR/local.zsh"
-
 
 ##------------------------------------------------------------------------------
 ## Clean up and Compilation

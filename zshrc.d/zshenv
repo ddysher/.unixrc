@@ -31,6 +31,10 @@ fi
 export PATH="/opt/homebrew/opt/node@24/bin:$PATH"
 export NPM_CONFIG_REGISTRY="https://registry.npmmirror.com/"
 
+# Bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 # Go
 export GOPATH="$HOME/.cache/go"
 export GOMODCACHE="$HOME/.cache/go/mod"
