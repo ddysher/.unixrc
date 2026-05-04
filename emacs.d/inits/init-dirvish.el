@@ -2,6 +2,13 @@
 ;; Dirvish - modern file navigation on top of Dired.
 ;;------------------------------------------------------------------------------
 
+(use-package dired-x
+  :ensure nil
+  :hook (dired-mode . dired-omit-mode)
+  :config
+  (setq dired-omit-files
+        (concat dired-omit-files "\\|\\.DS_Store\\'")))
+
 (use-package dirvish
   :init
   (dirvish-override-dired-mode)
