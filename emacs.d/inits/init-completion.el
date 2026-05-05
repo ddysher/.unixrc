@@ -111,4 +111,9 @@
   :after (embark consult)
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
+;;------------------------------------------------------------------------------
+;; Customization
+;;------------------------------------------------------------------------------
+(add-to-list 'completion-ignored-extensions ".DS_Store")
+
 (provide 'init-completion)
