@@ -6,7 +6,7 @@
 ;; Prog mode hook (shared across all programming modes):
 ;;   show-trailing-whitespace, truncate-lines, tempel-abbrev-mode
 ;;
-;; Data / markup:   yaml, thrift, protobuf, dockerfile, wsd
+;; Data / markup:   yaml, thrift, protobuf, dockerfile, templates, wsd
 ;; Scripting:       sh, lua, php, matlab
 ;; System:          java, scala/sbt, rust
 ;; Infra config:    apache, nginx
@@ -46,6 +46,32 @@
   :hook (protobuf-mode . (lambda () (setq c-basic-offset default-indent-size))))
 (use-package dockerfile-mode :defer t)
 (use-package wsd-mode :defer t)
+
+(defun web-mode-custom-hook ()
+  (setq web-mode-markup-indent-offset default-indent-size)
+  (setq web-mode-css-indent-offset default-indent-size)
+  (setq web-mode-code-indent-offset default-indent-size)
+  (setq web-mode-style-padding default-indent-size)
+  (setq web-mode-script-padding default-indent-size)
+  (tempel-abbrev-mode))
+
+(use-package web-mode
+  :mode (("\\.phtml\\'"       . web-mode)
+         ("\\.tpl\\.php\\'"   . web-mode)
+         ("\\.[agj]sp\\'"     . web-mode)
+         ("\\.as[cp]x\\'"     . web-mode)
+         ("\\.mustache\\'"    . web-mode)
+         ("\\.djhtml\\'"      . web-mode)
+         ("\\.erb\\'"         . web-mode)
+         ("\\.php\\'"         . web-mode)
+         ("\\.blade\\.php\\'" . web-mode))
+  :hook (web-mode . web-mode-custom-hook)
+  :config
+  (setq web-mode-engines-alist
+        '(("blade" . "\\.blade\\.")))
+
+  (setq web-mode-enable-auto-pairing t)
+  (setq web-mode-enable-css-colorization t))
 
 ;;------------------------------------------------------------------------------
 ;; Scripting languages

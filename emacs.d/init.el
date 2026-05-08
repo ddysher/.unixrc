@@ -44,7 +44,7 @@
 ;;------------------------------------------------------------------------------
 (require 'init-cc-mode)
 (require 'init-go-mode)
-(require 'init-web-mode)
+(require 'init-js-ts-mode)
 (require 'init-python-mode)
 (require 'init-markdown-mode)
 (require 'init-language-modes)

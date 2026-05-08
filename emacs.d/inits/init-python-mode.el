@@ -68,6 +68,7 @@
 (add-to-list 'auto-mode-alist '("\\.wsgi$" . python-ts-mode))
 (add-hook 'python-ts-mode-hook 'python-mode-custom-hook)
 
+;; Debug python in emacs.
 (defun gud-mode-custom-hook ()
   (define-key gud-mode-map '[f9] 'gud-cont)
   (define-key gud-mode-map '[f10] 'gud-next)
