@@ -27,8 +27,7 @@ if [[ -n "$HOMEBREW_PREFIX" ]]; then
   export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
 fi
 
-# Node.js (Homebrew-managed)
-export PATH="/opt/homebrew/opt/node@24/bin:$PATH"
+# Node.js (Homebrew-managed, install specific version with brew link)
 export NPM_CONFIG_REGISTRY="https://registry.npmmirror.com/"
 
 # Bun
