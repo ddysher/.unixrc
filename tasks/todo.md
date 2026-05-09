@@ -107,11 +107,11 @@ Vertical slices, ordered. Each phase ends with a hands-on testing guide you can 
 
 Pure rendering / interaction layer changes. No model changes. Sized roughly: (S) ~30 min, (M) afternoon.
 
-- [ ] **T9. TAB peek / RET commit.** (S) `TAB` displays the card's buffer in another window without taking focus; `RET` unchanged. Reuses an existing window first (`display-buffer-reuse-window`).
+- [x] **T9. TAB peek / RET commit.** (S) `TAB` displays the card's buffer in another window without taking focus; `RET` unchanged. Reuses an existing window first (`display-buffer-reuse-window`).
 
-- [ ] **T10. Dirvish-style modeline.** (S) Replace `Agents [N]` with a richer line: sort field with arrow direction (`↑ status|mtime`), filter indicator if `/` filter is active, and `position / total` on the right.
+- [x] **T10. Dirvish-style modeline.** (S) Replace `Agents [N]` with a richer line: sort field with arrow direction (`↑ status|mtime`), filter indicator if `/` filter is active, and `position / total` on the right.
 
-- [ ] **T11. `/` filter.** (M) `/` in the sidebar reads a substring query and filters cards by matching across the card text (agent / dir / buffer / label). Press `/` again with empty input to clear; `g` clears too. Re-render with a filter predicate on `agent-tool--sessions`. No isearch.
+- [x] **T11. `/` filter.** (M) `/` in the sidebar reads a substring query and filters cards by matching across the card text (agent / dir / buffer / label). Press `/` again with empty input to clear; `g` clears too. Re-render with a filter predicate on `agent-tool--sessions`. No isearch.
 
 ### Phase 5 user test guide
 
