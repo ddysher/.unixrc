@@ -55,12 +55,12 @@ Vertical slices, ordered. Each phase ends with a hands-on testing guide you can 
 
 ## Phase 3 — Resume (delegated to each tool's native picker)
 
-- [ ] **T5. Resume flag wiring**
+- [x] **T5. Resume flag wiring** *(landed with T1; flags were declared in the registry from the start)*
   - Set `:resume-flag "--resume"` and `:continue-flag "--continue"` for `claude`, `codex`, `claude-w`, `codex-w`.
   - Leave `cursor-agent` flags as `nil` until verified.
   - **No filesystem scraping.** No listing code. The tool's own picker handles selection.
 
-- [ ] **T6. `agent-tool-resume` and `agent-tool-continue` commands**
+- [x] **T6. `agent-tool-resume` and `agent-tool-continue` commands**
   - `agent-tool-resume`: prompts agent (filters out those without `:resume-flag`), launches with `--resume` — tool's own picker UI takes over.
   - `agent-tool-continue`: same, but `--continue` (last session, no picker).
   - Both honor `C-u` for directory override.
