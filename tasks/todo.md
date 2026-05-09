@@ -78,7 +78,7 @@ Vertical slices, ordered. Each phase ends with a hands-on testing guide you can 
 
 ## Phase 4 — Polish
 
-- [ ] **T7. Transient dispatch (`agent-tool-dispatch`)**
+- [x] **T7. Transient dispatch (`agent-tool-dispatch`)**
   - Infix `-d`: `project` | `prompt` (directory mode).
   - Infix `-r`: `off` | `continue` | `resume`.
   - Suffix per agent: `c` claude, `x` codex, `w` claude-w, `W` codex-w, `u` cursor-agent.
@@ -86,7 +86,7 @@ Vertical slices, ordered. Each phase ends with a hands-on testing guide you can 
   - Gray out an agent's suffix when `-r` ≠ `off` and that agent has no resume flag.
   - Bind in `init-global-keys.el` (default attempt: `C-c a`).
 
-- [ ] **T8. Smoke checklist in file header**
+- [x] **T8. Smoke checklist in file header**
   - 8-step list in commentary at top of `init-agent-tool.el`.
 
 ### Phase 4 user test guide
@@ -113,8 +113,8 @@ Vertical slices, ordered. Each phase ends with a hands-on testing guide you can 
 
 ## Done criteria (whole feature)
 
-- [ ] Launch any agent at any directory from `agent-tool-dispatch` in ≤3 keystrokes.
-- [ ] Sidebar shows all live agents; RET / kill / refresh work.
-- [ ] `agent-tool-resume` / `agent-tool-continue` delegate to each tool's own picker.
-- [ ] Kill prompts before destroying a live session.
-- [ ] Existing `M-x agent-tool-start` still works.
+- [x] Launch any agent at any directory from `agent-tool-dispatch` in ≤3 keystrokes.
+- [x] Sidebar shows all live agents; RET / kill / refresh work.
+- [x] `agent-tool-resume` / `agent-tool-continue` delegate to each tool's own picker.
+- [x] Kill prompts before destroying a live session.
+- [x] Existing `M-x agent-tool-start` still works.
