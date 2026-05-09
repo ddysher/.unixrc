@@ -467,23 +467,10 @@ Prompts only for agents that declare a `:continue-flag' in
           (read-directory-name "Agent directory: " root nil t)))
       root)))
 
-(defun agent-tool-dispatch--inapt-p (agent)
-  "Return non-nil when AGENT cannot satisfy the current resume mode."
-  (let* ((args   (transient-args 'agent-tool-dispatch))
-         (resume (or (cl-some (lambda (a)
-                                (and (stringp a)
-                                     (string-prefix-p "--resume=" a)
-                                     (substring a (length "--resume="))))
-                              args)
-                     "off"))
-         (plist  (cdr (assq agent agent-tool-agents))))
-    (pcase resume
-      ("continue" (not (plist-get plist :continue-flag)))
-      ("resume"   (not (plist-get plist :resume-flag)))
-      (_          nil))))
-
 (defun agent-tool-dispatch--launch-agent (agent)
-  "Launch AGENT with the directory and resume mode from the transient."
+  "Launch AGENT with the directory and resume mode from the transient.
+Errors with a clear message if AGENT lacks the flag the chosen resume
+mode requires."
   (agent-tool--launch agent
                       (agent-tool-dispatch--directory)
                       (agent-tool-dispatch--resume-mode)))
@@ -504,16 +491,11 @@ Prompts only for agents that declare a `:continue-flag' in
    (agent-tool-dispatch--dir)
    (agent-tool-dispatch--resume)]
   ["Launch"
-   ("c" "claude"       agent-tool-dispatch--claude
-    :inapt-if (lambda () (agent-tool-dispatch--inapt-p 'claude)))
-   ("x" "codex"        agent-tool-dispatch--codex
-    :inapt-if (lambda () (agent-tool-dispatch--inapt-p 'codex)))
-   ("w" "claude-w"     agent-tool-dispatch--claude-w
-    :inapt-if (lambda () (agent-tool-dispatch--inapt-p 'claude-w)))
-   ("W" "codex-w"      agent-tool-dispatch--codex-w
-    :inapt-if (lambda () (agent-tool-dispatch--inapt-p 'codex-w)))
-   ("u" "cursor-agent" agent-tool-dispatch--cursor-agent
-    :inapt-if (lambda () (agent-tool-dispatch--inapt-p 'cursor-agent)))]
+   ("c" "claude"       agent-tool-dispatch--claude)
+   ("x" "codex"        agent-tool-dispatch--codex)
+   ("w" "claude-w"     agent-tool-dispatch--claude-w)
+   ("W" "codex-w"      agent-tool-dispatch--codex-w)
+   ("u" "cursor-agent" agent-tool-dispatch--cursor-agent)]
   ["Other"
    ("s" "Toggle sidebar"   agent-tool-sidebar)
    ("j" "Jump to session"  agent-tool-jump)])
