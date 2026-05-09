@@ -1,33 +1,58 @@
+;;; init-agent-tool.el --- Run coding agents in ghostel  -*- lexical-binding: t; -*-
 ;;------------------------------------------------------------------------------
-;; agent-tool: spawn a coding agent (claude, codex, ...) in a ghostel buffer
-;; rooted at the current project's directory.
+;; agent-tool: spawn a coding agent (claude, codex, ...) in a ghostel buffer.
 ;;
 ;; M-x agent-tool-start prompts for an agent and opens a fresh ghostel
-;; session at the project root.  Each invocation spawns a new buffer, then
-;; leaves buffer title updates to ghostel's OSC 2 handling.
+;; session at the project root.  With C-u, prompts for a directory
+;; (defaulting to the project root) instead of using it directly.
+;;
+;; Each agent is a plist in `agent-tool-agents' so resume/continue flags
+;; and extra args can be declared per agent without touching call sites.
+;; Buffer name is left to ghostel (it rewrites it via OSC 2 anyway);
+;; identity lives in the buffer-local `agent-tool--session' plist.
 ;;------------------------------------------------------------------------------
 
+(require 'cl-lib)
 (require 'project)
 
+(defvar ghostel-buffer-name)
+(declare-function ghostel-exec "ghostel")
+
 (defgroup agent-tool nil
-  "Run coding agents in ghostel terminals at the project root."
+  "Run coding agents in ghostel terminals."
   :group 'tools)
 
-(defcustom agent-tool-commands
-  '((codex . "codex")
-    (claude  . "claude")
-    (codex-w  . "codex-w")
-    (claude-w  . "claude-w")
-    (cursor-agent  . "cursor-agent"))
-  "Alist of (NAME . PROGRAM) for available coding agents.
-NAME is a symbol shown in the prompt; PROGRAM is the executable to run."
-  :type '(alist :key-type symbol :value-type string)
+(defcustom agent-tool-agents
+  '((codex        :program "codex"        :resume-flag "--resume" :continue-flag "--continue")
+    (claude       :program "claude"       :resume-flag "--resume" :continue-flag "--continue")
+    (codex-w      :program "codex-w"      :resume-flag "--resume" :continue-flag "--continue")
+    (claude-w     :program "claude-w"     :resume-flag "--resume" :continue-flag "--continue")
+    (cursor-agent :program "cursor-agent"))
+  "Alist of (NAME . PLIST) for available coding agents.
+
+NAME is a symbol shown in the prompt.  PLIST keys:
+  :program        Executable name or path (string, required).
+  :resume-flag    Flag that opens the tool's native session picker, or nil.
+  :continue-flag  Flag that resumes the last session, or nil.
+  :extra-args     List of additional argv strings appended to every launch."
+  :type '(alist :key-type symbol
+                :value-type (plist :key-type symbol :value-type sexp))
   :group 'agent-tool)
 
 (defcustom agent-tool-default nil
   "Default agent symbol pre-selected at the prompt, or nil for no default."
   :type '(choice (const :tag "No default" nil) symbol)
   :group 'agent-tool)
+
+(defvar-local agent-tool--session nil
+  "Buffer-local plist describing this buffer's agent session.
+Keys: :agent :dir :resume-mode :started-at.  Set on launch and never
+overwritten — ghostel may rename the buffer via OSC 2, but this plist
+remains the source of truth for session identity.")
+
+(defvar agent-tool--sessions nil
+  "List of live buffers spawned by `agent-tool-start' & friends.
+Entries are pruned by `agent-tool--forget-buffer' on `kill-buffer-hook'.")
 
 (defun agent-tool--project-root ()
   "Return the project root for `default-directory'.
@@ -38,29 +63,76 @@ then fall back to `default-directory'."
       (locate-dominating-file default-directory ".git")
       default-directory))
 
-;;;###autoload
-(defun agent-tool-start (agent)
-  "Start AGENT in a ghostel terminal rooted at the current project.
-Interactively, prompt for the agent from `agent-tool-commands'.
-Each call creates a fresh ghostel buffer.  After startup, ghostel owns
-the buffer name and updates it from OSC 2 title events."
-  (interactive
-   (list
-    (let* ((names (mapcar (lambda (c) (symbol-name (car c))) agent-tool-commands))
-           (def   (and agent-tool-default (symbol-name agent-tool-default)))
-           (pick  (completing-read
-                   (format "Agent%s: " (if def (format " (default %s)" def) ""))
-                   names nil t nil nil def)))
-      (intern pick))))
+(defun agent-tool--agent-plist (agent)
+  "Return the plist for AGENT or signal an error if unknown."
+  (or (cdr (assq agent agent-tool-agents))
+      (error "Unknown agent: %s" agent)))
+
+(defun agent-tool--read-agent ()
+  "Prompt for an agent symbol from `agent-tool-agents'."
+  (let* ((names (mapcar (lambda (c) (symbol-name (car c))) agent-tool-agents))
+         (def   (and agent-tool-default (symbol-name agent-tool-default)))
+         (pick  (completing-read
+                 (format "Agent%s: " (if def (format " (default %s)" def) ""))
+                 names nil t nil nil def)))
+    (intern pick)))
+
+(defun agent-tool--resolve-dir (prompt-p)
+  "Return the launch directory.
+When PROMPT-P is non-nil, ask the user via `read-directory-name',
+defaulting to the project root.  Otherwise return the project root."
+  (let ((root (agent-tool--project-root)))
+    (file-name-as-directory
+     (expand-file-name
+      (if prompt-p
+          (read-directory-name "Agent directory: " root nil t)
+        root)))))
+
+(defun agent-tool--forget-buffer ()
+  "Remove the current buffer from `agent-tool--sessions'."
+  (setq agent-tool--sessions (delq (current-buffer) agent-tool--sessions)))
+
+(defun agent-tool--launch (agent dir &optional resume-mode)
+  "Launch AGENT in DIR and return the ghostel buffer.
+RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
+(use :continue-flag).  Errors if the requested flag is unset for AGENT."
   (unless (require 'ghostel nil t)
     (error "The ghostel package is required for agent-tool"))
-  (let* ((program (or (cdr (assq agent agent-tool-commands))
-                      (error "Unknown agent: %s" agent)))
-         (root    (agent-tool--project-root))
-         (default-directory (file-name-as-directory root))
-         (buffer (generate-new-buffer ghostel-buffer-name)))
+  (let* ((plist   (agent-tool--agent-plist agent))
+         (program (or (plist-get plist :program)
+                      (error "Agent %s has no :program" agent)))
+         (extra   (plist-get plist :extra-args))
+         (flag    (pcase resume-mode
+                    ('nil      nil)
+                    ('pick     (or (plist-get plist :resume-flag)
+                                   (error "Agent %s has no :resume-flag" agent)))
+                    ('continue (or (plist-get plist :continue-flag)
+                                   (error "Agent %s has no :continue-flag" agent)))
+                    (_ (error "Bad resume-mode: %s" resume-mode))))
+         (args    (delq nil (append (and flag (list flag)) extra)))
+         (default-directory (file-name-as-directory dir))
+         (buffer  (generate-new-buffer ghostel-buffer-name)))
     (switch-to-buffer buffer)
-    (ghostel-exec buffer program nil)
+    (with-current-buffer buffer
+      (setq agent-tool--session
+            (list :agent       agent
+                  :dir         default-directory
+                  :resume-mode resume-mode
+                  :started-at  (current-time)))
+      (add-hook 'kill-buffer-hook #'agent-tool--forget-buffer nil t))
+    (push buffer agent-tool--sessions)
+    (ghostel-exec buffer program args)
     buffer))
+
+;;;###autoload
+(defun agent-tool-start (agent &optional prompt-dir)
+  "Start AGENT in a ghostel terminal.
+Interactively, prompt for the agent from `agent-tool-agents'.
+With prefix arg, prompt for the launch directory; otherwise launch
+at the current project's root."
+  (interactive
+   (list (agent-tool--read-agent)
+         current-prefix-arg))
+  (agent-tool--launch agent (agent-tool--resolve-dir prompt-dir) nil))
 
 (provide 'init-agent-tool)
