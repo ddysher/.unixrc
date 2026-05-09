@@ -28,12 +28,12 @@ Vertical slices, ordered. Each phase ends with a hands-on testing guide you can 
 
 ## Phase 2 — Visibility & safety
 
-- [ ] **T3. Kill-buffer prompt**
+- [x] **T3. Kill-buffer prompt**
   - Add predicate to `kill-buffer-query-functions`.
   - Prompt only when buffer has `agent-tool--session` AND `(process-live-p (get-buffer-process buf))`.
   - Defcustom `agent-tool-confirm-kill` (default `t`).
 
-- [ ] **T4. Sidebar (`agent-tool-sidebar`)**
+- [x] **T4. Sidebar (`agent-tool-sidebar`)**
   - `tabulated-list-mode` derived `agent-tool-sidebar-mode`.
   - Side window: left, width `agent-tool-sidebar-width` (default 36).
   - Columns: Status (●/○) | Agent | Dir | Buffer.
