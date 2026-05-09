@@ -103,36 +103,67 @@ Vertical slices, ordered. Each phase ends with a hands-on testing guide you can 
 
 ---
 
-## Future / nice-to-have
+## Phase 5 — Sidebar UX
 
-Sized roughly: (S) ~30 min, (M) afternoon, (L) day+.
+Pure rendering / interaction layer changes. No model changes. Sized roughly: (S) ~30 min, (M) afternoon.
 
-- [ ] **Status glyph: running vs. waiting for input.** (M) Today the sidebar shows ● (process live) or ○ (dead). Add a third state distinguishing "agent is generating output" from "prompt visible, idle." Approaches to evaluate:
-  1. Watch ghostel filter output for each tool's prompt sentinel (claude `> `, codex `▌`) and toggle a buffer-local flag.
-  2. Idle-time heuristic on last-output timestamp (~500ms == waiting).
+- [ ] **T9. TAB peek / RET commit.** (S) `TAB` displays the card's buffer in another window without taking focus; `RET` unchanged. Reuses an existing window first (`display-buffer-reuse-window`).
+
+- [ ] **T10. Dirvish-style modeline.** (S) Replace `Agents [N]` with a richer line: sort field with arrow direction (`↑ status|mtime`), filter indicator if `/` filter is active, and `position / total` on the right.
+
+- [ ] **T11. `/` filter.** (M) `/` in the sidebar reads a substring query and filters cards by matching across the card text (agent / dir / buffer / label). Press `/` again with empty input to clear; `g` clears too. Re-render with a filter predicate on `agent-tool--sessions`. No isearch.
+
+### Phase 5 user test guide
+
+1. Restart Emacs. Launch claude in `~/.unixrc/`, codex in `~/tmp/`.
+2. `M-x agent-tool-sidebar` — two cards.
+3. On card 1, press `TAB` — buffer 1 appears in the right-hand window; sidebar still has focus.
+4. Move to card 2, press `TAB` — buffer 2 appears in the same window (reused).
+5. Press `RET` — switch to that buffer with focus.
+6. Sidebar modeline shows e.g. `↑ status|mtime  2 / 2`.
+7. `/` then type `claude` then `RET` — only the claude card visible; modeline shows filter active.
+8. `g` — filter cleared, both cards back.
+
+---
+
+## Phase 6 — Launch flow polish
+
+- [ ] **T12. Rebind global keys.** (S) `C-c A` → `agent-tool-sidebar`; pick a fresh key for `agent-tool-dispatch` (proposed: `C-c a` lowercase). Update `init-global-keys.el` and the file-header smoke list.
+
+- [ ] **T13. Directory picker on bare commands.** (M) `agent-tool-start` / `-resume` / `-continue` get a tabspaces-style three-section picker after the agent prompt:
+  1. Default project root, shown with its path (one-keystroke pick).
+  2. `... (choose a dir)` sentinel → `read-directory-name`. Same convention as `tabspaces-prompt-project-dir` (`tabspaces.el:694–712`).
+  3. Known projects from `project--list`.
+
+  New helper `agent-tool--read-dir` using `project--ensure-read-project-list` + `project--file-completion-table` for the right completion category. Closes the asymmetry where only the transient supports directory choice.
+
+- [ ] **T14. `-n` session label infix.** (S) Add a `-n` infix to `agent-tool-dispatch` for a custom session label. Stored in `agent-tool--session :label`; sidebar shows `· label` after the agent name on the first card line when present (e.g. `● claude · review-pr`). Decoupled from the buffer name (ghostel still owns that via OSC 2).
+
+### Phase 6 user test guide
+
+1. After T12: `C-c A` opens the sidebar; `C-c a` opens the transient.
+2. After T13: `M-x agent-tool-start RET claude RET` — agent prompt, then a directory picker showing `Project root (~/foo/)`, `... (choose a dir)`, and your known projects. Pick each path.
+3. After T13: same for `agent-tool-resume` and `agent-tool-continue`.
+4. After T14: in the transient, set `-n review-pr`, press `c` — claude launches; sidebar card shows `● claude · review-pr`.
+
+---
+
+## Phase 7 — Status awareness
+
+- [ ] **T15. Status glyph: running vs. waiting for input.** (M) Today the sidebar shows ● (live) or ○ (dead). Add a third state for "agent generating output" vs. "idle at prompt." Approaches to evaluate:
+  1. Advise `ghostel--filter` (or equivalent output hook) — record last-output timestamp + look for prompt sentinel.
+  2. Idle-time heuristic alone (~500ms of no output ⇒ waiting).
   3. OSC 9;4 progress sequences if the tool emits them.
-  Render as `◐ running / ● waiting / ○ dead`. Don't block on perfection; a 1s-idle heuristic beats nothing.
 
-- [ ] **TAB peeks, RET commits.** (S) In the sidebar, `TAB` previews the card's buffer in the right-hand window without leaving the sidebar (focus stays). `RET` keeps current behavior — switch to the buffer and take focus. Mirrors dirvish-side preview style.
+  Extend `agent-tool--session` with `:status` (one of `running`, `waiting`, `dead`). Render `◐ / ● / ○`. Don't block on perfection — a 1s-idle heuristic beats nothing.
 
-- [ ] **Sidebar modeline parity with dirvish.** (S) Replace the simple `Agents [N]` modeline with a richer line modeled on the dirvish-side example: sort field with arrow direction (`↑ name|mtime`), filter indicator (`Omit`), and `position / total` on the right (e.g. `2 / 5`). Reuse the same faces dirvish uses where they're loaded, fall back gracefully where they aren't.
+- [ ] **T16. Default sort: status first, then created-at.** (S, blocks on T15) Default sidebar order: running → waiting → dead, each group by `:started-at` ascending. Add `agent-tool-sidebar-sort` defcustom (`status`, `mtime`, `agent`) so users can override.
 
-- [ ] **Optional session label via transient.** (S) Add a `-n` infix to `agent-tool-dispatch` for a custom session label. Stored in `agent-tool--session :label`; sidebar shows it on the agent name line when present (e.g. `● claude · review-pr`). Decoupled from the buffer name (ghostel still owns that via OSC 2).
+### Phase 7 user test guide
 
-- [ ] **`/` to filter cards.** (M) In the sidebar, `/` reads a query and filters cards to those whose card text matches (agent / dir / buffer / label). Press `/` again to clear, or `g` to refresh. Implementation: re-render with a filter predicate on `agent-tool--sessions`. No isearch inside the card text needed; substring match is enough.
-
-- [ ] **Rebind: `C-c A` → sidebar; transient gets a different key.** (S) Sidebar is the more frequent action. Reassign `C-c A` to `agent-tool-sidebar`; pick a fresh key for `agent-tool-dispatch` (candidates: `C-c a` lowercase, or `C-c C-a`). Update `init-global-keys.el` and the smoke checklist in the file header.
-
-- [ ] **Default sort: status first, then created-at.** (S, blocked on status glyph) Once status exists, default sidebar order becomes: running → waiting → dead, with each group sorted by `:started-at` ascending. Add `agent-tool-sidebar-sort` defcustom (`status`, `mtime`, `agent`) so users can override. Until status lands, current behavior (newest-first) is fine.
-
-- [ ] **Directory picker for `agent-tool-start` / `-resume` / `-continue`.** (M) Today these three commands always launch at the project root with no override (override only available via the transient's `-d` infix). After picking the agent, also prompt for a directory using a tabspaces-style picker. Layout:
-    1. **Default project root**, shown with its actual path so it's pickable in one keystroke (e.g. `Project root (~/.unixrc/)`).
-    2. **`... (choose a dir)`** sentinel — falls through to `read-directory-name`. Same convention as `tabspaces-prompt-project-dir` (see `tabspaces.el:694–712`).
-    3. **Known projects** from `project--list` (Emacs's built-in known-projects list, populated automatically as you visit projects).
-
-    Implementation: extract a helper `agent-tool--read-dir` mirroring `tabspaces-prompt-project-dir`. Use `project--ensure-read-project-list` + `project--file-completion-table` so `completing-read` gets the right category for substring/orderless filtering. Call it from `agent-tool-start`, `agent-tool-resume`, `agent-tool-continue` between agent prompt and `agent-tool--launch`.
-
-    Resolves the asymmetry where the transient supports directory choice but the M-x commands don't. Also makes the bare commands more useful as standalone entry points without the transient.
+1. Launch claude. Sidebar shows `◐` while it's still booting / generating; flips to `●` when prompt is visible and idle; flips to `○` when killed.
+2. Launch a second agent and trigger output in one — running session sorts above the waiting one.
+3. `(setq agent-tool-sidebar-sort 'mtime)` — order changes to pure created-at.
 
 ## Done criteria (whole feature)
 

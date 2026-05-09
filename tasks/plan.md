@@ -216,20 +216,23 @@ Add an 8-step manual smoke list to the commentary block at the top of the file.
 - All changes in `emacs.d/inits/init-agent-tool.el`. No new files.
 - One added line in `emacs.d/inits/init-global-keys.el` for the dispatch keybinding (T7).
 
-## Follow-up ideas (post-Phase 4)
+## Follow-up phases (post-Phase 4)
 
-These are tracked in detail in `tasks/todo.md` under "Future / nice-to-have." Listed here so the architectural shape stays visible:
+The eight ideas group into three coherent phases. Order chosen by risk + value: sidebar polish first (lowest risk, immediate UX win), launch-flow polish second (moderate scope, closes the M-x ↔ transient asymmetry), status-detection last (hardest — requires output sniffing or a sentinel timer; status-sort blocks on it).
 
-1. **Run/wait status glyph** — needs a hook into ghostel output filtering or an idle-time sentinel; the data flow extends `agent-tool--session` with a `:status` field updated by a process-output advice or timer.
-2. **TAB-peek / RET-commit split** — pure sidebar UX; no model change. Two keys mapped to one buffer-display function differing only in `(select-window . t/nil)`.
-3. **Dirvish-style modeline** — cosmetic; one `mode-line-format` rewrite. Surfaces sort direction, filter, position/total.
-4. **Custom session label** — extends `agent-tool--session` with `:label`, surfaces a `-n` infix on the dispatch transient, alters sidebar render only. Decoupled from buffer name (ghostel still owns).
-5. **`/`-search filter** — sidebar-local filter predicate; re-renders against a substring match across the card text. Not isearch.
-6. **Rebind sidebar to `C-c A`** — sidebar is the higher-frequency action; transient moves to a fresh key. Two-line change to `init-global-keys.el` plus header smoke list.
-7. **Status-first default sort** — depends on (1). Adds `agent-tool-sidebar-sort` defcustom; sidebar render groups + sorts before iterating.
-8. **Directory picker for the bare commands** — `agent-tool-start` / `-resume` / `-continue` get a tabspaces-style three-section picker (default project root shown, `... (choose a dir)` sentinel, known projects from `project--list`). Closes the asymmetry where only the transient supports directory choice. New helper `agent-tool--read-dir`; existing `agent-tool--launch` already takes `dir`.
+### Phase 5 — Sidebar UX (pure rendering, no model changes)
+- **T9. TAB peek / RET commit.** (S) Add a peek action that displays the card's buffer in another window without taking focus. Reuses an existing window first (`display-buffer-reuse-window`). RET unchanged.
+- **T10. Dirvish-style modeline.** (S) Replace `Agents [N]` with a richer line: sort field + arrow direction, filter indicator, position/total on the right.
+- **T11. `/` filter.** (M) Sidebar-local substring filter across card text. Re-render with a filter predicate; `g` clears.
 
-Dependency: (7) blocks on (1). The others are independent and can land in any order.
+### Phase 6 — Launch flow polish
+- **T12. Rebind global keys.** (S) `C-c A` → `agent-tool-sidebar`; pick a fresh key (proposed: `C-c a`) for `agent-tool-dispatch`. Update header smoke list.
+- **T13. Directory picker on bare commands.** (M) Tabspaces-style three-section picker (default project shown, `... (choose a dir)` sentinel, known projects from `project--list`) on `agent-tool-start` / `-resume` / `-continue`. New helper `agent-tool--read-dir`.
+- **T14. `-n` session label infix.** (S) Add `:label` to `agent-tool--session`, surface a `-n` infix on the dispatch transient, alter sidebar render to show `· label` after the agent name when present.
+
+### Phase 7 — Status awareness
+- **T15. Status glyph: running vs. waiting.** (M) Extend `agent-tool--session` with `:status`. Updated by either a process-output advice on `ghostel--filter` or an idle-time sentinel timer. Render `◐ running / ● waiting / ○ dead`.
+- **T16. Status-first sidebar sort.** (S, blocks on T15) Default order: running → waiting → dead, each group by `:started-at` ascending. Add `agent-tool-sidebar-sort` defcustom (`status`, `mtime`, `agent`).
 
 ## Acceptance for the whole feature
 
