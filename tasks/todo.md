@@ -128,16 +128,16 @@ Pure rendering / interaction layer changes. No model changes. Sized roughly: (S)
 
 ## Phase 6 — Launch flow polish
 
-- [ ] **T12. Rebind global keys.** (S) `C-c A` → `agent-tool-sidebar`; pick a fresh key for `agent-tool-dispatch` (proposed: `C-c a` lowercase). Update `init-global-keys.el` and the file-header smoke list.
+- [x] **T12. Rebind global keys.** (S) `C-c a` → `agent-tool-dispatch`, `C-c A` → `agent-tool-sidebar`; smoke list updated.
 
-- [ ] **T13. Directory picker on bare commands.** (M) `agent-tool-start` / `-resume` / `-continue` get a tabspaces-style three-section picker after the agent prompt:
+- [x] **T13. Directory picker on bare commands.** (M) `agent-tool-start` / `-resume` / `-continue` get a tabspaces-style three-section picker after the agent prompt:
   1. Default project root, shown with its path (one-keystroke pick).
   2. `... (choose a dir)` sentinel → `read-directory-name`. Same convention as `tabspaces-prompt-project-dir` (`tabspaces.el:694–712`).
   3. Known projects from `project--list`.
 
   New helper `agent-tool--read-dir` using `project--ensure-read-project-list` + `project--file-completion-table` for the right completion category. Closes the asymmetry where only the transient supports directory choice.
 
-- [ ] **T14. `-n` session label infix.** (S) Add a `-n` infix to `agent-tool-dispatch` for a custom session label. Stored in `agent-tool--session :label`; sidebar shows `· label` after the agent name on the first card line when present (e.g. `● claude · review-pr`). Decoupled from the buffer name (ghostel still owns that via OSC 2).
+- [x] **T14. `-n` session label infix.** (S) Add a `-n` infix to `agent-tool-dispatch` for a custom session label. Stored in `agent-tool--session :label`; sidebar shows `· label` after the agent name on the first card line when present (e.g. `● claude · review-pr`). Decoupled from the buffer name (ghostel still owns that via OSC 2).
 
 ### Phase 6 user test guide
 

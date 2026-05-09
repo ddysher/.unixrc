@@ -12,13 +12,13 @@
 ;; identity lives in the buffer-local `agent-tool--session' plist.
 ;;
 ;; Smoke test (run after editing this file):
-;;   1. C-c A                  → transient menu opens.
+;;   1. C-c a                  → transient menu opens.
 ;;   2. c                      → claude launches at project root.
-;;   3. M-x agent-tool-sidebar → left side window with one card.
-;;   4. C-c A then x           → codex launches; sidebar gains a card.
-;;   5. C-c A then -d prompt c → directory prompt, then claude in that dir.
-;;   6. C-c A then -r continue c → claude --continue (last session).
-;;   7. C-c A then -r resume c → claude --resume (its native picker).
+;;   3. C-c A                  → sidebar toggles (one card).
+;;   4. C-c a then x           → codex launches; sidebar gains a card.
+;;   5. C-c a then -d prompt c → directory picker, then claude in that dir.
+;;   6. C-c a then -n review c → claude card shows `· review' label.
+;;   7. C-c a then -r resume c → claude --resume (its native picker).
 ;;   8. C-x k a session buffer → y/n prompt; sidebar refreshes after kill.
 ;;------------------------------------------------------------------------------
 
@@ -89,6 +89,36 @@ then fall back to `default-directory'."
       (locate-dominating-file default-directory ".git")
       default-directory))
 
+(defun agent-tool--read-dir ()
+  "Pick a directory for an agent launch.
+Three sections, tabspaces-style:
+  1. Project root (one-keystroke default).
+  2. `... (choose a dir)' sentinel → `read-directory-name'.
+  3. Known projects from `project--list'.
+
+Returns an absolute, slash-terminated directory string."
+  (project--ensure-read-project-list)
+  (let* ((root        (file-name-as-directory
+                       (expand-file-name (agent-tool--project-root))))
+         (root-label  (format "Project root (%s)" (abbreviate-file-name root)))
+         (sentinel    "... (choose a dir)")
+         (others      (cl-remove-if
+                       (lambda (cell)
+                         (string= (file-name-as-directory
+                                   (expand-file-name (car cell)))
+                                  root))
+                       project--list))
+         (entries     (cons root-label
+                            (append (mapcar #'car others) (list sentinel))))
+         (table       (project--file-completion-table entries))
+         (pick        (completing-read "Agent directory: " table nil t)))
+    (cond
+     ((string= pick root-label) root)
+     ((string= pick sentinel)
+      (file-name-as-directory
+       (expand-file-name (read-directory-name "Directory: " root nil t))))
+     (t (file-name-as-directory (expand-file-name pick))))))
+
 (defun agent-tool--agent-plist (agent)
   "Return the plist for AGENT or signal an error if unknown."
   (or (cdr (assq agent agent-tool-agents))
@@ -137,10 +167,11 @@ already exited."
 
 (add-hook 'kill-buffer-query-functions #'agent-tool--confirm-kill)
 
-(defun agent-tool--launch (agent dir &optional resume-mode)
+(defun agent-tool--launch (agent dir &optional resume-mode label)
   "Launch AGENT in DIR and return the ghostel buffer.
 RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
-(use :continue-flag).  Errors if the requested flag is unset for AGENT."
+(use :continue-flag).  Errors if the requested flag is unset for AGENT.
+LABEL, when non-empty, is stored on the session plist for the sidebar."
   (unless (require 'ghostel nil t)
     (error "The ghostel package is required for agent-tool"))
   (let* ((plist   (agent-tool--agent-plist agent))
@@ -167,6 +198,9 @@ RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
             (list :agent       agent
                   :dir         default-directory
                   :resume-mode resume-mode
+                  :label       (and (stringp label)
+                                    (not (string-empty-p label))
+                                    label)
                   :started-at  (current-time)))
       (add-hook 'kill-buffer-hook #'agent-tool--forget-buffer nil t))
     (agent-tool--sidebar-refresh-if-visible)
@@ -215,11 +249,17 @@ RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
   "Face for the buffer-name line on a sidebar card."
   :group 'agent-tool)
 
+(defface agent-tool-sidebar-label
+  '((t :inherit font-lock-string-face))
+  "Face for the optional session label on a sidebar card."
+  :group 'agent-tool)
+
 (defun agent-tool--sidebar-insert-card (buffer)
   "Insert a card for session BUFFER at point."
   (let* ((session (buffer-local-value 'agent-tool--session buffer))
          (agent   (plist-get session :agent))
          (dir     (plist-get session :dir))
+         (label   (plist-get session :label))
          (live    (agent-tool--session-live-p buffer))
          (start   (point)))
     (insert (propertize (if live "● " "○ ")
@@ -227,6 +267,9 @@ RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
                                 'agent-tool-sidebar-dead)))
     (insert (propertize (if agent (symbol-name agent) "?")
                         'face 'agent-tool-sidebar-name))
+    (when label
+      (insert (propertize (format " · %s" label)
+                          'face 'agent-tool-sidebar-label)))
     (insert "\n  ")
     (insert (propertize (abbreviate-file-name (or dir ""))
                         'face 'agent-tool-sidebar-dir))
@@ -443,27 +486,33 @@ Layout:  `↑ <sort-field>'  [`/<filter>']  ...  `<index> / <total>'."
         (select-window (get-buffer-window buf t))))))
 
 ;;;###autoload
-(defun agent-tool-start (agent)
-  "Start AGENT in a ghostel terminal at the current project's root.
-Interactively, prompt for the agent from `agent-tool-agents'."
-  (interactive (list (agent-tool--read-agent)))
-  (agent-tool--launch agent (agent-tool--project-root) nil))
+(defun agent-tool-start (agent dir)
+  "Start AGENT in a ghostel terminal at DIR.
+Interactively, prompt for the agent and a directory."
+  (interactive
+   (let ((a (agent-tool--read-agent)))
+     (list a (agent-tool--read-dir))))
+  (agent-tool--launch agent dir nil))
 
 ;;;###autoload
-(defun agent-tool-resume (agent)
-  "Resume AGENT, opening its native session picker.
+(defun agent-tool-resume (agent dir)
+  "Resume AGENT in DIR, opening its native session picker.
 Prompts only for agents that declare a `:resume-flag' in
 `agent-tool-agents'.  The tool's own TUI handles session selection."
-  (interactive (list (agent-tool--read-agent :resume-flag "Resume agent")))
-  (agent-tool--launch agent (agent-tool--project-root) 'pick))
+  (interactive
+   (let ((a (agent-tool--read-agent :resume-flag "Resume agent")))
+     (list a (agent-tool--read-dir))))
+  (agent-tool--launch agent dir 'pick))
 
 ;;;###autoload
-(defun agent-tool-continue (agent)
-  "Resume AGENT's last session via its `:continue-flag'.
+(defun agent-tool-continue (agent dir)
+  "Resume AGENT's last session in DIR via its `:continue-flag'.
 Prompts only for agents that declare a `:continue-flag' in
 `agent-tool-agents'."
-  (interactive (list (agent-tool--read-agent :continue-flag "Continue agent")))
-  (agent-tool--launch agent (agent-tool--project-root) 'continue))
+  (interactive
+   (let ((a (agent-tool--read-agent :continue-flag "Continue agent")))
+     (list a (agent-tool--read-dir))))
+  (agent-tool--launch agent dir 'continue))
 
 ;;;###autoload
 (defun agent-tool-jump ()
@@ -512,6 +561,12 @@ Prompts only for agents that declare a `:continue-flag' in
   :argument-regexp "\\(--resume=\\(off\\|continue\\|resume\\)\\)"
   :choices '("off" "continue" "resume"))
 
+(transient-define-argument agent-tool-dispatch--label ()
+  :description "Session label"
+  :class 'transient-option
+  :key "-n"
+  :argument "--label=")
+
 (defun agent-tool-dispatch--arg-value (key &optional default)
   "Return the chosen value for infix KEY, or DEFAULT."
   (let ((args (transient-args 'agent-tool-dispatch)))
@@ -538,13 +593,18 @@ Prompts only for agents that declare a `:continue-flag' in
           (read-directory-name "Agent directory: " root nil t)))
       root)))
 
+(defun agent-tool-dispatch--label-value ()
+  "Return the -n session label from the transient, or nil."
+  (agent-tool-dispatch--arg-value "--label=" nil))
+
 (defun agent-tool-dispatch--launch-agent (agent)
-  "Launch AGENT with the directory and resume mode from the transient.
+  "Launch AGENT with the directory, resume mode, and label from the transient.
 Errors with a clear message if AGENT lacks the flag the chosen resume
 mode requires."
   (agent-tool--launch agent
                       (agent-tool-dispatch--directory)
-                      (agent-tool-dispatch--resume-mode)))
+                      (agent-tool-dispatch--resume-mode)
+                      (agent-tool-dispatch--label-value)))
 
 ;; Per-agent suffix commands.  Defined as plain interactives rather than
 ;; via `transient-define-suffix' so :inapt-if can use a closure over the
@@ -560,7 +620,8 @@ mode requires."
   "Dispatch menu for `agent-tool'."
   ["Options"
    (agent-tool-dispatch--dir)
-   (agent-tool-dispatch--resume)]
+   (agent-tool-dispatch--resume)
+   (agent-tool-dispatch--label)]
   ["Launch"
    ("c" "claude"       agent-tool-dispatch--claude)
    ("x" "codex"        agent-tool-dispatch--codex)
