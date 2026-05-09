@@ -83,13 +83,26 @@ then fall back to `default-directory'."
   (or (cdr (assq agent agent-tool-agents))
       (error "Unknown agent: %s" agent)))
 
-(defun agent-tool--read-agent ()
-  "Prompt for an agent symbol from `agent-tool-agents'."
-  (let* ((names (mapcar (lambda (c) (symbol-name (car c))) agent-tool-agents))
-         (def   (and agent-tool-default (symbol-name agent-tool-default)))
-         (pick  (completing-read
-                 (format "Agent%s: " (if def (format " (default %s)" def) ""))
-                 names nil t nil nil def)))
+(defun agent-tool--read-agent (&optional require-key prompt)
+  "Prompt for an agent symbol from `agent-tool-agents'.
+When REQUIRE-KEY is non-nil, only agents whose plist has a non-nil
+value for that key are offered.  PROMPT overrides the prompt label."
+  (let* ((entries (if require-key
+                      (cl-remove-if-not
+                       (lambda (cell) (plist-get (cdr cell) require-key))
+                       agent-tool-agents)
+                    agent-tool-agents))
+         (_       (unless entries
+                    (user-error "No agents support %s" require-key)))
+         (names   (mapcar (lambda (c) (symbol-name (car c))) entries))
+         (def     (and agent-tool-default
+                       (member (symbol-name agent-tool-default) names)
+                       (symbol-name agent-tool-default)))
+         (pick    (completing-read
+                   (format "%s%s: "
+                           (or prompt "Agent")
+                           (if def (format " (default %s)" def) ""))
+                   names nil t nil nil def)))
     (intern pick)))
 
 (defun agent-tool--forget-buffer ()
@@ -352,5 +365,21 @@ RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
 Interactively, prompt for the agent from `agent-tool-agents'."
   (interactive (list (agent-tool--read-agent)))
   (agent-tool--launch agent (agent-tool--project-root) nil))
+
+;;;###autoload
+(defun agent-tool-resume (agent)
+  "Resume AGENT, opening its native session picker.
+Prompts only for agents that declare a `:resume-flag' in
+`agent-tool-agents'.  The tool's own TUI handles session selection."
+  (interactive (list (agent-tool--read-agent :resume-flag "Resume agent")))
+  (agent-tool--launch agent (agent-tool--project-root) 'pick))
+
+;;;###autoload
+(defun agent-tool-continue (agent)
+  "Resume AGENT's last session via its `:continue-flag'.
+Prompts only for agents that declare a `:continue-flag' in
+`agent-tool-agents'."
+  (interactive (list (agent-tool--read-agent :continue-flag "Continue agent")))
+  (agent-tool--launch agent (agent-tool--project-root) 'continue))
 
 (provide 'init-agent-tool)
