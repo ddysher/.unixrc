@@ -125,6 +125,15 @@ Sized roughly: (S) ~30 min, (M) afternoon, (L) day+.
 
 - [ ] **Default sort: status first, then created-at.** (S, blocked on status glyph) Once status exists, default sidebar order becomes: running → waiting → dead, with each group sorted by `:started-at` ascending. Add `agent-tool-sidebar-sort` defcustom (`status`, `mtime`, `agent`) so users can override. Until status lands, current behavior (newest-first) is fine.
 
+- [ ] **Directory picker for `agent-tool-start` / `-resume` / `-continue`.** (M) Today these three commands always launch at the project root with no override (override only available via the transient's `-d` infix). After picking the agent, also prompt for a directory using a tabspaces-style picker. Layout:
+    1. **Default project root**, shown with its actual path so it's pickable in one keystroke (e.g. `Project root (~/.unixrc/)`).
+    2. **`... (choose a dir)`** sentinel — falls through to `read-directory-name`. Same convention as `tabspaces-prompt-project-dir` (see `tabspaces.el:694–712`).
+    3. **Known projects** from `project--list` (Emacs's built-in known-projects list, populated automatically as you visit projects).
+
+    Implementation: extract a helper `agent-tool--read-dir` mirroring `tabspaces-prompt-project-dir`. Use `project--ensure-read-project-list` + `project--file-completion-table` so `completing-read` gets the right category for substring/orderless filtering. Call it from `agent-tool-start`, `agent-tool-resume`, `agent-tool-continue` between agent prompt and `agent-tool--launch`.
+
+    Resolves the asymmetry where the transient supports directory choice but the M-x commands don't. Also makes the bare commands more useful as standalone entry points without the transient.
+
 ## Done criteria (whole feature)
 
 - [x] Launch any agent at any directory from `agent-tool-dispatch` in ≤3 keystrokes.

@@ -227,6 +227,7 @@ These are tracked in detail in `tasks/todo.md` under "Future / nice-to-have." Li
 5. **`/`-search filter** — sidebar-local filter predicate; re-renders against a substring match across the card text. Not isearch.
 6. **Rebind sidebar to `C-c A`** — sidebar is the higher-frequency action; transient moves to a fresh key. Two-line change to `init-global-keys.el` plus header smoke list.
 7. **Status-first default sort** — depends on (1). Adds `agent-tool-sidebar-sort` defcustom; sidebar render groups + sorts before iterating.
+8. **Directory picker for the bare commands** — `agent-tool-start` / `-resume` / `-continue` get a tabspaces-style three-section picker (default project root shown, `... (choose a dir)` sentinel, known projects from `project--list`). Closes the asymmetry where only the transient supports directory choice. New helper `agent-tool--read-dir`; existing `agent-tool--launch` already takes `dir`.
 
 Dependency: (7) blocks on (1). The others are independent and can land in any order.
 
