@@ -44,6 +44,11 @@ NAME is a symbol shown in the prompt.  PLIST keys:
   :type '(choice (const :tag "No default" nil) symbol)
   :group 'agent-tool)
 
+(defcustom agent-tool-confirm-kill t
+  "When non-nil, prompt before killing a buffer with a live agent process."
+  :type 'boolean
+  :group 'agent-tool)
+
 (defvar-local agent-tool--session nil
   "Buffer-local plist describing this buffer's agent session.
 Keys: :agent :dir :resume-mode :started-at.  Set on launch and never
@@ -80,6 +85,23 @@ then fall back to `default-directory'."
 (defun agent-tool--forget-buffer ()
   "Remove the current buffer from `agent-tool--sessions'."
   (setq agent-tool--sessions (delq (current-buffer) agent-tool--sessions)))
+
+(defun agent-tool--confirm-kill ()
+  "Confirm killing the current buffer when it hosts a live agent.
+Hooked into `kill-buffer-query-functions'.  Returns non-nil to allow
+the kill, nil to abort.  Skipped when `agent-tool-confirm-kill' is nil,
+when the buffer is not an agent session, or when the agent process has
+already exited."
+  (if (and agent-tool-confirm-kill
+           agent-tool--session
+           (let ((proc (get-buffer-process (current-buffer))))
+             (and proc (process-live-p proc))))
+      (let* ((agent (plist-get agent-tool--session :agent))
+             (dir   (plist-get agent-tool--session :dir)))
+        (y-or-n-p (format "Kill running %s session in %s? " agent dir)))
+    t))
+
+(add-hook 'kill-buffer-query-functions #'agent-tool--confirm-kill)
 
 (defun agent-tool--launch (agent dir &optional resume-mode)
   "Launch AGENT in DIR and return the ghostel buffer.
