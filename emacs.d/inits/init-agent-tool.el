@@ -269,12 +269,17 @@ RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
                             display-buffer-use-some-window)
                            (inhibit-same-window . t))))))
 
-(defun agent-tool-sidebar-visit-other-window ()
-  "Display the agent buffer on this card in another window, keep focus here."
+(defun agent-tool-sidebar-peek ()
+  "Display the agent buffer on this card without taking focus.
+Reuses an existing window showing the buffer when possible, otherwise
+picks a non-side window or pops one up.  Bound to both TAB (peek) and
+`o' (other-window) so either key works."
   (interactive)
   (let ((buf (agent-tool--sidebar-buffer-at-point)))
-    (display-buffer buf '((display-buffer-use-some-window
-                           display-buffer-pop-up-window)))))
+    (display-buffer buf '((display-buffer-reuse-window
+                           display-buffer-use-some-window
+                           display-buffer-pop-up-window)
+                          (inhibit-same-window . t)))))
 
 (defun agent-tool-sidebar-kill ()
   "Kill the agent buffer on this card (uses the standard confirm path)."
@@ -322,7 +327,8 @@ RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
 (defvar agent-tool-sidebar-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "RET") #'agent-tool-sidebar-visit)
-    (define-key map (kbd "o")   #'agent-tool-sidebar-visit-other-window)
+    (define-key map (kbd "TAB") #'agent-tool-sidebar-peek)
+    (define-key map (kbd "o")   #'agent-tool-sidebar-peek)
     (define-key map (kbd "k")   #'agent-tool-sidebar-kill)
     (define-key map (kbd "g")   #'agent-tool-sidebar-revert)
     (define-key map (kbd "n")   #'agent-tool-sidebar-next)
