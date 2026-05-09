@@ -109,8 +109,13 @@ Returns an absolute, slash-terminated directory string."
                                   root))
                        project--list))
          (entries     (cons root-label
-                            (append (mapcar #'car others) (list sentinel))))
-         (table       (project--file-completion-table entries))
+                            (cons sentinel (mapcar #'car others))))
+         (table       (lambda (string pred action)
+                        (if (eq action 'metadata)
+                            '(metadata (category . project-file)
+                                       (display-sort-function . identity)
+                                       (cycle-sort-function    . identity))
+                          (complete-with-action action entries string pred))))
          (pick        (completing-read "Agent directory: " table nil t)))
     (cond
      ((string= pick root-label) root)
