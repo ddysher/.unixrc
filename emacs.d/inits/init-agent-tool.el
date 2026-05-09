@@ -10,10 +10,21 @@
 ;; and extra args can be declared per agent without touching call sites.
 ;; Buffer name is left to ghostel (it rewrites it via OSC 2 anyway);
 ;; identity lives in the buffer-local `agent-tool--session' plist.
+;;
+;; Smoke test (run after editing this file):
+;;   1. C-c A                  → transient menu opens.
+;;   2. c                      → claude launches at project root.
+;;   3. M-x agent-tool-sidebar → left side window with one card.
+;;   4. C-c A then x           → codex launches; sidebar gains a card.
+;;   5. C-c A then -d prompt c → directory prompt, then claude in that dir.
+;;   6. C-c A then -r continue c → claude --continue (last session).
+;;   7. C-c A then -r resume c → claude --resume (its native picker).
+;;   8. C-x k a session buffer → y/n prompt; sidebar refreshes after kill.
 ;;------------------------------------------------------------------------------
 
 (require 'cl-lib)
 (require 'project)
+(require 'transient)
 
 (defvar ghostel-buffer-name)
 (declare-function ghostel-exec "ghostel")
@@ -382,5 +393,129 @@ Prompts only for agents that declare a `:continue-flag' in
 `agent-tool-agents'."
   (interactive (list (agent-tool--read-agent :continue-flag "Continue agent")))
   (agent-tool--launch agent (agent-tool--project-root) 'continue))
+
+;;;###autoload
+(defun agent-tool-jump ()
+  "Switch to a live agent session, picked via completion."
+  (interactive)
+  (let* ((live (cl-remove-if-not #'buffer-live-p agent-tool--sessions))
+         (_    (unless live (user-error "No live agent sessions")))
+         (alist
+          (mapcar (lambda (b)
+                    (let* ((s (buffer-local-value 'agent-tool--session b))
+                           (a (or (plist-get s :agent) "?"))
+                           (d (abbreviate-file-name (or (plist-get s :dir) ""))))
+                      (cons (format "%-12s %s  [%s]" a d (buffer-name b)) b)))
+                  live))
+         (pick (completing-read "Jump to session: " (mapcar #'car alist) nil t)))
+    (pop-to-buffer (cdr (assoc pick alist)))))
+
+;;------------------------------------------------------------------------------
+;; Transient dispatch — single entry point for every agent-tool action.
+;;
+;; Layout:
+;;   Options:  -d directory mode   (project | prompt)
+;;             -r resume mode      (off | continue | resume)
+;;   Launch:   one suffix per agent in `agent-tool-agents'
+;;   Other:    s sidebar toggle, j jump-to-session
+;;
+;; Suffixes read the infix state via `transient-args' so the same per-agent
+;; command handles plain start, continue, and resume.  An agent suffix
+;; becomes inapt (grayed) when -r is set but the agent lacks the matching
+;; flag — e.g. cursor-agent under -r resume.
+;;------------------------------------------------------------------------------
+
+(transient-define-argument agent-tool-dispatch--dir ()
+  :description "Directory"
+  :class 'transient-switches
+  :key "-d"
+  :argument-format "--dir=%s"
+  :argument-regexp "\\(--dir=\\(project\\|prompt\\)\\)"
+  :choices '("project" "prompt"))
+
+(transient-define-argument agent-tool-dispatch--resume ()
+  :description "Resume mode"
+  :class 'transient-switches
+  :key "-r"
+  :argument-format "--resume=%s"
+  :argument-regexp "\\(--resume=\\(off\\|continue\\|resume\\)\\)"
+  :choices '("off" "continue" "resume"))
+
+(defun agent-tool-dispatch--arg-value (key &optional default)
+  "Return the chosen value for infix KEY, or DEFAULT."
+  (let ((args (transient-args 'agent-tool-dispatch)))
+    (or (cl-some (lambda (a)
+                   (and (stringp a)
+                        (string-prefix-p key a)
+                        (substring a (length key))))
+                 args)
+        default)))
+
+(defun agent-tool-dispatch--resume-mode ()
+  "Translate the -r infix into a `agent-tool--launch' resume-mode symbol."
+  (pcase (agent-tool-dispatch--arg-value "--resume=" "off")
+    ("continue" 'continue)
+    ("resume"   'pick)
+    (_          nil)))
+
+(defun agent-tool-dispatch--directory ()
+  "Resolve the launch directory from the -d infix."
+  (let ((root (agent-tool--project-root)))
+    (if (string= (agent-tool-dispatch--arg-value "--dir=" "project") "prompt")
+        (file-name-as-directory
+         (expand-file-name
+          (read-directory-name "Agent directory: " root nil t)))
+      root)))
+
+(defun agent-tool-dispatch--inapt-p (agent)
+  "Return non-nil when AGENT cannot satisfy the current resume mode."
+  (let* ((args   (transient-args 'agent-tool-dispatch))
+         (resume (or (cl-some (lambda (a)
+                                (and (stringp a)
+                                     (string-prefix-p "--resume=" a)
+                                     (substring a (length "--resume="))))
+                              args)
+                     "off"))
+         (plist  (cdr (assq agent agent-tool-agents))))
+    (pcase resume
+      ("continue" (not (plist-get plist :continue-flag)))
+      ("resume"   (not (plist-get plist :resume-flag)))
+      (_          nil))))
+
+(defun agent-tool-dispatch--launch-agent (agent)
+  "Launch AGENT with the directory and resume mode from the transient."
+  (agent-tool--launch agent
+                      (agent-tool-dispatch--directory)
+                      (agent-tool-dispatch--resume-mode)))
+
+;; Per-agent suffix commands.  Defined as plain interactives rather than
+;; via `transient-define-suffix' so :inapt-if can use a closure over the
+;; agent symbol cleanly.
+(defun agent-tool-dispatch--claude       () (interactive) (agent-tool-dispatch--launch-agent 'claude))
+(defun agent-tool-dispatch--codex        () (interactive) (agent-tool-dispatch--launch-agent 'codex))
+(defun agent-tool-dispatch--claude-w     () (interactive) (agent-tool-dispatch--launch-agent 'claude-w))
+(defun agent-tool-dispatch--codex-w      () (interactive) (agent-tool-dispatch--launch-agent 'codex-w))
+(defun agent-tool-dispatch--cursor-agent () (interactive) (agent-tool-dispatch--launch-agent 'cursor-agent))
+
+;;;###autoload (autoload 'agent-tool-dispatch "init-agent-tool" nil t)
+(transient-define-prefix agent-tool-dispatch ()
+  "Dispatch menu for `agent-tool'."
+  ["Options"
+   (agent-tool-dispatch--dir)
+   (agent-tool-dispatch--resume)]
+  ["Launch"
+   ("c" "claude"       agent-tool-dispatch--claude
+    :inapt-if (lambda () (agent-tool-dispatch--inapt-p 'claude)))
+   ("x" "codex"        agent-tool-dispatch--codex
+    :inapt-if (lambda () (agent-tool-dispatch--inapt-p 'codex)))
+   ("w" "claude-w"     agent-tool-dispatch--claude-w
+    :inapt-if (lambda () (agent-tool-dispatch--inapt-p 'claude-w)))
+   ("W" "codex-w"      agent-tool-dispatch--codex-w
+    :inapt-if (lambda () (agent-tool-dispatch--inapt-p 'codex-w)))
+   ("u" "cursor-agent" agent-tool-dispatch--cursor-agent
+    :inapt-if (lambda () (agent-tool-dispatch--inapt-p 'cursor-agent)))]
+  ["Other"
+   ("s" "Toggle sidebar"   agent-tool-sidebar)
+   ("j" "Jump to session"  agent-tool-jump)])
 
 (provide 'init-agent-tool)
