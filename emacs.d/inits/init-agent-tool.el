@@ -49,6 +49,16 @@ NAME is a symbol shown in the prompt.  PLIST keys:
   :type 'boolean
   :group 'agent-tool)
 
+(defcustom agent-tool-sidebar-width 36
+  "Width in columns of the agent-tool sidebar window."
+  :type 'integer
+  :group 'agent-tool)
+
+(defcustom agent-tool-sidebar-buffer-name "*agent-tool sidebar*"
+  "Buffer name used by the agent-tool sidebar."
+  :type 'string
+  :group 'agent-tool)
+
 (defvar-local agent-tool--session nil
   "Buffer-local plist describing this buffer's agent session.
 Keys: :agent :dir :resume-mode :started-at.  Set on launch and never
@@ -136,6 +146,116 @@ RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
                   :started-at  (current-time)))
       (add-hook 'kill-buffer-hook #'agent-tool--forget-buffer nil t))
     buffer))
+
+;;------------------------------------------------------------------------------
+;; Sidebar — dirvish-style left side window listing live agent sessions.
+;;------------------------------------------------------------------------------
+
+(defun agent-tool--session-live-p (buffer)
+  "Return non-nil when BUFFER hosts a live agent process."
+  (let ((proc (get-buffer-process buffer)))
+    (and proc (process-live-p proc))))
+
+(defun agent-tool--sidebar-row (buffer)
+  "Return a tabulated-list row for session BUFFER."
+  (let* ((session (buffer-local-value 'agent-tool--session buffer))
+         (agent   (plist-get session :agent))
+         (dir     (plist-get session :dir))
+         (live    (agent-tool--session-live-p buffer))
+         (status  (if live "●" "○")))
+    (list buffer
+          (vector status
+                  (if agent (symbol-name agent) "?")
+                  (abbreviate-file-name (or dir ""))
+                  (buffer-name buffer)))))
+
+(defun agent-tool--sidebar-entries ()
+  "Return tabulated-list entries for live sidebar rows.
+Prunes dead buffers from `agent-tool--sessions' as a side effect."
+  (setq agent-tool--sessions
+        (cl-remove-if-not #'buffer-live-p agent-tool--sessions))
+  (mapcar #'agent-tool--sidebar-row agent-tool--sessions))
+
+(defun agent-tool--sidebar-buffer-at-point ()
+  "Return the session buffer for the row at point, or signal."
+  (or (tabulated-list-get-id)
+      (user-error "No agent session on this line")))
+
+(defun agent-tool-sidebar-visit ()
+  "Switch to the agent buffer on this row."
+  (interactive)
+  (let ((buf (agent-tool--sidebar-buffer-at-point)))
+    (pop-to-buffer buf '((display-buffer-reuse-window
+                          display-buffer-use-some-window)
+                         (inhibit-same-window . nil)))))
+
+(defun agent-tool-sidebar-visit-other-window ()
+  "Display the agent buffer on this row in another window, keep focus here."
+  (interactive)
+  (let ((buf (agent-tool--sidebar-buffer-at-point)))
+    (display-buffer buf '((display-buffer-use-some-window
+                           display-buffer-pop-up-window)))))
+
+(defun agent-tool-sidebar-kill ()
+  "Kill the agent buffer on this row (using the standard confirm path)."
+  (interactive)
+  (let ((buf (agent-tool--sidebar-buffer-at-point)))
+    (when (kill-buffer buf)
+      (tabulated-list-revert))))
+
+(defvar agent-tool-sidebar-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "RET") #'agent-tool-sidebar-visit)
+    (define-key map (kbd "o")   #'agent-tool-sidebar-visit-other-window)
+    (define-key map (kbd "k")   #'agent-tool-sidebar-kill)
+    (define-key map (kbd "g")   #'tabulated-list-revert)
+    (define-key map (kbd "n")   #'next-line)
+    (define-key map (kbd "p")   #'previous-line)
+    (define-key map (kbd "q")   #'quit-window)
+    map)
+  "Keymap for `agent-tool-sidebar-mode'.")
+
+(define-derived-mode agent-tool-sidebar-mode tabulated-list-mode "Agent-Sidebar"
+  "Major mode for the agent-tool sidebar."
+  (setq tabulated-list-format
+        [(""        2 nil)
+         ("Agent"  14 t)
+         ("Dir"    24 t)
+         ("Buffer" 30 t)])
+  (setq tabulated-list-padding 1)
+  (setq tabulated-list-entries #'agent-tool--sidebar-entries)
+  (tabulated-list-init-header))
+
+(defun agent-tool--sidebar-refresh-if-visible ()
+  "Refresh the sidebar buffer if it exists and is currently displayed."
+  (when-let* ((buf (get-buffer agent-tool-sidebar-buffer-name))
+              ((get-buffer-window buf t)))
+    (with-current-buffer buf
+      (let ((inhibit-message t))
+        (tabulated-list-revert)))))
+
+(add-hook 'kill-buffer-hook #'agent-tool--sidebar-refresh-if-visible)
+
+;;;###autoload
+(defun agent-tool-sidebar ()
+  "Toggle the agent-tool sidebar in a left side window."
+  (interactive)
+  (let* ((buf-name agent-tool-sidebar-buffer-name)
+         (existing (get-buffer-window (get-buffer buf-name) t)))
+    (if existing
+        (delete-window existing)
+      (let ((buf (get-buffer-create buf-name)))
+        (with-current-buffer buf
+          (unless (derived-mode-p 'agent-tool-sidebar-mode)
+            (agent-tool-sidebar-mode))
+          (tabulated-list-revert))
+        (display-buffer-in-side-window
+         buf `((side . left)
+               (slot . -1)
+               (window-width . ,agent-tool-sidebar-width)
+               (window-parameters . ((no-other-window . nil)
+                                     (no-delete-other-windows . t)))))
+        (select-window (get-buffer-window buf t))))))
 
 ;;;###autoload
 (defun agent-tool-start (agent)
