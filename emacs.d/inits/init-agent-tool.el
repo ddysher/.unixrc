@@ -294,20 +294,17 @@ RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
   (interactive)
   (agent-tool--sidebar-step -1))
 
-(defvar agent-tool-sidebar-mode-map (make-sparse-keymap)
+(defvar agent-tool-sidebar-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "RET") #'agent-tool-sidebar-visit)
+    (define-key map (kbd "o")   #'agent-tool-sidebar-visit-other-window)
+    (define-key map (kbd "k")   #'agent-tool-sidebar-kill)
+    (define-key map (kbd "g")   #'agent-tool-sidebar-revert)
+    (define-key map (kbd "n")   #'agent-tool-sidebar-next)
+    (define-key map (kbd "p")   #'agent-tool-sidebar-prev)
+    (define-key map (kbd "q")   #'quit-window)
+    map)
   "Keymap for `agent-tool-sidebar-mode'.")
-
-;; Re-apply bindings on every load.  `defvar' above is a no-op on reload,
-;; so without this block the old keymap (and any old bindings to renamed
-;; commands) would stick around — exactly the trap that ate the n/p keys.
-(let ((map agent-tool-sidebar-mode-map))
-  (define-key map (kbd "RET") #'agent-tool-sidebar-visit)
-  (define-key map (kbd "o")   #'agent-tool-sidebar-visit-other-window)
-  (define-key map (kbd "k")   #'agent-tool-sidebar-kill)
-  (define-key map (kbd "g")   #'agent-tool-sidebar-revert)
-  (define-key map (kbd "n")   #'agent-tool-sidebar-next)
-  (define-key map (kbd "p")   #'agent-tool-sidebar-prev)
-  (define-key map (kbd "q")   #'quit-window))
 
 (define-derived-mode agent-tool-sidebar-mode special-mode "Agents"
   "Major mode for the agent-tool sidebar."
