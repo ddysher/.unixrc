@@ -105,11 +105,25 @@ Vertical slices, ordered. Each phase ends with a hands-on testing guide you can 
 
 ## Future / nice-to-have
 
-- [ ] **Status glyph: running vs. waiting for input.** Today the sidebar shows ● (process live) or ○ (dead). Add a third state distinguishing "agent is generating output" from "prompt visible, idle." Approaches to evaluate:
+Sized roughly: (S) ~30 min, (M) afternoon, (L) day+.
+
+- [ ] **Status glyph: running vs. waiting for input.** (M) Today the sidebar shows ● (process live) or ○ (dead). Add a third state distinguishing "agent is generating output" from "prompt visible, idle." Approaches to evaluate:
   1. Watch ghostel filter output for each tool's prompt sentinel (claude `> `, codex `▌`) and toggle a buffer-local flag.
   2. Idle-time heuristic on last-output timestamp (~500ms == waiting).
   3. OSC 9;4 progress sequences if the tool emits them.
   Render as `◐ running / ● waiting / ○ dead`. Don't block on perfection; a 1s-idle heuristic beats nothing.
+
+- [ ] **TAB peeks, RET commits.** (S) In the sidebar, `TAB` previews the card's buffer in the right-hand window without leaving the sidebar (focus stays). `RET` keeps current behavior — switch to the buffer and take focus. Mirrors dirvish-side preview style.
+
+- [ ] **Sidebar modeline parity with dirvish.** (S) Replace the simple `Agents [N]` modeline with a richer line modeled on the dirvish-side example: sort field with arrow direction (`↑ name|mtime`), filter indicator (`Omit`), and `position / total` on the right (e.g. `2 / 5`). Reuse the same faces dirvish uses where they're loaded, fall back gracefully where they aren't.
+
+- [ ] **Optional session label via transient.** (S) Add a `-n` infix to `agent-tool-dispatch` for a custom session label. Stored in `agent-tool--session :label`; sidebar shows it on the agent name line when present (e.g. `● claude · review-pr`). Decoupled from the buffer name (ghostel still owns that via OSC 2).
+
+- [ ] **`/` to filter cards.** (M) In the sidebar, `/` reads a query and filters cards to those whose card text matches (agent / dir / buffer / label). Press `/` again to clear, or `g` to refresh. Implementation: re-render with a filter predicate on `agent-tool--sessions`. No isearch inside the card text needed; substring match is enough.
+
+- [ ] **Rebind: `C-c A` → sidebar; transient gets a different key.** (S) Sidebar is the more frequent action. Reassign `C-c A` to `agent-tool-sidebar`; pick a fresh key for `agent-tool-dispatch` (candidates: `C-c a` lowercase, or `C-c C-a`). Update `init-global-keys.el` and the smoke checklist in the file header.
+
+- [ ] **Default sort: status first, then created-at.** (S, blocked on status glyph) Once status exists, default sidebar order becomes: running → waiting → dead, with each group sorted by `:started-at` ascending. Add `agent-tool-sidebar-sort` defcustom (`status`, `mtime`, `agent`) so users can override. Until status lands, current behavior (newest-first) is fine.
 
 ## Done criteria (whole feature)
 

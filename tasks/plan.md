@@ -216,6 +216,20 @@ Add an 8-step manual smoke list to the commentary block at the top of the file.
 - All changes in `emacs.d/inits/init-agent-tool.el`. No new files.
 - One added line in `emacs.d/inits/init-global-keys.el` for the dispatch keybinding (T7).
 
+## Follow-up ideas (post-Phase 4)
+
+These are tracked in detail in `tasks/todo.md` under "Future / nice-to-have." Listed here so the architectural shape stays visible:
+
+1. **Run/wait status glyph** — needs a hook into ghostel output filtering or an idle-time sentinel; the data flow extends `agent-tool--session` with a `:status` field updated by a process-output advice or timer.
+2. **TAB-peek / RET-commit split** — pure sidebar UX; no model change. Two keys mapped to one buffer-display function differing only in `(select-window . t/nil)`.
+3. **Dirvish-style modeline** — cosmetic; one `mode-line-format` rewrite. Surfaces sort direction, filter, position/total.
+4. **Custom session label** — extends `agent-tool--session` with `:label`, surfaces a `-n` infix on the dispatch transient, alters sidebar render only. Decoupled from buffer name (ghostel still owns).
+5. **`/`-search filter** — sidebar-local filter predicate; re-renders against a substring match across the card text. Not isearch.
+6. **Rebind sidebar to `C-c A`** — sidebar is the higher-frequency action; transient moves to a fresh key. Two-line change to `init-global-keys.el` plus header smoke list.
+7. **Status-first default sort** — depends on (1). Adds `agent-tool-sidebar-sort` defcustom; sidebar render groups + sorts before iterating.
+
+Dependency: (7) blocks on (1). The others are independent and can land in any order.
+
 ## Acceptance for the whole feature
 
 1. Launch any agent at any directory in ≤3 keystrokes from `agent-tool-dispatch`.
