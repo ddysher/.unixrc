@@ -199,17 +199,6 @@ RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
   (let ((proc (get-buffer-process buffer)))
     (and proc (process-live-p proc))))
 
-;; TODO(status): distinguish "running" (agent is thinking/streaming) from
-;; "waiting for input" (prompt visible, idle).  Approaches to consider:
-;;   1. Watch ghostel filter output for the tool's prompt sentinel
-;;      (claude shows "> ", codex shows "▌"); set a buffer-local flag.
-;;   2. Sample the cursor position / last-output time relative to a
-;;      short idle threshold (~500ms idle == waiting).
-;;   3. OSC 9;4 progress sequences if the tool emits them.
-;; Render with a third glyph (e.g. ◐ running, ● waiting, ○ dead) once
-;; one of these proves reliable.  Do not block this on perfection —
-;; even a "last output > 1s ago" heuristic is more useful than nothing.
-
 (defface agent-tool-sidebar-buffer
   '((t :inherit shadow :slant italic))
   "Face for the buffer-name line on a sidebar card."

@@ -103,6 +103,14 @@ Vertical slices, ordered. Each phase ends with a hands-on testing guide you can 
 
 ---
 
+## Future / nice-to-have
+
+- [ ] **Status glyph: running vs. waiting for input.** Today the sidebar shows ● (process live) or ○ (dead). Add a third state distinguishing "agent is generating output" from "prompt visible, idle." Approaches to evaluate:
+  1. Watch ghostel filter output for each tool's prompt sentinel (claude `> `, codex `▌`) and toggle a buffer-local flag.
+  2. Idle-time heuristic on last-output timestamp (~500ms == waiting).
+  3. OSC 9;4 progress sequences if the tool emits them.
+  Render as `◐ running / ● waiting / ○ dead`. Don't block on perfection; a 1s-idle heuristic beats nothing.
+
 ## Done criteria (whole feature)
 
 - [ ] Launch any agent at any directory from `agent-tool-dispatch` in ≤3 keystrokes.
