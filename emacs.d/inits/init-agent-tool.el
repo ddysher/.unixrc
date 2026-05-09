@@ -3,8 +3,8 @@
 ;; agent-tool: spawn a coding agent (claude, codex, ...) in a ghostel buffer.
 ;;
 ;; M-x agent-tool-start prompts for an agent and opens a fresh ghostel
-;; session at the project root.  With C-u, prompts for a directory
-;; (defaulting to the project root) instead of using it directly.
+;; session at the project root.  Directory override and resume/continue
+;; flow live in the transient menu (added in a later phase).
 ;;
 ;; Each agent is a plist in `agent-tool-agents' so resume/continue flags
 ;; and extra args can be declared per agent without touching call sites.
@@ -77,17 +77,6 @@ then fall back to `default-directory'."
                  names nil t nil nil def)))
     (intern pick)))
 
-(defun agent-tool--resolve-dir (prompt-p)
-  "Return the launch directory.
-When PROMPT-P is non-nil, ask the user via `read-directory-name',
-defaulting to the project root.  Otherwise return the project root."
-  (let ((root (agent-tool--project-root)))
-    (file-name-as-directory
-     (expand-file-name
-      (if prompt-p
-          (read-directory-name "Agent directory: " root nil t)
-        root)))))
-
 (defun agent-tool--forget-buffer ()
   "Remove the current buffer from `agent-tool--sessions'."
   (setq agent-tool--sessions (delq (current-buffer) agent-tool--sessions)))
@@ -113,6 +102,10 @@ RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
          (default-directory (file-name-as-directory dir))
          (buffer  (generate-new-buffer ghostel-buffer-name)))
     (switch-to-buffer buffer)
+    (push buffer agent-tool--sessions)
+    ;; ghostel-exec switches the buffer into ghostel-mode, which calls
+    ;; kill-all-local-variables — so set our buffer-local plist *after*.
+    (ghostel-exec buffer program args)
     (with-current-buffer buffer
       (setq agent-tool--session
             (list :agent       agent
@@ -120,19 +113,13 @@ RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
                   :resume-mode resume-mode
                   :started-at  (current-time)))
       (add-hook 'kill-buffer-hook #'agent-tool--forget-buffer nil t))
-    (push buffer agent-tool--sessions)
-    (ghostel-exec buffer program args)
     buffer))
 
 ;;;###autoload
-(defun agent-tool-start (agent &optional prompt-dir)
-  "Start AGENT in a ghostel terminal.
-Interactively, prompt for the agent from `agent-tool-agents'.
-With prefix arg, prompt for the launch directory; otherwise launch
-at the current project's root."
-  (interactive
-   (list (agent-tool--read-agent)
-         current-prefix-arg))
-  (agent-tool--launch agent (agent-tool--resolve-dir prompt-dir) nil))
+(defun agent-tool-start (agent)
+  "Start AGENT in a ghostel terminal at the current project's root.
+Interactively, prompt for the agent from `agent-tool-agents'."
+  (interactive (list (agent-tool--read-agent)))
+  (agent-tool--launch agent (agent-tool--project-root) nil))
 
 (provide 'init-agent-tool)

@@ -93,11 +93,10 @@ registry (agents data)
 
 ### Phase 1 — Foundation
 
-**T1. Rich agent registry + directory override**
-Replace `agent-tool-commands` (alist symbol→string) with `agent-tool-agents` (alist symbol→plist with `:program :resume-flag :continue-flag :extra-args`). Refactor `agent-tool-start` to read the registry. Prefix-arg: `C-u` prompts for directory; no prefix uses project root.
+**T1. Rich agent registry**
+Replace `agent-tool-commands` (alist symbol→string) with `agent-tool-agents` (alist symbol→plist with `:program :resume-flag :continue-flag :extra-args`). Refactor `agent-tool-start` to read the registry. Bare command always launches at project root — directory override lives in the transient (T7), to keep one knob per behavior.
 
 - AC: `M-x agent-tool-start` works exactly as before for all 5 agents.
-- AC: `C-u M-x agent-tool-start` prompts for directory via `read-directory-name`, defaulting to project root.
 - AC: Old `agent-tool-commands` removed (one user, no shim needed).
 
 **T2. Buffer-local session identity + tracking**
@@ -110,7 +109,7 @@ Add buffer-local `agent-tool--session` plist on launch. Maintain `agent-tool--se
 > **Checkpoint A — User testing guide (Phase 1)**
 > 1. Restart Emacs (or eval the file).
 > 2. `M-x agent-tool-start RET claude RET` — claude starts at project root, exactly as today.
-> 3. `C-u M-x agent-tool-start RET claude RET ~/tmp/ RET` — claude starts in `~/tmp/`.
+> 3. `M-x agent-tool-start RET codex RET` — codex starts in a second buffer at project root.
 > 4. `M-: agent-tool--sessions RET` — should list both buffers.
 > 5. In one buffer: `M-: agent-tool--session RET` — should show plist with `:agent claude :dir <expected>`.
 > 6. Kill one buffer (`C-x k`); re-eval `agent-tool--sessions` — list shrinks.

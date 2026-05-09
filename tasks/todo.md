@@ -4,12 +4,12 @@ Vertical slices, ordered. Each phase ends with a hands-on testing guide you can 
 
 ## Phase 1 — Foundation
 
-- [ ] **T1. Rich agent registry + directory override**
+- [x] **T1. Rich agent registry + directory override**
   - Replace `agent-tool-commands` with `agent-tool-agents` (alist symbol → plist: `:program :resume-flag :continue-flag :extra-args`).
   - Refactor `agent-tool-start` to read the registry.
-  - Honor prefix-arg: `C-u` prompts for directory (default = project root).
+  - Bare `agent-tool-start` always uses project root (no prefix-arg). Directory override lives in the transient (T7).
 
-- [ ] **T2. Buffer-local session identity + tracking**
+- [x] **T2. Buffer-local session identity + tracking** *(landed with T1 — they were inseparable; kill-buffer prompt and sidebar still pending in Phase 2)*
   - Buffer-local `agent-tool--session` plist (`:agent :dir :resume-mode :started-at`); set immediately after launch.
   - Global `agent-tool--sessions` list, pruned on `kill-buffer-hook`.
   - **Do not** set the buffer name ourselves — keep `(generate-new-buffer ghostel-buffer-name)`. Ghostel renames via OSC 2; we never read the name for identity.
@@ -18,7 +18,7 @@ Vertical slices, ordered. Each phase ends with a hands-on testing guide you can 
 
 1. Restart Emacs (or eval the file).
 2. `M-x agent-tool-start RET claude RET` — claude starts at project root (current behavior).
-3. `C-u M-x agent-tool-start RET claude RET ~/tmp/ RET` — claude starts in `~/tmp/`.
+3. `M-x agent-tool-start RET codex RET` — codex starts in another buffer at project root.
 4. `M-: agent-tool--sessions RET` — both buffers listed.
 5. In a session buffer: `M-: agent-tool--session RET` — plist with the right `:agent` and `:dir`.
 6. `C-x k` one buffer; re-eval `agent-tool--sessions` — list shrinks.
