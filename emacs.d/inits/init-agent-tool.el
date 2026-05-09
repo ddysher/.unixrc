@@ -240,18 +240,45 @@ RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
     ;; Trailing blank separator (no property — used as card boundary).
     (insert "\n")))
 
+(defvar-local agent-tool--sidebar-filter nil
+  "Active substring filter for the sidebar, or nil when no filter is set.")
+
+(defun agent-tool--sidebar-card-text (buffer)
+  "Lowercased concatenation of searchable text for BUFFER's card."
+  (let* ((s (buffer-local-value 'agent-tool--session buffer))
+         (a (or (and (plist-get s :agent) (symbol-name (plist-get s :agent))) ""))
+         (d (or (plist-get s :dir) ""))
+         (l (or (plist-get s :label) ""))
+         (b (buffer-name buffer)))
+    (downcase (concat a " " d " " l " " b))))
+
+(defun agent-tool--sidebar-matches-filter-p (buffer)
+  "Return non-nil when BUFFER's card matches the active filter (or no filter)."
+  (or (null agent-tool--sidebar-filter)
+      (string-match-p (regexp-quote (downcase agent-tool--sidebar-filter))
+                      (agent-tool--sidebar-card-text buffer))))
+
 (defun agent-tool--sidebar-render ()
-  "Re-render the sidebar buffer from `agent-tool--sessions'."
+  "Re-render the sidebar buffer from `agent-tool--sessions'.
+Honors the buffer-local `agent-tool--sidebar-filter' when non-nil."
   (setq agent-tool--sessions
         (cl-remove-if-not #'buffer-live-p agent-tool--sessions))
-  (let ((inhibit-read-only t)
-        (saved-line (line-number-at-pos)))
+  (let* ((inhibit-read-only t)
+         (saved-line (line-number-at-pos))
+         (visible (cl-remove-if-not #'agent-tool--sidebar-matches-filter-p
+                                    agent-tool--sessions)))
     (erase-buffer)
-    (if (null agent-tool--sessions)
-        (insert (propertize "  (no agent sessions)\n"
-                            'face 'agent-tool-sidebar-dir))
-      (dolist (buf agent-tool--sessions)
-        (agent-tool--sidebar-insert-card buf)))
+    (cond
+     ((null agent-tool--sessions)
+      (insert (propertize "  (no agent sessions)\n"
+                          'face 'agent-tool-sidebar-dir)))
+     ((null visible)
+      (insert (propertize
+               (format "  (no matches for /%s)\n" agent-tool--sidebar-filter)
+               'face 'agent-tool-sidebar-dir)))
+     (t
+      (dolist (buf visible)
+        (agent-tool--sidebar-insert-card buf))))
     (goto-char (point-min))
     (forward-line (1- saved-line))))
 
@@ -289,9 +316,22 @@ picks a non-side window or pops one up.  Bound to both TAB (peek) and
       (agent-tool--sidebar-render))))
 
 (defun agent-tool-sidebar-revert ()
-  "Refresh the sidebar."
+  "Refresh the sidebar (preserves any active filter)."
   (interactive)
   (agent-tool--sidebar-render))
+
+(defun agent-tool-sidebar-filter ()
+  "Filter sidebar cards by a case-insensitive substring.
+Searches across each card's agent name, directory, label, and buffer
+name.  Empty input clears the current filter."
+  (interactive)
+  (let* ((current agent-tool--sidebar-filter)
+         (prompt  (format "Filter cards%s: "
+                          (if current (format " (current: %s, RET to clear)" current) "")))
+         (input   (read-string prompt)))
+    (setq agent-tool--sidebar-filter
+          (if (string-empty-p input) nil input))
+    (agent-tool--sidebar-render)))
 
 (defun agent-tool--sidebar-card-starts ()
   "Return a list of (POS . BUFFER) for every card in the sidebar buffer."
@@ -331,15 +371,12 @@ picks a non-side window or pops one up.  Bound to both TAB (peek) and
     (define-key map (kbd "o")   #'agent-tool-sidebar-peek)
     (define-key map (kbd "k")   #'agent-tool-sidebar-kill)
     (define-key map (kbd "g")   #'agent-tool-sidebar-revert)
+    (define-key map (kbd "/")   #'agent-tool-sidebar-filter)
     (define-key map (kbd "n")   #'agent-tool-sidebar-next)
     (define-key map (kbd "p")   #'agent-tool-sidebar-prev)
     (define-key map (kbd "q")   #'quit-window)
     map)
   "Keymap for `agent-tool-sidebar-mode'.")
-
-(defvar-local agent-tool--sidebar-filter nil
-  "Active substring filter for the sidebar, or nil when no filter is set.
-Wired up by T11 (`/' filter); T10 just shows the indicator when set.")
 
 (defvar agent-tool-sidebar-sort 'mtime
   "Sort field shown in the sidebar modeline.
