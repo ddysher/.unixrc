@@ -185,6 +185,11 @@ RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
   (let ((proc (get-buffer-process buffer)))
     (and proc (process-live-p proc))))
 
+(defface agent-tool-sidebar-buffer
+  '((t :inherit shadow :slant italic))
+  "Face for the buffer-name line on a sidebar card."
+  :group 'agent-tool)
+
 (defun agent-tool--sidebar-insert-card (buffer)
   "Insert a card for session BUFFER at point."
   (let* ((session (buffer-local-value 'agent-tool--session buffer))
@@ -200,6 +205,9 @@ RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
     (insert "\n  ")
     (insert (propertize (abbreviate-file-name (or dir ""))
                         'face 'agent-tool-sidebar-dir))
+    (insert "\n  ")
+    (insert (propertize (buffer-name buffer)
+                        'face 'agent-tool-sidebar-buffer))
     (insert "\n")
     ;; Stamp the buffer reference on every position of the card so point
     ;; lookups work regardless of which line the cursor is on.
@@ -286,23 +294,29 @@ RESUME-MODE is nil, `pick' (use :resume-flag), or `continue'
   (interactive)
   (agent-tool--sidebar-step -1))
 
-(defvar agent-tool-sidebar-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "RET") #'agent-tool-sidebar-visit)
-    (define-key map (kbd "o")   #'agent-tool-sidebar-visit-other-window)
-    (define-key map (kbd "k")   #'agent-tool-sidebar-kill)
-    (define-key map (kbd "g")   #'agent-tool-sidebar-revert)
-    (define-key map (kbd "n")   #'agent-tool-sidebar-next)
-    (define-key map (kbd "p")   #'agent-tool-sidebar-prev)
-    (define-key map (kbd "q")   #'quit-window)
-    map)
+(defvar agent-tool-sidebar-mode-map (make-sparse-keymap)
   "Keymap for `agent-tool-sidebar-mode'.")
 
-(define-derived-mode agent-tool-sidebar-mode special-mode "Agent-Sidebar"
+;; Re-apply bindings on every load.  `defvar' above is a no-op on reload,
+;; so without this block the old keymap (and any old bindings to renamed
+;; commands) would stick around — exactly the trap that ate the n/p keys.
+(let ((map agent-tool-sidebar-mode-map))
+  (define-key map (kbd "RET") #'agent-tool-sidebar-visit)
+  (define-key map (kbd "o")   #'agent-tool-sidebar-visit-other-window)
+  (define-key map (kbd "k")   #'agent-tool-sidebar-kill)
+  (define-key map (kbd "g")   #'agent-tool-sidebar-revert)
+  (define-key map (kbd "n")   #'agent-tool-sidebar-next)
+  (define-key map (kbd "p")   #'agent-tool-sidebar-prev)
+  (define-key map (kbd "q")   #'quit-window))
+
+(define-derived-mode agent-tool-sidebar-mode special-mode "Agents"
   "Major mode for the agent-tool sidebar."
   (setq-local cursor-type nil)
   (setq-local truncate-lines t)
-  (setq-local mode-line-format nil)
+  (setq-local mode-line-format
+              '(" "
+                (:propertize "Agents" face mode-line-buffer-id)
+                (:eval (format " [%d]" (length agent-tool--sessions)))))
   (hl-line-mode 1))
 
 (defun agent-tool--sidebar-refresh-if-visible ()
