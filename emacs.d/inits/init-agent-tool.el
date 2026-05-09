@@ -337,14 +337,42 @@ picks a non-side window or pops one up.  Bound to both TAB (peek) and
     map)
   "Keymap for `agent-tool-sidebar-mode'.")
 
+(defvar-local agent-tool--sidebar-filter nil
+  "Active substring filter for the sidebar, or nil when no filter is set.
+Wired up by T11 (`/' filter); T10 just shows the indicator when set.")
+
+(defvar agent-tool-sidebar-sort 'mtime
+  "Sort field shown in the sidebar modeline.
+One of `status', `mtime', `agent'.  T10 surfaces this in the modeline;
+T16 is what actually applies it during render.")
+
+(defun agent-tool--sidebar-modeline ()
+  "Build the sidebar's modeline string.
+Layout:  `↑ <sort-field>'  [`/<filter>']  ...  `<index> / <total>'."
+  (let* ((cards (agent-tool--sidebar-card-starts))
+         (total (length cards))
+         (here  (get-text-property (point) 'agent-tool-buffer))
+         (idx   (if here (1+ (cl-position here cards :key #'cdr)) 0))
+         (right (format "%d / %d" idx total)))
+    (list
+     " "
+     (propertize "↑ " 'face 'mode-line-emphasis)
+     (propertize (symbol-name agent-tool-sidebar-sort)
+                 'face 'mode-line-buffer-id)
+     (when agent-tool--sidebar-filter
+       (list "  "
+             (propertize (format "/%s" agent-tool--sidebar-filter)
+                         'face 'warning)))
+     (propertize " " 'display
+                 `(space :align-to (- right ,(1+ (length right)))))
+     right
+     " ")))
+
 (define-derived-mode agent-tool-sidebar-mode special-mode "Agents"
   "Major mode for the agent-tool sidebar."
   (setq-local cursor-type nil)
   (setq-local truncate-lines t)
-  (setq-local mode-line-format
-              '(" "
-                (:propertize "Agents" face mode-line-buffer-id)
-                (:eval (format " [%d]" (length agent-tool--sessions)))))
+  (setq-local mode-line-format '((:eval (agent-tool--sidebar-modeline))))
   (hl-line-mode 1))
 
 (defun agent-tool--sidebar-refresh-if-visible ()
