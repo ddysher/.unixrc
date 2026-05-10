@@ -150,14 +150,14 @@ Pure rendering / interaction layer changes. No model changes. Sized roughly: (S)
 
 ## Phase 7 — Status awareness
 
-- [ ] **T15. Status glyph: running vs. waiting for input.** (M) Today the sidebar shows ● (live) or ○ (dead). Add a third state for "agent generating output" vs. "idle at prompt." Approaches to evaluate:
+- [x] **T15. Status glyph: running vs. waiting for input.** (M) Today the sidebar shows ● (live) or ○ (dead). Add a third state for "agent generating output" vs. "idle at prompt." Approaches to evaluate:
   1. Advise `ghostel--filter` (or equivalent output hook) — record last-output timestamp + look for prompt sentinel.
   2. Idle-time heuristic alone (~500ms of no output ⇒ waiting).
   3. OSC 9;4 progress sequences if the tool emits them.
 
   Extend `agent-tool--session` with `:status` (one of `running`, `waiting`, `dead`). Render `◐ / ● / ○`. Don't block on perfection — a 1s-idle heuristic beats nothing.
 
-- [ ] **T16. Default sort: status first, then created-at.** (S, blocks on T15) Default sidebar order: running → waiting → dead, each group by `:started-at` ascending. Add `agent-tool-sidebar-sort` defcustom (`status`, `mtime`, `agent`) so users can override.
+- [x] **T16. Default sort: status first, then created-at.** (S, blocks on T15) Default sidebar order: running → waiting → dead, each group by `:started-at` ascending. Add `agent-tool-sidebar-sort` defcustom (`status`, `mtime`, `agent`) so users can override.
 
 ### Phase 7 user test guide
 
