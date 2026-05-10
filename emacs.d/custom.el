@@ -6,12 +6,13 @@
  '(package-selected-packages
    '(agent-shell apache-mode auto-dim-other-buffers cape claudemacs corfu
                  dimmer dirvish dockerfile-mode doom-modeline
-                 doom-themes eat embark-consult exec-path-from-shell
-                 ggtags ghostel go-mode gptel js2-mode lua-mode magit
-                 marginalia markdown-mode matlab-mode multi-vterm
-                 nginx-mode orderless pet php-mode protobuf-mode
-                 rust-mode sbt-mode scala-mode tabspaces tempel thrift
-                 vertico web-mode winum wsd-mode yaml-mode no-littering))
+                 doom-themes eat ef-themes embark-consult
+                 exec-path-from-shell ggtags ghostel go-mode gptel
+                 js2-mode lua-mode magit marginalia markdown-mode
+                 matlab-mode multi-vterm nginx-mode no-littering
+                 orderless pet php-mode protobuf-mode rust-mode
+                 sbt-mode scala-mode tabspaces tempel thrift vertico
+                 web-mode winum wsd-mode yaml-mode))
  '(package-vc-selected-packages '((claudemacs :url "https://github.com/cpoile/claudemacs"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

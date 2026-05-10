@@ -11,6 +11,9 @@
   :config
   (load-theme 'doom-one t))
 
+(use-package ef-themes
+  :defer t)
+
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
   :custom

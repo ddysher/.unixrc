@@ -48,7 +48,6 @@
 ;; Unified picker: open buffers, recent files, and bookmarks in one command.
 (global-set-key (kbd "C-o")     #'consult-buffer)
 (global-set-key (kbd "C-c D")   #'dirvish-side)
-(global-set-key (kbd "C-c a")   #'agent-tool-dispatch)
 (global-set-key (kbd "C-c A")   #'agent-tool-sidebar)
 
 (global-set-key (kbd "C-x d")   #'dirvish-dwim)     ; remap dired to dirvish

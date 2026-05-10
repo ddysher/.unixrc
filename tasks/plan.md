@@ -226,7 +226,7 @@ The eight ideas group into three coherent phases. Order chosen by risk + value: 
 - **T11. `/` filter.** (M) Sidebar-local substring filter across card text. Re-render with a filter predicate; `g` clears.
 
 ### Phase 6 — Launch flow polish
-- **T12. Rebind global keys.** (S) `C-c A` → `agent-tool-sidebar`; pick a fresh key (proposed: `C-c a`) for `agent-tool-dispatch`. Update header smoke list.
+- **T12. Rebind global keys.** (S) `C-c A` → `agent-tool-sidebar`; Update header smoke list.
 - **T13. Directory picker on bare commands.** (M) Tabspaces-style three-section picker (default project shown, `... (choose a dir)` sentinel, known projects from `project--list`) on `agent-tool-start` / `-resume` / `-continue`. New helper `agent-tool--read-dir`.
 - **T14. `-n` session label infix.** (S) Add `:label` to `agent-tool--session`, surface a `-n` infix on the dispatch transient, alter sidebar render to show `· label` after the agent name when present.
 
