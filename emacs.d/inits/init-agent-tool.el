@@ -20,20 +20,14 @@
 ;;   6. C-c a then -n review c → claude card shows `· review' label.
 ;;   7. C-c a then -r resume c → claude --resume (its native picker).
 ;;   8. C-x k a session buffer → y/n prompt; sidebar refreshes after kill.
-;;   9. While claude streams output, sidebar glyph is the loading icon;
-;;      ~1s after it idles at its prompt, the glyph flips to a filled
-;;      circle.  Killed buffers show a hollow circle.
 ;;------------------------------------------------------------------------------
 
 (require 'cl-lib)
 (require 'project)
 (require 'transient)
-(require 'nerd-icons nil t)
 
 (defvar ghostel-buffer-name)
 (declare-function ghostel-exec "ghostel")
-(declare-function ghostel--filter "ghostel")
-(declare-function nerd-icons-codicon "nerd-icons")
 
 (defgroup agent-tool nil
   "Run coding agents in ghostel terminals."
@@ -76,22 +70,6 @@ NAME is a symbol shown in the prompt.  PLIST keys:
   :type 'string
   :group 'agent-tool)
 
-(defcustom agent-tool-running-idle-threshold 0.8
-  "Seconds since last PTY output below which a session is `running'.
-Sessions that have been idle longer are reported as `waiting'.  Tune
-upward if your terminal emits trailing redraws long after you'd
-visually call the agent idle."
-  :type 'number
-  :group 'agent-tool)
-
-(defcustom agent-tool-sidebar-sort 'status
-  "How sessions are ordered in the sidebar.
-`status' groups by running → waiting → dead, then by `:started-at'
-ascending.  `mtime' uses `:started-at' alone.  `agent' sorts by agent
-name."
-  :type '(choice (const status) (const mtime) (const agent))
-  :group 'agent-tool)
-
 (defvar-local agent-tool--session nil
   "Buffer-local plist describing this buffer's agent session.
 Keys: :agent :dir :resume-mode :started-at.  Set on launch and never
@@ -101,33 +79,6 @@ remains the source of truth for session identity.")
 (defvar agent-tool--sessions nil
   "List of live buffers spawned by `agent-tool-start' & friends.
 Entries are pruned by `agent-tool--forget-buffer' on `kill-buffer-hook'.")
-
-(defun agent-tool--mark-output (process &rest _)
-  "Stamp PROCESS's buffer with the current time on every PTY chunk.
-Installed as :before advice on `ghostel--filter' so the sidebar can
-distinguish a generating agent from one idle at its prompt."
-  (when-let* ((buf (and (processp process) (process-buffer process)))
-              ((buffer-live-p buf))
-              ((buffer-local-value 'agent-tool--session buf))
-              (now (current-time)))
-    (with-current-buffer buf
-      (setq agent-tool--session
-            (plist-put agent-tool--session :last-output now)))))
-
-(with-eval-after-load 'ghostel
-  (advice-add 'ghostel--filter :before #'agent-tool--mark-output))
-
-(defun agent-tool--session-status (buffer)
-  "Return `running', `waiting', or `dead' for BUFFER."
-  (cond
-   ((not (agent-tool--session-live-p buffer)) 'dead)
-   (t (let* ((s    (buffer-local-value 'agent-tool--session buffer))
-             (last (plist-get s :last-output)))
-        (if (and last
-                 (< (float-time (time-since last))
-                    agent-tool-running-idle-threshold))
-            'running
-          'waiting)))))
 
 (defun agent-tool--project-root ()
   "Return the project root for `default-directory'.
@@ -283,41 +234,15 @@ LABEL, when non-empty, is stored on the session plist for the sidebar."
   "Face for the directory line on a sidebar card."
   :group 'agent-tool)
 
-(defface agent-tool-sidebar-running
-  '((t :inherit warning))
-  "Face for the status glyph of a session generating output."
-  :group 'agent-tool)
-
-(defface agent-tool-sidebar-waiting
+(defface agent-tool-sidebar-live
   '((t :inherit success))
-  "Face for the status glyph of a live session idle at its prompt."
+  "Face for the status glyph of a live session."
   :group 'agent-tool)
 
 (defface agent-tool-sidebar-dead
   '((t :inherit shadow))
   "Face for the status glyph of an exited session."
   :group 'agent-tool)
-
-(defun agent-tool--status-glyph (status)
-  "Return a propertized status glyph for STATUS.
-Uses nerd-icons codicons when available, falling back to plain text."
-  (let* ((face (pcase status
-                 ('running 'agent-tool-sidebar-running)
-                 ('waiting 'agent-tool-sidebar-waiting)
-                 (_        'agent-tool-sidebar-dead)))
-         (glyph (if (fboundp 'nerd-icons-codicon)
-                    (nerd-icons-codicon
-                     (pcase status
-                       ('running "nf-cod-loading")
-                       ('waiting "nf-cod-circle_filled")
-                       (_        "nf-cod-circle"))
-                     :face face)
-                  (propertize (pcase status
-                                ('running "◐")
-                                ('waiting "●")
-                                (_        "○"))
-                              'face face))))
-    (concat glyph " ")))
 
 (defun agent-tool--session-live-p (buffer)
   "Return non-nil when BUFFER hosts a live agent process."
@@ -340,9 +265,11 @@ Uses nerd-icons codicons when available, falling back to plain text."
          (agent   (plist-get session :agent))
          (dir     (plist-get session :dir))
          (label   (plist-get session :label))
-         (status  (agent-tool--session-status buffer))
+         (live    (agent-tool--session-live-p buffer))
          (start   (point)))
-    (insert (agent-tool--status-glyph status))
+    (insert (propertize (if live "● " "○ ")
+                        'face (if live 'agent-tool-sidebar-live
+                                'agent-tool-sidebar-dead)))
     (insert (propertize (if agent (symbol-name agent) "?")
                         'face 'agent-tool-sidebar-name))
     (when label
@@ -379,46 +306,6 @@ Uses nerd-icons codicons when available, falling back to plain text."
       (string-match-p (regexp-quote (downcase agent-tool--sidebar-filter))
                       (agent-tool--sidebar-card-text buffer))))
 
-(defun agent-tool--status-rank (status)
-  "Sort key for STATUS: running < waiting < dead."
-  (pcase status ('running 0) ('waiting 1) (_ 2)))
-
-(defun agent-tool--sort-sessions (buffers)
-  "Return BUFFERS ordered per `agent-tool-sidebar-sort'."
-  (let ((key
-         (pcase agent-tool-sidebar-sort
-           ('agent (lambda (b)
-                     (or (and (buffer-local-value 'agent-tool--session b)
-                              (symbol-name (plist-get
-                                            (buffer-local-value
-                                             'agent-tool--session b)
-                                            :agent)))
-                         "")))
-           ('mtime (lambda (b)
-                     (float-time
-                      (or (plist-get (buffer-local-value
-                                      'agent-tool--session b)
-                                     :started-at)
-                          0))))
-           (_ ;; status: running > waiting > dead, then started-at asc.
-            (lambda (b)
-              (cons (agent-tool--status-rank
-                     (agent-tool--session-status b))
-                    (float-time
-                     (or (plist-get (buffer-local-value
-                                     'agent-tool--session b)
-                                    :started-at)
-                         0))))))))
-    (cl-sort (copy-sequence buffers)
-             (lambda (a b)
-               (let ((ka (funcall key a)) (kb (funcall key b)))
-                 (cond
-                  ((and (consp ka) (consp kb))
-                   (or (< (car ka) (car kb))
-                       (and (= (car ka) (car kb)) (< (cdr ka) (cdr kb)))))
-                  ((numberp ka) (< ka kb))
-                  (t (string< ka kb))))))))
-
 (defun agent-tool--sidebar-render ()
   "Re-render the sidebar buffer from `agent-tool--sessions'.
 Honors the buffer-local `agent-tool--sidebar-filter' when non-nil."
@@ -426,9 +313,8 @@ Honors the buffer-local `agent-tool--sidebar-filter' when non-nil."
         (cl-remove-if-not #'buffer-live-p agent-tool--sessions))
   (let* ((inhibit-read-only t)
          (saved-line (line-number-at-pos))
-         (sorted  (agent-tool--sort-sessions agent-tool--sessions))
          (visible (cl-remove-if-not #'agent-tool--sidebar-matches-filter-p
-                                    sorted)))
+                                    agent-tool--sessions)))
     (erase-buffer)
     (cond
      ((null agent-tool--sessions)
@@ -540,6 +426,11 @@ name.  Empty input clears the current filter."
     map)
   "Keymap for `agent-tool-sidebar-mode'.")
 
+(defvar agent-tool-sidebar-sort 'mtime
+  "Sort field shown in the sidebar modeline.
+One of `status', `mtime', `agent'.  T10 surfaces this in the modeline;
+T16 is what actually applies it during render.")
+
 (defun agent-tool--sidebar-modeline ()
   "Build the sidebar's modeline string.
 Layout:  `↑ <sort-field>'  [`/<filter>']  ...  `<index> / <total>'."
@@ -577,20 +468,6 @@ Layout:  `↑ <sort-field>'  [`/<filter>']  ...  `<index> / <total>'."
       (agent-tool--sidebar-render))))
 
 (add-hook 'kill-buffer-hook #'agent-tool--sidebar-refresh-if-visible)
-
-(defvar agent-tool--sidebar-tick-timer nil
-  "Repeating timer that flips status glyphs while the sidebar is visible.")
-
-(defun agent-tool--sidebar-tick ()
-  "Refresh the sidebar while it is visible.
-Needed so the running→waiting transition (no filter event) shows up,
-and so the running glyph appears animated.  No-op when hidden."
-  (when (get-buffer-window agent-tool-sidebar-buffer-name t)
-    (agent-tool--sidebar-refresh-if-visible)))
-
-(unless agent-tool--sidebar-tick-timer
-  (setq agent-tool--sidebar-tick-timer
-        (run-with-timer 1 1 #'agent-tool--sidebar-tick)))
 
 ;;;###autoload
 (defun agent-tool-sidebar ()
