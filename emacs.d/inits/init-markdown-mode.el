@@ -122,7 +122,6 @@
 
 (defun markdown-custom-hook()
   (run-hooks 'prog-mode-hook)
-  (visual-line-mode 1)
   (local-set-key (kbd "C-c C-c d") 'markdown-doctoc)
   ;; Change 'M-p' and 'M-n' to bindings that I used to. By default, they
   ;; are bound to 'markdown-previous-link' and 'markdown-next-link'.

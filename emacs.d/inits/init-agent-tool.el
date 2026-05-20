@@ -100,7 +100,7 @@ Returns an absolute, slash-terminated directory string."
   (project--ensure-read-project-list)
   (let* ((root        (file-name-as-directory
                        (expand-file-name (agent-tool--project-root))))
-         (root-label  (format "Project root (%s)" (abbreviate-file-name root)))
+         (root-label  (format "%s (project root)" (abbreviate-file-name root)))
          (sentinel    "... (choose a dir)")
          (others      (cl-remove-if
                        (lambda (cell)
@@ -495,8 +495,8 @@ Layout:  `↑ <sort-field>'  [`/<filter>']  ...  `<index> / <total>'."
   "Start AGENT in a ghostel terminal at DIR.
 Interactively, prompt for the agent and a directory."
   (interactive
-   (let ((a (agent-tool--read-agent)))
-     (list a (agent-tool--read-dir))))
+   (let ((d (agent-tool--read-dir)))
+     (list (agent-tool--read-agent) d)))
   (agent-tool--launch agent dir nil))
 
 ;;;###autoload
@@ -505,8 +505,8 @@ Interactively, prompt for the agent and a directory."
 Prompts only for agents that declare a `:resume-flag' in
 `agent-tool-agents'.  The tool's own TUI handles session selection."
   (interactive
-   (let ((a (agent-tool--read-agent :resume-flag "Resume agent")))
-     (list a (agent-tool--read-dir))))
+   (let ((d (agent-tool--read-dir)))
+     (list (agent-tool--read-agent :resume-flag "Resume agent") d)))
   (agent-tool--launch agent dir 'pick))
 
 ;;;###autoload
@@ -515,8 +515,8 @@ Prompts only for agents that declare a `:resume-flag' in
 Prompts only for agents that declare a `:continue-flag' in
 `agent-tool-agents'."
   (interactive
-   (let ((a (agent-tool--read-agent :continue-flag "Continue agent")))
-     (list a (agent-tool--read-dir))))
+   (let ((d (agent-tool--read-dir)))
+     (list (agent-tool--read-agent :continue-flag "Continue agent") d)))
   (agent-tool--launch agent dir 'continue))
 
 ;;;###autoload
